@@ -153,7 +153,9 @@ def mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used):
 
     mean_3d_err = torch.mean(torch.norm(pred_3d - targ_3d, 2, 1))
 
-    return mean_3d_err
+    return outputs_p3d,mean_3d_err
+
+
 
 
 def mpjpe_error_3dpw(outputs, all_seq, dct_n, dim_used):

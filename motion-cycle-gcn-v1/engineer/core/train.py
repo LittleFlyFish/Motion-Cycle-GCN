@@ -45,6 +45,7 @@ def train_model(model,datasets,cfg,distributed,optimizer):
     script_name = os.path.basename(__file__).split('.')[0]
     script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n, cfg.data.train.dct_used)
     err_best = float("inf")
+    is_best_ret_log = None
 
     for epoch in range(start_epoch, cfg.total_epochs):
         pass
@@ -112,6 +113,13 @@ def train_model(model,datasets,cfg,distributed,optimizer):
                         file_name=file_name)
         for key in test_best.keys():
             logger.info("{}:{:.4f}".format(key,test_best[key]))
+
+        if is_best:
+            is_best_ret_log = ret_log.copy()
+    #best ret_log information to save
+    df = pd.DataFrame(np.expand_dims(is_best_ret_log, axis=0))
+    with open(cfg.checkpoints + '/' + script_name + '.csv', 'a') as f:
+        df.to_csv(f, header=False, index=False)
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15):
     t_l = utils.AccumLoss()
 
@@ -129,9 +137,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             all_seq = Variable(all_seq.cuda(async=True)).float()
 
         outputs = model(inputs)
-
         # calculate loss and backward
-        loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        _,loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
         optimizer.zero_grad()
         loss.backward()
         if max_norm:

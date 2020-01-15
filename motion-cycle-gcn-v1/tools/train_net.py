@@ -14,8 +14,6 @@ import engineer.utils.misc as misc
 from engineer.datasets.builder import build_dataset
 from engineer.core.train import train_model
 import os
-import torch.optim
-from opt import Options
 
 logger = logging.get_logger(__name__)
 
@@ -56,7 +54,7 @@ def set_random_seed(seed):
     torch.cuda.manual_seed_all(seed)
 
 
-def main(opt):
+def main():
     args = parse_args()
 
     cfg = Config.fromfile(args.config)
@@ -127,5 +125,4 @@ def main(opt):
 
 
 if __name__ == '__main__':
-    option = Options().parse()
-    main(option)
+    main()
