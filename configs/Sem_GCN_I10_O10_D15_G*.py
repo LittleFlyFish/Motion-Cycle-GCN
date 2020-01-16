@@ -21,7 +21,7 @@ val_pipeline = [
     dict(type='SampleFrames', direction=False),
 ]
 dataset_type = 'Hm36Dataset_3d'
-data_root = '/home/soe/Projects/MP_GCN/h3.6m/dataset'
+data_root = './dataset/h3.6m/dataset'
 data = dict(
     videos_per_gpu=2,
     workers_per_gpu=0,
