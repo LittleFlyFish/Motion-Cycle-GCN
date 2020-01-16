@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/configs/Inverse_P_GCN_I10_O10_D5.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Inverse_P_GCN_I10_O10_D5.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_G*.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_G*.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_G.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_G.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_GG*.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_GG*.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I25_O25_D15_G*.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I25_O25_D15_G*.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I25_O25_D15_G.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I25_O25_D15_G.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I25_O25_D15_GG*.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I25_O25_D15_GG*.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/PCycle_GCN_I10_O10_D5.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/PCycle_GCN_I10_O10_D5.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/P_GCN_I10_O10_D5.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/P_GCN_I10_O10_D5.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Sem_GCN_I10_O10_D15_G*.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Sem_GCN_I10_O10_D15_G*.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Sem_GCN_I10_O10_D15_G.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Sem_GCN_I10_O10_D15_G.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1WUVDT0hGdOS3wYycuefQqhLKeK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="" />
+      <created>1579204040348</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1579204040348</updated>
+    </task>
+    <task id="LOCAL-00001" summary="&quot;H3.6M dataset to be specific to 3D version&quot;">
+      <created>1579204381298</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1579204381298</updated>
+    </task>
+    <task id="LOCAL-00002" summary="&quot;H3.6M dataset to be specific to 3D version&quot;">
+      <created>1579204429387</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1579204429387</updated>
+    </task>
+    <task id="LOCAL-00003" summary="&quot;H3.6M dataset to be specific to 3D version&quot;">
+      <created>1579207375892</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1579207375892</updated>
+    </task>
+    <task id="LOCAL-00004" summary="&quot;H3.6M dataset to be specific to 3D version&quot;">
+      <created>1579208370849</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1579208370849</updated>
+    </task>
+    <task id="LOCAL-00005" summary="&quot;H3.6M dataset to be specific to 3D version&quot;">
+      <created>1579208559921</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1579208559921</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="&quot;H3.6M dataset to be specific to 3D version&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;H3.6M dataset to be specific to 3D version&quot;" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579208831969">
+      <screen x="65" y="24" width="1855" height="1176" />
+    </state>
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579208831969" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579208839423">
+      <screen x="65" y="24" width="1855" height="1176" />
+    </state>
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579208839423" />
+  </component>
+</project>
