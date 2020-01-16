@@ -153,9 +153,48 @@ def mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used):
 
     mean_3d_err = torch.mean(torch.norm(pred_3d - targ_3d, 2, 1))
 
-    return outputs_p3d,mean_3d_err
+    return outputs_p3d, mean_3d_err
 
-
+# def P_mpjpe_error_p3d(P_inputs, P_outputs, all_seq, dct_n, dim_used):
+#     """
+#
+#     :param P_inputs:input_n*66*dct_n
+#     :param P_outputs:output_n*66*dct_n
+#     :param all_seq:
+#     :param dct_n:
+#     :param dim_used:
+#     :return:
+#     """
+#     n, seq_len, dim_full_len = all_seq.data.shape
+#     input_n = P_inputs.shape[1]
+#     output_n = P_outputs.shape[1]
+#     dim_used = np.array(dim_used)
+#     dim_used_len = len(dim_used)
+#
+#     # inputs seqs
+#     _, idct_m_input = data_utils.get_dct_matrix(input_n)
+#     idct_m_input = Variable(torch.from_numpy(idct_m_input)).float().cuda()
+#     P_inputs_t = P_inputs.view(-1, dct_n).transpose(0, 1)
+#     P_inputs_p3d = torch.matmul(idct_m_input[:, 0:dct_n], P_inputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
+#                                                                                                 seq_len).transpose(1,2)
+#     # outputs seqs
+#     _, idct_m_output = data_utils.get_dct_matrix(output_n)
+#     idct_m_output = Variable(torch.from_numpy(idct_m_output)).float().cuda()
+#     P_outputs_t = P_outputs.view(-1, dct_n).transpose(0, 1)
+#     P_outputs_p3d = torch.matmul(idct_m_output[:, 0:dct_n], P_outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
+#                                                                                                         seq_len).transpose(1, 2)
+#
+#
+#     # the output seq
+#     pred_input_3d = P_inputs_p3d.contiguous().view(-1, dim_used_len).view(-1, 3)
+#     pred_output_3d = P_outputs_p3d.contiguous().view(-1, dim_used_len).view(-1, 3)
+#
+#     pred_3d = torch.cat((pred_input_3d, pred_output_3d), dim=1)
+#     targ_3d = all_seq[:, :, dim_used].contiguous().view(-1, dim_used_len).view(-1, 3)
+#
+#     mean_3d_err = torch.mean(torch.norm(pred_3d - targ_3d, 2, 1))
+#
+#     return mean_3d_err
 
 
 def mpjpe_error_3dpw(outputs, all_seq, dct_n, dim_used):

@@ -134,8 +134,8 @@ def get_reverse_input(g_out_3d,input_n,output_n,dct_used,dim_used):
 
 
     input_dct_seq = torch.matmul(dct_m_in[0:dct_used, :], all_seqs)
-
     input_dct_seq = input_dct_seq.transpose(1,2)
+
 
 
     return input_dct_seq
