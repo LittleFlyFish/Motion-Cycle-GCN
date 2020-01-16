@@ -156,7 +156,7 @@ def get_left_input(all_seq, input_n, output_n, dct_n,dim_used, leftdim=[], right
 
 
 
-    return input_left, input_seq_dct, output_left, output_seq_dct
+    return input_left, input_right, input_seq_dct, output_left, output_right, output_seq_dct
 
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15,input_n=10,output_n=10, rightdim=[], leftdim=[]):
     t_l = utils.AccumLoss()
@@ -177,24 +177,47 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # get the left half input of seq.
 
         # the model interfer the right side from the left side
-        (input_left, input_seq_dct, output_left, output_seq_dct) = \
+        (input_left, input_right, input_seq_dct, output_left, output_right, output_seq_dct) = \
             get_left_input(all_seq, input_n, output_n, dct_n=dct_n, dim_used=dim_used, leftdim=leftdim, rightdim=rightdim)
 
-        # P_GCN calculate
-        P_1_out = model(input_left)
-        P_2_out = model(output_left)
+        # P*P(left) = left calculate
+        P_I_right = model.p(input_left)
+        P_O_right = model.p(output_left)
+        
+        PvP_I_left = model.p_verse(P_I_right)
+        PvP_O_left = model.p_verse(P_O_right)
 
-        P_inputs = input_seq_dct
-        P_inputs[:, rightdim, :] = P_1_out
-        P_outputs = output_seq_dct
-        P_outputs[:, rightdim, :] = P_2_out
+        PvP_inputs = input_seq_dct
+        PvP_inputs[:, leftdim, :] = PvP_I_left
+        PvP_outputs = output_seq_dct
+        PvP_outputs[:, leftdim, :] = PvP_O_left
 
-        # calculate loss and backward
+        # calculate the left loss and backward
 
-        _, loss1 = loss_funcs.mpjpe_error_p3d(P_inputs, all_seq[:,0:input_n,:], dct_n, dim_used)
-        _, loss2 = loss_funcs.mpjpe_error_p3d(P_outputs, all_seq[:, input_n:(input_n+output_n), :], dct_n, dim_used)
+        _, loss1 = loss_funcs.mpjpe_error_p3d(PvP_inputs, all_seq[:, 0:input_n, :], dct_n, dim_used)
+        _, loss2 = loss_funcs.mpjpe_error_p3d(PvP_outputs, all_seq[:, input_n:(input_n+output_n), :], dct_n, dim_used)
+        loss_left = loss1 + loss2
+        
+        # PP*(right) = right calculate
+        Pv_I_left = model.p_verse(input_right)
+        Pv_O_left = model.p_verse(output_right)
 
-        loss = loss1 + loss2
+        PPv_I_right = model.p(Pv_I_left)
+        PPv_O_right = model.p(Pv_O_left)
+
+        PPv_inputs = input_seq_dct
+        PPv_inputs[:, rightdim, :] = PPv_I_right
+        PPv_outputs = output_seq_dct
+        PPv_outputs[:, rightdim, :] = PPv_O_right
+
+        # calculate right loss and backward
+
+        _, lossa = loss_funcs.mpjpe_error_p3d(PPv_inputs, all_seq[:, 0:input_n, :], dct_n, dim_used)
+        _, lossb = loss_funcs.mpjpe_error_p3d(PPv_outputs, all_seq[:, input_n:(input_n + output_n), :], dct_n, dim_used)
+        loss_right = lossa + lossb
+        
+        loss = loss_left + loss_right
+        
 
 
         optimizer.zero_grad()
@@ -232,26 +255,51 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(async=True)).float()
 
-        (input_left, input_seq_dct, output_left, output_seq_dct) = \
-            get_left_input(all_seq, input_n, output_n, dct_n, dim_used, leftdim=leftdim, rightdim=rightdim)
+        # the model interfer the right side from the left side
+        (input_left, input_right, input_seq_dct, output_left, output_right, output_seq_dct) = \
+            get_left_input(all_seq, input_n, output_n, dct_n=dct_n, dim_used=dim_used, leftdim=leftdim,
+                           rightdim=rightdim)
+
+        # P*P(left) = left calculate
+        P_I_right = model.p(input_left)
+        P_O_right = model.p(output_left)
+
+        PvP_I_left = model.p_verse(P_I_right)
+        PvP_O_left = model.p_verse(P_O_right)
+
+        PvP_inputs = input_seq_dct
+        PvP_inputs[:, leftdim, :] = PvP_I_left
+        PvP_outputs = output_seq_dct
+        PvP_outputs[:, leftdim, :] = PvP_O_left
+
+        # calculate the left loss and backward
+
+        _, loss1 = loss_funcs.mpjpe_error_p3d(PvP_inputs, all_seq[:, 0:input_n, :], dct_n, dim_used)
+        _, loss2 = loss_funcs.mpjpe_error_p3d(PvP_outputs, all_seq[:, input_n:(input_n + output_n), :], dct_n, dim_used)
+        loss_left = loss1 + loss2
+
+        # PP*(right) = right calculate
+        Pv_I_left = model.p_verse(input_right)
+        Pv_O_left = model.p_verse(output_right)
+
+        PPv_I_right = model.p(Pv_I_left)
+        PPv_O_right = model.p(Pv_O_left)
+
+        PPv_inputs = input_seq_dct
+        PPv_inputs[:, rightdim, :] = PPv_I_right
+        PPv_outputs = output_seq_dct
+        PPv_outputs[:, rightdim, :] = PPv_O_right
+
+        # calculate right loss and backward
+
+        _, lossa = loss_funcs.mpjpe_error_p3d(PPv_inputs, all_seq[:, 0:input_n, :], dct_n, dim_used)
+        _, lossb = loss_funcs.mpjpe_error_p3d(PPv_outputs, all_seq[:, input_n:(input_n + output_n), :], dct_n, dim_used)
+        loss_right = lossa + lossb
+
+        loss = loss_left + loss_right
 
 
-        # P_GCN calculate
-        P_1_out = model(input_left)
-        P_2_out = model(output_left)
-
-        P_inputs = input_seq_dct
-        P_inputs[:, rightdim, :] = P_1_out
-        P_outputs = output_seq_dct
-        P_outputs[:, rightdim, :] = P_2_out
-
-        n, seq_len, dim_full_len = all_seq.data.shape
-        dim_used_len = len(dim_used)
-
-        P1_p3d, loss1 = loss_funcs.mpjpe_error_p3d(P_inputs, all_seq[:,0:input_n,:], dct_n, dim_used)
-        P2_p3d, loss2 = loss_funcs.mpjpe_error_p3d(P_outputs, all_seq[:, input_n:(input_n+output_n), :], dct_n, dim_used)
-
-        t_l += loss1 + loss2
+        t_l += loss
 
         N += n
 
@@ -275,28 +323,52 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15, rightdim=[], 
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(async=True)).float()
 
-        (input_left, input_seq_dct, output_left, output_seq_dct) = \
-            get_left_input(all_seq, input_n, output_n, dct_n, dim_used, leftdim=leftdim, rightdim=rightdim)
+        # the model interfer the right side from the left side
+        (input_left, input_right, input_seq_dct, output_left, output_right, output_seq_dct) = \
+            get_left_input(all_seq, input_n, output_n, dct_n=dct_n, dim_used=dim_used, leftdim=leftdim,
+                           rightdim=rightdim)
 
+        # P*P(left) = left calculate
+        P_I_right = model.p(input_left)
+        P_O_right = model.p(output_left)
 
-        # P_GCN calculate
-        P_1_out = model(input_left)
-        P_2_out = model(output_left)
+        PvP_I_left = model.p_verse(P_I_right)
+        PvP_O_left = model.p_verse(P_O_right)
 
-        P_inputs = input_seq_dct
-        P_inputs[:, rightdim, :] = P_1_out
-        P_outputs = output_seq_dct
-        P_outputs[:, rightdim, :] = P_2_out
+        PvP_inputs = input_seq_dct
+        PvP_inputs[:, leftdim, :] = PvP_I_left
+        PvP_outputs = output_seq_dct
+        PvP_outputs[:, leftdim, :] = PvP_O_left
 
-        n, seq_len, dim_full_len = all_seq.data.shape
-        dim_used_len = len(dim_used)
+        # calculate the left loss and backward
 
-        P1_p3d, loss1 = loss_funcs.mpjpe_error_p3d(P_inputs, all_seq[:, 0:input_n, :], dct_n, dim_used)
-        P2_p3d, loss2 = loss_funcs.mpjpe_error_p3d(P_outputs, all_seq[:, input_n:(input_n+output_n), :], dct_n, dim_used)
+        _, loss1 = loss_funcs.mpjpe_error_p3d(PvP_inputs, all_seq[:, 0:input_n, :], dct_n, dim_used)
+        _, loss2 = loss_funcs.mpjpe_error_p3d(PvP_outputs, all_seq[:, input_n:(input_n + output_n), :], dct_n, dim_used)
+        loss_left = loss1 + loss2
+
+        # PP*(right) = right calculate
+        Pv_I_left = model.p_verse(input_right)
+        Pv_O_left = model.p_verse(output_right)
+
+        PPv_I_right = model.p(Pv_I_left)
+        PPv_O_right = model.p(Pv_O_left)
+
+        PPv_inputs = input_seq_dct
+        PPv_inputs[:, rightdim, :] = PPv_I_right
+        PPv_outputs = output_seq_dct
+        PPv_outputs[:, rightdim, :] = PPv_O_right
+
+        # calculate right loss and backward
+
+        _, lossa = loss_funcs.mpjpe_error_p3d(PPv_inputs, all_seq[:, 0:input_n, :], dct_n, dim_used)
+        _, lossb = loss_funcs.mpjpe_error_p3d(PPv_outputs, all_seq[:, input_n:(input_n + output_n), :], dct_n, dim_used)
+        loss_right = lossa + lossb
+
+        loss = loss_left + loss_right
 
         n, _, _ = all_seq.data.shape
 
-        m_err = loss1 + loss2
+        m_err = loss
 
         # update the training loss
         t_3d.update(m_err.item() * n, n)
