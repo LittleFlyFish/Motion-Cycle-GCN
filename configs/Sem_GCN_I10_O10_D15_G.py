@@ -22,7 +22,7 @@ model = dict(
     p_dropout=0.5
 )
 dataset_type = 'Hm36Dataset_3d'
-data_root = './dataset/h3.6m/dataset'
+data_root = './datasets/h3.6m/dataset'
 data = dict(
     videos_per_gpu=2,
     workers_per_gpu=0,

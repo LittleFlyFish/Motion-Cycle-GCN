@@ -21,7 +21,7 @@ model = dict(
     P_verse_meta =  "./checkpoints/Inverse_P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_best.pth.tar"
 )
 dataset_type = 'Hm36Dataset_3d'
-data_root = './dataset/h3.6m/dataset'
+data_root = './datasets/h3.6m/dataset'
 left = [0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16] # 22 joints in the order, left is the input of P
 right = [4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21] # right is the output of P
 
