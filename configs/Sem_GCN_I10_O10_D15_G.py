@@ -21,8 +21,8 @@ model = dict(
     nodes_group=None,
     p_dropout=0.5
 )
-dataset_type = 'Hm36Dataset'
-data_root = '/home/soe/Projects/h3.6m/dataset'
+dataset_type = 'Hm36Dataset_3d'
+data_root = '/home/soe/Projects/MP_GCN/h3.6m/dataset'
 data = dict(
     videos_per_gpu=2,
     workers_per_gpu=0,

@@ -7,8 +7,8 @@ model = dict(
     num_stage=12,
     node_n=39
 )
-dataset_type = 'Hm36Dataset'
-data_root = '/home/soe/Projects/h3.6m/dataset'
+dataset_type = 'Hm36Dataset_3d'
+data_root = '/home/soe/Projects/MP_GCN/h3.6m/dataset'
 left = [0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16] # 22 joints in the order, left is the input of P
 right = [4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21] # right is the output of P
 train_pipeline = [

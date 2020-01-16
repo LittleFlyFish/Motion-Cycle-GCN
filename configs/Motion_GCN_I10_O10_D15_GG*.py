@@ -20,8 +20,8 @@ model = dict(
     G_meta="./checkpoints/Motion_GCN_I10_O10_D15_G/ckpt_train_3D_in10_out10_dct_n_15_best.pth.tar",
     G_verse_meta =  "./checkpoints/Motion_GCN_I10_O10_D15_G*/ckpt_train_3D_in10_out10_dct_n_15_best.pth.tar"
 )
-dataset_type = 'Hm36Dataset'
-data_root = '/home/soe/Projects/h3.6m/dataset'
+dataset_type = 'Hm36Dataset_3d'
+data_root = '/home/soe/Projects/MP_GCN/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
