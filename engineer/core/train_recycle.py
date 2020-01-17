@@ -24,6 +24,14 @@ def build_dataloader(dataset,num_worker,batch_size):
         pin_memory=True)
 
 def train_model(model,datasets,cfg,distributed,optimizer):
+    # define the leftdim and rightdim
+    left = np.array(cfg.left)
+    leftdim = np.concatenate((left * 3, left * 3 + 1, left * 3 + 2))
+    right = np.array(cfg.right)
+    rightdim = np.concatenate((right * 3, right * 3 + 1, right * 3 + 2))
+    p_dct = cfg.p_dct
+
+
     train_dataset,val_dataset,test_datasets = datasets
     train_loader = build_dataloader(train_dataset,cfg.dataloader.num_worker,cfg.dataloader.batch_size.train)
     val_loader = build_dataloader(val_dataset,cfg.dataloader.num_worker,cfg.dataloader.batch_size.test)
@@ -59,12 +67,14 @@ def train_model(model,datasets,cfg,distributed,optimizer):
         head = np.array(['epoch'])
         # training on per epoch
         lr_now, t_l = train(train_loader, model, optimizer, lr_now=lr_now, max_norm=cfg.max_norm, is_cuda=is_cuda,
-                            dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used,input_n=cfg.data.train.input_n,output_n=cfg.data.train.output_n)
+                            dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used, p_dct = p_dct,
+                            input_n=cfg.data.train.input_n,output_n=cfg.data.train.output_n,rightdim=[], leftdim=[])
         ret_log = np.append(ret_log, [lr_now, t_l])
         head = np.append(head, ['lr', 't_l'])
 
         #val evaluation
-        v_3d = val(val_loader, model, is_cuda=is_cuda, dim_used=train_dataset.dim_used, dct_n=cfg.data.val.dct_used)
+        v_3d = val(val_loader, model, is_cuda=is_cuda, dim_used=train_dataset.dim_used,
+                   dct_n=cfg.data.val.dct_used, rightdim=[], leftdim=[])
         ret_log = np.append(ret_log, [v_3d])
         head = np.append(head, ['v_3d'])
 
@@ -77,7 +87,7 @@ def train_model(model,datasets,cfg,distributed,optimizer):
         test_3d_head = np.array([])
         for act in acts:
             test_l, test_3d = test(test_loaders[act], model, input_n=cfg.data.test.input_n, output_n=cfg.data.test.output_n, is_cuda=is_cuda,
-                                   dim_used=train_dataset.dim_used, dct_n=cfg.data.test.dct_used)
+                                   dim_used=train_dataset.dim_used, dct_n=cfg.data.test.dct_used, rightdim=[], leftdim=[])
             # ret_log = np.append(ret_log, test_l)
             ret_log = np.append(ret_log, test_3d)
             test_best[act] = min(test_best[act],test_3d[0])
@@ -134,7 +144,57 @@ def get_reverse_input(g_out_3d,input_n,output_n,dct_used,dim_used):
 
     return input_dct_seq
 
-def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15,input_n=10,output_n=10):
+def get_left_input(all_seq, input_n, output_n, dct_n,dim_used, leftdim=[], rightdim=[]):
+
+    all_seq = all_seq[:, :, dim_used] # [batch, framenumber, dim]
+    # get input seqs dct
+    dct_m_in, _ = data_utils.get_dct_matrix(input_n)
+    input_seqs = all_seq[:, 0:input_n, :]
+    input_seq_dct = data_utils.seq2dct(input_seqs, dct_n)
+
+    # get output seqs dct
+    dct_m_out, _ = data_utils.get_dct_matrix(output_n)
+    output_seqs = all_seq[:, input_n:(input_n+output_n), :]
+    output_seq_dct = data_utils.seq2dct(output_seqs, dct_n)
+
+    # get left and right data for P module
+    input_left = input_seq_dct[:, leftdim, :] # batch * leftdim * dct_n
+    output_left = output_seq_dct[:, leftdim, :]
+    input_right = input_seq_dct[:, rightdim, :]
+    output_right = output_seq_dct[:, rightdim, :]
+
+    return input_left, input_right, input_seq_dct, output_left, output_right, output_seq_dct
+
+def Short2Long(P_Input, input_n, output_n, dct_n):
+    # this function turns back dct of short Input(1..10) to dct of padding long seq 1..10,10,10,..10
+    Short_seq = data_utils.dct2seq(P_Input, input_n)
+    idx = np.append(np.arange(0, input_n), np.repeat([input_n - 1], output_n))
+    Long_seq = Short_seq[:, idx, :]
+    Long_dct = data_utils.seq2dct(Long_seq, dct_n)
+    return Long_dct
+
+def Long2Short(G_Output, input_n, output_n, dct_n, dim=[]):
+    # this function turns back dct of 1 .. 20 to the dct of right side of 10..20
+    Long_seq = data_utils.dct2seq(G_Output, input_n+output_n)
+    Short_seq = Long_seq[:, input_n:(input_n+output_n), :]
+    Short_dct = data_utils.seq2dct(Short_seq, dct_n)
+    Pv_O_right = Short_dct[:, dim, :]
+    return Pv_O_right
+
+def VShort2Long(Pv_Output, input_n, output_n, dct_n):
+    # change 10..20 of P* to 20 ..10..10..10 input feed in G*
+    Vshort_seq = data_utils.dct2seq(Pv_Output, output_n)
+    Vshort_seq = torch.flip(Vshort_seq, dims=1) # 20 ...10
+    idx = np.append(np.arange(0, output_n), np.repeat([output_n - 1], input_n))
+    Long_seq = Vshort_seq[:, idx, :] # 20 ...10, 10, ..10
+    dct_Long = data_utils.seq2dct(Long_seq, dct_n)
+    return dct_Long
+    
+
+
+
+def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[],
+          dct_n=15, p_dct = 5, input_n=10, output_n=10, rightdim=[], leftdim=[]):
     t_l = utils.AccumLoss()
 
     model.train()
@@ -150,15 +210,48 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(async=True)).float()
 
-        outputs = model.g(inputs)
+
+        # Recycle 1: G*P*GP(left) = left
+        # the model infer the right side from the left side
+        (input_left, input_right, input_seq_dct, output_left, output_right, output_seq_dct) = \
+            get_left_input(all_seq, input_n, output_n, dct_n=p_dct, dim_used=dim_used, leftdim=leftdim,rightdim=rightdim)
+        P_I_right = model.p(input_left) # input_left = [batch, leftnode, dct_n]
+        P_Input = input_seq_dct
+        P_Input[:, rightdim, :] = P_I_right # generate the input for G, the dct of 1..10(input) frame
+        G_Input = Short2Long(P_Input, input_n, output_n, dct_n) # generate the dct of 1...20(input+padding) frame
+        G_Output = model.g(G_Input) # generate the dct of 1..20 (input+output)
+        Pv_O_right = Long2Short(G_Output, input_n, output_n, p_dct, rightdim) # generate the dct of 10..20
+        Pv_O_left = model.p_verse(Pv_O_right)
+        Pv_Output = output_seq_dct
+        Pv_Output[:, leftdim, :] = Pv_O_left # generate the inputs for G*
+        Gv_Input= VShort2Long(Pv_Output, input_n, output_n, dct_n) # generate the dct of 20 ..1 (output + padding)
+        Gv_Output = model.g_verse(Gv_Input) # the predict dct of 20..1
+        loss1R = loss_funcs.R_mpjpe_error_p3d(Gv_Output, all_seq, input_n, dct_n, dim_used, rightdim)
+            # this loss only calculate the 10..1 left side error
+        
+        # Recycle 2: GPG*P*(right) = right
+        # the model infer the left side from the right side of output
+        Pv_O_left = model.p_verse(output_right)
+        Pv_Out = output_seq_dct
+        Pv_Out[:, leftdim, :] = Pv_O_left
+        Gv_In = VShort2Long(Pv_Out, input_n, output_n, dct_n)
+        Gv_Out = model.g_verse(Gv_In)
+        P_In = Long2Short(Gv_Out, input_n, output_n, p_dct, leftdim) # obtain left dct feature for P
+        P_Out = model.p(P_In)
+        G_In = Short2Long(P_Out, input_n, output_n, dct_n)
+        G_Out = model.g(G_In)
+        loss2L = loss_funcs.R_mpjpe_error_p3d(G_Out, torch.flip(all_seq, dims=1), output_n, dct_n, dim_used, leftdim)
+        
+
+        # Cycle Constrains: GG* = I, G*G = I
+
+
 
         # calculate loss and backward
-        g_out_3d,loss1 = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        loss = loss1R+loss2L
 
-        g_reverse_input = get_reverse_input(g_out_3d,input_n,output_n,dct_n,dim_used)
-        verse_out = model.g_verse(g_reverse_input)
-        _,loss2 = loss_funcs.mpjpe_error_p3d(verse_out, torch.flip(all_seq,dims=[1]), dct_n, dim_used)
-        loss = loss1+loss2
+
+
 
         optimizer.zero_grad()
         loss.backward()
@@ -176,7 +269,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
     return lr_now, t_l.avg
 #
 #
-def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15):
+def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15, rightdim=[], leftdim=[]):
     N = 0
     t_l = 0
     if output_n == 25:
@@ -235,7 +328,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
     return t_l / N, t_3d / N
 #
 #
-def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
+def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15,rightdim=[], leftdim=[]):
     t_3d = utils.AccumLoss()
 
     model.eval()

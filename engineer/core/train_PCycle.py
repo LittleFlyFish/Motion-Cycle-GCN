@@ -129,32 +129,24 @@ def train_model(model,datasets,cfg,distributed,optimizer):
     with open(cfg.checkpoints + '/' + script_name + '.csv', 'a') as f:
         df.to_csv(f, header=False, index=False)
 
-def get_left_input(all_seq, input_n, output_n, dct_n,dim_used, leftdim=[], rightdim=[]):
 
-    all_seq = all_seq[:, :, dim_used] # [batch, framenumber, dim]
+def get_left_input(all_seq, input_n, output_n, dct_n, dim_used, leftdim=[], rightdim=[]):
+    all_seq = all_seq[:, :, dim_used]  # [batch, framenumber, dim]
     # get input seqs dct
     dct_m_in, _ = data_utils.get_dct_matrix(input_n)
     input_seqs = all_seq[:, 0:input_n, :]
-    dct_m_in = Variable(torch.from_numpy(dct_m_in)).float().cuda()
-    input_seq_dct = torch.matmul(dct_m_in[0:dct_n, :], input_seqs)
-    input_seq_dct = input_seq_dct.transpose(0,1).reshape([-1, len(dim_used), dct_n])
+    input_seq_dct = data_utils.seq2dct(input_seqs, dct_n)
 
     # get output seqs dct
     dct_m_out, _ = data_utils.get_dct_matrix(output_n)
-    output_seqs = all_seq[:, input_n:(input_n+output_n), :]
-    dct_m_out = Variable(torch.from_numpy(dct_m_out)).float().cuda()
-    output_seq_dct = torch.matmul(dct_m_out[0:dct_n, :], output_seqs)
-
-    output_seq_dct = output_seq_dct.transpose(0,1).reshape([-1, len(dim_used), dct_n])
+    output_seqs = all_seq[:, input_n:(input_n + output_n), :]
+    output_seq_dct = data_utils.seq2dct(output_seqs, dct_n)
 
     # get left and right data for P module
-    input_left = input_seq_dct[:, leftdim, :] # batch * leftdim * dct_n
+    input_left = input_seq_dct[:, leftdim, :]  # batch * leftdim * dct_n
     output_left = output_seq_dct[:, leftdim, :]
     input_right = input_seq_dct[:, rightdim, :]
     output_right = output_seq_dct[:, rightdim, :]
-
-
-
 
     return input_left, input_right, input_seq_dct, output_left, output_right, output_seq_dct
 

@@ -8,6 +8,25 @@ import os
 from engineer.utils import forward_kinematics
 
 
+def dct2seq(dct_feature, frame_n):
+    batch, dim, dct_n = dct_feature.shape
+    _, idct_m = get_dct_matrix(frame_n)
+    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
+    outputs_t = dct_feature.view(-1, dct_n).transpose(0, 1)
+    outputs_p3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous(). \
+        view(-1, dim, frame_n).transpose(1, 2)
+    return outputs_p3d
+
+
+def seq2dct(seqs, dct_n):
+    batch, frame_n, dim = seqs.shape
+
+    dct_m_in, _ = get_dct_matrix(frame_n)
+    dct_m_in = Variable(torch.from_numpy(dct_m_in)).float().cuda()
+    input_dct_seq = torch.matmul(dct_m_in[0:dct_n, :], seqs)
+    input_dct_seq = input_dct_seq.transpose(1, 2)
+    return input_dct_seq
+
 def rotmat2euler(R):
     """
     Converts a rotation matrix to Euler angles
