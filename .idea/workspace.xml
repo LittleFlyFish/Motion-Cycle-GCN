@@ -131,17 +131,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="&quot;H3.6M dataset to be specific to 3D version&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;H3.6M dataset to be specific to 3D version&quot;" />
+    <MESSAGE value="&quot;Visdom add to see the training process&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;Visdom add to see the training process&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1579271917043">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579271917043" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579224307621">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579302112302">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579224307621" />
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579302112302" />
     <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579224323717">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
