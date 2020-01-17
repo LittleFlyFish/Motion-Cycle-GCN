@@ -11,9 +11,12 @@ import numpy as np
 from progress.bar import Bar
 import pandas as pd
 import os
-
 from engineer.utils import loss_funcs
 from engineer.utils import  data_utils as data_utils
+
+
+plotter = data_utils.VisdomLinePlotter(env_name='Tutorial Plots')
+
 
 def build_dataloader(dataset,num_worker,batch_size):
     return DataLoader(
@@ -154,8 +157,6 @@ def get_left_input(all_seq, input_n, output_n, dct_n,dim_used, leftdim=[], right
     output_right = output_seq_dct[:, rightdim, :]
 
 
-
-
     return input_left, input_seq_dct, output_left, output_seq_dct
 
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15,input_n=10,output_n=10, rightdim=[], leftdim=[]):
@@ -195,6 +196,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         _, loss2 = loss_funcs.mpjpe_error_p3d(P_outputs, all_seq[:, input_n:(input_n+output_n), :], dct_n, dim_used)
 
         loss = loss1 + loss2
+        plotter.plot('loss', 'train', 'Class Loss', i, loss.item())
 
 
         optimizer.zero_grad()
@@ -202,6 +204,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         if max_norm:
             nn.utils.clip_grad_norm(model.parameters(), max_norm=1)
         optimizer.step()
+        t_l.update(loss.item()*batch_size, batch_size)
 
         # update the training loss
         t_l.update(loss.item()*batch_size, batch_size)
@@ -215,13 +218,9 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 #
 def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15, rightdim=[], leftdim=[]):
     N = 0
-    t_l = 0
-    if output_n == 25:
-        eval_frame = [1, 3, 7, 9, 13, 24]
-    elif output_n == 10:
-        eval_frame = [1, 3, 7, 9]
-    t_3d = np.zeros(len(eval_frame))
-
+    t_l =0
+    t_3d =0
+    test_loss = 0
     model.eval()
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
@@ -251,25 +250,8 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         P1_p3d, loss1 = loss_funcs.mpjpe_error_p3d(P_inputs, all_seq[:,0:input_n,:], dct_n, dim_used)
         P2_p3d, loss2 = loss_funcs.mpjpe_error_p3d(P_outputs, all_seq[:, input_n:(input_n+output_n), :], dct_n, dim_used)
 
-        t_l += loss1 + loss2
-
-        # # joints at same loc
-        # joint_to_ignore = np.array([16, 20, 23, 24, 28, 31])
-        # index_to_ignore = np.concatenate((joint_to_ignore * 3, joint_to_ignore * 3 + 1, joint_to_ignore * 3 + 2))
-        # joint_equal = np.array([13, 19, 22, 13, 27, 30])
-        # index_to_equal = np.concatenate((joint_equal * 3, joint_equal * 3 + 1, joint_equal * 3 + 2))
-        #
-        # pred_3d = all_seq.clone()
-        # pred_3d[:, :, dim_used] = torch.cat((P1_p3d, P2_p3d), dim=1)
-        # pred_3d[:, :, index_to_ignore] = pred_3d[:, :, index_to_equal]
-        # pred_p3d = pred_3d.contiguous().view(n, seq_len, -1, 3)[:, input_n:, :, :]
-        # targ_p3d = all_seq.contiguous().view(n, seq_len, -1, 3)[:, input_n:, :, :]
-        #
-        # for k in np.arange(0, len(eval_frame)):
-        #     j = eval_frame[k]
-        #     t_3d[k] += torch.mean(torch.norm(
-        #         targ_p3d[:, j, :, :].contiguous().view(-1, 3) - pred_p3d[:, j, :, :].contiguous().view(-1, 3), 2,
-        #         1)).item() * n
+        test_loss = loss1.item() + loss2.item()
+        t_l += test_loss
 
         N += n
 
@@ -277,7 +259,8 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
                                                                          time.time() - st)
         bar.next()
     bar.finish()
-    return t_l / N, t_3d / N
+    plotter.plot('loss', 'test', 'Class Loss', i, t_l/N)
+    return t_l/ N, t_l/N
 #
 #
 def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15, rightdim=[], leftdim=[], input_n=10, output_n=10):
@@ -315,6 +298,7 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15, rightdim=[], 
         n, _, _ = all_seq.data.shape
 
         m_err = loss1 + loss2
+        val_loss = loss1.item() + loss2.item()
 
         # update the training loss
         t_3d.update(m_err.item() * n, n)
@@ -323,4 +307,5 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15, rightdim=[], 
                                                                          time.time() - st)
         bar.next()
     bar.finish()
+    plotter.plot('loss', 'val', 'Class Loss', i, t_3d.avg)
     return t_3d.avg

@@ -247,6 +247,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(async=True)).float()
 
+        n, seq_len, dim_full_len = all_seq.data.shape
         # the model interfer the right side from the left side
         (input_left, input_right, input_seq_dct, output_left, output_right, output_seq_dct) = \
             get_left_input(all_seq, input_n, output_n, dct_n=dct_n, dim_used=dim_used, leftdim=leftdim,

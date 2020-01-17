@@ -15,6 +15,8 @@ import os
 from engineer.utils import loss_funcs
 from engineer.utils import  data_utils as data_utils
 
+
+
 def build_dataloader(dataset,num_worker,batch_size):
     return DataLoader(
         dataset=dataset,
@@ -146,7 +148,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         optimizer.step()
 
         # update the training loss
-        t_l.update(loss.item()*batch_size, batch_size)
+        writer.add_scalar('Train/Loss', loss, i)
 
         bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i+1, len(train_loader), time.time() - bt,
                                                                          time.time() - st)
@@ -231,7 +233,10 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
 
         n, _, _ = all_seq.data.shape
 
+        print(outputs.shape)
         m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        print(m_err)
+        print(m_err.shape)
 
         # update the training loss
         t_3d.update(m_err.item() * n, n)
