@@ -7,10 +7,6 @@
       <change beforePath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/train_P_3D_in10_out10_dct_n_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/train_P_3D_in10_out10_dct_n_5.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/core/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_P.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_P.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_PCycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_PCycle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_cycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_cycle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_recycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_recycle.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579302148915</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="&quot;Visdom add to see the training process&quot;">
+      <created>1579365056176</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1579365056176</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -152,13 +155,13 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579271917043" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579302148812">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579365055692">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579302148812" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579302158026">
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579365055692" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579365065433">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579302158026" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579365065433" />
   </component>
 </project>
