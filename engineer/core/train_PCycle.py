@@ -15,6 +15,8 @@ import os
 from engineer.utils import loss_funcs
 from engineer.utils import  data_utils as data_utils
 
+plotter = data_utils.VisdomLinePlotter(env_name='PCycle Plots')
+
 def build_dataloader(dataset,num_worker,batch_size):
     return DataLoader(
         dataset=dataset,
@@ -75,10 +77,6 @@ def train_model(model,datasets,cfg,distributed,optimizer):
                    dct_n=cfg.data.val.dct_used, rightdim=rightdim, leftdim=leftdim, input_n=cfg.data.train.input_n,output_n=cfg.data.train.output_n)
         ret_log = np.append(ret_log, [v_3d])
         head = np.append(head, ['v_3d'])
-
-
-
-
 
         #test_results
         test_3d_temp = np.array([])
@@ -209,8 +207,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         loss_right = lossa + lossb
         
         loss = loss_left + loss_right
-        
 
+        plotter.plot('loss', 'train', 'Class Loss', i, loss.item())
 
         optimizer.zero_grad()
         loss.backward()
@@ -290,7 +288,8 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         loss_right = lossa + lossb
 
         loss = loss_left + loss_right
-
+        
+        plotter.plot('loss', 'test', 'Class Loss', i, loss.item())
 
         t_l += loss
 
@@ -358,7 +357,8 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15, rightdim=[], 
         loss_right = lossa + lossb
 
         loss = loss_left + loss_right
-
+        plotter.plot('loss', 'val', 'Class Loss', i, loss.item())
+        
         n, _, _ = all_seq.data.shape
 
         m_err = loss

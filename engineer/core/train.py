@@ -15,7 +15,7 @@ import os
 from engineer.utils import loss_funcs
 from engineer.utils import  data_utils as data_utils
 
-
+plotter = data_utils.VisdomLinePlotter(env_name='Train Plots')
 
 def build_dataloader(dataset,num_worker,batch_size):
     return DataLoader(
@@ -141,6 +141,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         outputs = model(inputs)
         # calculate loss and backward
         _,loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        plotter.plot('loss', 'train', 'Class Loss', i, loss.item())
+        
         optimizer.zero_grad()
         loss.backward()
         if max_norm:
@@ -148,7 +150,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         optimizer.step()
 
         # update the training loss
-        writer.add_scalar('Train/Loss', loss, i)
+        t_l.update(loss.item() * batch_size, batch_size)
 
         bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i+1, len(train_loader), time.time() - bt,
                                                                          time.time() - st)
@@ -187,6 +189,9 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         outputs_3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                    seq_len).transpose(1,
                                                                                                                       2)
+        _,test_loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        plotter.plot('loss', 'test', 'Class Loss', i, test_loss.item())
+        
         pred_3d = all_seq.clone()
         dim_used = np.array(dim_used)
 
@@ -233,10 +238,9 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
 
         n, _, _ = all_seq.data.shape
 
-        print(outputs.shape)
+
         m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
-        print(m_err)
-        print(m_err.shape)
+        plotter.plot('loss', 'val', 'Class Loss', i, m_err.item())
 
         # update the training loss
         t_3d.update(m_err.item() * n, n)

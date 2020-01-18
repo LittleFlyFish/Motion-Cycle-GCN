@@ -9,9 +9,8 @@
       <change beforePath="$PROJECT_DIR$/engineer/core/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/core/train_P.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_P.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/core/train_PCycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_PCycle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/utils/data_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/utils/data_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/train_cycle.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/train_cycle.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_cycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_cycle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_recycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_recycle.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +125,21 @@
       <option name="project" value="LOCAL" />
       <updated>1579224307726</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="&quot;Visdom add to see the training process&quot;">
+      <created>1579302112744</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1579302112744</updated>
+    </task>
+    <task id="LOCAL-00011" summary="&quot;Visdom add to see the training process&quot;">
+      <created>1579302148915</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1579302148915</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -139,13 +152,13 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579271917043" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579302112302">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579302148812">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579302112302" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579224323717">
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579302148812" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579302158026">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579224323717" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579302158026" />
   </component>
 </project>

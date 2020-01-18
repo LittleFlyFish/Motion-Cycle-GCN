@@ -15,6 +15,8 @@ import os
 from engineer.utils import loss_funcs
 from engineer.utils import  data_utils as data_utils
 
+plotter = data_utils.VisdomLinePlotter(env_name='GCycle Plots')
+
 def build_dataloader(dataset,num_worker,batch_size):
     return DataLoader(
         dataset=dataset,
@@ -123,7 +125,10 @@ def train_model(model,datasets,cfg,distributed,optimizer):
 
 def get_reverse_input(g_out_3d,input_n,output_n,dct_used,dim_used):
     #reverse output from G
-    all_seqs = torch.flip(g_out_3d,dims=[1])
+    all_seqs = torch.flip(g_out_3d, dims=[1])
+    batch, frame, dim = all_seqs.shape
+    if dim == 96:
+        all_seqs = all_seqs[:, :, dim_used]
 
     dct_m_in, _ = data_utils.get_dct_matrix(input_n + output_n)
     pad_idx = np.repeat([output_n - 1], input_n)
@@ -150,15 +155,27 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(async=True)).float()
 
+        # predict loss
         outputs = model.g(inputs)
-
-        # calculate loss and backward
         g_out_3d,loss1 = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
 
+        # G*G(Input) loss: input 1..10, 10, ..., 10
         g_reverse_input = get_reverse_input(g_out_3d,input_n,output_n,dct_n,dim_used)
         verse_out = model.g_verse(g_reverse_input)
         _,loss2 = loss_funcs.mpjpe_error_p3d(verse_out, torch.flip(all_seq,dims=[1]), dct_n, dim_used)
-        loss = loss1+loss2
+
+        # GG*(Input) loss, verse cycle, input 20...10, 10, 10, .. 10 ground truth as input
+        Gv_Input = get_reverse_input(all_seq, input_n,output_n,dct_n,dim_used)
+        Gv_Output = model.g_verse(Gv_Input)
+        Gv_Output_seq = data_utils.dct2seq(Gv_Output, input_n+output_n)
+        G_Input = get_reverse_input(Gv_Output_seq, dct_used=dct_n, dim_used=dim_used, input_n=output_n, output_n=input_n)
+        G_Output = model.g(G_Input)
+        _, loss3 = loss_funcs.mpjpe_error_p3d(G_Output, all_seq, dct_n, dim_used)
+
+
+        loss = loss1 + 10*(loss2 + loss3)
+        
+        plotter.plot('loss', 'train', 'Class Loss', i, loss.item())
 
         optimizer.zero_grad()
         loss.backward()
@@ -206,6 +223,8 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         outputs_3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                    seq_len).transpose(1,
                                                                                                                       2)
+        _,test_loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        plotter.plot('loss', 'test', 'Class Loss', i, test_loss.item())
         pred_3d = all_seq.clone()
         dim_used = np.array(dim_used)
 
@@ -253,6 +272,7 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
         n, _, _ = all_seq.data.shape
 
         _,m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        plotter.plot('loss', 'val', 'Class Loss', i, m_err.item())
 
         # update the training loss
         t_3d.update(m_err.item() * n, n)
