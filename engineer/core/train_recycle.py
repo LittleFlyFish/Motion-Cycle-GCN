@@ -32,6 +32,7 @@ def train_model(model,datasets,cfg,distributed,optimizer):
     right = np.array(cfg.right)
     rightdim = np.concatenate((right * 3, right * 3 + 1, right * 3 + 2))
     p_dct = cfg.p_dct
+    train_num = 0
 
 
     train_dataset,val_dataset,test_datasets = datasets
@@ -68,9 +69,10 @@ def train_model(model,datasets,cfg,distributed,optimizer):
         ret_log = np.array([epoch + 1])
         head = np.array(['epoch'])
         # training on per epoch
-        lr_now, t_l = train(train_loader, model, optimizer, lr_now=lr_now, max_norm=cfg.max_norm, is_cuda=is_cuda,
+        lr_now, t_l, train_num = train(train_loader, model, optimizer, lr_now=lr_now, max_norm=cfg.max_norm, is_cuda=is_cuda,
                             dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used, p_dct = p_dct,
-                            input_n=cfg.data.train.input_n,output_n=cfg.data.train.output_n,rightdim=[], leftdim=[])
+                            input_n=cfg.data.train.input_n,output_n=cfg.data.train.output_n,
+                            rightdim=[], leftdim=[], num= train_num)
         ret_log = np.append(ret_log, [lr_now, t_l])
         head = np.append(head, ['lr', 't_l'])
 
@@ -196,7 +198,7 @@ def VShort2Long(Pv_Output, input_n, output_n, dct_n):
 
 
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[],
-          dct_n=15, p_dct = 5, input_n=10, output_n=10, rightdim=[], leftdim=[]):
+          dct_n=15, p_dct = 5, input_n=10, output_n=10, rightdim=[], leftdim=[], num=1):
     t_l = utils.AccumLoss()
 
     model.train()
@@ -248,11 +250,15 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # Cycle Constrains: GG* = I, G*G = I
 
 
+        # 
+
+
 
         # calculate loss and backward
         loss = loss1R+loss2L
 
-        plotter.plot('loss', 'train', 'Class Loss', i, loss.item())
+        num += 1
+        plotter.plot('loss', 'train', 'Class Loss', num, loss.item())
 
 
         optimizer.zero_grad()
@@ -268,7 +274,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
                                                                          time.time() - st)
         bar.next()
     bar.finish()
-    return lr_now, t_l.avg
+    return lr_now, t_l.avg, num
 #
 #
 def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15, rightdim=[], leftdim=[]):

@@ -64,7 +64,7 @@ class GC_Block(nn.Module):
         self.bn2 = nn.BatchNorm1d(node_n * in_features)
 
         self.do = nn.Dropout(p_dropout)
-        self.act_f = nn.Tanh()
+        self.act_f = nn.LeakyReLU()
 
     def forward(self, x):
         y = self.gc1(x)
@@ -75,7 +75,7 @@ class GC_Block(nn.Module):
 
         y = self.gc2(y)
         b, n, f = y.shape
-        y = self.bn2(y.view(b, -1)).view(b, n, f)
+        y = self.bn2(y.view(b, -1)).view(b, n, f) 
         y = self.act_f(y)
         y = self.do(y)
 

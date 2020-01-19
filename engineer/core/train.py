@@ -48,6 +48,7 @@ def train_model(model,datasets,cfg,distributed,optimizer):
     script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n, cfg.data.train.dct_used)
     err_best = float("inf")
     is_best_ret_log = None
+    train_num = 0
 
     for epoch in range(start_epoch, cfg.total_epochs):
         pass
@@ -60,8 +61,8 @@ def train_model(model,datasets,cfg,distributed,optimizer):
         ret_log = np.array([epoch + 1])
         head = np.array(['epoch'])
         # training on per epoch
-        lr_now, t_l = train(train_loader, model, optimizer, lr_now=lr_now, max_norm=cfg.max_norm, is_cuda=is_cuda,
-                            dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used)
+        lr_now, t_l, train_num = train(train_loader, model, optimizer, lr_now=lr_now, max_norm=cfg.max_norm, is_cuda=is_cuda,
+                            dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used, num=train_num)
         ret_log = np.append(ret_log, [lr_now, t_l])
         head = np.append(head, ['lr', 't_l'])
 
@@ -122,7 +123,7 @@ def train_model(model,datasets,cfg,distributed,optimizer):
     df = pd.DataFrame(np.expand_dims(is_best_ret_log, axis=0))
     with open(cfg.checkpoints + '/' + script_name + '.csv', 'a') as f:
         df.to_csv(f, header=False, index=False)
-def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15):
+def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15, num=1):
     t_l = utils.AccumLoss()
 
     model.train()
@@ -141,7 +142,9 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         outputs = model(inputs)
         # calculate loss and backward
         _,loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
-        plotter.plot('loss', 'train', 'Class Loss', i, loss.item())
+        num += 1
+        plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
+
         
         optimizer.zero_grad()
         loss.backward()
@@ -156,7 +159,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
                                                                          time.time() - st)
         bar.next()
     bar.finish()
-    return lr_now, t_l.avg
+    return lr_now, t_l.avg, num
 #
 #
 def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15):
@@ -190,7 +193,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
                                                                                                    seq_len).transpose(1,
                                                                                                                       2)
         _,test_loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
-        plotter.plot('loss', 'test', 'Class Loss', i, test_loss.item())
+        plotter.plot('loss', 'test', 'LeakyRelu+No Batch ', i, test_loss.item())
         
         pred_3d = all_seq.clone()
         dim_used = np.array(dim_used)
@@ -240,7 +243,7 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
 
 
         _, m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
-        plotter.plot('loss', 'val', 'Class Loss', i, m_err.item())
+        plotter.plot('loss', 'val', 'LeakyRelu+No Batch ', i, m_err.item())
 
         # update the training loss
         t_3d.update(m_err.item() * n, n)

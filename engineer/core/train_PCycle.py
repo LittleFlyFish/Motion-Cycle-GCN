@@ -54,6 +54,7 @@ def train_model(model,datasets,cfg,distributed,optimizer):
     script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n, cfg.data.train.dct_used)
     err_best = float("inf")
     is_best_ret_log = None
+    train_num = 0
 
     for epoch in range(start_epoch, cfg.total_epochs):
         pass
@@ -66,9 +67,9 @@ def train_model(model,datasets,cfg,distributed,optimizer):
         ret_log = np.array([epoch + 1])
         head = np.array(['epoch'])
         # training on per epoch
-        lr_now, t_l = train(train_loader, model, optimizer, lr_now=lr_now, max_norm=cfg.max_norm, is_cuda=is_cuda,
-                            dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used,
-                            input_n=cfg.data.train.input_n,output_n=cfg.data.train.output_n, rightdim=rightdim, leftdim=leftdim)
+        lr_now, t_l, train_num = train(train_loader, model, optimizer, lr_now=lr_now, max_norm=cfg.max_norm, is_cuda=is_cuda,
+                            dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used,input_n=cfg.data.train.input_n,
+                            output_n=cfg.data.train.output_n, rightdim=rightdim, leftdim=leftdim, num=train_num)
         ret_log = np.append(ret_log, [lr_now, t_l])
         head = np.append(head, ['lr', 't_l'])
 
@@ -148,7 +149,8 @@ def get_left_input(all_seq, input_n, output_n, dct_n, dim_used, leftdim=[], righ
 
     return input_left, input_right, input_seq_dct, output_left, output_right, output_seq_dct
 
-def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15,input_n=10,output_n=10, rightdim=[], leftdim=[]):
+def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, 
+          dim_used=[], dct_n=15,input_n=10,output_n=10, rightdim=[], leftdim=[], num=1):
     t_l = utils.AccumLoss()
 
     model.train()
@@ -207,8 +209,9 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         loss_right = lossa + lossb
         
         loss = loss_left + loss_right
-
-        plotter.plot('loss', 'train', 'Class Loss', i, loss.item())
+        
+        num += 1
+        plotter.plot('loss', 'train', 'Class Loss', num, loss.item())
 
         optimizer.zero_grad()
         loss.backward()
@@ -219,11 +222,12 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # update the training loss
         t_l.update(loss.item()*batch_size, batch_size)
 
+
         bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i+1, len(train_loader), time.time() - bt,
                                                                          time.time() - st)
         bar.next()
     bar.finish()
-    return lr_now, t_l.avg
+    return lr_now, t_l.avg, num
 #
 #
 def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15, rightdim=[], leftdim=[]):
