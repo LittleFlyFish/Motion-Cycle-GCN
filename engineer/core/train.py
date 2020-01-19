@@ -239,8 +239,7 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
         n, _, _ = all_seq.data.shape
 
 
-        m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
-        print(m_err)
+        _, m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
         plotter.plot('loss', 'val', 'Class Loss', i, m_err.item())
 
         # update the training loss
