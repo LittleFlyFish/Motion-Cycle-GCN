@@ -15,12 +15,15 @@ python3 tools/train_PCycle.py --config ./configs/PCycle_GCN_I25_O25_D15.py  # tr
 
 python3 tools/train_recycle.py --config ./configs/Recycle_G252515P252515.py  # train PCycle for inputs=25
 
-### Plan B, Comparison of MSE loss, L_1 loss
+### Plan B, Comparison of MSE loss, L_1 loss, Recycle Loss without P constrains
 
 ####engineer.utils.loss_funcs   mpjpe_error function, change torch.norm (x, 2, 1) into torch.norm(x, 1, 1)
 
+### train_recycle.py delete the loss_right and loss_left term and train Recycle. Only Command the G, G* load_state_dict
+### use the Pretrained P part.
+
 ### Plan C, evaluate Recycle part with /without initialization
-##without initialization ### command the G, G*, load_state_dict part in models.backbones——Recycle_GCN
+##without initialization ### command the G, G*, P, P* load_state_dict part in models.backbones——Recycle_GCN
 
 
 ### Plan D, compare the batch size = 16, 32, 64
