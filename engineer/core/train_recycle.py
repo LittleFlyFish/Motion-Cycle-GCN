@@ -219,7 +219,9 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # the model infer the right side from the left side
         (input_left, input_right, input_seq_dct, output_left, output_right, output_seq_dct) = \
             get_left_input(all_seq, input_n, output_n, dct_n=p_dct, dim_used=dim_used, leftdim=leftdim,rightdim=rightdim)
+        print(input_left.shape)
         P_I_right = model.p(input_left) # input_left = [batch, leftnode, dct_n]
+        print(P_I_right.shape)
         P_Input = input_seq_dct
         P_Input[:, rightdim, :] = P_I_right # generate the input for G, the dct of 1..10(input) frame
         G_Input = Short2Long(P_Input, input_n, output_n, dct_n) # generate the dct of 1...20(input+padding) frame
