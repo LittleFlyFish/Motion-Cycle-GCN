@@ -176,7 +176,7 @@ def R_mpjpe_error_p3d(Gv_Final, allseqs, frame_n, dct_n, dim_used, select_dim):
     Gv_Final_p3d = torch.matmul(idct_m[:, 0:dct_n], Gv_Final_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                 seq_len).transpose(1,
                                                                                                                    2)
-    pred_seq_p3d = torch.flip(Gv_Final_p3d, dim=1) # turns to 1...20
+    pred_seq_p3d = torch.flip(Gv_Final_p3d, dims=[1]) # turns to 1...20
     pred_seq_p3d[:, frame_n:seq_len, :] = allseqs[:, frame_n:seq_len, :] # the output error not count
     pred_seq_p3d[:, frame_n:seq_len, select_dim] = allseqs[:, frame_n:seq_len, select_dim] # the select_dim side error not count
     

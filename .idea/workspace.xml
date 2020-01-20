@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_recycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_recycle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/Jan_20.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Jan_20.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_best.pth.tar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_last.pth.tar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/train_P_3D_in10_out10_dct_n_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/train_P_3D_in10_out10_dct_n_5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,27 +163,91 @@
       <option name="project" value="LOCAL" />
       <updated>1579471061472</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="&quot;Train Policy&quot;">
+      <created>1579471364770</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1579471364770</updated>
+    </task>
+    <task id="LOCAL-00017" summary="&quot;Train Plan&quot;">
+      <created>1579518769059</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1579518769059</updated>
+    </task>
+    <task id="LOCAL-00018" summary="&quot;Train Plan&quot;">
+      <created>1579519808911</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1579519808911</updated>
+    </task>
+    <task id="LOCAL-00019" summary="&quot;Train Plan&quot;">
+      <created>1579520236470</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1579520236470</updated>
+    </task>
+    <task id="LOCAL-00020" summary="&quot;Train Plan&quot;">
+      <created>1579520618591</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1579520618591</updated>
+    </task>
+    <task id="LOCAL-00021" summary="&quot;Train Plan&quot;">
+      <created>1579521344031</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1579521344031</updated>
+    </task>
+    <task id="LOCAL-00022" summary="&quot;Train Plan&quot;">
+      <created>1579521712230</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1579521712230</updated>
+    </task>
+    <task id="LOCAL-00023" summary="&quot;Train Plan&quot;">
+      <created>1579522002199</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1579522002199</updated>
+    </task>
+    <task id="LOCAL-00024" summary="&quot;Train Plan&quot;">
+      <created>1579522349401</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1579522349401</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="&quot;H3.6M dataset to be specific to 3D version&quot;" />
     <MESSAGE value="&quot;Visdom add to see the training process&quot;" />
     <MESSAGE value="&quot;Train Policy&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;Train Policy&quot;" />
+    <MESSAGE value="&quot;Train Plan&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;Train Plan&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1579271917043">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579271917043" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579471058911">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579522349332">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579471058911" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579471073633">
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579522349332" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579522357075">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579471073633" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579522357075" />
   </component>
 </project>
