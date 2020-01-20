@@ -242,10 +242,11 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         Gv_Out = model.g_verse(Gv_In)
         P_In = Long2Short(Gv_Out, input_n, output_n, p_dct, leftdim) # obtain left dct feature for P
         P_Out = model.p(P_In)
-        G_In = Short2Long(P_Out, input_n, output_n, dct_n)
-        print(G_In.shape)
+        P_Out_seq = input_seq_dct
+        P_Out_seq[:, rightdim, :] = P_Out
+        G_In = Short2Long(P_Out_seq, input_n, output_n, dct_n)
         G_Out = model.g(G_In)
-        loss2L = loss_funcs.R_mpjpe_error_p3d(G_Out, torch.flip(all_seq, dims=1), output_n, dct_n, dim_used, leftdim)
+        loss2L = loss_funcs.R_mpjpe_error_p3d(G_Out, torch.flip(all_seq, dims=[1]), output_n, dct_n, dim_used, leftdim)
         
 
         # Cycle Constrains: GG* = I, G*G = I
