@@ -31,7 +31,7 @@ def dct2seq(dct_feature, frame_n):
     print(dct_n)
     _, idct_m = get_dct_matrix(frame_n)
     idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
-    outputs_t = dct_feature.view(-1, dct_n).transpose(0, 1)
+    outputs_t = dct_feature.contiguous().view(-1, dct_n).transpose(0, 1)
     outputs_p3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous(). \
         view(-1, dim, frame_n).transpose(1, 2)
     return outputs_p3d
