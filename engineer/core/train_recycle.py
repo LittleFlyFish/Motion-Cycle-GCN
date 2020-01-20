@@ -265,8 +265,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         # calculate the left loss and backward
 
-        _, loss1 = loss_funcs.mpjpe_error_p3d(PvP_inputs, all_seq[:, 0:input_n, :], dct_n, dim_used)
-        _, loss2 = loss_funcs.mpjpe_error_p3d(PvP_outputs, all_seq[:, input_n:(input_n + output_n), :], dct_n, dim_used)
+        _, loss1 = loss_funcs.mpjpe_error_p3d(PvP_inputs, all_seq[:, 0:input_n, :], p_dct, dim_used)
+        _, loss2 = loss_funcs.mpjpe_error_p3d(PvP_outputs, all_seq[:, input_n:(input_n + output_n), :], p_dct, dim_used)
         loss_left = loss1 + loss2
 
         # PP*(right) = right calculate
@@ -283,8 +283,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         # calculate right loss and backward
 
-        _, lossa = loss_funcs.mpjpe_error_p3d(PPv_inputs, all_seq[:, 0:input_n, :], dct_n, dim_used)
-        _, lossb = loss_funcs.mpjpe_error_p3d(PPv_outputs, all_seq[:, input_n:(input_n + output_n), :], dct_n, dim_used)
+        _, lossa = loss_funcs.mpjpe_error_p3d(PPv_inputs, all_seq[:, 0:input_n, :], p_dct, dim_used)
+        _, lossb = loss_funcs.mpjpe_error_p3d(PPv_outputs, all_seq[:, input_n:(input_n + output_n), :], p_dct, dim_used)
         loss_right = lossa + lossb
 
         loss = loss_left + loss_right + loss_left + loss_right
