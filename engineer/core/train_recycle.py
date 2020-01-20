@@ -188,7 +188,7 @@ def Long2Short(G_Output, input_n, output_n, dct_n, dim=[]):
 def VShort2Long(Pv_Output, input_n, output_n, dct_n):
     # change 10..20 of P* to 20 ..10..10..10 input feed in G*
     Vshort_seq = data_utils.dct2seq(Pv_Output, output_n)
-    Vshort_seq = torch.flip(Vshort_seq, dims=1) # 20 ...10
+    Vshort_seq = torch.flip(Vshort_seq, dims=[1]) # 20 ...10
     idx = np.append(np.arange(0, output_n), np.repeat([output_n - 1], input_n))
     Long_seq = Vshort_seq[:, idx, :] # 20 ...10, 10, ..10
     dct_Long = data_utils.seq2dct(Long_seq, dct_n)
