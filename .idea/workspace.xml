@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_best.pth.tar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_last.pth.tar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/train_P_3D_in10_out10_dct_n_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/train_P_3D_in10_out10_dct_n_5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_recycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_recycle.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -226,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579522349401</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="&quot;Train Plan&quot;">
+      <created>1579522660954</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1579522660954</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -241,13 +246,13 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579271917043" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579522349332">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579522660664">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579522349332" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579522357075">
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579522660664" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579522667356">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579522357075" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579522667356" />
   </component>
 </project>
