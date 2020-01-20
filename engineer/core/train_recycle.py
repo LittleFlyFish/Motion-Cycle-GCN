@@ -224,7 +224,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         print(P_I_right.shape)
         P_Input = input_seq_dct
         P_Input[:, rightdim, :] = P_I_right # generate the input for G, the dct of 1..10(input) frame
-        G_Input = Short2Long(P_Input, input_n, output_n, dct_n) # generate the dct of 1...20(input+padding) frame
+        G_Input = Short2Long(P_Input, input_n, output_n, dct_n=p_dct) # generate the dct of 1...20(input+padding) frame
         G_Output = model.g(G_Input) # generate the dct of 1..20 (input+output)
         Pv_O_right = Long2Short(G_Output, input_n, output_n, p_dct, rightdim) # generate the dct of 10..20
         Pv_O_left = model.p_verse(Pv_O_right)
