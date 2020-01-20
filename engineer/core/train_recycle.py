@@ -72,7 +72,7 @@ def train_model(model,datasets,cfg,distributed,optimizer):
         lr_now, t_l, train_num = train(train_loader, model, optimizer, lr_now=lr_now, max_norm=cfg.max_norm, is_cuda=is_cuda,
                             dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used, p_dct = p_dct,
                             input_n=cfg.data.train.input_n,output_n=cfg.data.train.output_n,
-                            rightdim=[], leftdim=[], num= train_num)
+                            rightdim=rightdim, leftdim=leftdim, num= train_num)
         ret_log = np.append(ret_log, [lr_now, t_l])
         head = np.append(head, ['lr', 't_l'])
 
