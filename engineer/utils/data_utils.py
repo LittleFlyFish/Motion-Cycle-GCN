@@ -27,8 +27,6 @@ class VisdomLinePlotter(object):
 
 def dct2seq(dct_feature, frame_n):
     batch, dim, dct_n = dct_feature.shape
-    print(dct_feature.shape)
-    print(dct_n)
     _, idct_m = get_dct_matrix(frame_n)
     idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
     outputs_t = dct_feature.contiguous().view(-1, dct_n).transpose(0, 1)

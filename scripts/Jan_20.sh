@@ -1,6 +1,7 @@
 # This is the plan of experiement:
 
 ### Note: command the load_state_dict in Cycle_GCN always when train GG*
+### python -m visdom.server # after run experienment, run Visdom TO visualize the loss, and save these images
 
 ### Plan A, evaluate Recycle part with /without pretrained data
 ## with pretrained data
