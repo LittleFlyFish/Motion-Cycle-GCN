@@ -1,6 +1,6 @@
 import numpy as np
 model = dict(
-    type='G_Attention',
+    type='G_Attention_GCN',
     input_feature=15,
     hidden_feature=256,
     p_dropout=0.5,
