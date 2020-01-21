@@ -15,7 +15,7 @@ import os
 from engineer.utils import loss_funcs
 from engineer.utils import  data_utils as data_utils
 
-#plotter = data_utils.VisdomLinePlotter(env_name='GCycle Plots')
+plotter = data_utils.VisdomLinePlotter(env_name='GCycle Plots')
 
 def build_dataloader(dataset,num_worker,batch_size):
     return DataLoader(
@@ -60,6 +60,7 @@ def train_model(model,datasets,cfg,distributed,optimizer):
         logger.info('>>> epoch: {} | lr: {:.5f}'.format(epoch + 1, lr_now))
         ret_log = np.array([epoch + 1])
         head = np.array(['epoch'])
+
         # training on per epoch
         lr_now, t_l, train_num = train(train_loader, model, optimizer, lr_now=lr_now, max_norm=cfg.max_norm, is_cuda=is_cuda,
                             dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used,
@@ -71,9 +72,6 @@ def train_model(model,datasets,cfg,distributed,optimizer):
         v_3d = val(val_loader, model, is_cuda=is_cuda, dim_used=train_dataset.dim_used, dct_n=cfg.data.val.dct_used)
         ret_log = np.append(ret_log, [v_3d])
         head = np.append(head, ['v_3d'])
-
-
-
 
 
         #test_results
@@ -120,6 +118,10 @@ def train_model(model,datasets,cfg,distributed,optimizer):
 
         if is_best:
             is_best_ret_log = ret_log.copy()
+
+
+
+
     #best ret_log information to save
     df = pd.DataFrame(np.expand_dims(is_best_ret_log, axis=0))
     with open(cfg.checkpoints + '/' + script_name + '.csv', 'a') as f:
@@ -142,60 +144,79 @@ def get_reverse_input(g_out_3d,input_n,output_n,dct_used,dim_used):
     return input_dct_seq
 
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False,
-           dim_used=[], dct_n=15,input_n=10,output_n=10, num=1):
-    # t_l = utils.AccumLoss()
-    #
-    # model.train()
-    # st = time.time()
-    # bar = Bar('>>>', fill='>', max=len(train_loader))
-    # for i, (inputs, targets, all_seq) in enumerate(train_loader):
-    #     batch_size = inputs.shape[0]
-    #     if batch_size == 1:
-    #         continue
-    #
-    #     bt = time.time()
-    #     if is_cuda:
-    #         inputs = Variable(inputs.cuda()).float()
-    #         all_seq = Variable(all_seq.cuda(non_blocking = True)).float()
-    #
-    #     # predict loss
-    #     outputs = model.g(inputs)
-    #     g_out_3d,loss1 = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
-    #
-    #     # G*G(Input) loss: input 1..10, 10, ..., 10
-    #     g_reverse_input = get_reverse_input(g_out_3d,input_n,output_n,dct_n,dim_used)
-    #     verse_out = model.g_verse(g_reverse_input)
-    #     _,loss2 = loss_funcs.mpjpe_error_p3d_l1(verse_out, torch.flip(all_seq,dims=[1]), dct_n, dim_used)
-    #
-    #     # GG*(Input) loss, verse cycle, input 20...10, 10, 10, .. 10 ground truth as input
-    #     Gv_Input = get_reverse_input(all_seq, input_n,output_n,dct_n,dim_used)
-    #     Gv_Output = model.g_verse(Gv_Input)
-    #     Gv_Output_seq = data_utils.dct2seq(Gv_Output, input_n+output_n)
-    #     G_Input = get_reverse_input(Gv_Output_seq, dct_used=dct_n, dim_used=dim_used, input_n=output_n, output_n=input_n)
-    #     G_Output = model.g(G_Input)
-    #     _, loss3 = loss_funcs.mpjpe_error_p3d_l1(G_Output, all_seq, dct_n, dim_used)
-    #
-    #
-    #     loss = loss1 + 10*(loss2 + loss3)
-    #     num += 1
-    #     #plotter.plot('loss', 'train', 'Class Loss', num, loss.item())
-    #
-    #     optimizer.zero_grad()
-    #     loss.backward()
-    #     if max_norm:
-    #         nn.utils.clip_grad_norm(model.parameters(), max_norm=1)
-    #     optimizer.step()
-    #
-    #     # update the training loss
-    #     t_l.update(loss.item()*batch_size, batch_size)
-    #
-    #
-    #     bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i+1, len(train_loader), time.time() - bt,
-    #                                                                      time.time() - st)
-    #     bar.next()
-    # bar.finish()
-    #return lr_now, t_l.avg, num
+             dim_used=[], dct_n=15,input_n=10,output_n=10, num=1):
+    t_l = utils.AccumLoss()
+
+    model.train()
+    st = time.time()
+    bar = Bar('>>>', fill='>', max=len(train_loader))
+    for i, (inputs, targets, all_seq) in enumerate(train_loader):
+        batch_size = inputs.shape[0]
+        if batch_size == 1:
+            continue
+
+        bt = time.time()
+        if is_cuda:
+            inputs = Variable(inputs.cuda()).float()
+            all_seq = Variable(all_seq.cuda(non_blocking = True)).float()
+
+
+        idx = torch.from_numpy(np.append(np.arange(0, output_n), np.repeat([output_n - 1], input_n)))
+        inputs_seq = all_seq[:, idx, :]
+        # predict loss
+        outputs = model.g(inputs)
+        g_out_3d, loss1 = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+
+
+        # ############# Cycle Plan A,
+        # # G*G(Input), Input = 1...10, 10, ..,10,
+        # Cycle_Input = model.g_verse(outputs)
+        # _, loss2 = loss_funcs.mpjpe_error_p3d(Cycle_Input, inputs_seq, dct_n, dim_used)
+        #
+        # #GG*(all_seq)
+        # Gv_Input = data_utils.seq2dct(all_seq[:, :, dim_used],dct_n)
+        # Gv_Output = model.g_verse(Gv_Input)
+        # G_Output = model.g(Gv_Output)
+        # _, loss3 = loss_funcs.mpjpe_error_p3d(G_Output, all_seq, dct_n, dim_used)
+
+
+
+        ############ Cycle Plan B
+        # G*G(Input) loss: input 1..10, 10, ..., 10
+        g_reverse_input = get_reverse_input(g_out_3d,input_n,output_n,dct_n,dim_used)
+        verse_out = model.g_verse(g_reverse_input)
+        _,loss2 = loss_funcs.mpjpe_error_p3d(verse_out, torch.flip(all_seq,dims=[1]), dct_n, dim_used)
+
+        # GG*(Input) loss, verse cycle, input 20...10, 10, 10, .. 10 ground truth as input
+        Gv_Input = get_reverse_input(all_seq, input_n,output_n,dct_n,dim_used)
+        Gv_Output = model.g_verse(Gv_Input)
+        Gv_Output_seq, loss4 = loss_funcs.mpjpe_error_p3d(Gv_Output, torch.flip(all_seq, dims=[1]), dct_n, dim_used)
+        G_Input = get_reverse_input(Gv_Output_seq, dct_used=dct_n, dim_used=dim_used, input_n=output_n, output_n=input_n)
+        G_Output = model.g(G_Input)
+        _, loss3 = loss_funcs.mpjpe_error_p3d(G_Output, all_seq, dct_n, dim_used)
+
+
+        loss = loss1 + loss4 + loss2 + loss3
+        num += 1
+        plotter.plot('loss', 'train', 'Class Loss', num, loss.item())
+
+        optimizer.zero_grad()
+        loss.backward()
+        if max_norm:
+            nn.utils.clip_grad_norm(model.parameters(), max_norm=1)
+        optimizer.step()
+
+        # update the training loss
+        t_l.update(loss.item()*batch_size, batch_size)
+
+
+        bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i+1, len(train_loader), time.time() - bt,
+                                                                         time.time() - st)
+        bar.next()
+    bar.finish()
+    return lr_now, t_l.avg, num
     return 0, 0, 0
+
 #
 #
 def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15):
@@ -229,7 +250,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
                                                                                                    seq_len).transpose(1,
                                                                                                                       2)
         _,test_loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
-        #plotter.plot('loss', 'test', 'Class Loss', i, test_loss.item())
+        plotter.plot('loss', 'test', 'Class Loss', i, test_loss.item())
         pred_3d = all_seq.clone()
         dim_used = np.array(dim_used)
 
@@ -277,7 +298,7 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
         n, _, _ = all_seq.data.shape
 
         _,m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
-        #plotter.plot('loss', 'val', 'Class Loss', i, m_err.item())
+        plotter.plot('loss', 'val', 'Class Loss', i, m_err.item())
 
         # update the training loss
         t_3d.update(m_err.item() * n, n)

@@ -177,6 +177,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         bar.next()
     bar.finish()
     return lr_now, t_l.avg, num, loss_list
+
 #
 #
 def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15):
