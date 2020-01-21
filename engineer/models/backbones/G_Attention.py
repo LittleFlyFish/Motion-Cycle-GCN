@@ -35,4 +35,4 @@ class G_Attention(nn.Module):
         y, _ = self.attention(y, y)
         y, _ = self.attention(y, y)
 
-        return y
+        return y+x

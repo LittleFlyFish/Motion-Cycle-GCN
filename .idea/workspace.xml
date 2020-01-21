@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/configs/Attention_I10_O10_D15_G.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/models/backbones/G_Attention.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/models/common/Attention.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_GG*.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_GG*.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_cycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_cycle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Motion_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Motion_GCN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/P_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/P_GCN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/Jan_21.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Jan_21.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/G_Attention.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/G_Attention.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,7 +266,21 @@
       <option name="project" value="LOCAL" />
       <updated>1579622414888</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="&quot;G_Attention add&quot;">
+      <created>1579638877568</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1579638877568</updated>
+    </task>
+    <task id="LOCAL-00032" summary="&quot;G_Attention add&quot;">
+      <created>1579639029221</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1579639029221</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -284,25 +289,26 @@
     <MESSAGE value="&quot;Train Policy&quot;" />
     <MESSAGE value="&quot;Train Plan&quot;" />
     <MESSAGE value="&quot;Df_2 change&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;Df_2 change&quot;" />
+    <MESSAGE value="&quot;G_Attention add&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;G_Attention add&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1579271917043">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579271917043" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579638877305">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579639029128">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579638877305" />
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579639029128" />
     <state x="486" y="234" key="SettingsEditor" timestamp="1579536210566">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579638886657">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579639038544">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579638886657" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579639038544" />
     <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1579623804008">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
