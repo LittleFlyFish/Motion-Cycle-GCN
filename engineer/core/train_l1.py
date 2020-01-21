@@ -128,7 +128,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     with open(cfg.checkpoints + '/' + script_name + '_l1.csv', 'a') as f:
         df.to_csv(f, header=False, index=False)
 
-    df2 = pd.DataFrame(data={"train_loss": train_loss_plot, "test_loss":test_loss_plot, "val_loss":val_loss_plot})
+    df2 = pd.DataFrame(data={"train_loss": train_loss_plot})
     with open(cfg.checkpoints + '/' + script_name + '_l1_loss.csv', 'a') as f:
         df.to_csv(f, header=False, index=False)
 
