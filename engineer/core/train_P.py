@@ -15,7 +15,7 @@ from engineer.utils import loss_funcs
 from engineer.utils import  data_utils as data_utils
 
 
-plotter = data_utils.VisdomLinePlotter(env_name='P Plots')
+#plotter = data_utils.VisdomLinePlotter(env_name='P Plots')
 
 
 def build_dataloader(dataset,num_worker,batch_size):
@@ -177,7 +177,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         bt = time.time()
         if is_cuda:
             inputs = Variable(inputs.cuda()).float()
-            all_seq = Variable(all_seq.cuda(async=True)).float()
+            all_seq = Variable(all_seq.cuda(non_blocking = True)).float()
 
         # get the left half input of seq.
 
@@ -201,7 +201,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         loss = loss1 + loss2
         num +=1
-        plotter.plot('loss', 'train', 'Class Loss', num, loss.item())
+        #plotter.plot('loss', 'train', 'Class Loss', num, loss.item())
 
 
         optimizer.zero_grad()
@@ -237,7 +237,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
 
         if is_cuda:
             inputs = Variable(inputs.cuda()).float()
-            all_seq = Variable(all_seq.cuda(async=True)).float()
+            all_seq = Variable(all_seq.cuda(non_blocking = True)).float()
 
         (input_left, input_seq_dct, output_left, output_seq_dct) = \
             get_left_input(all_seq, input_n, output_n, dct_n, dim_used, leftdim=leftdim, rightdim=rightdim)
@@ -262,7 +262,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         t_l += test_loss
 
         num += 1
-        plotter.plot('loss', 'test', 'Class Loss', num, test_loss)
+        #plotter.plot('loss', 'test', 'Class Loss', num, test_loss)
 
         N += n
 
@@ -284,7 +284,7 @@ def val(train_loader, model, leftdim, rightdim, input_n=10, output_n = 10, is_cu
 
         if is_cuda:
             inputs = Variable(inputs.cuda()).float()
-            all_seq = Variable(all_seq.cuda(async=True)).float()
+            all_seq = Variable(all_seq.cuda(non_blocking = True)).float()
 
         n, _, _ = all_seq.data.shape
 
@@ -309,7 +309,7 @@ def val(train_loader, model, leftdim, rightdim, input_n=10, output_n = 10, is_cu
         m_err = loss1 + loss2
 
         num +=1
-        plotter.plot('loss', 'test', 'Class Loss', num, m_err.item())
+        #plotter.plot('loss', 'test', 'Class Loss', num, m_err.item())
 
 
         # update the training loss

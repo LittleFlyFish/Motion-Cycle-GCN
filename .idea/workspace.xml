@@ -2,7 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/configs/NoNorm_I10_O10_D15_G.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engineer/core/train_l1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engineer/models/backbones/G_NoNorm.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engineer/models/backbones/Multiscale.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/Jan_21.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/train_net_l1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/Inverse_P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_best.pth.tar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/Inverse_P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_last.pth.tar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/Inverse_P_GCN_I10_O10_D5/train_P_3D_in10_out10_dct_n_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_G*/ckpt_train_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_G*/train_3D_in10_out10_dct_n_15.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_G/.~lock.train_3D_in10_out10_dct_n_15.csv#" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_G/ckpt_train_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_G/train_3D_in10_out10_dct_n_15.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_best.pth.tar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/ckpt_train_P_3D_in10_out10_dct_n_5_last.pth.tar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/P_GCN_I10_O10_D5/train_P_3D_in10_out10_dct_n_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_GG*.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_GG*.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/P_GCN_I10_O10_D5.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/P_GCN_I10_O10_D5.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Recycle_G252515P252515.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Recycle_G252515P252515.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_P.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_P.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_PCycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_PCycle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_cycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_cycle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_recycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_recycle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Cycle_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Cycle_GCN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/P_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/P_GCN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/Jan_20.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Jan_20.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +60,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -250,7 +281,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579523878514</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="&quot;Train Plan&quot;">
+      <created>1579524861597</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1579524861597</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -265,13 +303,17 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579271917043" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579523878435">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579572662976">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579523878435" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579523883342">
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579572662976" />
+    <state x="486" y="234" key="SettingsEditor" timestamp="1579536210566">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579523883342" />
+    <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579524866589">
+      <screen x="65" y="24" width="1855" height="1176" />
+    </state>
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579524866589" />
   </component>
 </project>

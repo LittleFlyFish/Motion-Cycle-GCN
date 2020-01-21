@@ -5,14 +5,15 @@ model = dict(
     hidden_feature=256,
     p_dropout=0.5,
     num_stage=12,
-    node_n=39
+    node_n=39,
+    dct_n=5,
 )
 dataset_type = 'Hm36Dataset_3d'
 data_root = './engineer/datasets/h3.6m/dataset'
 left = [0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16] # 22 joints in the order, left is the input of P
 right = [4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21] # right is the output of P
 train_pipeline = [
-    dict(type='SampleFrames',direction = True),
+    dict(type='SampleFrames',direction=True),
 ]
 
 val_pipeline = [
@@ -58,9 +59,9 @@ data = dict(
 #
 # optimizer
 optim_para=dict(
-    optimizer = dict(type='Adam',lr=0.0001),
-    lr_decay=2,
-    lr_gamma= 0.96
+    optimizer = dict(type='Adam',lr=0.001),
+    lr_decay=1,
+    lr_gamma= 0.8
 )
 total_epochs = 50
 max_norm= True
@@ -74,7 +75,7 @@ actions=dict(all = ["walking", "eating", "smoking", "discussion", "directions",
 dataloader=dict(
     num_worker=10,
     batch_size=dict(
-        train=16,
+        train=64,
         test=128
     )
 )

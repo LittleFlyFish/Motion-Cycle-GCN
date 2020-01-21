@@ -17,8 +17,8 @@ class Cycle_GCN(nn.Module):
         self.G = build_backbone(G)
         self.G_verse = build_backbone(G_verse)
 
-        #self.G.load_state_dict(torch.load(G_meta)["state_dict"])
-        #self.G_verse.load_state_dict(torch.load(G_verse_meta)["state_dict"])
+        self.G.load_state_dict(torch.load(G_meta)["state_dict"])
+        self.G_verse.load_state_dict(torch.load(G_verse_meta)["state_dict"])
 
     def g(self,x):
         return self.G(x)

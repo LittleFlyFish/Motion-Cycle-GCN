@@ -69,7 +69,7 @@ data = dict(
 #
 # optimizer
 optim_para=dict(
-    optimizer = dict(type='Adam',lr=0.0001),
+    optimizer = dict(type='Adam',lr=0.0005),
     lr_decay=2,
     lr_gamma= 0.96
 )
@@ -85,7 +85,7 @@ actions=dict(all = ["walking", "eating", "smoking", "discussion", "directions",
 dataloader=dict(
     num_worker=10,
     batch_size=dict(
-        train=64,
+        train=16,
         test=128
     )
 )
