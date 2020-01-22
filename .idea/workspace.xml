@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/Jan_21.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Jan_21.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_GG*.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_GG*.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_cycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_cycle.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -322,7 +323,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579642874751</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="&quot;G_Attention add&quot;">
+      <created>1579643192932</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1579643192932</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -339,18 +347,18 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579271917043" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579642874665">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1579643192880">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579642874665" />
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579643192880" />
     <state x="486" y="234" key="SettingsEditor" timestamp="1579536210566">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579642882117">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1579643200400">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579642882117" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579643200400" />
     <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1579623804008">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
