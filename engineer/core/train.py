@@ -82,9 +82,6 @@ def train_model(model,datasets,cfg,distributed,optimizer):
         head = np.append(head, ['v_3d'])
 
 
-
-
-
         #test_results
         test_3d_temp = np.array([])
         test_3d_head = np.array([])

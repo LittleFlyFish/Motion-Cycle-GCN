@@ -83,7 +83,7 @@ class Dense_GCN(nn.Module):
 
         self.mlp = []
         for i in range(num_stage):
-            self.mlp.append(nn.Linear((i+1)*15, (i+2)*15))
+            self.mlp.append(nn.Linear(np.int((i+1)*(i+2)*hidden_feature/2), hidden_feature))
 
     def forward(self, x):
         y = self.gc1(x)
@@ -93,13 +93,12 @@ class Dense_GCN(nn.Module):
         y = self.do(y)
 
         for i in range(self.num_stage):
-            print("here is the size")
-            print(y.shape)
             y1 = self.gcbs[i](y) # y size [batch, node_n, dct_n]
             y = torch.cat((y, y1), dim=2)
-            print(y.shape)
+            _,_,f1 = y.shape
+            y = y.view(-1, f1)
             y = self.mlp[i](y)
-            print(y.shape)
+            y = y.view(-1, n, f)
 
 
         y = self.gc7(y)
