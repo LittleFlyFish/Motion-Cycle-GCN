@@ -139,6 +139,10 @@ def train_model(model,datasets,cfg,distributed,optimizer):
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15, num=1, loss_list=[1]):
     t_l = utils.AccumLoss()
 
+    is_cuda = torch.cuda.is_available()
+    if is_cuda:
+        model.cuda()
+
     model.train()
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
