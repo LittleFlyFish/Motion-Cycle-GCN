@@ -16,7 +16,7 @@ class GC_Block_NoRes(nn.Module):
         """
         Define a residual block of GCN
         """
-        super(GC_Block, self).__init__()
+        super(GC_Block_NoRes, self).__init__()
         self.in_features = in_features
         self.out_features = in_features
 
