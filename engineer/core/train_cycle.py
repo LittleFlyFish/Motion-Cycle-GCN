@@ -201,7 +201,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         _, loss3 = loss_funcs.mpjpe_error_p3d_l1(G_Output, all_seq, dct_n, dim_used)
 
 
-        loss = loss1 + loss4 + 10*(loss2 + loss3)
+        loss = loss1 + loss4 + 1*(loss2 + loss3)
         num += 1
         plotter.plot('loss', 'train', 'Gv=G, Loss L1, Lamda=1, padding=True', num, loss.item())
 
