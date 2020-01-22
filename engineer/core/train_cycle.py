@@ -165,7 +165,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         padding_idx = np.repeat([output_n - 1], input_n)
         idx = torch.from_numpy(np.append(np.arange(0, output_n), padding_idx))
         inputs_seq = all_seq[:, idx, :]
-        padding_seq = all_seq[:, padding_idx, :]
+        padding_seq = all_seq[:, padding_idx, dim_used]
         # predict loss
         outputs = model.g(inputs)
         g_out_3d, loss1 = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
