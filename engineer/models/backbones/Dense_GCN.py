@@ -96,7 +96,7 @@ class Dense_GCN(nn.Module):
             print("here is the size")
             print(y.shape)
             y1 = self.gcbs[i](y) # y size [batch, node_n, dct_n]
-            y = np.concatenate((y, y1), axis=2)
+            y = torch.cat((y, y1), dim=2)
             print(y.shape)
             y = self.mlp[i](y)
             print(y.shape)
