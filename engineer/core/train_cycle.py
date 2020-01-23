@@ -15,7 +15,7 @@ import os
 from engineer.utils import loss_funcs
 from engineer.utils import  data_utils as data_utils
 
-#plotter = data_utils.VisdomLinePlotter(env_name='GCycle Plots')
+plotter = data_utils.VisdomLinePlotter(env_name='GCycle Plots')
 
 def build_dataloader(dataset,num_worker,batch_size):
     return DataLoader(
@@ -189,7 +189,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # G*G(Input) loss: input 1..10, 10, ..., 10
         g_reverse_input = get_reverse_input(g_out_3d, input_n, output_n, dct_n, dim_used, padding_seq=padding_seq)
         verse_out = model.g(g_reverse_input)
-        _,loss2 = loss_funcs.mpjpe_error_p3d_l1(verse_out, torch.flip(all_seq,dims=[1]), dct_n, dim_used)
+        _,loss2 = loss_funcs.mpjpe_error_p3d(verse_out, torch.flip(all_seq,dims=[1]), dct_n, dim_used)
 
         # GG*(Input) loss, verse cycle, input 20...10, 10, 10, .. 10 ground truth as input
         Gv_Input = get_reverse_input(all_seq, input_n, output_n, dct_n, dim_used, padding_seq=padding_seq)
@@ -198,12 +198,12 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         G_Input = get_reverse_input(Gv_Output_seq, dct_used=dct_n, dim_used=dim_used, 
                                     input_n=output_n, output_n=input_n, padding_seq=padding_seq)
         G_Output = model.g(G_Input)
-        _, loss3 = loss_funcs.mpjpe_error_p3d_l1(G_Output, all_seq, dct_n, dim_used)
+        _, loss3 = loss_funcs.mpjpe_error_p3d(G_Output, all_seq, dct_n, dim_used)
 
 
         loss = loss1 + loss4 + 1*(loss2 + loss3)
         num += 1
-        #plotter.plot('loss', 'train', 'Gv=G, Loss L1, Lamda=1, padding=True', num, loss.item())
+        plotter.plot('loss', 'train', 'Gv=G, Lamda=1, padding=True', num, loss.item())
 
         optimizer.zero_grad()
         loss.backward()
@@ -254,7 +254,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
                                                                                                    seq_len).transpose(1,
                                                                                                                       2)
         _,test_loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
-        #plotter.plot('loss', 'test', 'Gv=G, Loss L1, Lamda=1, padding=True', i, test_loss.item())
+        plotter.plot('loss', 'test', 'Gv=G, Lamda=1, padding=True', i, test_loss.item())
         pred_3d = all_seq.clone()
         dim_used = np.array(dim_used)
 
@@ -302,7 +302,7 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
         n, _, _ = all_seq.data.shape
 
         _,m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
-        #plotter.plot('loss', 'val', 'Gv=G, Loss L1, Lamda=1, padding=True', i, m_err.item())
+        plotter.plot('loss', 'val', 'Gv=G, Lamda=1, padding=True', i, m_err.item())
 
         # update the training loss
         t_3d.update(m_err.item() * n, n)

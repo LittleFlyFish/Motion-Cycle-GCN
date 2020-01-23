@@ -35,6 +35,7 @@ def train_model(model,datasets,cfg,distributed,optimizer):
     is_cuda = torch.cuda.is_available()
     if is_cuda:
         model.cuda()
+        model.to('cuda:0')
     start_epoch = cfg.resume.start
     lr_now = cfg.optim_para.optimizer.lr
 
@@ -139,10 +140,6 @@ def train_model(model,datasets,cfg,distributed,optimizer):
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15, num=1, loss_list=[1]):
     t_l = utils.AccumLoss()
 
-    is_cuda = torch.cuda.is_available()
-    if is_cuda:
-        model.cuda()
-
     model.train()
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
@@ -152,6 +149,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             continue
 
         bt = time.time()
+
         if is_cuda:
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking = True)).float()
