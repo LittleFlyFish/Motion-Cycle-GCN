@@ -104,7 +104,7 @@ def train_model(model,datasets,cfg,distributed,optimizer):
             err_best = min(v_3d, err_best)
         else:
             is_best = False
-        file_name = ['ckpt_' + script_name + '_best.pth.tar', 'ckpt_' + script_name + '_last.pth.tar']
+        file_name = ['ckpt_' + script_name + "Lamda=10" + '_best.pth.tar', 'ckpt_' + script_name + '_last.pth.tar']
         utils.save_ckpt({'epoch': epoch + 1,
                          'lr': lr_now,
                          'err': test_3d[0],
