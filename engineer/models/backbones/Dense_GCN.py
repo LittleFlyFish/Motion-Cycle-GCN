@@ -92,7 +92,6 @@ class Dense_GCN(nn.Module):
             y1 = self.gcbs[i](y) # y size [batch, node_n, dct_n]
             y = torch.cat((y, y1), dim=2)
 
-
         y = self.gc7(y)
         y = y + x
 
