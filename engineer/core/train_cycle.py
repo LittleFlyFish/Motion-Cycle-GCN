@@ -139,7 +139,7 @@ def get_reverse_input(g_out_3d,input_n,output_n,dct_used,dim_used, padding_seq):
     i_idx = torch.from_numpy(np.append(np.arange(0, output_n), pad_idx))
 
     pad_all_seqs = all_seqs[:,i_idx,:]
-    pad_all_seqs[:, pad_idx, :] = padding_seq
+    #pad_all_seqs[:, pad_idx, :] = padding_seq
     input_dct_seq = data_utils.seq2dct(pad_all_seqs, dct_n=dct_used)
 
     return input_dct_seq
