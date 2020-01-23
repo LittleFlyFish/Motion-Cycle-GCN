@@ -12,19 +12,19 @@ from engineer.models.backbones.Motion_GCN import GraphConvolution, GC_Block
 import numpy as np
 
 class GC_Block_NoRes(nn.Module):
-    def __init__(self, in_features, p_dropout, bias=True, node_n=48):
+    def __init__(self, in_features, out_features, p_dropout, bias=True, node_n=48):
         """
         Define a residual block of GCN
         """
         super(GC_Block_NoRes, self).__init__()
         self.in_features = in_features
-        self.out_features = in_features
+        self.out_features = out_features
 
         self.gc1 = GraphConvolution(in_features, in_features, node_n=node_n, bias=bias)
         self.bn1 = nn.BatchNorm1d(node_n * in_features)
 
-        self.gc2 = GraphConvolution(in_features, in_features, node_n=node_n, bias=bias)
-        self.bn2 = nn.BatchNorm1d(node_n * in_features)
+        self.gc2 = GraphConvolution(in_features, out_features, node_n=node_n, bias=bias)
+        self.bn2 = nn.BatchNorm1d(node_n * out_features)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
@@ -71,21 +71,15 @@ class Dense_GCN(nn.Module):
 
         self.gcbs = []
         for i in range(num_stage):
-            self.gcbs.append(GC_Block_NoRes(hidden_feature, p_dropout=p_dropout, node_n=node_n))
+            self.gcbs.append(GC_Block_NoRes((i+1)*hidden_feature, hidden_feature, p_dropout=p_dropout, node_n=node_n))
 
         self.gcbs = nn.ModuleList(self.gcbs)
 
-        self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
+        self.gc7 = GraphConvolution(hidden_feature*(num_stage+1), input_feature, node_n=node_n)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
 
-
-        self.mlp = []
-        for i in range(num_stage):
-            self.mlp.append(nn.Linear(np.int((i+1)*(i+2)*hidden_feature/2), hidden_feature))
-
-        self.mlp = nn.ModuleList(self.mlp)
 
     def forward(self, x):
         y = self.gc1(x)
@@ -97,12 +91,6 @@ class Dense_GCN(nn.Module):
         for i in range(self.num_stage):
             y1 = self.gcbs[i](y) # y size [batch, node_n, dct_n]
             y = torch.cat((y, y1), dim=2)
-            # _,_,f1 = y.shape
-            # y = y.view(-1, f1)
-            # y = self.mlp[i](y)
-            # y = y.view(-1, n, f)
-
-        print(y.shape)
 
 
         y = self.gc7(y)
