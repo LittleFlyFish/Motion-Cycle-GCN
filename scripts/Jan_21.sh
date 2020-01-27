@@ -31,7 +31,7 @@ python3 tools/train_net.py --config ./configs/Attention_GCN_I10_O10_D15_G.py    
 python3 tools/train_net.py --config ./configs/Dense_GCN_I10_O10_D15_G.py
 
 ## Plan: ST-GCN auto encoder graph, + residual link + U-net link + attention + upsample and downsample
-
+python3 tools/train_ST_GCN.py --config ./configs/ST_GCN_I10_O10_D15_G.py   ## ST_GCN resudial framework
 
 
 ###Plan : Multi-scale skills

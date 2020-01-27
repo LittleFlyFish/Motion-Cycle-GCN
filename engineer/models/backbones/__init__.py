@@ -8,6 +8,8 @@ from .G_NoNorm import G_NoNorm
 from .G_Attention import G_Attention
 from .G_Attention_GCN import G_Attention_GCN
 from .Dense_GCN import Dense_GCN
+from .Fuse_GCN import Fuse_GCN # ST-GCN as encoder, Motion_GCN as decoder
+from .ST_GCN_Dense import ST_GCN_Dense
 __all__=["Motion_GCN","SemGCN","Cycle_GCN", "P_GCN", "Cycle_P", "Recycle_GCN", "G_NoNorm",
-         "G_Attention", "G_Attention_GCN", "Dense_GCN"]
+         "G_Attention", "G_Attention_GCN", "Dense_GCN", "Fuse_GCN", "ST_GCN_Dense"]
 

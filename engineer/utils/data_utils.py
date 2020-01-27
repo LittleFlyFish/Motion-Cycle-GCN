@@ -714,8 +714,96 @@ def load_data(path_to_dataset, subjects, actions, sample_rate, seq_len, input_n=
 
     return sampled_seq, dimensions_to_ignore, dimensions_to_use, data_mean, data_std
 
+def load_data(path_to_dataset, subjects, actions, sample_rate, seq_len, input_n=10, data_mean=None, data_std=None):
+    """
+    adapted from
+    https://github.com/una-dinosauria/human-motion-prediction/src/data_utils.py#L216
 
-def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len):
+    :param path_to_dataset: path of dataset
+    :param subjects:
+    :param actions:
+    :param sample_rate:
+    :param seq_len: past frame length + future frame length
+    :param is_norm: normalize the expmap or not
+    :param data_std: standard deviation of the expmap
+    :param data_mean: mean of the expmap
+    :param input_n: past frame length
+    :return:
+    """
+
+    sampled_seq = []
+    complete_seq = []
+    # actions_all = define_actions("all")
+    # one_hot_all = np.eye(len(actions_all))
+    for subj in subjects:
+        for action_idx in np.arange(len(actions)):
+            action = actions[action_idx]
+            if not (subj == 5):
+                for subact in [1, 2]:  # subactions
+
+                    print("Reading subject {0}, action {1}, subaction {2}".format(subj, action, subact))
+
+                    filename = '{0}/S{1}/{2}_{3}.txt'.format(path_to_dataset, subj, action, subact)
+                    action_sequence = readCSVasFloat(filename)
+                    n, d = action_sequence.shape
+                    even_list = range(0, n, sample_rate)
+                    the_sequence = np.array(action_sequence[even_list, :])
+                    num_frames = len(the_sequence)
+                    fs = np.arange(0, num_frames - seq_len + 1)
+                    fs_sel = fs
+                    for i in np.arange(seq_len - 1):
+                        fs_sel = np.vstack((fs_sel, fs + i + 1))
+                    fs_sel = fs_sel.transpose()
+                    seq_sel = the_sequence[fs_sel, :]
+                    if len(sampled_seq) == 0:
+                        sampled_seq = seq_sel
+                        complete_seq = the_sequence
+                    else:
+                        sampled_seq = np.concatenate((sampled_seq, seq_sel), axis=0)
+                        complete_seq = np.append(complete_seq, the_sequence, axis=0)
+            else:
+                print("Reading subject {0}, action {1}, subaction {2}".format(subj, action, 1))
+                filename = '{0}/S{1}/{2}_{3}.txt'.format(path_to_dataset, subj, action, 1)
+                action_sequence = readCSVasFloat(filename)
+                n, d = action_sequence.shape
+                even_list = range(0, n, sample_rate)
+                the_sequence1 = np.array(action_sequence[even_list, :])
+                num_frames1 = len(the_sequence1)
+
+                print("Reading subject {0}, action {1}, subaction {2}".format(subj, action, 2))
+                filename = '{0}/S{1}/{2}_{3}.txt'.format(path_to_dataset, subj, action, 2)
+                action_sequence = readCSVasFloat(filename)
+                n, d = action_sequence.shape
+                even_list = range(0, n, sample_rate)
+                the_sequence2 = np.array(action_sequence[even_list, :])
+                num_frames2 = len(the_sequence2)
+
+                fs_sel1, fs_sel2 = find_indices_srnn(num_frames1, num_frames2, seq_len, input_n=input_n)
+                seq_sel1 = the_sequence1[fs_sel1, :]
+                seq_sel2 = the_sequence2[fs_sel2, :]
+                if len(sampled_seq) == 0:
+                    sampled_seq = seq_sel1
+                    sampled_seq = np.concatenate((sampled_seq, seq_sel2), axis=0)
+                    complete_seq = the_sequence1
+                    complete_seq = np.append(complete_seq, the_sequence2, axis=0)
+
+    # if is not testing or validation then get the data statistics
+    if not (subj == 5 and subj == 11):
+        data_std = np.std(complete_seq, axis=0)
+        data_mean = np.mean(complete_seq, axis=0)
+
+    dimensions_to_ignore = []
+    dimensions_to_use = []
+    dimensions_to_ignore.extend(list(np.where(data_std < 1e-4)[0]))
+    dimensions_to_use.extend(list(np.where(data_std >= 1e-4)[0]))
+    data_std[dimensions_to_ignore] = 1.0
+    data_mean[dimensions_to_ignore] = 0.0
+
+    return sampled_seq, dimensions_to_ignore, dimensions_to_use, data_mean, data_std
+
+
+
+def load_data_ST(path_to_dataset, subjects, actions, sample_rate, seq_len):
     """
 
     adapted from
@@ -817,7 +905,7 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len):
                     complete_seq = np.append(complete_seq, the_sequence1, axis=0)
                     complete_seq = np.append(complete_seq, the_sequence2, axis=0)
     # ignore constant joints and joints at same position with other joints
-    joint_to_ignore = np.array([0, 1, 6, 11, 16, 20, 23, 24, 28, 31])
+    joint_to_ignore = np.array([])
     dimensions_to_ignore = np.concatenate((joint_to_ignore * 3, joint_to_ignore * 3 + 1, joint_to_ignore * 3 + 2))
     dimensions_to_use = np.setdiff1d(np.arange(complete_seq.shape[1]), dimensions_to_ignore)
 
