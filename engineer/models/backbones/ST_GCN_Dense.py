@@ -111,8 +111,8 @@ class ST_GCN_Dense(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
-        for i in range(self.num_stage):
-            y = self.stbs[i](y)
+        # for i in range(self.num_stage):
+        #     y = self.stbs[i](y)
 
         y, _ = self.st2(y, self.A)
         y = y + x

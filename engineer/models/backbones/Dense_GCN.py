@@ -27,7 +27,7 @@ class GC_Block_NoRes(nn.Module):
         self.bn2 = nn.BatchNorm1d(node_n * out_features)
 
         self.do = nn.Dropout(p_dropout)
-        self.act_f = nn.Tanh()
+        self.act_f = nn.LeakyReLU()
 
     def forward(self, x):
         y = self.gc1(x)
@@ -78,7 +78,7 @@ class Dense_GCN(nn.Module):
         self.gc7 = GraphConvolution(hidden_feature*(num_stage+1), input_feature, node_n=node_n)
 
         self.do = nn.Dropout(p_dropout)
-        self.act_f = nn.Tanh()
+        self.act_f = nn.LeakyReLU()
 
 
     def forward(self, x):

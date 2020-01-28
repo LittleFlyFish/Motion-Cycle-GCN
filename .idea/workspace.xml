@@ -5,6 +5,10 @@
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/ST_GCN_I10_O10_D15_G.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/ST_GCN_I10_O10_D15_G.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_ST_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_ST_GCN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Dense_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Dense_GCN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_GCN_Dense.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_GCN_Dense.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,13 +88,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00007" summary="&quot;H3.6M dataset to be specific to 3D version&quot;">
-      <created>1579208832080</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1579208832080</updated>
     </task>
     <task id="LOCAL-00008" summary="&quot;H3.6M dataset to be specific to 3D version&quot;">
       <created>1579208995698</created>
@@ -428,7 +425,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580135332067</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="&quot;ST_GCN version&quot;">
+      <created>1580136408346</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1580136408346</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -447,17 +451,18 @@
     <MESSAGE value="&quot;Lamda=10, L2 loss, Cycle, Padding = False,  &quot;" />
     <MESSAGE value="&quot;Lamda=10, L2 loss, Cycle, Padding = False&quot;" />
     <MESSAGE value="&quot;ST-GCN module&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;ST-GCN module&quot;" />
+    <MESSAGE value="&quot;ST_GCN version&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;ST_GCN version&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1579271917043">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579271917043" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580135331984">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580136408290">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580135331984" />
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580136408290" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -474,10 +479,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580135338359">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580136414047">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580135338359" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580136414047" />
     <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1579623804008">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>

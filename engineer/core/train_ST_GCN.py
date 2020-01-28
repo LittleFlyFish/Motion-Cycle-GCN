@@ -146,6 +146,10 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
           loss_list=[1]):
     t_l = utils.AccumLoss()
 
+    print(len(dim_used))
+
+
+
     model.train()
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
@@ -205,9 +209,9 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
         outputs = model(inputs)
+        dim_used_len = len(dim_used)
 
         n, seq_len, dim_full_len = all_seq.data.shape
-        dim_used_len = len(dim_used)
 
         outputs_3d = outputs.contiguous().transpose(1, 2).reshape(n, seq_len, dim_used_len)
 
@@ -216,6 +220,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
 
         pred_3d = all_seq.clone()
         dim_used = np.array(dim_used)
+
 
         # joints at same loc
         joint_to_ignore = np.array([16, 20, 23, 24, 28, 31])

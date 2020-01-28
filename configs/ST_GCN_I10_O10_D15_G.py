@@ -5,7 +5,7 @@ model = dict(
     strategy = 'spatial',
     hidden_feature = 256,
     dropout = 0.5,
-    num_stage = 12,
+    num_stage = 3,
 )
 dataset_type = 'Hm36Dataset_3d_ST'
 data_root = './engineer/datasets/h3.6m/dataset'
