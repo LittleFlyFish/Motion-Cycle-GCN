@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="&quot;GV=G version, Padding=True&quot;">
+      <change afterPath="$PROJECT_DIR$/tools/Calculate.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/ST_GCN_I10_O10_D15_G.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/ST_GCN_I10_O10_D15_G.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_ST_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_ST_GCN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Dense_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Dense_GCN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_GCN_Dense.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_GCN_Dense.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/utils/data_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/utils/data_utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +36,28 @@
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/st-gcn-master" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.Calculate">
+    <configuration name="Calculate" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Motion-Cycle-GCN" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tools" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tools/Calculate.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="G_Attention_GCN" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Motion-Cycle-GCN" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -62,6 +81,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Calculate" />
         <item itemvalue="Python.G_Attention_GCN" />
       </list>
     </recent_temporary>
@@ -88,13 +108,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00008" summary="&quot;H3.6M dataset to be specific to 3D version&quot;">
-      <created>1579208995698</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1579208995698</updated>
     </task>
     <task id="LOCAL-00009" summary="&quot;H3.6M dataset to be specific to 3D version&quot;">
       <created>1579224307726</created>
@@ -432,7 +445,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580136408346</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="&quot;Dense-GCN LeakyRelu version&quot;">
+      <created>1580222573468</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1580222573468</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -452,17 +472,18 @@
     <MESSAGE value="&quot;Lamda=10, L2 loss, Cycle, Padding = False&quot;" />
     <MESSAGE value="&quot;ST-GCN module&quot;" />
     <MESSAGE value="&quot;ST_GCN version&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;ST_GCN version&quot;" />
+    <MESSAGE value="&quot;Dense-GCN LeakyRelu version&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;Dense-GCN LeakyRelu version&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1579271917043">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579271917043" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580136408290">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580222573410">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580136408290" />
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580222573410" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -471,6 +492,22 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="780" y="357" key="FileChooserDialogImpl/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579894477941" />
+    <state width="1832" height="369" key="GridCell.Tab.0.bottom" timestamp="1580224099502">
+      <screen x="65" y="24" width="1855" height="1176" />
+    </state>
+    <state width="1832" height="369" key="GridCell.Tab.0.bottom/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580224099502" />
+    <state width="1832" height="369" key="GridCell.Tab.0.center" timestamp="1580224099502">
+      <screen x="65" y="24" width="1855" height="1176" />
+    </state>
+    <state width="1832" height="369" key="GridCell.Tab.0.center/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580224099502" />
+    <state width="1832" height="369" key="GridCell.Tab.0.left" timestamp="1580224099502">
+      <screen x="65" y="24" width="1855" height="1176" />
+    </state>
+    <state width="1832" height="369" key="GridCell.Tab.0.left/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580224099502" />
+    <state width="1832" height="369" key="GridCell.Tab.0.right" timestamp="1580224099502">
+      <screen x="65" y="24" width="1855" height="1176" />
+    </state>
+    <state width="1832" height="369" key="GridCell.Tab.0.right/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580224099502" />
     <state x="736" y="312" key="RollbackChangesDialog" timestamp="1579703113854">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -479,14 +516,14 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580136414047">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580222579769">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580136414047" />
-    <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1579623804008">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580222579769" />
+    <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1580223894911">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="655" y="266" width="672" height="678" key="search.everywhere.popup/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579623804008" />
+    <state x="655" y="266" width="672" height="678" key="search.everywhere.popup/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580223894911" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
