@@ -55,22 +55,24 @@ class ST_A(nn.Module):
 
 
         self.st_gcn_networks = nn.ModuleList((
-            st_gcn(32, 64, kernel_size, 1, residual=False),
-            st_gcn(64, 64, kernel_size, 1, **kwargs),
-            st_gcn(64, 64, kernel_size, 1, **kwargs),
-            st_gcn(64, 64, kernel_size, 2, **kwargs),
+            st_gcn(16, 32, kernel_size, 1, residual=False, **kwargs),
+            st_gcn(32, 64, kernel_size, 2, **kwargs),
             st_gcn(64, 128, kernel_size, 1, **kwargs),
             st_gcn(128, 128, kernel_size, 1, **kwargs),
             st_gcn(128, 128, kernel_size, 1, **kwargs),
             st_gcn(128, 256, kernel_size, 1, **kwargs),
             st_gcn(256, 256, kernel_size, 2, **kwargs),
             st_gcn(256, 256, kernel_size, 1, **kwargs),
+            st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
+            st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
+            st_gcn(256, 512, kernel_size, 1, **kwargs),
+            st_gcn(512, 512, kernel_size, 1, **kwargs),
         ))
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
-        self.st2 = st_gcn(256, in_channels, kernel_size, 1, residual=False)
-        self.st1 = st_gcn(in_channels, 32, kernel_size, 1, residual=False)
+        self.st2 = st_gcn(512, in_channels, kernel_size, 1, residual=False)
+        self.st1 = st_gcn(in_channels, 16, kernel_size, 1, residual=False)
         self.residual = residual
 
     def forward(self, x):
@@ -78,8 +80,9 @@ class ST_A(nn.Module):
 
         for st_gcn in self.st_gcn_networks:  # pass through the ST-GCN to encoder the feature
             y, _ = st_gcn(y, self.A)
+            y = self.act_f(y)
 
-        y = self.act_f(y)
+
         y = self.do(y)
         y, _ = self.st2(y, self.A)
         if self.residual:

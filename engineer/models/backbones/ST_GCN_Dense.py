@@ -110,11 +110,11 @@ class ST_GCN_Dense(nn.Module):
 
         # ST-GCN module
         y, _ = self.st1(x, self.A)
-        y = self.act_f(y)
         y = self.do(y)
 
         for i in range(self.num_stage):
             y1 = self.stbs[i](y)
+            y = self.act_f(y)
             y = torch.cat((y, y1), dim=1)
 
         y, _ = self.st2(y, self.A)

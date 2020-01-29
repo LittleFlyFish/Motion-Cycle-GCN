@@ -36,7 +36,7 @@ class st_gcn(nn.Module):
                  stride=1,
                  dropout=0,
                  residual=True,
-                 Transpose= False):
+                 Transpose=False):
         super().__init__()
 
         assert len(kernel_size) == 2
@@ -70,6 +70,7 @@ class st_gcn(nn.Module):
                     (kernel_size[0], 1),
                     (stride, 1),
                     padding,
+                    output_padding=(1, 0),
                 ),
                 nn.BatchNorm2d(out_channels),
                 nn.Dropout(dropout, inplace=True),
@@ -81,13 +82,26 @@ class st_gcn(nn.Module):
         elif (in_channels == out_channels) and (stride == 1):
             self.residual = lambda x: x
 
-        else:
+        elif not Transpose:
             self.residual = nn.Sequential(
                 nn.Conv2d(
                     in_channels,
                     out_channels,
                     kernel_size=1,
-                    stride=(stride, 1)),
+                    stride=(stride, 1),
+                ),
+                nn.BatchNorm2d(out_channels),
+
+            )
+        elif residual & Transpose:
+            self.residual = nn.Sequential(
+                nn.ConvTranspose2d(
+                    in_channels,
+                    out_channels,
+                    kernel_size=1,
+                    stride=(stride, 1),
+                    output_padding=(1, 0),
+                ),
                 nn.BatchNorm2d(out_channels),
             )
 
