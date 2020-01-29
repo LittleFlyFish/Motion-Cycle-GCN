@@ -125,8 +125,9 @@ class Hm36Dataset_3d_ST2(Dataset):
         all_seqs, dim_ignore, dim_used = data_utils.load_data_3d(path_to_data, subjs, acts, sample_rate,
                                                                  input_n + output_n)
         self.dim_used = dim_used
+        self.all_seqs = all_seqs
 
-        self.all_seqs,self.input_dct_seq,self.output_dct_seq = self.pipeline(dict(all_seqs=all_seqs,dim_used=dim_used,input_n=input_n,output_n=output_n,dct_used=dct_used))
+        #self.all_seqs,self.input_dct_seq,self.output_dct_seq = self.pipeline(dict(all_seqs=all_seqs,dim_used=dim_used,input_n=input_n,output_n=output_n,dct_used=dct_used))
 
         ################################################################################################################
         ## change the output version to be [batch, 3, frame_n, node_n]
@@ -135,11 +136,11 @@ class Hm36Dataset_3d_ST2(Dataset):
         node_n = int(len(dim_used)/3)
 
         pad_idx = np.repeat([input_n - 1], output_n)
-        i_idx = np.append(np.arange(0, input_n))
-        self.input = np.resize(all_seqs[:, i_idx, :], (batch, input_n+output_n, 3, node_n)) ## this line of view is not sure
+        i_idx = np.arange(0, input_n)
+        self.input = np.resize(all_seqs[:, i_idx, :], (batch, input_n, 3, node_n)) ## this line of view is not sure
         self.input = np.transpose(self.input, (0, 2, 1, 3))
 
-        self.padding_seq = np.resize(all_seqs[:, pad_idx, :], (batch, input_n+output_n, 3, node_n)) ## this line of view is not sure
+        self.padding_seq = np.resize(all_seqs[:, pad_idx, :], (batch, output_n, 3, node_n)) ## this line of view is not sure
         self.padding_seq = np.transpose(self.padding_seq, (0, 2, 1, 3))
 
         self.output = np.resize(all_seqs, (batch, 3, input_n+output_n, node_n))

@@ -8,7 +8,7 @@ model = dict(
     num_stage = 12,
     residual = False
 )
-dataset_type = 'Hm36Dataset_3d_ST'
+dataset_type = 'Hm36Dataset_3d_ST2'
 data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),

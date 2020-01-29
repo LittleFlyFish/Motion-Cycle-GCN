@@ -2,28 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="&quot;GV=G version, Padding=True&quot;">
-      <change afterPath="$PROJECT_DIR$/configs/ST_A_I10_O10_D15_G.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/ST_A_I10_O10_D15_G2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/ST_GCN_I10_O10_D15_G2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/core/train_ST_GCN2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_A.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_B.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_C.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/Jan_28.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/Calculate.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/train_ST_GCN2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/ST_GCN_I10_O10_D15_G.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/ST_GCN_I10_O10_D15_G.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_ST_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_ST_GCN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/datasets/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/datasets/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/ST_A_I10_O10_D15_G2.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/ST_A_I10_O10_D15_G2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/ST_GCN_I10_O10_D15_G2.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/ST_GCN_I10_O10_D15_G2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_ST_GCN2.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_ST_GCN2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/datasets/hm36_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/datasets/hm36_dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_GCN_Dense.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_GCN_Dense.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/common/graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/common/graph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/Jan_21.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Jan_21.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_A.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_A.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/common/STGCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/common/STGCN.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,13 +112,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00010" summary="&quot;Visdom add to see the training process&quot;">
-      <created>1579302112744</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1579302112744</updated>
     </task>
     <task id="LOCAL-00011" summary="&quot;Visdom add to see the training process&quot;">
       <created>1579302148915</created>
@@ -469,7 +449,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580225473157</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1580303192239</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1580303192239</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -481,7 +468,6 @@
     <MESSAGE value="&quot;G_Attention add&quot;" />
     <MESSAGE value="&quot;GV=G version&quot;" />
     <MESSAGE value="&quot;Dense_GCN add&quot;" />
-    <MESSAGE value="&quot;GV=G version, Padding=True&quot;" />
     <MESSAGE value="&quot;Cycle, Gv=G, L2 Loss, Lamda=1&quot;" />
     <MESSAGE value="&quot;Desne_GCN version&quot;" />
     <MESSAGE value="&quot;Lamda = 1, L2 Loss, Cycle, Padding = False&quot;" />
@@ -491,17 +477,18 @@
     <MESSAGE value="&quot;ST_GCN version&quot;" />
     <MESSAGE value="&quot;Dense-GCN LeakyRelu version&quot;" />
     <MESSAGE value="&quot;Dense + LeakyRelu&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;Dense + LeakyRelu&quot;" />
+    <MESSAGE value="&quot;GV=G version, Padding=True&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;GV=G version, Padding=True&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1579271917043">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579271917043" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580225473096">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580303192146">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580225473096" />
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580303192146" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -534,10 +521,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580225478226">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580303198395">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580225478226" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580303198395" />
     <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1580223894911">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -550,11 +537,6 @@
           <url>file://$PROJECT_DIR$/engineer/models/common/tgcn.py</url>
           <line>2</line>
           <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/engineer/models/backbones/ST_GCN_Dense.py</url>
-          <line>96</line>
-          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

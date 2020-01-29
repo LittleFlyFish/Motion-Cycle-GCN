@@ -35,7 +35,8 @@ class st_gcn(nn.Module):
                  kernel_size,
                  stride=1,
                  dropout=0,
-                 residual=True):
+                 residual=True,
+                 Transpose= False):
         super().__init__()
 
         assert len(kernel_size) == 2
@@ -45,19 +46,34 @@ class st_gcn(nn.Module):
         self.gcn = ConvTemporalGraphical(in_channels, out_channels,
                                          kernel_size[1])
 
-        self.tcn = nn.Sequential(
-            nn.BatchNorm2d(out_channels),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(
-                out_channels,
-                out_channels,
-                (kernel_size[0], 1),
-                (stride, 1),
-                padding,
-            ),
-            nn.BatchNorm2d(out_channels),
-            nn.Dropout(dropout, inplace=True),
-        )
+        if not Transpose:
+            self.tcn = nn.Sequential(
+                nn.BatchNorm2d(out_channels),
+                nn.ReLU(inplace=True),
+                nn.Conv2d(
+                    out_channels,
+                    out_channels,
+                    (kernel_size[0], 1),
+                    (stride, 1),
+                    padding,
+                ),
+                nn.BatchNorm2d(out_channels),
+                nn.Dropout(dropout, inplace=True),
+            )
+        else:
+            self.tcn = nn.Sequential(
+                nn.BatchNorm2d(out_channels),
+                nn.ReLU(inplace=True),
+                nn.ConvTranspose2d(
+                    out_channels,
+                    out_channels,
+                    (kernel_size[0], 1),
+                    (stride, 1),
+                    padding,
+                ),
+                nn.BatchNorm2d(out_channels),
+                nn.Dropout(dropout, inplace=True),
+            )
 
         if not residual:
             self.residual = lambda x: 0
