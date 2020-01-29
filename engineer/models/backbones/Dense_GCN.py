@@ -85,11 +85,11 @@ class Dense_GCN(nn.Module):
         y = self.gc1(x)
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
         y = self.do(y)
 
         for i in range(self.num_stage):
             y1 = self.gcbs[i](y) # y size [batch, node_n, dct_n]
+            y = self.act_f(y)
             y = torch.cat((y, y1), dim=2)
 
         y = self.gc7(y)
