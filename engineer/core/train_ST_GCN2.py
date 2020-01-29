@@ -149,7 +149,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
     model.train()
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
-    for i, (inputs, targets, all_seq) in enumerate(train_loader):
+    for i, (inputs, padding_seq, all_seq) in enumerate(train_loader):
         batch_size = inputs.shape[0]
         if batch_size == 1:
             continue
@@ -159,10 +159,12 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         if is_cuda:
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
+            padding_seq = Variable(padding_seq.cuda()).float()
 
         outputs = model(inputs)
+        Final = torch.concat(2, [inputs, outputs+padding_seq])
         # calculate loss and backward
-        _, loss = loss_funcs.mpjpe_error_p3d_ST(outputs, all_seq, dct_n, dim_used)
+        _, loss = loss_funcs.mpjpe_error_p3d_ST(Final, all_seq, dct_n, dim_used)
         # #############################################################################
         # #debug loss
         #

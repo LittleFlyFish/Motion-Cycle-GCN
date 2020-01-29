@@ -72,7 +72,7 @@ class Hm36Dataset_3d_ST(Dataset):
         subjs = subs[split]
         self.pipeline = Compose(pipeline)
         # loader data is in here
-        all_seqs, dim_ignore, dim_used = data_utils.load_data_ST(path_to_data, subjs, acts, sample_rate,
+        all_seqs, dim_ignore, dim_used = data_utils.load_data_3d(path_to_data, subjs, acts, sample_rate,
                                                                  input_n + output_n)
         self.dim_used = dim_used
 
@@ -80,16 +80,14 @@ class Hm36Dataset_3d_ST(Dataset):
 
         ################################################################################################################
         ## change the output version to be [batch, 3, frame_n, node_n]
-        all_seqs = all_seqs[:, :, :]
+        all_seqs = all_seqs[:, :, dim_used]
         batch, frame_n, _ = all_seqs.shape
-        all_seqs = all_seqs.transpose(0, 2, 1)
-        all_seqs = all_seqs.reshape(-1, input_n + output_n)
-        all_seqs = all_seqs.transpose()
         node_n = int(len(dim_used)/3)
 
         pad_idx = np.repeat([input_n - 1], output_n)
         i_idx = np.append(np.arange(0, input_n), pad_idx)
-        self.input = np.resize(all_seqs[i_idx, :], (batch, 3, input_n+output_n, node_n)) ## this line of view is not sure
+        self.input = np.resize(all_seqs[:, i_idx, :], (batch, input_n+output_n, 3, node_n)) ## this line of view is not sure
+        self.input = np.transpose(self.input, (0, 2, 1, 3))
         self.output = np.resize(all_seqs, (batch, 3, input_n+output_n, node_n))
 
 
@@ -101,6 +99,61 @@ class Hm36Dataset_3d_ST(Dataset):
     def __repr__(self):
         return "{} @action {}".format(__class__.__name__,self.actions)
 
+@DATASETS.register_module
+class Hm36Dataset_3d_ST2(Dataset):
+
+    def __init__(self, path_to_data, actions, pipeline,input_n=20, output_n=10, dct_used=15, split=0, sample_rate=2):
+        """
+        :param path_to_data:
+        :param actions:
+        :param input_n:
+        :param output_n:
+        :param dct_used:
+        :param split: 0 train, 1 testing, 2 validation
+        :param sample_rate:
+        """
+        self.path_to_data = path_to_data
+        self.split = split
+        self.dct_used = dct_used
+        self.actions = actions
+        subs = np.array([[1, 6, 7, 8, 9], [5], [11]])
+        # subs = np.array([[1], [5], [11]])
+        acts = data_utils.define_actions(actions)
+        subjs = subs[split]
+        self.pipeline = Compose(pipeline)
+        # loader data is in here
+        all_seqs, dim_ignore, dim_used = data_utils.load_data_3d(path_to_data, subjs, acts, sample_rate,
+                                                                 input_n + output_n)
+        self.dim_used = dim_used
+
+        self.all_seqs,self.input_dct_seq,self.output_dct_seq = self.pipeline(dict(all_seqs=all_seqs,dim_used=dim_used,input_n=input_n,output_n=output_n,dct_used=dct_used))
+
+        ################################################################################################################
+        ## change the output version to be [batch, 3, frame_n, node_n]
+        all_seqs = all_seqs[:, :, dim_used]
+        batch, frame_n, _ = all_seqs.shape
+        node_n = int(len(dim_used)/3)
+
+        pad_idx = np.repeat([input_n - 1], output_n)
+        i_idx = np.append(np.arange(0, input_n))
+        self.input = np.resize(all_seqs[:, i_idx, :], (batch, input_n+output_n, 3, node_n)) ## this line of view is not sure
+        self.input = np.transpose(self.input, (0, 2, 1, 3))
+
+        self.padding_seq = np.resize(all_seqs[:, pad_idx, :], (batch, input_n+output_n, 3, node_n)) ## this line of view is not sure
+        self.padding_seq = np.transpose(self.padding_seq, (0, 2, 1, 3))
+
+        self.output = np.resize(all_seqs, (batch, 3, input_n+output_n, node_n))
+
+        self.output = self.output[:, :, input_n: (input_n + output_n), :]
+
+
+    def __len__(self):
+        return np.shape(self.input)[0]
+
+    def __getitem__(self, item):
+        return self.input[item], self.padding_seq[item], self.all_seqs[item]
+    def __repr__(self):
+        return "{} @action {}".format(__class__.__name__,self.actions)
 
 @DATASETS.register_module
 class VideoDataset(Dataset):

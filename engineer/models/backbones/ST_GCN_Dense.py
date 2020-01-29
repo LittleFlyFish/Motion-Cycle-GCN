@@ -22,17 +22,17 @@ from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, G
 
 
 class ST_Block(nn.Module):
-    def __init__(self, in_channels, kernel_size, graph_adj, stride=1, dropout=0, residual=True):
+    def __init__(self, in_channels, out_channels, kernel_size, graph_adj, stride=1, dropout=0, residual=True):
         """
         Define a residual block of GCN
         """
         super(ST_Block, self).__init__()
         self.in_channels = in_channels
-        self.out_channels = in_channels
+        self.out_channels = out_channels
         self.A = graph_adj.cuda()
 
         self.stlayer1 = st_gcn(in_channels, in_channels, kernel_size, 1, residual=False)
-        self.stlayer2 = st_gcn(in_channels, in_channels, kernel_size, 1, residual=False)
+        self.stlayer2 = st_gcn(in_channels, out_channels, kernel_size, 1, residual=False)
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
@@ -46,7 +46,7 @@ class ST_Block(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
-        return y + x
+        return y
 
     def __repr__(self):
         return self.__class__.__name__ + ' (' \
@@ -61,7 +61,7 @@ class ST_GCN_Dense(nn.Module):
     The input is [batch, in_channels, input_n, node_dim]   # the in_channels is 3 at the beginning
     the out feature of encoder is  [batch, node_dim, feature_len]
     '''
-    def __init__(self, layout, strategy, hidden_feature, dropout, num_stage=1, **kwargs):
+    def __init__(self, layout, strategy, hidden_feature, dropout, residual, num_stage=1,  **kwargs):
         """
 
         :param input_feature: num of input feature, dct_n
@@ -75,6 +75,7 @@ class ST_GCN_Dense(nn.Module):
         # load graph
         self.graph = Graph(layout=layout, strategy=strategy)
         A = torch.tensor(self.graph.A, dtype=torch.float32, requires_grad=False)
+
         self.register_buffer('A', A)
         self.data_bn = nn.BatchNorm1d(3 * A.size(1))
 
@@ -87,33 +88,36 @@ class ST_GCN_Dense(nn.Module):
         self.num_stage = num_stage
         self.stbs = []
         for i in range(num_stage):
-            self.stbs.append(ST_Block(hidden_feature, kernel_size, graph_adj=A, stride=1, dropout=0, residual=True))
+            self.stbs.append(ST_Block(hidden_feature*(i+1), hidden_feature, kernel_size, graph_adj=A, stride=1, dropout=0, residual=True))
         self.stbs = nn.ModuleList(self.stbs)
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
         self.st1 = st_gcn(input_feature, hidden_feature, kernel_size, 1, residual=False)
-        self.st2 = st_gcn(hidden_feature, input_feature, kernel_size, 1, residual=False)
+        self.st2 = st_gcn(hidden_feature*(num_stage + 1), input_feature, kernel_size, 1, residual=False)
+        self.residual = residual
 
 
     def forward(self, x):
-        # data normalization
-        N, C, T, V = x.size() #[batch, channels, input_n, node_m]
-        x = x.permute(0, 3, 1, 2).contiguous()
-        x = x.view(N, V * C, T)
-        x = self.data_bn(x)
-        x = x.view(N, V, C, T)
-        x = x.permute(0, 1, 3, 2).contiguous()
-        x = x.view(N, C, T, V)
+        # # data normalization
+        # N, C, T, V = x.size() #[batch, channels, input_n, node_m]
+        # x = x.permute(0, 3, 1, 2).contiguous()
+        # x = x.view(N, V * C, T)
+        # x = self.data_bn(x)
+        # x = x.view(N, V, C, T)
+        # x = x.permute(0, 1, 3, 2).contiguous()
+        # x = x.view(N, C, T, V)
 
         # ST-GCN module
         y, _ = self.st1(x, self.A)
         y = self.act_f(y)
         y = self.do(y)
 
-        # for i in range(self.num_stage):
-        #     y = self.stbs[i](y)
+        for i in range(self.num_stage):
+            y1 = self.stbs[i](y)
+            y = torch.cat((y, y1), dim=1)
 
         y, _ = self.st2(y, self.A)
-        y = y + x
+        if self.residual:
+            y = y + x
         return y

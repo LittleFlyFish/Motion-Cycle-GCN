@@ -6,7 +6,7 @@ model = dict(
     hidden_feature = 256,
     dropout = 0.5,
     num_stage = 12,
-    residual = True
+    residual = False
 )
 dataset_type = 'Hm36Dataset_3d_ST'
 data_root = './engineer/datasets/h3.6m/dataset'

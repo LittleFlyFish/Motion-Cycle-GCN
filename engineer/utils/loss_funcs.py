@@ -196,7 +196,8 @@ def mpjpe_error_p3d_ST(outputs, all_seq, dct_n, dim_used):
     dim_used = np.array(dim_used)
     dim_used_len = len(dim_used)
 
-    outputs_p3d = outputs.contiguous().transpose(1,2).reshape(n, seq_len, dim_used_len)
+    outputs_p3d = outputs.contiguous().transpose(1, 2).reshape(n, seq_len, dim_used_len)
+
     pred_3d = outputs_p3d.contiguous().view(-1, dim_used_len).view(-1, 3)
     targ_3d = all_seq[:, :, dim_used].contiguous().view(-1, dim_used_len).view(-1, 3)
 
