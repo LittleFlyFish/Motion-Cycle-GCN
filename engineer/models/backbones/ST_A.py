@@ -22,8 +22,6 @@ from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, G
 
 
 
-
-
 @BACKBONES.register_module
 class ST_A(nn.Module):
     '''
@@ -54,7 +52,7 @@ class ST_A(nn.Module):
 
 
 
-        self.st_gcn_networks = nn.ModuleList((
+        self.encoder = nn.ModuleList((
             st_gcn(16, 32, kernel_size, 1, residual=False, **kwargs),
             st_gcn(32, 64, kernel_size, 2, **kwargs),
             st_gcn(64, 128, kernel_size, 1, **kwargs),
@@ -62,12 +60,24 @@ class ST_A(nn.Module):
             st_gcn(128, 128, kernel_size, 1, **kwargs),
             st_gcn(128, 256, kernel_size, 1, **kwargs),
             st_gcn(256, 256, kernel_size, 2, **kwargs),
-            st_gcn(256, 256, kernel_size, 1, **kwargs),
-            st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
-            st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
-            st_gcn(256, 512, kernel_size, 1, **kwargs),
-            st_gcn(512, 512, kernel_size, 1, **kwargs),
         ))
+
+        self.gcn = nn.ModuleList((
+            GraphConvolution(256*5, 256*3, node_n=22),
+            GraphConvolution(256 * 3, 256, node_n=22),
+            GraphConvolution(256, 256, node_n=22),
+            GraphConvolution(256, 256*3, node_n=22),
+            GraphConvolution(256*3, 256*5, node_n=22),
+
+        ))
+
+        self.decoder = nn.ModuleList((
+                st_gcn(256, 256, kernel_size, 1, **kwargs),
+                st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
+                st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
+                st_gcn(256, 512, kernel_size, 1, **kwargs),
+                st_gcn(512, 512, kernel_size, 1, **kwargs),
+            ))
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
@@ -77,11 +87,23 @@ class ST_A(nn.Module):
 
     def forward(self, x):
         y, _ = self.st1(x, self.A)
+        batch, feature, frame_n, node = y.shape
 
-        for st_gcn in self.st_gcn_networks:  # pass through the ST-GCN to encoder the feature
+        for st_gcn in self.encoder:  # pass through the ST-GCN to encoder the feature
             y, _ = st_gcn(y, self.A)
             y = self.act_f(y)
 
+        y = y.reshape(batch, 256*5, node).transpose(1, 2)
+
+        for gcn in self.gcn:
+            y = gcn(y)
+            y = self.act_f(y)
+
+        y = y.transpose(1, 2).reshape(batch, 256, 5, node)
+
+        for st_gcn in self.decoder:
+            y, _ = st_gcn(y, self.A)
+            y = self.act_f(y)
 
         y = self.do(y)
         y, _ = self.st2(y, self.A)
