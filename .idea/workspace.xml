@@ -2,15 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="&quot;GV=G version, Padding=True&quot;">
-      <change afterPath="$PROJECT_DIR$/configs/ST_B_I10_O10_D15_G2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/models/common/GraphDownUp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/ST_C_I10_O10_D15_G2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/ST_B_I10_O10_D15_G2.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/ST_B_I10_O10_D15_G2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_ST_GCN2.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_ST_GCN2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Dense_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Dense_GCN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Motion_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Motion_GCN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_A.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_A.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_B.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_B.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_C.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_C.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/common/GraphDownUp.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/common/GraphDownUp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/Jan_28.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Jan_28.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/Calculate.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/Calculate.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,13 +118,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00015" summary="&quot;Train Policy&quot;">
-      <created>1579471061472</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1579471061472</updated>
     </task>
     <task id="LOCAL-00016" summary="&quot;Train Policy&quot;">
       <created>1579471364770</created>
@@ -456,7 +455,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580321557775</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="&quot;test ST_B&quot;">
+      <created>1580329090988</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1580329090988</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -482,17 +488,18 @@
     <MESSAGE value="&quot;Dense every layer append LeakyRelu&quot;" />
     <MESSAGE value="&quot;Dense, every layer append LeakyRelu&quot;" />
     <MESSAGE value="&quot;Dense_GCN no dropout version&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;Dense_GCN no dropout version&quot;" />
+    <MESSAGE value="&quot;test ST_B&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;test ST_B&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580323938186">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580323938186" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580321557721">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580329090932">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580321557721" />
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580329090932" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -501,22 +508,22 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="780" y="357" key="FileChooserDialogImpl/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579894477941" />
-    <state width="1832" height="369" key="GridCell.Tab.0.bottom" timestamp="1580301450326">
+    <state width="1832" height="369" key="GridCell.Tab.0.bottom" timestamp="1580393695541">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.bottom/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580301450326" />
-    <state width="1832" height="369" key="GridCell.Tab.0.center" timestamp="1580301450326">
+    <state width="1832" height="369" key="GridCell.Tab.0.bottom/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580393695541" />
+    <state width="1832" height="369" key="GridCell.Tab.0.center" timestamp="1580393695541">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.center/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580301450326" />
-    <state width="1832" height="369" key="GridCell.Tab.0.left" timestamp="1580301450326">
+    <state width="1832" height="369" key="GridCell.Tab.0.center/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580393695541" />
+    <state width="1832" height="369" key="GridCell.Tab.0.left" timestamp="1580393695541">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.left/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580301450326" />
-    <state width="1832" height="369" key="GridCell.Tab.0.right" timestamp="1580301450326">
+    <state width="1832" height="369" key="GridCell.Tab.0.left/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580393695541" />
+    <state width="1832" height="369" key="GridCell.Tab.0.right" timestamp="1580393695541">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.right/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580301450326" />
+    <state width="1832" height="369" key="GridCell.Tab.0.right/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580393695541" />
     <state x="736" y="312" key="RollbackChangesDialog" timestamp="1579703113854">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -525,10 +532,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580321562658">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580329097402">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580321562658" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580329097402" />
     <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1580223894911">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>

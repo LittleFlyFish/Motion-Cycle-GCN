@@ -5,6 +5,7 @@ from __future__ import print_function
 
 import torch
 import torch.nn as nn
+import itertools
 
 
 
@@ -33,13 +34,13 @@ class GraphDownSample(nn.Module):
         self.feature = []
 
         for i in samplelist:
-            kernel_size = len(samplelist[i])
+            kernel_size = len(i)
             self.downsample.append(nn.Conv2d(self.in_channels, self.out_channels, (1, kernel_size), (1, 1)))
 
         self.downsample = nn.ModuleList(self.downsample)
 
     def forward(self, x):
-        for i in self.list:
+        for i in range(0, len(self.list)):
             x1 = x[:, :, :, self.list[i]]
             y = self.downsample[i](x1)
             self.feature.append(y)
@@ -69,18 +70,28 @@ class GraphUpSample(nn.Module):
 
         self.list = samplelist
         self.feature = []
+        self.index = []
 
         for i in samplelist:
-            kernel_size = len(samplelist[i])
+            kernel_size = len(i)
             self.upsample.append(nn.ConvTranspose2d(self.in_channels, self.out_channels, (1, kernel_size), (1, 1)))
 
         self.upsample = nn.ModuleList(self.upsample)
 
     def forward(self, x):
-        for i in self.list:
-            x1 = x[:, :, :, self.list[i]]
+        _,_,_, node = x.shape
+        l = []
+        for i in range(0, node):
+            x1 = x[:, :, :, i]
+            x1 = torch.unsqueeze(x1, 3)
             y = self.upsample[i](x1)
             self.feature.append(y)
+            l.append(self.list[i])
 
-        y = torch.cat(self.feature, dim=3)
+        self.index = list(itertools.chain.from_iterable(l))
+        y1 = torch.cat(self.feature, dim=3)
+        y = y1
+        _, _, _, dims = y.shape
+        for i in range(0, dims):
+            y[:, :, :, self.index[i]] = y1[:, :, :, i]
         return y

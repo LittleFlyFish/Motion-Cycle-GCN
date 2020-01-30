@@ -25,7 +25,7 @@ from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, G
 
 
 @BACKBONES.register_module
-class ST_A(nn.Module):
+class ST_B(nn.Module):
     '''
     Use ST-GCN as encoder, and then use gcn as a decoder
     The input is [batch, in_channels, input_n, node_dim]   # the in_channels is 3 at the beginning
@@ -40,7 +40,7 @@ class ST_A(nn.Module):
         :param num_stage: number of residual blocks
         :param node_n: number of nodes in graph
         """
-        super(ST_A, self).__init__()
+        super(ST_B, self).__init__()
         # load graph
         self.graph = Graph(layout=layout, strategy=strategy)
         A = torch.tensor(self.graph.A, dtype=torch.float32, requires_grad=False)
@@ -54,32 +54,32 @@ class ST_A(nn.Module):
 
 
 
-        self.encoder = nn.ModuleList((
-            st_gcn(16, 32, kernel_size, 1, residual=False, **kwargs),
-            st_gcn(32, 64, kernel_size, 2, **kwargs),
-            st_gcn(64, 128, kernel_size, 1, **kwargs),
-            st_gcn(128, 128, kernel_size, 1, **kwargs),
-            st_gcn(128, 128, kernel_size, 1, **kwargs),
-            st_gcn(128, 256, kernel_size, 1, **kwargs),
-            st_gcn(256, 256, kernel_size, 2, **kwargs),
-        ))
-
-        self.gcn = nn.ModuleList((
-            GraphConvolution(256*5, 256*3, node_n=22),
-            GraphConvolution(256 * 3, 256, node_n=22),
-            GraphConvolution(256, 256, node_n=22),
-            GraphConvolution(256, 256*3, node_n=22),
-            GraphConvolution(256*3, 256*5, node_n=22),
-
-        ))
-
-        self.decoder = nn.ModuleList((
-                st_gcn(256, 256, kernel_size, 1, **kwargs),
-                st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
-                st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
-                st_gcn(256, 512, kernel_size, 1, **kwargs),
-                st_gcn(512, 512, kernel_size, 1, **kwargs),
-            ))
+        # self.encoder = nn.ModuleList((
+        #     st_gcn(16, 32, kernel_size, 1, residual=False, **kwargs),
+        #     st_gcn(32, 64, kernel_size, 2, **kwargs),
+        #     st_gcn(64, 128, kernel_size, 1, **kwargs),
+        #     st_gcn(128, 128, kernel_size, 1, **kwargs),
+        #     st_gcn(128, 128, kernel_size, 1, **kwargs),
+        #     st_gcn(128, 256, kernel_size, 1, **kwargs),
+        #     st_gcn(256, 256, kernel_size, 2, **kwargs),
+        # ))
+        #
+        # self.gcn = nn.ModuleList((
+        #     GraphConvolution(256*5, 256*3, node_n=22),
+        #     GraphConvolution(256 * 3, 256, node_n=22),
+        #     GraphConvolution(256, 256, node_n=22),
+        #     GraphConvolution(256, 256*3, node_n=22),
+        #     GraphConvolution(256*3, 256*5, node_n=22),
+        #
+        # ))
+        #
+        # self.decoder = nn.ModuleList((
+        #         st_gcn(256, 256, kernel_size, 1, **kwargs),
+        #         st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
+        #         st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
+        #         st_gcn(256, 512, kernel_size, 1, **kwargs),
+        #         st_gcn(512, 512, kernel_size, 1, **kwargs),
+        #     ))
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
@@ -88,12 +88,15 @@ class ST_A(nn.Module):
         self.residual = residual
 
         self.graphdown = GraphDownSample(16, 32, [[10,12], [13,14]])
+        self.graphup = GraphUpSample(32, 16, [[0,1], [2,3]])
 
     def forward(self, x):
         y, _ = self.st1(x, self.A)
         batch, feature, frame_n, node = y.shape
 
         y = self.graphdown(y)
+        print(y.shape)
+        y = self.graphup(y)
         print(y.shape)
 
         # for st_gcn in self.encoder:  # pass through the ST-GCN to encoder the feature

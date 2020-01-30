@@ -93,7 +93,7 @@ class Motion_GCN(nn.Module):
     '''
     def __init__(self, input_feature, hidden_feature, p_dropout, num_stage=1, node_n=48):
         """
-
+        input = [batch, node, dct_n]
         :param input_feature: num of input feature
         :param hidden_feature: num of hidden feature
         :param p_dropout: drop out prob.

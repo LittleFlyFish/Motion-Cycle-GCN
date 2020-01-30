@@ -92,21 +92,26 @@ class ST_A(nn.Module):
         for st_gcn in self.encoder:  # pass through the ST-GCN to encoder the feature
             y, _ = st_gcn(y, self.A)
             y = self.act_f(y)
+            y = self.do(y)
 
         y = y.reshape(batch, 256*5, node).transpose(1, 2)
 
         for gcn in self.gcn:
             y = gcn(y)
             y = self.act_f(y)
+            y = self.do(y)
 
         y = y.transpose(1, 2).reshape(batch, 256, 5, node)
 
         for st_gcn in self.decoder:
             y, _ = st_gcn(y, self.A)
             y = self.act_f(y)
+            y = self.do(y)
 
         y = self.do(y)
         y, _ = self.st2(y, self.A)
+        y = self.act_f(y)
+        y = self.do(y)
         if self.residual:
             y = y + x
 

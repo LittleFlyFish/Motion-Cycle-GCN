@@ -162,7 +162,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             padding_seq = Variable(padding_seq.cuda()).float()
 
         outputs = model(inputs)
-        Final = torch.cat([inputs, outputs+padding_seq], 2)
+        Final = torch.cat([inputs, outputs + padding_seq], 2)
         # calculate loss and backward
         _, loss = loss_funcs.mpjpe_error_p3d_ST(Final, all_seq, dct_n, dim_used)
         # #############################################################################
