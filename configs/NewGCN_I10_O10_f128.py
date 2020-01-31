@@ -1,8 +1,8 @@
 import numpy as np
 model = dict(
     type = 'NewGCN',
-    hidden_feature=256,
-    f_feature=128,
+    hidden_feature=32,
+    f_feature=16,
     dropout=0.5,
     input_n=10,
     output_n=10,
