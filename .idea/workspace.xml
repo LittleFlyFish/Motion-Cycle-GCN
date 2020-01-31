@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="&quot;GV=G version, Padding=True&quot;">
-      <change afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_h128f128.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_h128f64.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_h32f32.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_h64f64.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_h64f128.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/NewGCN_I10_O10_f128.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_h32f16.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/Jan_28.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Jan_28.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,13 +108,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00019" summary="&quot;Train Plan&quot;">
-      <created>1579520236470</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1579520236470</updated>
     </task>
     <task id="LOCAL-00020" summary="&quot;Train Plan&quot;">
       <created>1579520618591</created>
@@ -456,11 +445,17 @@
       <option name="project" value="LOCAL" />
       <updated>1580483194899</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="&quot;NewGCN version&quot;">
+      <created>1580487314446</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1580487314446</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="&quot;H3.6M dataset to be specific to 3D version&quot;" />
     <MESSAGE value="&quot;Visdom add to see the training process&quot;" />
     <MESSAGE value="&quot;Train Policy&quot;" />
     <MESSAGE value="&quot;Train Plan&quot;" />
@@ -485,17 +480,18 @@
     <MESSAGE value="&quot;GV=G version, Padding=True&quot;" />
     <MESSAGE value="&quot;NewGCN framework&quot;" />
     <MESSAGE value="&quot;NewGCN test&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;NewGCN test&quot;" />
+    <MESSAGE value="&quot;NewGCN version&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;NewGCN version&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580323938186">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580323938186" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580483194838">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580487314385">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580483194838" />
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580487314385" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -528,10 +524,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580483201293">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580487318662">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580483201293" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580487318662" />
     <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1580223894911">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>

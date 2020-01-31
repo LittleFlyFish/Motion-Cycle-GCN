@@ -14,6 +14,9 @@ python3 tools/train_ST_GCN2.py --config ./configs/ST_A_I10_O10_D15_G2.py   ## ST
 python3 tools/train_ST_GCN2.py --config ./configs/ST_B_I10_O10_D15_G2.py  ## DownSample Upsample Autoencoder
 python3 tools/train_ST_GCN2.py --config ./configs/ST_C_I10_O10_D15_G2.py  ## ST instead of dct feature
 python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h32f16.py   ## test new GCN feature
+python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h32f32.py
+python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h128f128.py
+python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h64f64.py
 ###Plan : Multi-scale skills
 
 ###Plan L_2,1 Loss
