@@ -66,9 +66,13 @@ class ST_C(nn.Module):
     def forward(self, x):
 
         y, _ = self.st1(x, self.A) # [16, 16, 10, 22]
+        y = self.act_f(y)
+        y = self.do(y)
         batch, feature, frame_n, node_n = y.shape
         y = y.reshape(batch, feature*frame_n, node_n).transpose(1, 2)
         y = self.gcn(y)
         y = y.transpose(1, 2).reshape(batch, feature, frame_n, node_n)
         y, _ = self.st2(y, self.A)
+        y = self.act_f(y)
+        y = self.do(y)
         return y

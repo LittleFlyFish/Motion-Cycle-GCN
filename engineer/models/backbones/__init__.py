@@ -13,7 +13,8 @@ from .ST_GCN_Dense import ST_GCN_Dense
 from .ST_A import ST_A
 from .ST_B import ST_B
 from .ST_C import ST_C
+from .NewGCN import NewGCN
 __all__=["Motion_GCN","SemGCN","Cycle_GCN", "P_GCN", "Cycle_P", "Recycle_GCN", "G_NoNorm",
          "G_Attention", "G_Attention_GCN", "Dense_GCN", "Fuse_GCN", "ST_GCN_Dense",
-         "ST_A", "ST_B", "ST_C"]
+         "ST_A", "ST_B", "ST_C", "NewGCN"]
 

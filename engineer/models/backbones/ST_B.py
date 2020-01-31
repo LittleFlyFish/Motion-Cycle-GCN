@@ -46,11 +46,19 @@ class ST_B(nn.Module):
         A = torch.tensor(self.graph.A, dtype=torch.float32, requires_grad=False)
         self.register_buffer('A', A)
 
+        self.graph_d1 = Graph(layout="h36m_d1", strategy=strategy)
+        A_d1 = torch.tensor(self.graph_d1.A, dtype=torch.float32, requires_grad=False)
+        self.register_buffer('A_d1', A_d1)
+
         # build networks
         spatial_kernel_size = A.size(0)
         temporal_kernel_size = 9
         kernel_size = (temporal_kernel_size, spatial_kernel_size)
         in_channels = 3
+
+        spatial_kernel_size = A_d1.size(0)
+        temporal_kernel_size = 9
+        kernel_size_d1 = (temporal_kernel_size, spatial_kernel_size)
 
 
 
@@ -83,41 +91,37 @@ class ST_B(nn.Module):
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
-        self.st2 = st_gcn(512, in_channels, kernel_size, 1, residual=False)
         self.st1 = st_gcn(in_channels, 16, kernel_size, 1, residual=False)
+        self.st2 = st_gcn(32, 256, kernel_size_d1, 1, residual=False)
+        self.st3 = st_gcn(32, 16, kernel_size, 1, residual=False)
         self.residual = residual
 
-        self.graphdown = GraphDownSample(16, 32, [[10,12], [13,14]])
-        self.graphup = GraphUpSample(32, 16, [[0,1], [2,3]])
+        list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
+        self.graphdown = GraphDownSample(16, 32, list1)
+        self.graphup = GraphUpSample(256, 32, list1)
 
     def forward(self, x):
         y, _ = self.st1(x, self.A)
+        y = self.act_f(y)
+        y = self.do(y)
         batch, feature, frame_n, node = y.shape
 
         y = self.graphdown(y)
+        y = self.act_f(y)
+        y = self.do(y)
+        print(y.shape)
+        print(self.A_d1.shape)
+        y, _ = self.st2(y, self.A_d1)
+        y = self.act_f(y)
         print(y.shape)
         y = self.graphup(y)
+        y = self.act_f(y)
+        y = self.do(y)
+        print(y.shape)
+        y, _ = self.st3(y, self.A)
+        y = self.act_f(y)
+        y = self.do(y)
         print(y.shape)
 
-        # for st_gcn in self.encoder:  # pass through the ST-GCN to encoder the feature
-        #     y, _ = st_gcn(y, self.A)
-        #     y = self.act_f(y)
-        #
-        # y = y.reshape(batch, 256*5, node).transpose(1, 2)
-        #
-        # for gcn in self.gcn:
-        #     y = gcn(y)
-        #     y = self.act_f(y)
-        #
-        # y = y.transpose(1, 2).reshape(batch, 256, 5, node)
-        #
-        # for st_gcn in self.decoder:
-        #     y, _ = st_gcn(y, self.A)
-        #     y = self.act_f(y)
-        #
-        # y = self.do(y)
-        # y, _ = self.st2(y, self.A)
-        # if self.residual:
-        #     y = y + x
 
         return y

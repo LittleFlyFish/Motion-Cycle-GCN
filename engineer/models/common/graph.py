@@ -82,6 +82,13 @@ class Graph():
             neighbor_link = [(i - 1, j - 1) for (i, j) in neighbor_1base]
             self.edge = self_link + neighbor_link
             self.center = 1
+        elif layout == 'h36m_d1':
+            self.num_node = 5
+            self_link = [(i, i) for i in range(self.num_node)]
+            neighbor_1base = [(1,2),(2,3),(3,4),(4,5),(1,3),(1,4),(1,5),(2,4),(2,5),(3,5)]
+            neighbor_link = [(i - 1, j - 1) for (i, j) in neighbor_1base]
+            self.edge = self_link + neighbor_link
+            self.center = 1
         # elif layout=='customer settings'
         #     pass
         else:
