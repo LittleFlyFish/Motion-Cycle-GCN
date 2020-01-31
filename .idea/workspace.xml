@@ -2,10 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="&quot;GV=G version, Padding=True&quot;">
+      <change afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_h128f128.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_h128f64.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_h32f32.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_h64f64.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/NewGCN_I10_O10_f128.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_f128.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/NewGCN_I10_O10_f128.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/NewGCN_I10_O10_h32f16.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/Jan_28.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Jan_28.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,13 +112,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00018" summary="&quot;Train Plan&quot;">
-      <created>1579519808911</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1579519808911</updated>
     </task>
     <task id="LOCAL-00019" summary="&quot;Train Plan&quot;">
       <created>1579520236470</created>
@@ -451,7 +449,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580479027565</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="&quot;NewGCN test&quot;">
+      <created>1580483194899</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1580483194899</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -479,17 +484,18 @@
     <MESSAGE value="&quot;test ST_B&quot;" />
     <MESSAGE value="&quot;GV=G version, Padding=True&quot;" />
     <MESSAGE value="&quot;NewGCN framework&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;NewGCN framework&quot;" />
+    <MESSAGE value="&quot;NewGCN test&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;NewGCN test&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580323938186">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580323938186" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580479027501">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580483194838">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580479027501" />
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580483194838" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -498,22 +504,22 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="780" y="357" key="FileChooserDialogImpl/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579894477941" />
-    <state width="1832" height="369" key="GridCell.Tab.0.bottom" timestamp="1580393695541">
+    <state width="1832" height="369" key="GridCell.Tab.0.bottom" timestamp="1580486996637">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.bottom/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580393695541" />
-    <state width="1832" height="369" key="GridCell.Tab.0.center" timestamp="1580393695541">
+    <state width="1832" height="369" key="GridCell.Tab.0.bottom/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580486996637" />
+    <state width="1832" height="369" key="GridCell.Tab.0.center" timestamp="1580486996637">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.center/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580393695541" />
-    <state width="1832" height="369" key="GridCell.Tab.0.left" timestamp="1580393695541">
+    <state width="1832" height="369" key="GridCell.Tab.0.center/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580486996637" />
+    <state width="1832" height="369" key="GridCell.Tab.0.left" timestamp="1580486996637">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.left/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580393695541" />
-    <state width="1832" height="369" key="GridCell.Tab.0.right" timestamp="1580393695541">
+    <state width="1832" height="369" key="GridCell.Tab.0.left/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580486996637" />
+    <state width="1832" height="369" key="GridCell.Tab.0.right" timestamp="1580486996637">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.right/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580393695541" />
+    <state width="1832" height="369" key="GridCell.Tab.0.right/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580486996637" />
     <state x="736" y="312" key="RollbackChangesDialog" timestamp="1579703113854">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -522,10 +528,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580479033332">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580483201293">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580479033332" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580483201293" />
     <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1580223894911">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
