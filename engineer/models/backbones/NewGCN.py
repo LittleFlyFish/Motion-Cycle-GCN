@@ -31,6 +31,15 @@ class GC_Block_NoRes(nn.Module):
         self.gc3 = GraphConvolution(out_features, out_features, node_n=node_n, bias=bias)
         self.bn3 = nn.BatchNorm1d(node_n * out_features)
 
+        self.gc4 = GraphConvolution(out_features, out_features, node_n=node_n, bias=bias)
+        self.bn4 = nn.BatchNorm1d(node_n * out_features)
+
+        self.gc5 = GraphConvolution(out_features, out_features, node_n=node_n, bias=bias)
+        self.bn5 = nn.BatchNorm1d(node_n * out_features)
+
+        self.gc6 = GraphConvolution(out_features, out_features, node_n=node_n, bias=bias)
+        self.bn6 = nn.BatchNorm1d(node_n * out_features)
+
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.LeakyReLU()
 
@@ -50,6 +59,24 @@ class GC_Block_NoRes(nn.Module):
         y = self.gc3(y)
         b, n, f = y.shape
         y = self.bn3(y.view(b, -1)).view(b, n, f)
+        y = self.act_f(y)
+        y = self.do(y)
+
+        y = self.gc4(y)
+        b, n, f = y.shape
+        y = self.bn4(y.view(b, -1)).view(b, n, f)
+        y = self.act_f(y)
+        y = self.do(y)
+
+        y = self.gc5(y)
+        b, n, f = y.shape
+        y = self.bn5(y.view(b, -1)).view(b, n, f)
+        y = self.act_f(y)
+        y = self.do(y)
+
+        y = self.gc6(y)
+        b, n, f = y.shape
+        y = self.bn6(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
         y = self.do(y)
         return y
