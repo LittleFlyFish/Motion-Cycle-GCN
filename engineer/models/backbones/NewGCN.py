@@ -5,6 +5,7 @@ from __future__ import print_function
 
 import torch.nn as nn
 import torch
+from torch.autograd import Variable
 from torch.nn.parameter import Parameter
 import math
 from engineer.models.registry import BACKBONES
@@ -26,6 +27,9 @@ class GC_Block_NoRes(nn.Module):
         self.gc2 = GraphConvolution(in_features, out_features, node_n=node_n, bias=bias)
         self.bn2 = nn.BatchNorm1d(node_n * out_features)
 
+        self.gc3 = GraphConvolution(out_features, out_features, node_n=node_n, bias=bias)
+        self.bn3 = nn.BatchNorm1d(node_n * out_features)
+
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.LeakyReLU()
 
@@ -35,6 +39,7 @@ class GC_Block_NoRes(nn.Module):
         y = self.bn1(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
         y = self.do(y)
+        y = y + x
 
         y = self.gc2(y)
         b, n, f = y.shape
@@ -42,12 +47,21 @@ class GC_Block_NoRes(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
+        y = self.gc3(y)
+        b, n, f = y.shape
+        y = self.bn3(y.view(b, -1)).view(b, n, f)
+        y = self.act_f(y)
+        y = self.do(y)
+        y = y + x
+
+
         return y
 
     def __repr__(self):
         return self.__class__.__name__ + ' (' \
                + str(self.in_features) + ' -> ' \
                + str(self.out_features) + ')'
+
 
 @BACKBONES.register_module
 class NewGCN(nn.Module):
@@ -65,7 +79,7 @@ class NewGCN(nn.Module):
         """
         super(NewGCN, self).__init__()
 
-        self.input_n= input_n
+        self.input_n = input_n
         self.output_n = output_n
 
         self.gcbs = []
