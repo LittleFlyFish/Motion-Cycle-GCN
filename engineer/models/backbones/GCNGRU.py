@@ -9,6 +9,7 @@ from torch.autograd import Variable
 from torch.nn.parameter import Parameter
 import math
 from engineer.models.registry import BACKBONES
+from engineer.models.common.Attention import Attention
 from engineer.models.backbones.Motion_GCN import GraphConvolution, GC_Block
 import numpy as np
 
@@ -86,6 +87,7 @@ class GCNGRU(nn.Module):
         self.act_f = nn.LeakyReLU()
         self.bn1 = nn.BatchNorm1d(node_n * f_feature)
         self.gc1 = GraphConvolution(3, f_feature, node_n=node_n) # output [batch, node, hidden_feature]
+        self.attention = Attention(f_feature)
 
 
 
@@ -117,6 +119,7 @@ class GCNGRU(nn.Module):
             outF1 = self.act_f(outF1)
             outF1 = self.do(outF1)
 
+            g1, _ = self.attention(g1, outF1)
             g1 = self.gcbs[i+self.input_n](g1, outF1)
 
         outputframe = torch.cat(outputframe, dim=2)

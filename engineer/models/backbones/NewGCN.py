@@ -9,6 +9,7 @@ from torch.autograd import Variable
 from torch.nn.parameter import Parameter
 import math
 from engineer.models.registry import BACKBONES
+from engineer.models.common.Attention import Attention
 from engineer.models.backbones.Motion_GCN import GraphConvolution, GC_Block
 import numpy as np
 
@@ -39,7 +40,6 @@ class GC_Block_NoRes(nn.Module):
         y = self.bn1(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
         y = self.do(y)
-        y = y + x
 
         y = self.gc2(y)
         b, n, f = y.shape
@@ -47,13 +47,11 @@ class GC_Block_NoRes(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
-        y2 = y
-        y2 = self.gc3(y2)
-        b, n, f = y2.shape
-        y2 = self.bn3(y2.view(b, -1)).view(b, n, f)
-        y2 = self.act_f(y2)
-        y2 = self.do(y2)
-        y = y + y2
+        y = self.gc3(y)
+        b, n, f = y.shape
+        y = self.bn3(y.view(b, -1)).view(b, n, f)
+        y = self.act_f(y)
+        y = self.do(y)
         return y
 
     def __repr__(self):
@@ -96,6 +94,7 @@ class NewGCN(nn.Module):
         self.act_f = nn.LeakyReLU()
         self.bn1 = nn.BatchNorm1d(node_n * f_feature)
         self.gc1 = GraphConvolution(3, f_feature, node_n=node_n) # output [batch, node, hidden_feature]
+
 
 
 
