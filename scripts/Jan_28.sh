@@ -19,6 +19,14 @@ python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h64f128.py
 python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h64f64.py
 
 python3 tools/train_NewGCN.py --config ./configs/GCNGRU_I10_O10_h128f128.py
+
+
+##############################################################################
+# feature size test
+python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h8f8.py
+
+
+
 ###Plan : Multi-scale skills
 
 ###Plan L_2,1 Loss
