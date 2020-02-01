@@ -41,13 +41,11 @@ class GC_Block_NoRes(nn.Module):
         y = self.do(y)
         y = y + x
 
-        y1 = y
-        y1 = self.gc2(y1)
-        b, n, f = y1.shape
-        y1 = self.bn2(y1.view(b, -1)).view(b, n, f)
-        y1 = self.act_f(y1)
-        y1 = self.do(y1)
-        y = y + y1
+        y = self.gc2(y)
+        b, n, f = y.shape
+        y = self.bn2(y.view(b, -1)).view(b, n, f)
+        y = self.act_f(y)
+        y = self.do(y)
 
         y2 = y
         y2 = self.gc3(y2)
