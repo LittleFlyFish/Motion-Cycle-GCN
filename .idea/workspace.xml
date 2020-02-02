@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="&quot;GV=G version, Padding=True&quot;">
+      <change afterPath="$PROJECT_DIR$/configs/ST_B_I10_O10_D15_G2_h64.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_B.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_B.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/Jan_28.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Jan_28.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,20 +109,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00030" summary="&quot;Df_2 change&quot;">
-      <created>1579622414888</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1579622414888</updated>
-    </task>
-    <task id="LOCAL-00031" summary="&quot;G_Attention add&quot;">
-      <created>1579638877568</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1579638877568</updated>
     </task>
     <task id="LOCAL-00032" summary="&quot;G_Attention add&quot;">
       <created>1579639029221</created>
@@ -451,12 +439,24 @@
       <option name="project" value="LOCAL" />
       <updated>1580668712888</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="&quot;ST_B two step downsample upsameple&quot;">
+      <created>1580677358511</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1580677358511</updated>
+    </task>
+    <task id="LOCAL-00080" summary="&quot;ST-B two step downsample upsample&quot;">
+      <created>1580677463508</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1580677463508</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="&quot;Dense_GCN add&quot;" />
-    <MESSAGE value="&quot;Cycle, Gv=G, L2 Loss, Lamda=1&quot;" />
     <MESSAGE value="&quot;Desne_GCN version&quot;" />
     <MESSAGE value="&quot;Lamda = 1, L2 Loss, Cycle, Padding = False&quot;" />
     <MESSAGE value="&quot;Lamda=10, L2 loss, Cycle, Padding = False,  &quot;" />
@@ -480,17 +480,19 @@
     <MESSAGE value="&quot;NewGCN version&quot;" />
     <MESSAGE value="&quot;ST_B version 0.1 learning rate&quot;" />
     <MESSAGE value="&quot;ST_B LR = 0.001&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;ST_B LR = 0.001&quot;" />
+    <MESSAGE value="&quot;ST_B two step downsample upsameple&quot;" />
+    <MESSAGE value="&quot;ST-B two step downsample upsample&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;ST-B two step downsample upsample&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580323938186">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580323938186" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580677358451">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580677463454">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580677358451" />
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580677463454" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -523,10 +525,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580677364266">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580677469449">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580677364266" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580677469449" />
     <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1580223894911">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>

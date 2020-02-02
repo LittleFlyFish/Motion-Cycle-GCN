@@ -20,6 +20,8 @@ python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h64f64.py
 
 python3 tools/train_NewGCN.py --config ./configs/GCNGRU_I10_O10_h128f128.py
 
+python3 tools/train_ST_GCN2.py --config ./configs/ST_B_I10_O10_D15_G2h64.py
+
 
 ##############################################################################
 # feature size test

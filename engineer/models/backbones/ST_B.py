@@ -102,8 +102,8 @@ class ST_B(nn.Module):
         self.gu1 = GraphUpSample(4*hidden_feature, 2*hidden_feature, list1)
 
         list2 = [[0,1,2,3,4]]
-        self.gd2 = GraphDownSample(4*hidden_feature, 4*hidden_feature, list1)
-        self.gu2= GraphUpSample(4*hidden_feature, 4*hidden_feature, list1)
+        self.gd2 = GraphDownSample(4*hidden_feature, 4*hidden_feature, list2)
+        self.gu2= GraphUpSample(4*hidden_feature, 4*hidden_feature, list2)
 
     def forward(self, x):
         y, _ = self.st1(x, self.A)
@@ -118,16 +118,19 @@ class ST_B(nn.Module):
         y, _ = self.st2(y, self.A_d1)
         y = self.act_f(y)
         y = self.do(y)
+        u1 = y
 
         y = self.gd2(y)
         y = self.act_f(y)
         y = self.do(y)
 
+        u2 = y
+
         y = self.gu2(y)
         y = self.act_f(y)
         y = self.do(y)
 
-        y = self.gu1(y)
+        y = self.gu1(y+u1)
         y = self.act_f(y)
         y = self.do(y)
 
