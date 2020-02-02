@@ -11,6 +11,7 @@ import math
 from engineer.models.registry import BACKBONES
 from engineer.models.common.Attention import Attention
 from engineer.models.backbones.Motion_GCN import GraphConvolution, GC_Block
+from engineer.models.backbones.NewGCN import GC_Block_NoRes
 import numpy as np
 
 class GCNGRU_Block(nn.Module):
@@ -74,14 +75,13 @@ class GCNGRU(nn.Module):
 
         self.gcbs = []
         for i in range(self.input_n+self.output_n):
-            self.gcbs.append(GCNGRU_Block(f_feature, hidden_feature, bias=True, node_n=node_n))
+            self.gcbs.append(GC_Block_NoRes(f_feature, hidden_feature, p_dropout=0.5, bias=True, node_n=node_n))
         self.gcbs = nn.ModuleList(self.gcbs)
 
         self.decoder = []
         for i in range(self.output_n):
             self.decoder.append(GraphConvolution(hidden_feature, 3, node_n=node_n))
         self.decoder = nn.ModuleList(self.decoder)
-
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()

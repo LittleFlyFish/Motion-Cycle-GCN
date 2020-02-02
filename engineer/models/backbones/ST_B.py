@@ -94,6 +94,7 @@ class ST_B(nn.Module):
         self.st1 = st_gcn(in_channels, 16, kernel_size, 1, residual=False)
         self.st2 = st_gcn(32, 256, kernel_size_d1, 1, residual=False)
         self.st3 = st_gcn(32, 16, kernel_size, 1, residual=False)
+        self.st4 = st_gcn(16, 3, kernel_size, 1, residual=False)
         self.residual = residual
 
         list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
@@ -109,19 +110,19 @@ class ST_B(nn.Module):
         y = self.graphdown(y)
         y = self.act_f(y)
         y = self.do(y)
-        print(y.shape)
-        print(self.A_d1.shape)
         y, _ = self.st2(y, self.A_d1)
         y = self.act_f(y)
-        print(y.shape)
+
         y = self.graphup(y)
         y = self.act_f(y)
         y = self.do(y)
-        print(y.shape)
+
         y, _ = self.st3(y, self.A)
         y = self.act_f(y)
         y = self.do(y)
-        print(y.shape)
 
+        y, _ = self.st4(y, self.A)
+        y = self.act_f(y)
+        y = self.do(y)
 
         return y

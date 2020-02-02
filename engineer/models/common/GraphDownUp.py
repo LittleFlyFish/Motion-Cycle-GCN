@@ -40,6 +40,7 @@ class GraphDownSample(nn.Module):
         self.downsample = nn.ModuleList(self.downsample)
 
     def forward(self, x):
+        self.feature = []
         for i in range(0, len(self.list)):
             x1 = x[:, :, :, self.list[i]]
             y = self.downsample[i](x1)
@@ -81,6 +82,7 @@ class GraphUpSample(nn.Module):
     def forward(self, x):
         _,_,_, node = x.shape
         l = []
+        self.feature = []
         for i in range(0, node):
             x1 = x[:, :, :, i]
             x1 = torch.unsqueeze(x1, 3)
