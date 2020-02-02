@@ -31,7 +31,7 @@ class ST_B(nn.Module):
     The input is [batch, in_channels, input_n, node_dim]   # the in_channels is 3 at the beginning
     the out feature of encoder is  [batch, node_dim, feature_len], this is dct feature version.
     '''
-    def __init__(self,  layout, strategy, dropout, residual, **kwargs):
+    def __init__(self,  hidden_feature, layout, strategy, dropout, residual, **kwargs):
         """
 
         :param input_feature: num of input feature, dct_n
@@ -91,15 +91,19 @@ class ST_B(nn.Module):
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
-        self.st1 = st_gcn(in_channels, 16, kernel_size, 1, residual=False)
-        self.st2 = st_gcn(32, 256, kernel_size_d1, 1, residual=False)
-        self.st3 = st_gcn(32, 16, kernel_size, 1, residual=False)
-        self.st4 = st_gcn(16, 3, kernel_size, 1, residual=False)
+        self.st1 = st_gcn(in_channels, hidden_feature, kernel_size, 1, residual=False)
+        self.st2 = st_gcn(2*hidden_feature, 4*hidden_feature, kernel_size_d1, 1, residual=False)
+        self.st3 = st_gcn(2*hidden_feature, hidden_feature, kernel_size, 1, residual=False)
+        self.st4 = st_gcn(hidden_feature, in_channels, kernel_size, 1, residual=False)
         self.residual = residual
 
         list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
-        self.graphdown = GraphDownSample(16, 32, list1)
-        self.graphup = GraphUpSample(256, 32, list1)
+        self.gd1 = GraphDownSample(hidden_feature, 2*hidden_feature, list1)
+        self.gu1 = GraphUpSample(4*hidden_feature, 2*hidden_feature, list1)
+
+        list2 = [[0,1,2,3,4]]
+        self.gd2 = GraphDownSample(4*hidden_feature, 4*hidden_feature, list1)
+        self.gu2= GraphUpSample(4*hidden_feature, 4*hidden_feature, list1)
 
     def forward(self, x):
         y, _ = self.st1(x, self.A)
@@ -107,13 +111,23 @@ class ST_B(nn.Module):
         y = self.do(y)
         batch, feature, frame_n, node = y.shape
 
-        y = self.graphdown(y)
+        y = self.gd1(y)
         y = self.act_f(y)
         y = self.do(y)
+
         y, _ = self.st2(y, self.A_d1)
         y = self.act_f(y)
+        y = self.do(y)
 
-        y = self.graphup(y)
+        y = self.gd2(y)
+        y = self.act_f(y)
+        y = self.do(y)
+
+        y = self.gu2(y)
+        y = self.act_f(y)
+        y = self.do(y)
+
+        y = self.gu1(y)
         y = self.act_f(y)
         y = self.do(y)
 
