@@ -1,13 +1,13 @@
 import numpy as np
 model = dict(
-    type='Motion_GCN',
-    input_feature=15,
-    hidden_feature=256,
-    p_dropout=0.5,
-    num_stage=1,
-    node_n=66
+    type = 'ST_E',
+    hidden_feature = 256,
+    layout = 'h36m',
+    strategy = 'spatial',
+    dropout = 0.5,
+    node_n = 22
 )
-dataset_type = 'Hm36Dataset_3d'
+dataset_type = 'Hm36Dataset_3d_ST2'
 data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),
@@ -56,7 +56,7 @@ data = dict(
 #
 # optimizer
 optim_para=dict(
-    optimizer = dict(type='Adam',lr=0.0005),
+    optimizer = dict(type='Adam',lr=0.001),
     lr_decay=2,
     lr_gamma= 0.96
 )

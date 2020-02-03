@@ -11,17 +11,12 @@ import itertools
 
 
 class GraphDownSample(nn.Module):
-    '''
-    Use ST-GCN as encoder, and then use gcn as a decoder
-    The input is [batch, in_channels, input_n, node_dim]   # the in_channels is 3 at the beginning
-    the out feature of encoder is  [batch, node_dim, feature_len], this is dct feature version.
-    '''
     def __init__(self, input_feature, output_feature, samplelist):
         """
         :param input_feature: num of input feature, dct_n
         :param hidden_feature: num of hidden feature
         :param samplelist, a list, every element is the node should be conv together, (16, 17)
-        Input is [batch, in_channels, frame_n, node_n], reshape to []
+        Input is [batch, in_channels, frame_n, node_n],
         Output is [batch, out_channels, frame_n, node*_n]
         """
         super(GraphDownSample, self).__init__()

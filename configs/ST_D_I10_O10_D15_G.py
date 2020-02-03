@@ -1,11 +1,11 @@
 import numpy as np
 model = dict(
-    type='Motion_GCN',
-    input_feature=15,
+    type='ST_D',
     hidden_feature=256,
-    p_dropout=0.5,
-    num_stage=1,
-    node_n=66
+    layout = "h36m",
+    strategy = "spatial",
+    dropout = 0.5,
+    residual = True
 )
 dataset_type = 'Hm36Dataset_3d'
 data_root = './engineer/datasets/h3.6m/dataset'

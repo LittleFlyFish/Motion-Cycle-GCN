@@ -25,10 +25,10 @@ from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, G
 
 
 @BACKBONES.register_module
-class ST_B(nn.Module):
+class ST_D(nn.Module):
     '''
-    Use ST-GCN  do UpSample Downsample autoencoder
-    The input is [batch, in_channels, input_n, node_dim]   # the in_channels is 3 at the beginning
+    Use GCN as encoder, and then use gcn as a decoder
+    The input is [batch, node_dim, dct_n]   # for example, [16, 66, 15]
     the out feature of encoder is  [batch, node_dim, feature_len], this is dct feature version.
     '''
     def __init__(self,  hidden_feature, layout, strategy, dropout, residual, **kwargs):
@@ -40,7 +40,7 @@ class ST_B(nn.Module):
         :param num_stage: number of residual blocks
         :param node_n: number of nodes in graph
         """
-        super(ST_B, self).__init__()
+        super(ST_D, self).__init__()
         # load graph
         self.graph = Graph(layout=layout, strategy=strategy)
         A = torch.tensor(self.graph.A, dtype=torch.float32, requires_grad=False)
@@ -54,47 +54,19 @@ class ST_B(nn.Module):
         spatial_kernel_size = A.size(0)
         temporal_kernel_size = 9
         kernel_size = (temporal_kernel_size, spatial_kernel_size)
-        in_channels = 3
+        in_channels = 15
+        self.hidden_feature = hidden_feature
 
         spatial_kernel_size = A_d1.size(0)
         temporal_kernel_size = 9
         kernel_size_d1 = (temporal_kernel_size, spatial_kernel_size)
 
-
-
-        # self.encoder = nn.ModuleList((
-        #     st_gcn(16, 32, kernel_size, 1, residual=False, **kwargs),
-        #     st_gcn(32, 64, kernel_size, 2, **kwargs),
-        #     st_gcn(64, 128, kernel_size, 1, **kwargs),
-        #     st_gcn(128, 128, kernel_size, 1, **kwargs),
-        #     st_gcn(128, 128, kernel_size, 1, **kwargs),
-        #     st_gcn(128, 256, kernel_size, 1, **kwargs),
-        #     st_gcn(256, 256, kernel_size, 2, **kwargs),
-        # ))
-        #
-        # self.gcn = nn.ModuleList((
-        #     GraphConvolution(256*5, 256*3, node_n=22),
-        #     GraphConvolution(256 * 3, 256, node_n=22),
-        #     GraphConvolution(256, 256, node_n=22),
-        #     GraphConvolution(256, 256*3, node_n=22),
-        #     GraphConvolution(256*3, 256*5, node_n=22),
-        #
-        # ))
-        #
-        # self.decoder = nn.ModuleList((
-        #         st_gcn(256, 256, kernel_size, 1, **kwargs),
-        #         st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
-        #         st_gcn(256, 256, kernel_size, 2, Transpose=True, **kwargs),
-        #         st_gcn(256, 512, kernel_size, 1, **kwargs),
-        #         st_gcn(512, 512, kernel_size, 1, **kwargs),
-        #     ))
-
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
-        self.st1 = st_gcn(in_channels, hidden_feature, kernel_size, 1, residual=False)
-        self.st2 = st_gcn(2*hidden_feature, 4*hidden_feature, kernel_size_d1, 1, residual=False)
-        self.st3 = st_gcn(2*hidden_feature, hidden_feature, kernel_size, 1, residual=False)
-        self.st4 = st_gcn(hidden_feature, in_channels, kernel_size, 1, residual=False)
+        self.gc1 = GraphConvolution(in_channels, hidden_feature, node_n=66)
+        self.gc2 = GraphConvolution(2*hidden_feature, 4*hidden_feature, node_n=15)
+        self.gc3 = GraphConvolution(2*hidden_feature, hidden_feature, node_n=66)
+        self.gc4 = GraphConvolution(hidden_feature, in_channels, node_n=66)
         self.residual = residual
 
         list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
@@ -106,40 +78,58 @@ class ST_B(nn.Module):
         self.gu2= GraphUpSample(4*hidden_feature, 4*hidden_feature, list2)
 
     def forward(self, x):
-        y, _ = self.st1(x, self.A)
+        y = self.gc1(x)
         y = self.act_f(y)
         y = self.do(y)
-        batch, feature, frame_n, node = y.shape
+        batch, n, f = y.shape
+        print("ST_D")
+        y = y.transpose(1,2).reshape(batch, f, 3, 22)
+        print(y.shape)
 
         y = self.gd1(y)
         y = self.act_f(y)
         y = self.do(y)
+        print(y.shape)
+        y = y.view(batch, -1, 3*5).transpose(1,2)
+        print(y.shape)
 
-        y, _ = self.st2(y, self.A_d1)
+        y = self.gc2(y)
         y = self.act_f(y)
         y = self.do(y)
+        print(y.shape)
+        y = y.transpose(1,2).reshape(batch, 4*self.hidden_feature, 3, 5)
+        print(y.shape)
         u1 = y
 
+        print(y.shape)
         y = self.gd2(y)
         y = self.act_f(y)
         y = self.do(y)
+        print(y.shape)
 
         u2 = y
 
+        print(y.shape)
         y = self.gu2(y)
         y = self.act_f(y)
         y = self.do(y)
+        print(y.shape)
 
-        y = self.gu1(y+u1)
+        y = self.gu1(y)
+        y = self.act_f(y)
+        y = self.do(y)
+        print(y.shape)
+        y = y.view(batch, -1, 66).transpose(1,2)
+
+        print(y.shape)
+        y = self.gc3(y)
         y = self.act_f(y)
         y = self.do(y)
 
-        y, _ = self.st3(y, self.A)
+        print(y.shape)
+        y= self.gc4(y)
         y = self.act_f(y)
         y = self.do(y)
+        print(y.shape)
 
-        y, _ = self.st4(y, self.A)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        return y
+        return y+x

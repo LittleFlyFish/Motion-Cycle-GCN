@@ -15,7 +15,9 @@ from .ST_B import ST_B
 from .ST_C import ST_C
 from .NewGCN import NewGCN
 from .GCNGRU import GCNGRU
+from .ST_D import ST_D
+from .ST_E import ST_E
 __all__=["Motion_GCN","SemGCN","Cycle_GCN", "P_GCN", "Cycle_P", "Recycle_GCN", "G_NoNorm",
          "G_Attention", "G_Attention_GCN", "Dense_GCN", "Fuse_GCN", "ST_GCN_Dense",
-         "ST_A", "ST_B", "ST_C", "NewGCN", "GCNGRU"]
+         "ST_A", "ST_B", "ST_C", "NewGCN", "GCNGRU", "ST_D", "ST_E"]
 
