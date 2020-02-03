@@ -46,6 +46,9 @@ class ST_Block(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
+        if self.in_channels == self.out_channels:
+            y = y + x
+
         return y
 
     def __repr__(self):
@@ -88,13 +91,17 @@ class ST_GCN_Dense(nn.Module):
         self.num_stage = num_stage
         self.stbs = []
         for i in range(num_stage):
-            self.stbs.append(ST_Block(hidden_feature*(i+1), hidden_feature, kernel_size, graph_adj=A, stride=1, dropout=0, residual=True))
+            #self.stbs.append(ST_Block(hidden_feature*(i+1), hidden_feature, kernel_size, graph_adj=A, stride=1, dropout=0, residual=True))
+            self.stbs.append(
+                ST_Block(hidden_feature, hidden_feature, kernel_size, graph_adj=A, stride=1, dropout=0,
+                         residual=True))
         self.stbs = nn.ModuleList(self.stbs)
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
         self.st1 = st_gcn(input_feature, hidden_feature, kernel_size, 1, residual=False)
-        self.st2 = st_gcn(hidden_feature*(num_stage + 1), input_feature, kernel_size, 1, residual=False)
+        #self.st2 = st_gcn(hidden_feature*(num_stage + 1), input_feature, kernel_size, 1, residual=False)
+        self.st2 = st_gcn(hidden_feature, input_feature, kernel_size, 1, residual=False)
         self.residual = residual
 
 
@@ -108,14 +115,22 @@ class ST_GCN_Dense(nn.Module):
         # x = x.permute(0, 1, 3, 2).contiguous()
         # x = x.view(N, C, T, V)
 
-        # ST-GCN module
+        # ST-GCN module Dense Version
         y, _ = self.st1(x, self.A)
         y = self.do(y)
 
+        # for i in range(self.num_stage):
+        #     y1 = self.stbs[i](y)
+        #     y = self.act_f(y)
+        #     y = torch.cat((y, y1), dim=1)
+        #
+        # y, _ = self.st2(y, self.A)
+        # if self.residual:
+        #     y = y + x
+
+        # ST-GCN module Res Version
         for i in range(self.num_stage):
             y1 = self.stbs[i](y)
-            y = self.act_f(y)
-            y = torch.cat((y, y1), dim=1)
 
         y, _ = self.st2(y, self.A)
         if self.residual:

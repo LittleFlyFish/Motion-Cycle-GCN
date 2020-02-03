@@ -21,3 +21,11 @@ __all__=["Motion_GCN","SemGCN","Cycle_GCN", "P_GCN", "Cycle_P", "Recycle_GCN", "
          "G_Attention", "G_Attention_GCN", "Dense_GCN", "Fuse_GCN", "ST_GCN_Dense",
          "ST_A", "ST_B", "ST_C", "NewGCN", "GCNGRU", "ST_D", "ST_E"]
 
+# ST_A : 5 layer ST_GCN as encoder, ST_GCN as decoder, only downsample on frames
+# ST_B: ST_GCN autoencoder, only 2 downsample upsample layers
+# ST_C:  ST_GCN + Motion_GCN + ST_GCN
+# ST_D: GCN autoencoder, only 2 downsample upsample layers.
+# ST_E: ST_GCN long term + short term encoder, predict next frame recursively
+# ST_GCN_Dense: Dense network with each layer ST_GCN
+# New GCN: a dense connected but RNN similar structure network, each layer GCN
+# GCNGRU: GRU structure with each operator GCN.

@@ -61,6 +61,7 @@ class Hm36Dataset_3d_ST(Dataset):
         :param dct_used:
         :param split: 0 train, 1 testing, 2 validation
         :param sample_rate:
+        input [batch, 3, 20, 22]
         """
         self.path_to_data = path_to_data
         self.split = split

@@ -82,54 +82,40 @@ class ST_D(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
         batch, n, f = y.shape
-        print("ST_D")
         y = y.transpose(1,2).reshape(batch, f, 3, 22)
-        print(y.shape)
 
         y = self.gd1(y)
         y = self.act_f(y)
         y = self.do(y)
-        print(y.shape)
         y = y.view(batch, -1, 3*5).transpose(1,2)
-        print(y.shape)
 
         y = self.gc2(y)
         y = self.act_f(y)
         y = self.do(y)
-        print(y.shape)
         y = y.transpose(1,2).reshape(batch, 4*self.hidden_feature, 3, 5)
-        print(y.shape)
         u1 = y
 
-        print(y.shape)
         y = self.gd2(y)
         y = self.act_f(y)
         y = self.do(y)
-        print(y.shape)
 
         u2 = y
 
-        print(y.shape)
         y = self.gu2(y)
         y = self.act_f(y)
         y = self.do(y)
-        print(y.shape)
 
         y = self.gu1(y)
         y = self.act_f(y)
         y = self.do(y)
-        print(y.shape)
         y = y.view(batch, -1, 66).transpose(1,2)
 
-        print(y.shape)
         y = self.gc3(y)
         y = self.act_f(y)
         y = self.do(y)
 
-        print(y.shape)
         y= self.gc4(y)
         y = self.act_f(y)
         y = self.do(y)
-        print(y.shape)
 
         return y+x
