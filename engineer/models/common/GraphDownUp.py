@@ -136,9 +136,8 @@ class GraphDownSample_Conv(nn.Module):
         batch, feature, _, node_n = x.shape
         for i in range(0, len(self.list)):
             x1 = x[:, :, :, self.list[i]]
-            print(x1)
-            y = self.downsample[i](x1)
-            print(y)
+            y = self.downsample[2*i](x1)
+            y = self.downsample[2*i+1](y)
             self.feature.append(y)
 
         y = torch.cat(self.feature, dim=3)
@@ -182,7 +181,9 @@ class GraphUpSample_Conv(nn.Module):
         self.feature = []
         for i in range(0, node):
             x1 = x[:, :, :, i] # [batch, feature, 3, 1]
-            y = self.upsample[i](x1)
+            x1 = torch.unsqueeze(x1, dim=3)
+            y = self.upsample[2*i](x1)
+            y = self.upsample[2*i+1](y)
             self.feature.append(y)
             l.append(self.list[i])
 

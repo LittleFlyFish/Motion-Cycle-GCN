@@ -56,6 +56,7 @@ class Multi_GCN(nn.Module):
         kernel_size = (temporal_kernel_size, spatial_kernel_size)
         in_channels = 15
         self.hidden_feature = hidden_feature
+        self.in_channels = in_channels
 
         spatial_kernel_size = A_d1.size(0)
         temporal_kernel_size = 9
@@ -63,21 +64,24 @@ class Multi_GCN(nn.Module):
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
-        self.gc1 = GraphConvolution(in_channels, hidden_feature, node_n=66)
+        self.gc1 = GraphConvolution(in_channels, in_channels, node_n=66)
         self.gc2 = GraphConvolution(hidden_feature, hidden_feature, node_n=15)
         self.gc3 = GraphConvolution(hidden_feature, hidden_feature, node_n=66)
-        self.gc4 = GraphConvolution(hidden_feature, in_channels, node_n=66)
+        self.gc4 = GraphConvolution(in_channels, in_channels, node_n=15)
+        self.gc5 = GraphConvolution(in_channels, in_channels, node_n=66)
         self.residual = residual
 
         list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
-        self.gd1 = GraphDownSample(hidden_feature, hidden_feature, list1)
-        self.gu1 = GraphUpSample(hidden_feature, hidden_feature, list1)
+        self.gd1 = GraphDownSample(in_channels, in_channels, list1)
+        self.gu1 = GraphUpSample(in_channels, in_channels, list1)
 
         list2 = [[0,1,2,3,4]]
         self.gd2 = GraphDownSample(hidden_feature, hidden_feature, list2)
         self.gu2= GraphUpSample(hidden_feature, hidden_feature, list2)
 
-        self.gcn = Motion_GCN(input_feature=hidden_feature, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=15)
+        self.gcn = Motion_GCN(input_feature=in_channels, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=15)
+
+        self.fullgcn = Motion_GCN(input_feature=hidden_feature, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=15)
 
     def forward(self, x):
         y = self.gc1(x)
@@ -92,14 +96,14 @@ class Multi_GCN(nn.Module):
         y = y.view(batch, -1, 3*5).transpose(1,2)
 
         y = self.gcn(y)
-        y = y.transpose(1,2).reshape(batch, self.hidden_feature, 3, 5)
+        y = y.transpose(1,2).reshape(batch, self.in_channels, 3, 5)
 
         y = self.gu1(y)
         y = self.act_f(y)
         y = self.do(y)
         y = y.view(batch, -1, 66).transpose(1,2)
 
-        y= self.gc4(y)
+        y= self.gc5(y)
         y = self.act_f(y)
         y = self.do(y)
 
