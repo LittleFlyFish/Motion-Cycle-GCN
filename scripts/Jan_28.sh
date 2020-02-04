@@ -29,6 +29,8 @@ python3 tools/train_net.py --config ./configs/ST_D_I10_O10_D15_G.py
 
 python3 tools/train_ST_GCN2.py --config ./configs/ST_E_I10_O10_D15_G2.py
 
+python3 tools/train_ST_GCN.py --config ./configs/ST_B_I10_O10_D15_G2.py
+
 ##############################################################################
 # feature size test
 python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h8f8.py

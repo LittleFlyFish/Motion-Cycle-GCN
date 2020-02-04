@@ -162,7 +162,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             padding_seq = Variable(padding_seq.cuda()).float()
 
         outputs = model(inputs)
-        Final = torch.cat([inputs, outputs], 2)
+        Final = torch.cat([inputs, outputs + padding_seq], 2)
         # calculate loss and backward
         _, loss = loss_funcs.mpjpe_error_p3d_ST(Final, all_seq, dct_n, dim_used)
         # #############################################################################
@@ -222,10 +222,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
 
         n, seq_len, dim_full_len = all_seq.data.shape
 
-        Final = torch.cat([inputs, outputs], 2)
-        print("here")
-        print(outputs.shape)
-        print(Final.shape)
+        Final = torch.cat([inputs, outputs + padding_seq], 2)
         outputs_3d = Final.contiguous().transpose(1, 2).reshape(n, seq_len, dim_used_len)
         # calculate loss and backward
         _, test_loss = loss_funcs.mpjpe_error_p3d_ST(Final, all_seq, dct_n, dim_used)
@@ -281,7 +278,7 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
 
         n, _, _ = all_seq.data.shape
 
-        Final = torch.cat([inputs, outputs], dim=2)
+        Final = torch.cat([inputs, outputs + padding_seq], dim=2)
         # calculate loss and backward
         _, m_err = loss_funcs.mpjpe_error_p3d_ST(Final, all_seq, dct_n, dim_used)
         # plotter.plot('loss', 'val', 'LeakyRelu+No Batch ', i, m_err.item())

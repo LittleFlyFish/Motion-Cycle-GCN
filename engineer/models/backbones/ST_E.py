@@ -120,6 +120,7 @@ class ST_E(nn.Module):
         self.gc1 = GraphConvolution(3, hidden_feature, node_n=node_n) # output [batch, node, hidden_feature]
 
     def forward(self, x):
+        batch, _, _, _ = x.shape
         frames = torch.split(x, 1, dim=2)
         frames = list(frames)
         longfeature = self.longencoder(x)
@@ -128,9 +129,9 @@ class ST_E(nn.Module):
             shortx = torch.cat(shortlist, dim=2)
             shortfeature = self.shortencoder(shortx)
             DF = torch.cat([shortfeature, longfeature], dim=2)
-            DF = DF.view(16, -1)
+            DF = DF.view(batch, -1)
             OutFrame = self.decoder(DF)
-            OutFrame = OutFrame.reshape([16, 3, 1, 22])
+            OutFrame = OutFrame.reshape([batch, 3, 1, 22])
             OutFrame = OutFrame + frames[self.input_n-1]
             frames.append(OutFrame)
 
