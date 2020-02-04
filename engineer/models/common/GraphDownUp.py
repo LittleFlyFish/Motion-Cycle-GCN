@@ -125,7 +125,6 @@ class GraphDownSample_Avg(nn.Module):
             #self.downsample.append(nn.Conv2d(self.in_channels, self.out_channels, (1, kernel_size), (1, 1)))
             self.downsample.append(nn.Linear(kernel_size*3, 3))
 
-
         self.downsample = nn.ModuleList(self.downsample)
 
     def forward(self, x):
@@ -133,12 +132,12 @@ class GraphDownSample_Avg(nn.Module):
         batch, feature, _, node_n = x.shape
         for i in range(0, len(self.list)):
             x1 = x[:, :, :, self.list[i]]
-            y = x1.sum(3)
-            y = torch.unsqueeze(dim=3)
-
+            y = x1.sum(3, keepdim = True)
+            print(y.shape)
             self.feature.append(y)
 
         y = torch.cat(self.feature, dim=3)
+        print(y.shape)
         return y
 
 class GraphUpSample_Avg(nn.Module):
