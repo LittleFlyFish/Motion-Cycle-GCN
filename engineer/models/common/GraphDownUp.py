@@ -134,6 +134,7 @@ class GraphDownSample_Avg(nn.Module):
         for i in range(0, len(self.list)):
             x1 = x[:, :, :, self.list[i]]
             y = x1.sum(3)
+            y = torch.unsqueeze(dim=3)
 
             self.feature.append(y)
 
