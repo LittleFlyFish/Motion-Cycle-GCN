@@ -17,9 +17,10 @@ from .NewGCN import NewGCN
 from .GCNGRU import GCNGRU
 from .ST_D import ST_D
 from .ST_E import ST_E
+from .Multi_GCN import Multi_GCN
 __all__=["Motion_GCN","SemGCN","Cycle_GCN", "P_GCN", "Cycle_P", "Recycle_GCN", "G_NoNorm",
          "G_Attention", "G_Attention_GCN", "Dense_GCN", "Fuse_GCN", "ST_GCN_Dense",
-         "ST_A", "ST_B", "ST_C", "NewGCN", "GCNGRU", "ST_D", "ST_E"]
+         "ST_A", "ST_B", "ST_C", "NewGCN", "GCNGRU", "ST_D", "ST_E", "Multi_GCN"]
 
 # ST_A : 5 layer ST_GCN as encoder, ST_GCN as decoder, only downsample on frames
 # ST_B: ST_GCN autoencoder, only 2 downsample upsample layers

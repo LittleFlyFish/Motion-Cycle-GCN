@@ -25,7 +25,7 @@ from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, G
 
 
 @BACKBONES.register_module
-class ST_D(nn.Module):
+class Multi_GCN(nn.Module):
     '''
     Use GCN as encoder, and then use gcn as a decoder
     The input is [batch, node_dim, dct_n]   # for example, [16, 66, 15]
@@ -40,7 +40,7 @@ class ST_D(nn.Module):
         :param num_stage: number of residual blocks
         :param node_n: number of nodes in graph
         """
-        super(ST_D, self).__init__()
+        super(Multi_GCN, self).__init__()
         # load graph
         self.graph = Graph(layout=layout, strategy=strategy)
         A = torch.tensor(self.graph.A, dtype=torch.float32, requires_grad=False)
@@ -77,6 +77,8 @@ class ST_D(nn.Module):
         self.gd2 = GraphDownSample(hidden_feature, hidden_feature, list2)
         self.gu2= GraphUpSample(hidden_feature, hidden_feature, list2)
 
+        self.gcn = Motion_GCN(input_feature=hidden_feature, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=15)
+
     def forward(self, x):
         y = self.gc1(x)
         y = self.act_f(y)
@@ -89,30 +91,13 @@ class ST_D(nn.Module):
         y = self.do(y)
         y = y.view(batch, -1, 3*5).transpose(1,2)
 
-        y = self.gc2(y)
-        y = self.act_f(y)
-        y = self.do(y)
+        y = self.gcn(y)
         y = y.transpose(1,2).reshape(batch, self.hidden_feature, 3, 5)
-        u1 = y
-
-        y = self.gd2(y)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        u2 = y
-
-        y = self.gu2(y)
-        y = self.act_f(y)
-        y = self.do(y)
 
         y = self.gu1(y)
         y = self.act_f(y)
         y = self.do(y)
         y = y.view(batch, -1, 66).transpose(1,2)
-
-        y = self.gc3(y)
-        y = self.act_f(y)
-        y = self.do(y)
 
         y= self.gc4(y)
         y = self.act_f(y)

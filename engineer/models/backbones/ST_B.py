@@ -18,7 +18,7 @@ from torch.autograd import Variable
 from engineer.models.common.tgcn import ConvTemporalGraphical
 from engineer.models.common.graph import Graph
 from engineer.models.common.STGCN import st_gcn
-from engineer.models.common.GraphDownUp import GraphDownSample, GraphUpSample
+from engineer.models.common.GraphDownUp import GraphDownSample_Conv, GraphUpSample_Conv
 from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, GC_Block
 
 
@@ -98,12 +98,12 @@ class ST_B(nn.Module):
         self.residual = residual
 
         list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
-        self.gd1 = GraphDownSample(hidden_feature, 2*hidden_feature, list1)
-        self.gu1 = GraphUpSample(4*hidden_feature, 2*hidden_feature, list1)
+        self.gd1 = GraphDownSample_Conv(hidden_feature, 2*hidden_feature, list1)
+        self.gu1 = GraphUpSample_Conv(4*hidden_feature, 2*hidden_feature, list1)
 
         list2 = [[0,1,2,3,4]]
-        self.gd2 = GraphDownSample(4*hidden_feature, 4*hidden_feature, list2)
-        self.gu2= GraphUpSample(4*hidden_feature, 4*hidden_feature, list2)
+        self.gd2 = GraphDownSample_Conv(4*hidden_feature, 4*hidden_feature, list2)
+        self.gu2= GraphUpSample_Conv(4*hidden_feature, 4*hidden_feature, list2)
 
     def forward(self, x):
         y, _ = self.st1(x, self.A)

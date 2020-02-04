@@ -223,6 +223,9 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         n, seq_len, dim_full_len = all_seq.data.shape
 
         Final = torch.cat([inputs, outputs], 2)
+        print("here")
+        print(outputs.shape)
+        print(Final.shape)
         outputs_3d = Final.contiguous().transpose(1, 2).reshape(n, seq_len, dim_used_len)
         # calculate loss and backward
         _, test_loss = loss_funcs.mpjpe_error_p3d_ST(Final, all_seq, dct_n, dim_used)
