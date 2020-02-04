@@ -185,6 +185,8 @@ class GraphUpSample_Avg(nn.Module):
         self.index = list(itertools.chain.from_iterable(l))
         y1 = torch.cat(self.feature, dim=3)
         y = y1
+        print(y.shape)
+        print(len(self.index))
         _, _, _, dims = y.shape
         for i in range(0, dims):
             y[:, :, :, self.index[i]] = y1[:, :, :, i]
