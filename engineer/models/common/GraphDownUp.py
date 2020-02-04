@@ -133,11 +133,9 @@ class GraphDownSample_Avg(nn.Module):
         for i in range(0, len(self.list)):
             x1 = x[:, :, :, self.list[i]]
             y = x1.sum(3, keepdim = True)
-            print(y.shape)
             self.feature.append(y)
 
         y = torch.cat(self.feature, dim=3)
-        print(y.shape)
         return y
 
 class GraphUpSample_Avg(nn.Module):
@@ -179,6 +177,9 @@ class GraphUpSample_Avg(nn.Module):
         for i in range(0, node):
             x1 = x[:, :, :, i] # [batch, feature, 3, 1]
             y = x1.repeat(1,1,1,len(self.list[i]))
+            print(i)
+            print(x1.shape)
+            print(y.shape)
             self.feature.append(y)
             l.append(self.list[i])
 
