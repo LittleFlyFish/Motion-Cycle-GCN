@@ -18,7 +18,7 @@ from torch.autograd import Variable
 from engineer.models.common.tgcn import ConvTemporalGraphical
 from engineer.models.common.graph import Graph
 from engineer.models.common.STGCN import st_gcn
-from engineer.models.common.GraphDownUp import GraphDownSample_Avg, GraphUpSample_Avg
+from engineer.models.common.GraphDownUp import GraphDownSample, GraphUpSample
 from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, GC_Block
 
 
@@ -77,12 +77,12 @@ class Multi_GCN(nn.Module):
         self.bn4 = nn.BatchNorm1d(3 * 22 * in_channels)
 
         list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
-        self.gd1 = GraphDownSample_Avg(in_channels, in_channels, list1)
-        self.gu1 = GraphUpSample_Avg(in_channels, in_channels, list1)
+        self.gd1 = GraphDownSample(in_channels, in_channels, list1)
+        self.gu1 = GraphUpSample(in_channels, in_channels, list1)
 
         list2 = [[0,1,2,3,4]]
-        self.gd2 = GraphDownSample_Avg(hidden_feature, hidden_feature, list2)
-        self.gu2= GraphUpSample_Avg(hidden_feature, hidden_feature, list2)
+        self.gd2 = GraphDownSample(hidden_feature, hidden_feature, list2)
+        self.gu2= GraphUpSample(hidden_feature, hidden_feature, list2)
 
         self.gcn = Motion_GCN(input_feature=in_channels, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=66)
 

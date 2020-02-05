@@ -56,7 +56,7 @@ data = dict(
 #
 # optimizer
 optim_para=dict(
-    optimizer = dict(type='Adam',lr=0.001),
+    optimizer = dict(type='Adam',lr=0.01),
     lr_decay=1,
     lr_gamma= 0.8
 )
