@@ -14,7 +14,7 @@ from engineer.models.common.GraphDownUp import GraphDownSample_Conv, GraphUpSamp
 from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, GC_Block
 
 class STGCN_encoder(nn.Module):
-    def __init__(self, hidden_feature, layout, strategy, p_dropout, batchframe, bias=True, node_n=48):
+    def __init__(self, hidden_feature, layout, strategy, p_dropout, input_frame = 10, bias=True, node_n=48):
         """
         Use a ST_GCN as encoder
         input: [batch, in_channels, input_n, node_dim]  such as [16, 3, 10, 22]
@@ -32,13 +32,22 @@ class STGCN_encoder(nn.Module):
 
         # build networks
         spatial_kernel_size = A.size(0)
-        temporal_kernel_size = 9
+        temporal_kernel_size = 5
         kernel_size = (temporal_kernel_size, spatial_kernel_size)
         in_channels = 3
 
         spatial_kernel_size = A_d1.size(0)
-        temporal_kernel_size = 9
+        temporal_kernel_size = 5
         kernel_size_d1 = (temporal_kernel_size, spatial_kernel_size)
+
+        if input_frame == 10:
+            BF = 3
+        elif input_frame == 5:
+            BF = 2
+        elif input_frame == 50:
+            BF = 13
+        else:
+            print("please define BF")
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.LeakyReLU()
@@ -46,6 +55,8 @@ class STGCN_encoder(nn.Module):
         self.st2 = st_gcn(hidden_feature, hidden_feature, kernel_size_d1, 1, residual=False)
         self.st3 = st_gcn(hidden_feature, hidden_feature, kernel_size, 2, residual=False)
         self.st4 = st_gcn(hidden_feature, hidden_feature, kernel_size, 2, residual=False)
+
+        self.st5 = st_gcn(hidden_feature, hidden_feature, kernel_size, BF, residual=False)
 
         list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
         self.gd1 = GraphDownSample_Conv(hidden_feature, hidden_feature, list1)
@@ -55,8 +66,8 @@ class STGCN_encoder(nn.Module):
         self.gd2 = GraphDownSample_Conv(hidden_feature, hidden_feature, list2)
         self.gu2= GraphUpSample_Conv(hidden_feature, hidden_feature, list2)
 
-        self.bn1 = nn.BatchNorm1d(batchframe * 5 * hidden_feature)
-        self.bn2 = nn.BatchNorm1d(batchframe * hidden_feature)
+        self.bn1 = nn.BatchNorm1d(BF * 5 * hidden_feature)
+        self.bn2 = nn.BatchNorm1d(BF * hidden_feature)
 
     def forward(self, x):
         y, _ = self.st1(x, self.A)
