@@ -70,6 +70,11 @@ class Multi_GCN(nn.Module):
         self.gc4 = GraphConvolution(in_channels, in_channels, node_n=15)
         self.gc5 = GraphConvolution(in_channels, in_channels, node_n=66)
         self.residual = residual
+        node_n = 66
+        self.bn1 = nn.BatchNorm1d(node_n * 15) # 15 is in_channel
+        self.bn2 = nn.BatchNorm1d(66 * in_channels)
+        self.bn3 = nn.BatchNorm1d(3 * 5 * in_channels)
+        self.bn4 = nn.BatchNorm1d(3 * 22 * in_channels)
 
         list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
         self.gd1 = GraphDownSample_Avg(in_channels, in_channels, list1)
@@ -79,31 +84,41 @@ class Multi_GCN(nn.Module):
         self.gd2 = GraphDownSample_Avg(hidden_feature, hidden_feature, list2)
         self.gu2= GraphUpSample_Avg(hidden_feature, hidden_feature, list2)
 
-        self.gcn = Motion_GCN(input_feature=in_channels, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=15)
+        self.gcn = Motion_GCN(input_feature=in_channels, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=66)
 
         self.fullgcn = Motion_GCN(input_feature=hidden_feature, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=15)
 
     def forward(self, x):
         y = self.gc1(x)
+        b, n, f = y.shape
+        y = self.bn1(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
         y = self.do(y)
         batch, n, f = y.shape
         y = y.transpose(1,2).reshape(batch, f, 3, 22)
 
-        y = self.gd1(y)
+        y = self.gd1(y)# [batch, in_channel=15, 3, node=5]
+        b, c1, c2, n = y.shape
+        y = self.bn3(y.view(b, -1)).view(b, c1, c2, n)
         y = self.act_f(y)
         y = self.do(y)
-        y = y.view(batch, -1, 3*5).transpose(1,2)
+        #y = y.view(batch, -1, 3*5).transpose(1,2)
 
-        y = self.gcn(y)
-        y = y.transpose(1,2).reshape(batch, self.in_channels, 3, 5)
+        # y = self.gcn(y)
+        # y = y.transpose(1,2).reshape(batch, self.in_channels, 3, 5)
 
-        y = self.gu1(y)
+        y = self.gu1(y) # [16, 15, 3, 22]
+        b, c1, c2, n= y.shape
+        y = self.bn4(y.view(b, -1)).view(b, c1, c2, n)
         y = self.act_f(y)
         y = self.do(y)
         y = y.view(batch, -1, 66).transpose(1,2)
 
+        y = self.gcn(y)
+
         y= self.gc5(y)
+        b, n, f = y.shape
+        y = self.bn2(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
         y = self.do(y)
 

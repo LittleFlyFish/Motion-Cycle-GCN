@@ -14,11 +14,11 @@ from engineer.models.common.GraphDownUp import GraphDownSample_Conv, GraphUpSamp
 from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, GC_Block
 
 class STGCN_encoder(nn.Module):
-    def __init__(self, hidden_feature, layout, strategy, p_dropout, bias=True, node_n=48):
+    def __init__(self, hidden_feature, layout, strategy, p_dropout, batchframe, bias=True, node_n=48):
         """
         Use a ST_GCN as encoder
         input: [batch, in_channels, input_n, node_dim]  such as [16, 3, 10, 22]
-        output: [batch, 2*hidden_feature, input_n/2/2, 1] such as [16, 2*h, 2, 1]
+        output: [batch, hidden_feature, input_n/2/2, 1] such as [16, h, 2, 1]
         """
         super(STGCN_encoder, self).__init__()
         # load graph
@@ -55,6 +55,9 @@ class STGCN_encoder(nn.Module):
         self.gd2 = GraphDownSample_Conv(hidden_feature, hidden_feature, list2)
         self.gu2= GraphUpSample_Conv(hidden_feature, hidden_feature, list2)
 
+        self.bn1 = nn.BatchNorm1d(batchframe * 5 * hidden_feature)
+        self.bn2 = nn.BatchNorm1d(batchframe * hidden_feature)
+
     def forward(self, x):
         y, _ = self.st1(x, self.A)
         y = self.act_f(y)
@@ -69,18 +72,19 @@ class STGCN_encoder(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
-
-        y = self.gd1(y)
+        y = self.gd1(y) # [16, h, batchframe, node =5]
+        b, n, f, t = y.shape
+        y = self.bn1(y.view(b, -1)).view(b, n, f, t)
         y = self.act_f(y)
         y = self.do(y)
 
         y, _ = self.st2(y, self.A_d1)
         y = self.act_f(y)
         y = self.do(y)
-        u1 = y
 
-
-        y = self.gd2(y)
+        y = self.gd2(y) # [16, h, 3, node =1]
+        b, n, f, t = y.shape
+        y = self.bn2(y.view(b, -1)).view(b, n, f, t)
         y = self.act_f(y)
         y = self.do(y)
         return y
@@ -90,6 +94,46 @@ class STGCN_encoder(nn.Module):
                + str(self.in_features) + ' -> ' \
                + str(self.out_features) + ')'
 
+
+class GCN_decoder(nn.Module):
+    def __init__(self, input_feature, input_frame, dropout=0.5, node_n=66):
+        """
+        A encoder to transfer back a graph [batch, 22, 3]
+        input: [batch, input_feature, input_frame, 1] such as [16, f, 5, 1]
+        """
+        super(GCN_decoder, self).__init__()
+
+        self.do = nn.Dropout(dropout)
+        self.act_f = nn.LeakyReLU()
+        self.resize = nn.Linear(input_feature * input_frame, node_n)
+        self.gc1 = GraphConvolution(3, 3, node_n=22)
+        self.gc2 = GraphConvolution(3, 3, node_n=22)
+
+        self.bn1 = nn.BatchNorm1d(node_n)
+        self.bn2 = nn.BatchNorm1d(node_n)
+
+
+    def forward(self, x):
+        batch, f,frame, _ = x.shape
+        x = x.view(batch, -1)
+        y = self.resize(x)
+        y = self.bn1(y)
+        y = self.act_f(y)
+        y = self.do(y)
+
+        y = y.view(batch, 22, 3)
+        y = self.gc1(y)
+        y = self.bn2(y.view(batch, -1)).view(batch, 22, 3)
+        y = self.act_f(y)
+        y = self.do(y)
+
+        y = torch.unsqueeze(y.transpose(1, 2), dim=2)
+        return y
+
+    def __repr__(self):
+        return self.__class__.__name__ + ' (' \
+               + str(self.in_features) + ' -> ' \
+               + str(self.out_features) + ')'
 
 @BACKBONES.register_module
 class ST_E(nn.Module):
@@ -110,9 +154,10 @@ class ST_E(nn.Module):
         self.input_n = input_n
         self.output_n = output_n
 
-        self.longencoder = STGCN_encoder(hidden_feature, layout, strategy, p_dropout=dropout)
-        self.shortencoder = STGCN_encoder(hidden_feature, layout, strategy, p_dropout=dropout)
-        self.decoder = nn.Linear(hidden_feature*5, 66)
+        self.longencoder = STGCN_encoder(hidden_feature, layout, strategy, batchframe=3, p_dropout=dropout)
+        self.shortencoder = STGCN_encoder(hidden_feature, layout, strategy, batchframe=2, p_dropout=dropout)
+        #self.decoder = nn.Linear(hidden_feature*5, 66)
+        self.decoder = GCN_decoder(hidden_feature, 5)
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
@@ -129,9 +174,7 @@ class ST_E(nn.Module):
             shortx = torch.cat(shortlist, dim=2)
             shortfeature = self.shortencoder(shortx)
             DF = torch.cat([shortfeature, longfeature], dim=2)
-            DF = DF.view(batch, -1)
             OutFrame = self.decoder(DF)
-            OutFrame = OutFrame.reshape([batch, 3, 1, 22])
             OutFrame = OutFrame + frames[self.input_n-1]
             frames.append(OutFrame)
 
