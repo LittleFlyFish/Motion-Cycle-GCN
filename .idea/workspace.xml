@@ -6,7 +6,6 @@
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/Multi_GCN_I10_O10_D15_G.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Multi_GCN_I10_O10_D15_G.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_A.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_A.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_E.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_E.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -109,20 +108,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00047" summary="&quot;Dense_GCN add&quot;">
-      <created>1579720511884</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1579720511884</updated>
-    </task>
-    <task id="LOCAL-00048" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1579732387869</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1579732387869</updated>
     </task>
     <task id="LOCAL-00049" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1579733031530</created>
@@ -453,11 +438,24 @@
       <option name="project" value="LOCAL" />
       <updated>1580912509421</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="&quot;ST-E&quot;">
+      <created>1580913680625</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1580913680625</updated>
+    </task>
+    <task id="LOCAL-00097" summary="&quot;ST_E&quot;">
+      <created>1580913794290</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1580913794290</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="&quot;Dense_GCN no dropout version&quot;" />
     <MESSAGE value="&quot;test ST_B&quot;" />
     <MESSAGE value="&quot;NewGCN framework&quot;" />
     <MESSAGE value="&quot;NewGCN test&quot;" />
@@ -479,20 +477,21 @@
     <MESSAGE value="&quot;Multi_GCN AVerage DownupSample strategy&quot;" />
     <MESSAGE value="&quot;Average Downsample Upsample strategy&quot;" />
     <MESSAGE value="&quot;GV=G version, Padding=True&quot;" />
-    <MESSAGE value="&quot;ST_E&quot;" />
     <MESSAGE value="&quot;ST_E 50&quot;" />
     <MESSAGE value="&quot;kernel size = 5&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;kernel size = 5&quot;" />
+    <MESSAGE value="&quot;ST-E&quot;" />
+    <MESSAGE value="&quot;ST_E&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;ST_E&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580323938186">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580323938186" />
-    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580913680536">
+    <state x="604" y="194" key="CommitChangelistDialog2" timestamp="1580913794226">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580913680536" />
+    <state x="604" y="194" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580913794226" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -525,10 +524,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580913689176">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1580913800591">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580913689176" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580913800591" />
     <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1580820018501">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>

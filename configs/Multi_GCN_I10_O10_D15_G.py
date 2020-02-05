@@ -57,8 +57,8 @@ data = dict(
 # optimizer
 optim_para=dict(
     optimizer = dict(type='Adam',lr=0.001),
-    lr_decay=2,
-    lr_gamma= 0.96
+    lr_decay=1,
+    lr_gamma= 0.8
 )
 total_epochs = 50
 max_norm= True

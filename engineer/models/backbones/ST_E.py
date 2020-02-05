@@ -128,9 +128,9 @@ class GCN_decoder(nn.Module):
         batch, f,frame, _ = x.shape
         x = x.view(batch, -1)
         y = self.resize(x)
-        y = self.bn1(y)
-        y = self.act_f(y)
-        y = self.do(y)
+        # y = self.bn1(y)
+        # y = self.act_f(y)
+        # y = self.do(y)
 
         y = y.view(batch, 22, 3)
         # y = self.gc1(y)
