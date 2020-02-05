@@ -165,8 +165,8 @@ class ST_E(nn.Module):
         self.input_n = input_n
         self.output_n = output_n
 
-        self.longencoder = STGCN_encoder(hidden_feature, layout, strategy, batchframe=3, p_dropout=dropout)
-        self.shortencoder = STGCN_encoder(hidden_feature, layout, strategy, batchframe=2, p_dropout=dropout)
+        self.longencoder = STGCN_encoder(hidden_feature, layout, strategy, input_frame=10, p_dropout=dropout)
+        self.shortencoder = STGCN_encoder(hidden_feature, layout, strategy, input_frame=5, p_dropout=dropout)
         #self.decoder = nn.Linear(hidden_feature*5, 66)
         self.decoder = GCN_decoder(hidden_feature, 5)
 
