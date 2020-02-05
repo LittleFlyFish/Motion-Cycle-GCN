@@ -117,11 +117,11 @@ class GCN_decoder(nn.Module):
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
         self.resize = nn.Linear(input_feature * input_frame, node_n)
-        self.gc1 = GraphConvolution(3, 3, node_n=22)
-        self.gc2 = GraphConvolution(3, 3, node_n=22)
+        # self.gc1 = GraphConvolution(3, 3, node_n=22)
+        #self.gc2 = GraphConvolution(3, 3, node_n=22)
 
         self.bn1 = nn.BatchNorm1d(node_n)
-        self.bn2 = nn.BatchNorm1d(node_n)
+        #self.bn2 = nn.BatchNorm1d(node_n)
 
 
     def forward(self, x):
@@ -133,10 +133,10 @@ class GCN_decoder(nn.Module):
         y = self.do(y)
 
         y = y.view(batch, 22, 3)
-        y = self.gc1(y)
-        y = self.bn2(y.view(batch, -1)).view(batch, 22, 3)
-        y = self.act_f(y)
-        y = self.do(y)
+        # y = self.gc1(y)
+        # y = self.bn2(y.view(batch, -1)).view(batch, 22, 3)
+        # y = self.act_f(y)
+        # y = self.do(y)
 
         y = torch.unsqueeze(y.transpose(1, 2), dim=2)
         return y

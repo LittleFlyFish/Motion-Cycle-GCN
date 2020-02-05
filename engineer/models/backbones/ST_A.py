@@ -46,7 +46,7 @@ class ST_A(nn.Module):
 
         # build networks
         spatial_kernel_size = A.size(0)
-        temporal_kernel_size = 9
+        temporal_kernel_size = 3
         kernel_size = (temporal_kernel_size, spatial_kernel_size)
         in_channels = 3
 
