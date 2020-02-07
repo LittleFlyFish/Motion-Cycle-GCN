@@ -79,8 +79,8 @@ class STGCN_encoder(nn.Module):
         self.gd2 = GraphDownSample_Conv(hidden_feature, hidden_feature, list2)
         self.gu2= GraphUpSample_Conv(hidden_feature, hidden_feature, list2)
 
-        self.gd3 = GraphDownSample_Conv(hidden_feature, hidden_feature, list2)
-        self.gu3= GraphUpSample_Conv(hidden_feature, hidden_feature, list2)
+        self.gd3 = GraphDownSample_Conv(hidden_feature, hidden_feature, list3)
+        self.gu3= GraphUpSample_Conv(hidden_feature, hidden_feature, list3)
 
         self.bn1 = nn.BatchNorm1d(BF * 17 * hidden_feature)
         self.bn2 = nn.BatchNorm1d(BF * 5 * hidden_feature)
@@ -119,9 +119,7 @@ class STGCN_encoder(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
-        print(y.shape)
         y = self.gd3(y)
-        print(y.shape)
         return y
 
     def __repr__(self):
