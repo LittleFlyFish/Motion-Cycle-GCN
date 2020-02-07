@@ -94,10 +94,10 @@ class STGCN_encoder(nn.Module):
         y = self.do(y)
 
         y = self.gd2(y) # [16, h, 3, node =1]
-        b, n, f, t = y.shape
-        y = self.bn2(y.view(b, -1)).view(b, n, f, t)
-        y = self.act_f(y)
-        y = self.do(y)
+        # b, n, f, t = y.shape
+        # y = self.bn2(y.view(b, -1)).view(b, n, f, t)
+        # y = self.act_f(y)
+        # y = self.do(y)
         return y
 
     def __repr__(self):
@@ -128,12 +128,12 @@ class GCN_decoder(nn.Module):
         batch, f,frame, _ = x.shape
         x = x.view(batch, -1)
         y = self.resize(x)
-        # y = self.bn1(y)
+        y = self.bn1(y)
         y = self.act_f(y)
         y = self.do(y)
 
         y = y.view(batch, 22, 3)
-        # y = self.gc1(y)
+        y = self.gc1(y)
         # y = self.bn2(y.view(batch, -1)).view(batch, 22, 3)
         # y = self.act_f(y)
         # y = self.do(y)
