@@ -73,12 +73,12 @@ class Multi_GCN(nn.Module):
         node_n = 66
         self.bn1 = nn.BatchNorm1d(node_n * 15) # 15 is in_channel
         self.bn2 = nn.BatchNorm1d(66 * in_channels)
-        self.bn3 = nn.BatchNorm1d(3 * 5 * in_channels)
+        self.bn3 = nn.BatchNorm1d(3 * 15 * in_channels)
         self.bn4 = nn.BatchNorm1d(3 * 22 * in_channels)
 
         #list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
         list1 = [[0,1], [1,2], [2,3], [4,5], [5,6], [6,7], [8,9], [9,10], [10,11],
-                   [12,13], [13,14], [14,16], [17,18], [18,19], [19,21]]
+                   [12,13], [13,14], [14,16], [17,18], [18,19], [19,21]] #15
         self.gd1 = GraphDownSample(in_channels, in_channels, list1)
         self.gu1 = GraphUpSample(in_channels, in_channels, list1)
 
