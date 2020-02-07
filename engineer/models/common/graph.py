@@ -83,7 +83,7 @@ class Graph():
             self.edge = self_link + neighbor_link
             self.center = 1
         elif layout == 'h36m_d1':
-            self.num_node = 5
+            self.num_node = 17
             self_link = [(i, i) for i in range(self.num_node)]
             neighbor_1base = [(1,2),(2,3),(4,5),(5,6),(7,8),(8,9),(10,11),(11,12),(12,13),(14,15),(15,16),(16,17)]
             neighbor_link = [(i - 1, j - 1) for (i, j) in neighbor_1base]
