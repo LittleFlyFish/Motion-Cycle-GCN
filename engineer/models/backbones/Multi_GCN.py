@@ -76,7 +76,9 @@ class Multi_GCN(nn.Module):
         self.bn3 = nn.BatchNorm1d(3 * 5 * in_channels)
         self.bn4 = nn.BatchNorm1d(3 * 22 * in_channels)
 
-        list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
+        #list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
+        list1 = [[0,1], [1,2], [2,3], [4,5], [5,6], [6,7], [8,9], [9,10], [10,11],
+                   [12,13], [13,14], [14,16], [17,18], [18,19], [19,21]]
         self.gd1 = GraphDownSample(in_channels, in_channels, list1)
         self.gu1 = GraphUpSample(in_channels, in_channels, list1)
 
@@ -94,6 +96,7 @@ class Multi_GCN(nn.Module):
         y = self.bn1(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
         y = self.do(y)
+
         batch, n, f = y.shape
         y = y.transpose(1,2).reshape(batch, f, 3, 22)
 
@@ -103,7 +106,6 @@ class Multi_GCN(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
         #y = y.view(batch, -1, 3*5).transpose(1,2)
-
         # y = self.gcn(y)
         # y = y.transpose(1,2).reshape(batch, self.in_channels, 3, 5)
 
@@ -114,12 +116,6 @@ class Multi_GCN(nn.Module):
         y = self.do(y)
         y = y.view(batch, -1, 66).transpose(1,2)
 
-        y = self.gcn(y)
+        y = self.gcn(x)
 
-        y= self.gc5(y)
-        b, n, f = y.shape
-        y = self.bn2(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        return y + x
+        return y
