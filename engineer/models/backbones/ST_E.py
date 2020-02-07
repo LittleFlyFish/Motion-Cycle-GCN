@@ -119,7 +119,9 @@ class STGCN_encoder(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
+        print(y.shape)
         y = self.gd3(y)
+        print(y.shape)
         return y
 
     def __repr__(self):
