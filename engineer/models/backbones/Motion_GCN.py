@@ -91,7 +91,7 @@ class Motion_GCN(nn.Module):
     '''
     Original Module GCN structure
     '''
-    def __init__(self, input_feature, hidden_feature, p_dropout, num_stage=1, node_n=48):
+    def __init__(self, input_feature, hidden_feature, p_dropout, num_stage=1, node_n=48, residual=True):
         """
         input = [batch, node, dct_n]
         :param input_feature: num of input feature
@@ -105,6 +105,7 @@ class Motion_GCN(nn.Module):
 
         self.gc1 = GraphConvolution(input_feature, hidden_feature, node_n=node_n)
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)
+        self.bn7 = nn.BatchNorm1d(node_n * input_feature)
 
         self.gcbs = []
         for i in range(num_stage):
@@ -116,6 +117,7 @@ class Motion_GCN(nn.Module):
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
+        self.residual = residual
 
     def forward(self, x):
         y = self.gc1(x)
@@ -127,7 +129,15 @@ class Motion_GCN(nn.Module):
         for i in range(self.num_stage):
             y = self.gcbs[i](y)
 
-        y = self.gc7(y)
-        y = y + x
+        if self.residual == True:
+            y = self.gc7(y)
+            y = y + x
+        else:
+            y = self.gc7(y)
+            b, n, f = y.shape
+            y = self.bn7(y.view(b, -1)).view(b, n, f)
+            y = self.act_f(y)
+            y = self.do(y)
+
 
         return y

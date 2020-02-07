@@ -71,6 +71,7 @@ class GraphUpSample(nn.Module):
         self.list = samplelist
         self.feature = []
         self.index = []
+        self.joints = []
 
         for i in samplelist:
             kernel_size = len(i)
@@ -93,11 +94,12 @@ class GraphUpSample(nn.Module):
             l.append(self.list[i])
 
         self.index = list(itertools.chain.from_iterable(l))
+        self.joints = list(dict.fromkeys(list(itertools.chain.from_iterable(l))))
         y1 = torch.cat(self.feature, dim=3)
-        y = y1
-        _, _, _, dims = y.shape
+        b, c1, c2, dims = y1.shape
+        y = torch.zeros([b, c1, c2, len(self.joints)], dtype=y1.dtype, device="cuda:0")
         for i in range(0, dims):
-            y[:, :, :, self.index[i]] = y1[:, :, :, i]
+            y[:, :, :, self.index[i]] = y[:, :, :, self.index[i]] + y1[:, :, :, i]
         return y
 
 class GraphDownSample_Avg(nn.Module):

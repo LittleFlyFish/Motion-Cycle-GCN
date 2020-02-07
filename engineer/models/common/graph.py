@@ -78,17 +78,25 @@ class Graph():
             #                   (13, 17), (17, 18), (18, 19), (19, 20), (20, 21), (21, 22), (20, 23), (23, 24),
             #                   (13, 25), (25, 26), (26, 27), (27, 28), (28, 29), (29, 30), (28, 31), (31, 32)]
             neighbor_1base = [(1, 2), (2, 3),(3, 4),(5, 6),(6, 7),(7,8),(9,10),(10,11),(11,12),
-                              (13,14),(14,15),(15,17),(18,19),(19,20),(20,22)]
+                              (13,14),(14,15), (15,17),(18,19),(19,20), (20,22)]
             neighbor_link = [(i - 1, j - 1) for (i, j) in neighbor_1base]
             self.edge = self_link + neighbor_link
             self.center = 1
         elif layout == 'h36m_d1':
             self.num_node = 5
             self_link = [(i, i) for i in range(self.num_node)]
+            neighbor_1base = [(1,2),(2,3),(4,5),(5,6),(7,8),(8,9),(10,11),(11,12),(12,13),(14,15),(15,16),(16,17)]
+            neighbor_link = [(i - 1, j - 1) for (i, j) in neighbor_1base]
+            self.edge = self_link + neighbor_link
+            self.center = 1
+        elif layout == 'h36m_d2':
+            self.num_node = 5
+            self_link = [(i, i) for i in range(self.num_node)]
             neighbor_1base = [(1,2),(2,3),(3,4),(4,5),(1,3),(1,4),(1,5),(2,4),(2,5),(3,5)]
             neighbor_link = [(i - 1, j - 1) for (i, j) in neighbor_1base]
             self.edge = self_link + neighbor_link
             self.center = 1
+
         # elif layout=='customer settings'
         #     pass
         else:

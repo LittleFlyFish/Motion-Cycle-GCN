@@ -188,12 +188,12 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         ############ Cycle Plan B
         # G*G(Input) loss: input 1..10, 10, ..., 10
         g_reverse_input = get_reverse_input(g_out_3d, input_n, output_n, dct_n, dim_used, padding_seq=padding_seq)
-        verse_out = model.g(g_reverse_input)
+        verse_out = model.g_verse(g_reverse_input)
         _,loss2 = loss_funcs.mpjpe_error_p3d(verse_out, torch.flip(all_seq,dims=[1]), dct_n, dim_used)
 
         # GG*(Input) loss, verse cycle, input 20...10, 10, 10, .. 10 ground truth as input
         Gv_Input = get_reverse_input(all_seq, input_n, output_n, dct_n, dim_used, padding_seq=padding_seq)
-        Gv_Output = model.g(Gv_Input)
+        Gv_Output = model.g_verse(Gv_Input)
         Gv_Output_seq, loss4 = loss_funcs.mpjpe_error_p3d(Gv_Output, torch.flip(all_seq, dims=[1]), dct_n, dim_used)
         G_Input = get_reverse_input(Gv_Output_seq, dct_used=dct_n, dim_used=dim_used, 
                                     input_n=output_n, output_n=input_n, padding_seq=padding_seq)

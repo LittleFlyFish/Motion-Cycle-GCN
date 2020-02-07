@@ -30,15 +30,24 @@ class STGCN_encoder(nn.Module):
         A_d1 = torch.tensor(self.graph_d1.A, dtype=torch.float32, requires_grad=False)
         self.register_buffer('A_d1', A_d1)
 
+        self.graph_d2 = Graph(layout="h36m_d2", strategy=strategy)
+        A_d2 = torch.tensor(self.graph_d2.A, dtype=torch.float32, requires_grad=False)
+        self.register_buffer('A_d2', A_d2)
+
         # build networks
         spatial_kernel_size = A.size(0)
         temporal_kernel_size = 5
         kernel_size = (temporal_kernel_size, spatial_kernel_size)
-        in_channels = 3
 
         spatial_kernel_size = A_d1.size(0)
         temporal_kernel_size = 5
         kernel_size_d1 = (temporal_kernel_size, spatial_kernel_size)
+
+        spatial_kernel_size = A_d2.size(0)
+        temporal_kernel_size = 5
+        kernel_size_d2 = (temporal_kernel_size, spatial_kernel_size)
+
+        in_channels = 3
 
         if input_frame == 10:
             BF = 3
@@ -52,34 +61,41 @@ class STGCN_encoder(nn.Module):
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.LeakyReLU()
         self.st1 = st_gcn(in_channels, hidden_feature, kernel_size, 1, residual=False)
-        self.st2 = st_gcn(hidden_feature, hidden_feature, kernel_size_d1, 1, residual=False)
+        self.st2 = st_gcn(hidden_feature, hidden_feature, kernel_size, 2, residual=False)
         self.st3 = st_gcn(hidden_feature, hidden_feature, kernel_size, 2, residual=False)
-        self.st4 = st_gcn(hidden_feature, hidden_feature, kernel_size, 2, residual=False)
+        self.st4 = st_gcn(hidden_feature, hidden_feature, kernel_size_d1, 1, residual=False)
+        self.st5 = st_gcn(hidden_feature, hidden_feature, kernel_size_d2, 1, residual=False)
 
-        self.st5 = st_gcn(hidden_feature, hidden_feature, kernel_size, BF, residual=False)
 
-        list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
+        self.st6 = st_gcn(hidden_feature, hidden_feature, kernel_size, BF, residual=False)
+
+        list1 = [[0, 1], [1, 2], [2, 3], [4, 5], [5, 6], [6, 7], [8, 9], [9, 10], [10, 11],
+                 [12, 13], [13, 14], [15], [14, 16], [17, 18], [18, 19], [20], [19, 21]]  # 17
+        list2 = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]  #5
+        list3 = [[0, 1, 2, 3, 4]]   #1
         self.gd1 = GraphDownSample_Conv(hidden_feature, hidden_feature, list1)
         self.gu1 = GraphUpSample_Conv(hidden_feature, hidden_feature, list1)
 
-        list2 = [[0,1,2,3,4]]
         self.gd2 = GraphDownSample_Conv(hidden_feature, hidden_feature, list2)
         self.gu2= GraphUpSample_Conv(hidden_feature, hidden_feature, list2)
 
-        self.bn1 = nn.BatchNorm1d(BF * 5 * hidden_feature)
-        self.bn2 = nn.BatchNorm1d(BF * hidden_feature)
+        self.gd3 = GraphDownSample_Conv(hidden_feature, hidden_feature, list2)
+        self.gu3= GraphUpSample_Conv(hidden_feature, hidden_feature, list2)
+
+        self.bn1 = nn.BatchNorm1d(BF * 17 * hidden_feature)
+        self.bn2 = nn.BatchNorm1d(BF * 5 * hidden_feature)
+        self.bn3 = nn.BatchNorm1d(BF * hidden_feature)
 
     def forward(self, x):
         y, _ = self.st1(x, self.A)
         y = self.act_f(y)
         y = self.do(y)
 
-        batch, feature, frame_n, node = y.shape
-        y, _ = self.st3(y, self.A) # temporal downsample
+        y, _ = self.st2(y, self.A) # temporal downsample
         y = self.act_f(y)
         y = self.do(y)
 
-        y, _ = self.st4(y, self.A) # temporal downsample
+        y, _ = self.st3(y, self.A) # temporal downsample
         y = self.act_f(y)
         y = self.do(y)
 
@@ -89,15 +105,21 @@ class STGCN_encoder(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
-        y, _ = self.st2(y, self.A_d1)
+        y, _ = self.st4(y, self.A_d1)
         y = self.act_f(y)
         y = self.do(y)
 
         y = self.gd2(y) # [16, h, 3, node =1]
-        # b, n, f, t = y.shape
-        # y = self.bn2(y.view(b, -1)).view(b, n, f, t)
-        # y = self.act_f(y)
-        # y = self.do(y)
+        b, n, f, t = y.shape
+        y = self.bn2(y.view(b, -1)).view(b, n, f, t)
+        y = self.act_f(y)
+        y = self.do(y)
+
+        y, _ = self.st5(y, self.A_d2)
+        y = self.act_f(y)
+        y = self.do(y)
+
+        y = self.gd3(y)
         return y
 
     def __repr__(self):
@@ -117,7 +139,8 @@ class GCN_decoder(nn.Module):
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
         self.resize = nn.Linear(input_feature * input_frame, node_n)
-        # self.gc1 = GraphConvolution(3, 3, node_n=22)
+        self.gcB = GC_Block(3, p_dropout=dropout, node_n=22)
+        self.gc1 = GraphConvolution(3, 3, node_n=22)
         #self.gc2 = GraphConvolution(3, 3, node_n=22)
 
         self.bn1 = nn.BatchNorm1d(node_n)
