@@ -110,6 +110,7 @@ class Multi_GCN(nn.Module):
         # y = y.transpose(1,2).reshape(batch, self.in_channels, 3, 5)
 
         y = self.gu1(y) # [16, 15, 3, 22]
+        print(y.shape)
         b, c1, c2, n= y.shape
         y = self.bn4(y.view(b, -1)).view(b, c1, c2, n)
         y = self.act_f(y)
