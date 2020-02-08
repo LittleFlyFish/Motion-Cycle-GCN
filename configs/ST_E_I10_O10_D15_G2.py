@@ -1,7 +1,7 @@
 import numpy as np
 model = dict(
     type = 'ST_E',
-    hidden_feature = 256,
+    hidden_feature = 64,
     layout = 'h36m',
     strategy = 'spatial',
     dropout = 0.5,

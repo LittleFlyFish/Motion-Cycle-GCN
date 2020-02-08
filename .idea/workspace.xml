@@ -6,7 +6,6 @@
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_E.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_E.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,13 +107,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00061" summary="&quot;Dense every layer append LeakyRelu&quot;">
-      <created>1580316412983</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1580316412983</updated>
     </task>
     <task id="LOCAL-00062" summary="&quot;Dense, every layer append LeakyRelu&quot;">
       <created>1580316448225</created>
@@ -452,7 +444,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581179651409</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="&quot;ST-E&quot;">
+      <created>1581179771451</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1581179771451</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -471,7 +470,6 @@
     <MESSAGE value="&quot;Average Downsample Upsample strategy&quot;" />
     <MESSAGE value="&quot;ST_E 50&quot;" />
     <MESSAGE value="&quot;kernel size = 5&quot;" />
-    <MESSAGE value="&quot;ST-E&quot;" />
     <MESSAGE value="&quot;ST_E&quot;" />
     <MESSAGE value="&quot;ST_E new&quot;" />
     <MESSAGE value="&quot;List 3&quot;" />
@@ -481,17 +479,18 @@
     <MESSAGE value="&quot;ST-E NEW downsample version&quot;" />
     <MESSAGE value="&quot;ST_E pool&quot;" />
     <MESSAGE value="&quot;GV=G version, Padding=True&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;GV=G version, Padding=True&quot;" />
+    <MESSAGE value="&quot;ST-E&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;ST-E&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580323938186">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1580323938186" />
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1581179651345">
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1581179771380">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1581179651345" />
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1581179771380" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -524,10 +523,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1581171817030">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1581179775701">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1581171817030" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1581179775701" />
     <state x="655" y="266" width="672" height="678" key="search.everywhere.popup" timestamp="1581171767179">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
