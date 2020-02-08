@@ -10,7 +10,7 @@ import torch
 import torch.nn as nn
 from engineer.models.common.graph import Graph
 from engineer.models.common.STGCN import st_gcn
-from engineer.models.common.GraphDownUp import GraphDownSample_Pool, GraphUpSample_Avg
+from engineer.models.common.GraphDownUp import GraphDownSample_Conv, GraphUpSample_Conv
 from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, GC_Block
 
 class STGCN_encoder(nn.Module):
@@ -73,14 +73,14 @@ class STGCN_encoder(nn.Module):
                  [12, 13], [13, 14], [15], [14, 16], [17, 18], [18, 19], [20], [19, 21]]  # 17
         list2 = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]  #5
         list3 = [[0, 1, 2, 3, 4]]   #1
-        self.gd1 = GraphDownSample_Pool(hidden_feature, hidden_feature, list1)
-        self.gu1 = GraphUpSample_Avg(hidden_feature, hidden_feature, list1)
+        self.gd1 = GraphDownSample_Conv(hidden_feature, hidden_feature, list1)
+        self.gu1 = GraphUpSample_Conv(hidden_feature, hidden_feature, list1)
 
-        self.gd2 = GraphDownSample_Pool(hidden_feature, hidden_feature, list2)
-        self.gu2= GraphUpSample_Avg(hidden_feature, hidden_feature, list2)
+        self.gd2 = GraphDownSample_Conv(hidden_feature, hidden_feature, list2)
+        self.gu2= GraphUpSample_Conv(hidden_feature, hidden_feature, list2)
 
-        self.gd3 = GraphDownSample_Pool(hidden_feature, hidden_feature, list3)
-        self.gu3= GraphUpSample_Avg(hidden_feature, hidden_feature, list3)
+        self.gd3 = GraphDownSample_Conv(hidden_feature, hidden_feature, list3)
+        self.gu3= GraphUpSample_Conv(hidden_feature, hidden_feature, list3)
 
         self.bn1 = nn.BatchNorm1d(BF * 17 * hidden_feature)
         self.bn2 = nn.BatchNorm1d(BF * 5 * hidden_feature)
