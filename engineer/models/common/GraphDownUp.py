@@ -32,7 +32,6 @@ class GraphDownSample(nn.Module):
             #self.downsample.append(nn.Conv2d(self.in_channels, self.out_channels, (1, kernel_size), (1, 1)))
             self.downsample.append(nn.Linear(kernel_size*3, 3))
 
-
         self.downsample = nn.ModuleList(self.downsample)
 
     def forward(self, x):
