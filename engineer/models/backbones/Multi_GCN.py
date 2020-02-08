@@ -68,7 +68,7 @@ class Multi_GCN(nn.Module):
         self.gc2 = GraphConvolution(hidden_feature, hidden_feature, node_n=15)
         self.gc3 = GraphConvolution(hidden_feature, hidden_feature, node_n=66)
         self.gc4 = GraphConvolution(in_channels, in_channels, node_n=15)
-        self.gc5 = GraphConvolution(in_channels, in_channels, node_n=66)
+        self.gc5 = GraphConvolution(2 * in_channels, in_channels, node_n=66)
         self.residual = residual
         node_n = 66
 
@@ -88,7 +88,7 @@ class Multi_GCN(nn.Module):
 
         self.gcn = Motion_GCN(input_feature=in_channels, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=17*3, residual=False)
 
-        self.fullgcn = Motion_GCN(input_feature=hidden_feature, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=15)
+        self.fullgcn = Motion_GCN(input_feature=in_channels, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=66, residual=False)
 
         self.bn1 = nn.BatchNorm1d(node_n * 15) # 15 is in_channel
         self.bn2 = nn.BatchNorm1d(66 * in_channels)
@@ -111,6 +111,7 @@ class Multi_GCN(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
         y = y.view(batch, -1, 3*17).transpose(1,2)
+
         y = self.gcn(y)
         y = y.transpose(1,2).reshape(batch, self.in_channels, 3, 17)
 
@@ -121,8 +122,12 @@ class Multi_GCN(nn.Module):
         y = self.do(y)
         y = y.view(batch, -1, 66).transpose(1,2)
 
+        y2 = self.fullgcn(x)
+
+        yc = torch.cat([y, y2], dim=2)
+
         #y = self.gcn(x)
-        y = self.gc5(y)
+        y = self.gc5(yc)
         y = y + x
 
         return y

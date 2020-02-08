@@ -115,7 +115,6 @@ class ST_D(nn.Module):
         y = self.do(y)
 
         y= self.gc4(y)
-        y = self.act_f(y)
-        y = self.do(y)
+
 
         return y + x
