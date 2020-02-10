@@ -80,13 +80,12 @@ class Multi_GCN(nn.Module):
         list2 = [[0,1,2], [3,4,5], [6,7,8], [9,10,11,12], [13,14,15,16]]
         list3 = [[0,1,2,3,4]]
         self.gd1 = GraphDownSample(in_channels, in_channels, list1)
-        self.gu1 = GraphUpSample(in_channels, in_channels, list1)
-
+        self.gu1 = GraphUpSample(in_channels + hidden_feature, in_channels + hidden_feature, list1)
 
         self.gd2 = GraphDownSample(hidden_feature, hidden_feature, list2)
         self.gu2= GraphUpSample(hidden_feature, hidden_feature, list2)
 
-        self.gcn = Motion_GCN(input_feature=in_channels, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=17*3, residual=False)
+        self.gcn = Motion_GCN(input_feature=in_channels + hidden_feature, hidden_feature= hidden_feature, p_dropout=0.5, num_stage=12, node_n=17*3, residual=False)
 
         self.fullgcn = Motion_GCN(input_feature=in_channels, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=66, residual=False)
 
@@ -95,39 +94,86 @@ class Multi_GCN(nn.Module):
         self.bn3 = nn.BatchNorm1d(3 * len(list1) * in_channels)
         self.bn4 = nn.BatchNorm1d(3 * 22 * in_channels)
 
+        self.bn1a = nn.BatchNorm1d(hidden_feature * 3 * 17) # 15 is in_channel
+        self.bn2a = nn.BatchNorm1d(node_n * 15)
+        self.bn3a = nn.BatchNorm1d(in_channels * 3 * 17)
+        self.bn4a = nn.BatchNorm1d(3 * 22 * hidden_feature)
+        self.gc1a = GraphConvolution(2 * hidden_feature, in_channels, node_n=66)
+
     def forward(self, x):
-        y = self.gc1(x)
-        b, n, f = y.shape
-        y = self.bn1(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
-        y = self.do(y)
+        # y = self.gc1(x)
+        # b, n, f = y.shape
+        # y = self.bn1(y.view(b, -1)).view(b, n, f)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        #
+        # batch, n, f = y.shape
+        # y = y.transpose(1,2).reshape(batch, f, 3, 22)
+        #
+        # y = self.gd1(y)# [batch, in_channel=15, 3, node=5]
+        # b, c1, c2, n = y.shape
+        # y = self.bn3(y.view(b, -1)).view(b, c1, c2, n)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        # y = y.view(batch, -1, 3*17).transpose(1,2)
+        #
+        # y = self.gcn(y)
+        # y = y.transpose(1,2).reshape(batch, self.in_channels, 3, 17)
+        #
+        # y = self.gu1(y) # [16, 15, 3, 22]
+        # b, c1, c2, n= y.shape
+        # y = self.bn4(y.view(b, -1)).view(b, c1, c2, n)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        # y = y.view(batch, -1, 66).transpose(1,2)
+        #
+        # y2 = self.fullgcn(x)
+        #
+        # yc = torch.cat([y, y2], dim=2)
+        #
+        # #y = self.gcn(x)
+        # y = self.gc5(yc)
+        # y = y + x
 
+        y = self.fullgcn(x)
         batch, n, f = y.shape
-        y = y.transpose(1,2).reshape(batch, f, 3, 22)
+        y1 = y.transpose(1,2).reshape(batch, f, 3, 22)
+        y1 = self.gd1(y1)# [batch, in_channel=15, 3, node=5]
+        b, c1, c2, n = y1.shape
+        y1 = self.bn1a(y1.view(b, -1)).view(b, c1, c2, n)
+        y1 = self.act_f(y1)
+        y1 = self.do(y1)
+        y1 = y1.view(b, -1, 3*17).transpose(1,2)
 
-        y = self.gd1(y)# [batch, in_channel=15, 3, node=5]
-        b, c1, c2, n = y.shape
-        y = self.bn3(y.view(b, -1)).view(b, c1, c2, n)
-        y = self.act_f(y)
-        y = self.do(y)
-        y = y.view(batch, -1, 3*17).transpose(1,2)
+        y2 = self.gc1(x)
+        b, n, f = y2.shape
+        y2 = self.bn2a(y2.view(b, -1)).view(b, n, f)
+        y2 = self.act_f(y2)
+        y2 = self.do(y2)
 
-        y = self.gcn(y)
-        y = y.transpose(1,2).reshape(batch, self.in_channels, 3, 17)
+        batch, n, f = y2.shape
+        y2 = y2.transpose(1,2).reshape(batch, f, 3, 22)
 
-        y = self.gu1(y) # [16, 15, 3, 22]
-        b, c1, c2, n= y.shape
-        y = self.bn4(y.view(b, -1)).view(b, c1, c2, n)
-        y = self.act_f(y)
-        y = self.do(y)
-        y = y.view(batch, -1, 66).transpose(1,2)
+        y2 = self.gd1(y2)# [batch, in_channel=15, 3, node=5]
+        b, c1, c2, n = y2.shape
+        y2 = self.bn3a(y2.view(b, -1)).view(b, c1, c2, n)
+        y2 = self.act_f(y2)
+        y2 = self.do(y2)
+        y2 = y2.view(batch, -1, 3*17).transpose(1,2)
 
-        y2 = self.fullgcn(x)
+        y3 = torch.cat([y1, y2], dim=2) # [batch, 17*3, 2*hidden_feature]
+        y3 = self.gcn(y3)
+        batch, n, f = y3.shape
+        y3 = y3.transpose(1,2).reshape(batch, f, 3, 17)
 
-        yc = torch.cat([y, y2], dim=2)
+        y3 = self.gu1(y3) # [16, 15, 3, 22]
+        b, c1, c2, n = y3.shape
+        y3 = self.bn4a(y3.view(b, -1)).view(b, c1, c2, n)
+        y3 = self.act_f(y3)
+        y3 = self.do(y3)
+        y3 = y3.view(batch, -1, 66).transpose(1,2)
 
-        #y = self.gcn(x)
-        y = self.gc5(yc)
+        y = torch.cat([y3, y], dim=2)
+        y = self.gc1a(y)
         y = y + x
-
         return y

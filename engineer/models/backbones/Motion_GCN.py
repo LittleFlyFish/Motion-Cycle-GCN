@@ -132,12 +132,11 @@ class Motion_GCN(nn.Module):
         if self.residual == True:
             y = self.gc7(y)
             y = y + x
-        else:
-            y = self.gc7(y)
-            b, n, f = y.shape
-            y = self.bn7(y.view(b, -1)).view(b, n, f)
-            y = self.act_f(y)
-            y = self.do(y)
-
+        #else:
+            # y = self.gc7(y)
+            # b, n, f = y.shape
+            # y = self.bn7(y.view(b, -1)).view(b, n, f)
+            # y = self.act_f(y)
+            # y = self.do(y)
 
         return y
