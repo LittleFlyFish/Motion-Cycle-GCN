@@ -51,28 +51,42 @@ class ST_C(nn.Module):
         temporal_kernel_size = 9
         kernel_size = (temporal_kernel_size, spatial_kernel_size)
         in_channels = 3
+        self.residual = residual
 
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
-        self.in_feature = 512
+        self.in_feature = 128
         self.st2 = st_gcn(self.in_feature, in_channels, kernel_size, 1, residual=False)
         self.st1 = st_gcn(in_channels, self.in_feature, kernel_size, 1, residual=False)
-        self.gcn = Motion_GCN(self.in_feature*10, 256, 0.5, num_stage=12, node_n=22)
 
-        self.residual = residual
 
+        if self.residual == True:
+            self.bn1 = nn.BatchNorm1d(self.in_feature * 20 * 22)  # 15 is in_channel
+            self.gcn = Motion_GCN(self.in_feature * 20, self.in_feature * 20, 0.5, num_stage=12, node_n=22,
+                                  residual=False)
+
+        else:
+            self.bn1 = nn.BatchNorm1d(self.in_feature * 10 * 22)  # 15 is in_channel
+            self.gcn = Motion_GCN(self.in_feature * 10, self.in_feature * 10, 0.5, num_stage=12, node_n=22,
+                                  residual=False)
 
     def forward(self, x):
 
         y, _ = self.st1(x, self.A) # [16, 16, 10, 22]
+        b, n, c1, c2 = y.shape
+        y = self.bn1(y.view(b, -1)).view(b, n, c1, c2)
         y = self.act_f(y)
         y = self.do(y)
+
+
         batch, feature, frame_n, node_n = y.shape
         y = y.reshape(batch, feature*frame_n, node_n).transpose(1, 2)
         y = self.gcn(y)
         y = y.transpose(1, 2).reshape(batch, feature, frame_n, node_n)
         y, _ = self.st2(y, self.A)
-        y = self.act_f(y)
-        y = self.do(y)
+
+        if self.residual == True:
+            y = y + x
+
         return y

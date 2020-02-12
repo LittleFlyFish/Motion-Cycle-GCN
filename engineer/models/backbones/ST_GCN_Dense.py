@@ -37,12 +37,20 @@ class ST_Block(nn.Module):
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
 
+        self.bn1 = nn.BatchNorm1d(in_channels * 10 * 22)
+        self.bn2 = nn.BatchNorm1d(out_channels * 10 * 22)
+
     def forward(self, x):
         y, _ = self.stlayer1(x, self.A)
+        b, n, c1, c2 = y.shape
+        y = self.bn1(y.view(b, -1)).view(b, n, c1, c2)
         y = self.act_f(y)
         y = self.do(y)
 
+
         y, _ = self.stlayer2(y, self.A)
+        b, n, c1, c2 = y.shape
+        y = self.bn2(y.view(b, -1)).view(b, n, c1, c2)
         y = self.act_f(y)
         y = self.do(y)
 
@@ -103,6 +111,7 @@ class ST_GCN_Dense(nn.Module):
         #self.st2 = st_gcn(hidden_feature*(num_stage + 1), input_feature, kernel_size, 1, residual=False)
         self.st2 = st_gcn(hidden_feature, input_feature, kernel_size, 1, residual=False)
         self.residual = residual
+        self.bn1 = nn.BatchNorm1d(hidden_feature * 20 * 22)
 
 
     def forward(self, x):
@@ -117,6 +126,9 @@ class ST_GCN_Dense(nn.Module):
 
         # ST-GCN module Dense Version
         y, _ = self.st1(x, self.A)
+        b, n, c1, c2 = y.shape
+        y = self.bn1(y.view(b, -1)).view(b, n, c1, c2)
+        y = self.act_f(y)
         y = self.do(y)
 
         # for i in range(self.num_stage):

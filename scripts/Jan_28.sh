@@ -13,6 +13,7 @@ python3 tools/train_ST_GCN2.py --config ./configs/ST_GCN_I10_O10_D15_G2.py   ## 
 python3 tools/train_ST_GCN2.py --config ./configs/ST_A_I10_O10_D15_G2.py   ## ST_GCN layer conv structure framework
 python3 tools/train_ST_GCN2.py --config ./configs/ST_B_I10_O10_D15_G2.py  ## DownSample Upsample Autoencoder
 python3 tools/train_ST_GCN2.py --config ./configs/ST_C_I10_O10_D15_G2.py  ## ST instead of dct feature
+python3 tools/train_ST_GCN.py --config ./configs/ST_C_I10_O10_D15_G.py
 python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h32f16.py   ## test new GCN feature
 python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h32f32.py
 python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h64f128.py
