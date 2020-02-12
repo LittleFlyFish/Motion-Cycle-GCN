@@ -25,7 +25,7 @@ from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, G
 
 
 @BACKBONES.register_module
-class ST_D(nn.Module):
+class Discriminator(nn.Module):
     '''
     Use GCN as encoder, and then use gcn as a decoder
     The input is [batch, node_dim, dct_n]   # for example, [16, 66, 15]
@@ -40,7 +40,7 @@ class ST_D(nn.Module):
         :param num_stage: number of residual blocks
         :param node_n: number of nodes in graph
         """
-        super(ST_D, self).__init__()
+        super(Discriminator, self).__init__()
         # load graph
         self.graph = Graph(layout=layout, strategy=strategy)
         A = torch.tensor(self.graph.A, dtype=torch.float32, requires_grad=False)
@@ -75,50 +75,46 @@ class ST_D(nn.Module):
 
         list2 = [[0,1,2,3,4]]
         self.gd2 = GraphDownSample(hidden_feature, hidden_feature, list2)
-        self.gu2= GraphUpSample(hidden_feature, hidden_feature, list2)
+        self.gu2 = GraphUpSample(hidden_feature, hidden_feature, list2)
+
+        self.bn1 = nn.BatchNorm1d(66 * hidden_feature)
+        self.bn2 = nn.BatchNorm1d(15 * hidden_feature)
+        self.bn3 = nn.BatchNorm1d(15 * hidden_feature)
+        self.bn4 = nn.BatchNorm1d(3 * hidden_feature)
+
+        self.fcn = nn.Linear(3 * hidden_feature, 2)
+        self.Softmax = nn.Softmax()
 
     def forward(self, x):
-        y = self.gc1(x) #[16, 66, 256]
-        print(y.shape)
+        y = self.gc1(x)
+        b, n, f = y.shape
+        y = self.bn1(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
         y = self.do(y)
         batch, n, f = y.shape
         y = y.transpose(1,2).reshape(batch, f, 3, 22)
 
         y = self.gd1(y)
-        print(y.shape) #[16, 256, 3, 5]
+        b, n, c1, c2 = y.shape
+        y = self.bn2(y.view(b, -1)).view(b, n, c1, c2)
         y = self.act_f(y)
         y = self.do(y)
         y = y.view(batch, -1, 3*5).transpose(1,2)
 
         y = self.gc2(y)
-        print(y.shape) #[16,15,256]
+        b, n, f = y.shape
+        y = self.bn3(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
         y = self.do(y)
         y = y.transpose(1,2).reshape(batch, self.hidden_feature, 3, 5)
-        u1 = y
 
-        y = self.gd2(y)#[16, 256, 3, 1]
-        y = self.act_f(y)
-        y = self.do(y)
-        print(y.shape)
-
-        u2 = y
-
-        y = self.gu2(y)
+        y = self.gd2(y)
+        b, n, c1, c2 = y.shape
+        y = self.bn4(y.view(b, -1))
         y = self.act_f(y)
         y = self.do(y)
 
-        y = self.gu1(y)
-        y = self.act_f(y)
-        y = self.do(y)
-        y = y.view(batch, -1, 66).transpose(1,2)
+        y = self.fcn(y)
+        y = self.Softmax(y)
 
-        y = self.gc3(y)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        y= self.gc4(y)
-
-
-        return y + x
+        return y
