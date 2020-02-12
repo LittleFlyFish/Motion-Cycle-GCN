@@ -52,7 +52,7 @@ class Hm36Dataset_3d(Dataset):
 @DATASETS.register_module
 class Hm36Dataset_3d_ST(Dataset):
 
-    def __init__(self, path_to_data, actions, pipeline,input_n=20, output_n=10, dct_used=15, split=0, sample_rate=2):
+    def __init__(self, path_to_data, actions, pipeline, input_n=20, output_n=10, dct_used=15, split=0, sample_rate=2):
         """
         :param path_to_data:
         :param actions:

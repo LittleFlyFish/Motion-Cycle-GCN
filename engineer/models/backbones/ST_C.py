@@ -56,7 +56,7 @@ class ST_C(nn.Module):
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
-        self.in_feature = 128
+        self.in_feature = 100
         self.st2 = st_gcn(self.in_feature, in_channels, kernel_size, 1, residual=False)
         self.st1 = st_gcn(in_channels, self.in_feature, kernel_size, 1, residual=False)
 

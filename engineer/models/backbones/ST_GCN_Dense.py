@@ -47,7 +47,6 @@ class ST_Block(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
-
         y, _ = self.stlayer2(y, self.A)
         b, n, c1, c2 = y.shape
         y = self.bn2(y.view(b, -1)).view(b, n, c1, c2)
@@ -142,7 +141,7 @@ class ST_GCN_Dense(nn.Module):
 
         # ST-GCN module Res Version
         for i in range(self.num_stage):
-            y1 = self.stbs[i](y)
+            y = self.stbs[i](y)
 
         y, _ = self.st2(y, self.A)
         if self.residual:
