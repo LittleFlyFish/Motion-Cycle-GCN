@@ -106,40 +106,40 @@ class ST_B(nn.Module):
         self.gu2= GraphUpSample_Conv(hidden_feature, hidden_feature, list2)
 
     def forward(self, x):
-        y, _ = self.st1(x, self.A)
-        y = self.act_f(y)
-        y = self.do(y)
-        batch, feature, frame_n, node = y.shape
-
-        y = self.gd1(y)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        y, _ = self.st2(y, self.A_d1)
-        y = self.act_f(y)
-        y = self.do(y)
-        u1 = y
-
-        y = self.gd2(y)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        u2 = y
-
-        y = self.gu2(y)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        y = self.gu1(y+u1)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        y, _ = self.st3(y, self.A)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        y, _ = self.st4(y, self.A)
-        y = self.act_f(y)
-        y = self.do(y)
+        # y, _ = self.st1(x, self.A)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        # batch, feature, frame_n, node = y.shape
+        #
+        # y = self.gd1(y)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        #
+        # y, _ = self.st2(y, self.A_d1)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        # u1 = y
+        #
+        # y = self.gd2(y)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        #
+        # u2 = y
+        #
+        # y = self.gu2(y)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        #
+        # y = self.gu1(y+u1)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        #
+        # y, _ = self.st3(y, self.A)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        #
+        # y, _ = self.st4(y, self.A)
+        # y = self.act_f(y)
+        # y = self.do(y)
 
         return y

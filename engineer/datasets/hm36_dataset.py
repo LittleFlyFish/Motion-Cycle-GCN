@@ -6,6 +6,7 @@ import json
 
 from torch.utils.data import Dataset
 import numpy as np
+from torch.autograd import Variable
 from engineer.utils import data_utils
 
 
@@ -45,6 +46,66 @@ class Hm36Dataset_3d(Dataset):
 
     def __getitem__(self, item):
         return self.input_dct_seq[item], self.output_dct_seq[item], self.all_seqs[item]
+    def __repr__(self):
+        return "{} @action {}".format(__class__.__name__,self.actions)
+
+
+@DATASETS.register_module
+class Hm36Dataset_K(Dataset):
+
+    def __init__(self, path_to_data, actions, pipeline,input_n=20, output_n=10, dct_used=15, split=0, sample_rate=2):
+        """
+        :param path_to_data:
+        :param actions:
+        :param input_n:
+        :param output_n:
+        :param dct_used:
+        :param split: 0 train, 1 testing, 2 validation
+        :param sample_rate:
+        """
+        self.path_to_data = path_to_data
+        self.split = split
+        self.dct_used = dct_used
+        self.actions = actions
+        subs = np.array([[1, 6, 7, 8, 9], [5], [11]])
+        K = 5
+        # subs = np.array([[1], [5], [11]])
+        acts = data_utils.define_actions(actions)
+        subjs = subs[split]
+        self.pipeline = Compose(pipeline)
+        # loader data is in here
+        all_seqs, dim_ignore, dim_used = data_utils.load_data_3d(path_to_data, subjs, acts, sample_rate,
+                                                                 input_n + output_n)
+        self.dim_used = dim_used
+
+        self.all_seqs,self.input_dct_seq,self.output_dct_seq = self.pipeline(dict(all_seqs=all_seqs,dim_used=dim_used,input_n=input_n,output_n=output_n,dct_used=dct_used))
+
+        ## change the output version to be [batch, 3, frame_n, node_n]
+        all_seqs = all_seqs[:, :, dim_used]
+        batch, frame_n, _ = all_seqs.shape
+
+        pad_idx = np.repeat([input_n - 1], output_n)
+        i_idx = np.append(np.arange(0, input_n), pad_idx)
+        self.input = all_seqs[:, i_idx, :] ## this line of view is not sure
+        self.padding_seq = all_seqs[:, pad_idx, :] ## this line of view is not sure
+        self.output = all_seqs
+
+        self.inputKdct = []
+        for i in range(frame_n-5):
+            K_f = self.input[:, i:i+5, :]
+            K_dct = data_utils.np_seq2dct(K_f, 3)
+            self.inputKdct.append(K_dct)
+
+        self.inputKdct = np.concatenate(self.inputKdct, axis=2) #[8, 66, 45]
+
+
+
+
+    def __len__(self):
+        return np.shape(self.input_dct_seq)[0]
+
+    def __getitem__(self, item):
+        return self.inputKdct[item], self.output_dct_seq[item], self.all_seqs[item]
     def __repr__(self):
         return "{} @action {}".format(__class__.__name__,self.actions)
 

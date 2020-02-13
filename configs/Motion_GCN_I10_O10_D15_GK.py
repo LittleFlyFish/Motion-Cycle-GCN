@@ -1,11 +1,11 @@
 import numpy as np
 model = dict(
-    type = 'ST_B',
-    hidden_feature = 16,
-    layout = 'h36m',
-    strategy = 'spatial',
-    dropout = 0.5,
-    residual=False
+    type='Motion_GCN',
+    input_feature=45,
+    hidden_feature=256,
+    p_dropout=0.5,
+    num_stage=12,
+    node_n=66
 )
 dataset_type = 'Hm36Dataset_K'
 data_root = './engineer/datasets/h3.6m/dataset'
@@ -56,7 +56,7 @@ data = dict(
 #
 # optimizer
 optim_para=dict(
-    optimizer = dict(type='Adam',lr=0.001),
+    optimizer = dict(type='Adam',lr=0.0005),
     lr_decay=2,
     lr_gamma= 0.96
 )
