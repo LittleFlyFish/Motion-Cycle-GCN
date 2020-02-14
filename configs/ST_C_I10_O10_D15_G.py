@@ -2,7 +2,7 @@ import numpy as np
 model = dict(
     type = 'ST_C',
     layout = 'h36m',
-    strategy = 'uniform',
+    strategy = 'distance',
     dropout = 0.5,
     residual=True
 )

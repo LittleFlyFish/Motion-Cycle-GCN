@@ -113,7 +113,7 @@ class Motion_GCN(nn.Module):
 
         self.gcbs = nn.ModuleList(self.gcbs)
 
-        self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
+        self.gc7 = GraphConvolution(hidden_feature, 15, node_n=node_n)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
