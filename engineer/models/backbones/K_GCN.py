@@ -75,7 +75,7 @@ class GC_Block(nn.Module):
 
         y = self.gc2(y)
         b, n, f = y.shape
-        y = self.bn2(y.view(b, -1)).view(b, n, f) 
+        y = self.bn2(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
         y = self.do(y)
 
@@ -87,7 +87,7 @@ class GC_Block(nn.Module):
                + str(self.out_features) + ')'
 
 @BACKBONES.register_module
-class Motion_GCN(nn.Module):
+class K_GCN(nn.Module):
     '''
     Original Module GCN structure
     '''
@@ -100,7 +100,7 @@ class Motion_GCN(nn.Module):
         :param num_stage: number of residual blocks
         :param node_n: number of nodes in graph
         """
-        super(Motion_GCN, self).__init__()
+        super(K_GCN, self).__init__()
         self.num_stage = num_stage
 
         self.gc1 = GraphConvolution(input_feature, hidden_feature, node_n=node_n)
@@ -113,7 +113,7 @@ class Motion_GCN(nn.Module):
 
         self.gcbs = nn.ModuleList(self.gcbs)
 
-        self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
+        self.gc7 = GraphConvolution(hidden_feature, 15, node_n=node_n)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
@@ -129,9 +129,10 @@ class Motion_GCN(nn.Module):
         for i in range(self.num_stage):
             y = self.gcbs[i](y)
 
+        y1 = x[:, :, 0:15]
         if self.residual == True:
             y = self.gc7(y)
-            y = y + x
+            y = y + y1
         #else:
             # y = self.gc7(y)
             # b, n, f = y.shape

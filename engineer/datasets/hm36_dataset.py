@@ -97,7 +97,7 @@ class Hm36Dataset_K(Dataset):
             self.inputKdct.append(K_dct)
 
         self.inputKdct = np.concatenate(self.inputKdct, axis=2) #[8, 66, 45]
-
+        self.inputKdct = np.concatenate((self.input_dct_seq, self.inputKdct), axis=2) #[8, 66, 60]
 
 
 
