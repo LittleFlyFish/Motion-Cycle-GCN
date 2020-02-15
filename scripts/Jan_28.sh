@@ -42,7 +42,7 @@ python3 tools/train_net.py --config ./configs/Multi_GCN_I10_O10_D15_G.py
 python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h8f8.py
 
 -------------------------------------------------------------------------------------------
-python3 tools/train_net.py --config ./configs/Motion_GCN_I10_O10_D15_GK.py
+python3 tools/train_K.py --config ./configs/K_GCN_I10_O10_D15_G.py
 
 
 

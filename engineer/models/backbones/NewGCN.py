@@ -40,6 +40,14 @@ class GC_Block_NoRes(nn.Module):
         self.gc6 = GraphConvolution(out_features, out_features, node_n=node_n, bias=bias)
         self.bn6 = nn.BatchNorm1d(node_n * out_features)
 
+        num_stage = 12
+        self.num_stage = num_stage
+        self.gcbs = []
+        for i in range(num_stage):
+            self.gcbs.append(GC_Block(out_features, p_dropout=p_dropout, node_n=node_n))
+
+        self.gcbs = nn.ModuleList(self.gcbs)
+
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.LeakyReLU()
 
@@ -55,30 +63,34 @@ class GC_Block_NoRes(nn.Module):
         y = self.bn2(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
         y = self.do(y)
+        y1 = y
 
-        y = self.gc3(y)
-        b, n, f = y.shape
-        y = self.bn3(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
-        y = self.do(y)
+        # y = self.gc3(y)
+        # b, n, f = y.shape
+        # y = self.bn3(y.view(b, -1)).view(b, n, f)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        #
+        # y = self.gc4(y)
+        # b, n, f = y.shape
+        # y = self.bn4(y.view(b, -1)).view(b, n, f)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        #
+        # y = self.gc5(y)
+        # b, n, f = y.shape
+        # y = self.bn5(y.view(b, -1)).view(b, n, f)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        #
+        # y = self.gc6(y)
+        # b, n, f = y.shape
+        # y = self.bn6(y.view(b, -1)).view(b, n, f)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        for i in range(self.num_stage):
+            y = self.gcbs[i](y)
 
-        y = self.gc4(y)
-        b, n, f = y.shape
-        y = self.bn4(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        y = self.gc5(y)
-        b, n, f = y.shape
-        y = self.bn5(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        y = self.gc6(y)
-        b, n, f = y.shape
-        y = self.bn6(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
-        y = self.do(y)
         return y
 
     def __repr__(self):
@@ -121,6 +133,7 @@ class NewGCN(nn.Module):
         self.act_f = nn.LeakyReLU()
         self.bn1 = nn.BatchNorm1d(node_n * f_feature)
         self.gc1 = GraphConvolution(3, f_feature, node_n=node_n) # output [batch, node, hidden_feature]
+        self.gc2 = GraphConvolution(f_feature, f_feature, node_n=node_n)  # output [batch, node, hidden_feature]
 
 
 
@@ -136,6 +149,7 @@ class NewGCN(nn.Module):
             f1 = self.bn1(f1.view(b, -1)).view(b, n, f_size)
             f1 = self.act_f(f1)
             f1 = self.do(f1)
+            f1 = self.gc2(f1)
             if i>0:
                 g1 = torch.cat((g, f1), dim=2)
             else:
@@ -157,6 +171,7 @@ class NewGCN(nn.Module):
             outF1 = self.bn1(outF1.view(b, -1)).view(b, n, f_size)
             outF1 = self.act_f(outF1)
             outF1 = self.do(outF1)
+            outF1 = self.gc2(outF1)
             g1 = g
             g1 = torch.cat((g1, outF1), dim=2)
             g1 = self.gcbs[i+self.input_n](g1)
