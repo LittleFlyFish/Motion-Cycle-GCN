@@ -22,10 +22,10 @@ class GC_Block_NoRes(nn.Module):
         self.in_features = in_features
         self.out_features = out_features
 
-        self.gc1 = GraphConvolution(in_features, in_features, node_n=node_n, bias=bias)
-        self.bn1 = nn.BatchNorm1d(node_n * in_features)
+        self.gc1 = GraphConvolution(in_features, out_features, node_n=node_n, bias=bias)
+        self.bn1 = nn.BatchNorm1d(node_n * out_features)
 
-        self.gc2 = GraphConvolution(in_features, out_features, node_n=node_n, bias=bias)
+        self.gc2 = GraphConvolution(out_features, out_features, node_n=node_n, bias=bias)
         self.bn2 = nn.BatchNorm1d(node_n * out_features)
 
         self.gc3 = GraphConvolution(out_features, out_features, node_n=node_n, bias=bias)
@@ -58,12 +58,12 @@ class GC_Block_NoRes(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
-        y = self.gc2(y)
-        b, n, f = y.shape
-        y = self.bn2(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
-        y = self.do(y)
-        y1 = y
+        # y = self.gc2(y)
+        # b, n, f = y.shape
+        # y = self.bn2(y.view(b, -1)).view(b, n, f)
+        # y = self.act_f(y)
+        # y = self.do(y)
+        # y1 = y
 
         # y = self.gc3(y)
         # b, n, f = y.shape
@@ -149,7 +149,8 @@ class NewGCN(nn.Module):
             f1 = self.bn1(f1.view(b, -1)).view(b, n, f_size)
             f1 = self.act_f(f1)
             f1 = self.do(f1)
-            f1 = self.gc2(f1)
+            f2 = self.gc2(f1)
+            f1 = f1 + f2
             if i>0:
                 g1 = torch.cat((g, f1), dim=2)
             else:
