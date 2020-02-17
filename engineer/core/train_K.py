@@ -229,16 +229,19 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
 
         outputs = model(inputs)
 
+        outputs_dct = seg2whole(outputs, dct_n)
+
+
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used_len = len(dim_used)
 
         _, idct_m = data_utils.get_dct_matrix(seq_len)
         idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
-        outputs_t = outputs.view(-1, dct_n).transpose(0, 1)
+        outputs_t = outputs_dct.view(-1, dct_n).transpose(0, 1)
         outputs_3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                    seq_len).transpose(1,
                                                                                                                       2)
-        _, test_loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        _, test_loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
         # plotter.plot('loss', 'test', 'LeakyRelu+No Batch ', i, test_loss.item())
 
         pred_3d = all_seq.clone()
@@ -287,9 +290,11 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
 
         outputs = model(inputs)
 
+        outputs_dct = seg2whole(outputs, dct_n)
+
         n, _, _ = all_seq.data.shape
 
-        _, m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        _, m_err = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
         # plotter.plot('loss', 'val', 'LeakyRelu+No Batch ', i, m_err.item())
 
         # update the training loss
