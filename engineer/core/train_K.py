@@ -145,6 +145,8 @@ def seg2whole(seg, dct_n):
     # tranasfer element from K windows back to the dct of whole feature
     a = seg[:, :, 0:45]
     b = seg[:, :, 45:60]
+    print(seg.shape)
+    print(b.shape)
     segs = torch.split(a, 3, dim=2)
     whole = data_utils.dct2seq(b, frame_n=20)
     frame = []
