@@ -184,7 +184,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         outputs = model(inputs) # assume the outputs is [batch, node, K]
 
-        outputs_dct = seg2whole(outputs,dct_n)
+        outputs_dct = seg2whole(outputs, dct_n)
         print(outputs_dct.shape)
 
 

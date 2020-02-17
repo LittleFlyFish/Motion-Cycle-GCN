@@ -113,7 +113,7 @@ class K_GCN(nn.Module):
 
         self.gcbs = nn.ModuleList(self.gcbs)
 
-        self.gc7 = GraphConvolution(hidden_feature, 15, node_n=node_n)
+        self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
@@ -129,10 +129,9 @@ class K_GCN(nn.Module):
         for i in range(self.num_stage):
             y = self.gcbs[i](y)
 
-        y1 = x[:, :, 0:15]
         if self.residual == True:
             y = self.gc7(y)
-            y = y + y1
+            y = y + x
         #else:
             # y = self.gc7(y)
             # b, n, f = y.shape
