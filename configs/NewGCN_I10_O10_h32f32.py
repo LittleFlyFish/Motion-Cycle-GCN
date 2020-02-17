@@ -11,7 +11,7 @@ model = dict(
 dataset_type = 'Hm36Dataset_3d_ST2'
 data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
-    dict(type='SampleFrames',direction = True),
+    dict(type='SampleFrames', direction=True),
 ]
 
 val_pipeline = [
@@ -57,7 +57,7 @@ data = dict(
 #
 # optimizer
 optim_para=dict(
-    optimizer = dict(type='Adam',lr=0.001),
+    optimizer = dict(type='Adam',lr=0.0005),
     lr_decay=2,
     lr_gamma= 0.96
 )

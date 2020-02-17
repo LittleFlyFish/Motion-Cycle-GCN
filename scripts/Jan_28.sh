@@ -44,6 +44,8 @@ python3 tools/train_NewGCN.py --config ./configs/NewGCN_I10_O10_h8f8.py
 -------------------------------------------------------------------------------------------
 python3 tools/train_K.py --config ./configs/K_GCN_I10_O10_D15_G.py
 
+python3 tools/train_K.py --config ./configs/K_GCN_I10_O10_D15_Goutput.py
+
 
 
 ###Plan : Multi-scale skills
