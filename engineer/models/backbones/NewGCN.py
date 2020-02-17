@@ -172,7 +172,8 @@ class NewGCN(nn.Module):
             outF1 = self.bn1(outF1.view(b, -1)).view(b, n, f_size)
             outF1 = self.act_f(outF1)
             outF1 = self.do(outF1)
-            outF1 = self.gc2(outF1)
+            outF2 = self.gc2(outF1)
+            outF1 = outF1 + outF2
             g1 = g
             g1 = torch.cat((g1, outF1), dim=2)
             g1 = self.gcbs[i+self.input_n](g1)

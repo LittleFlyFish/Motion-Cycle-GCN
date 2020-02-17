@@ -145,8 +145,6 @@ def seg2whole(seg, dct_n):
     # tranasfer element from K windows back to the dct of whole feature
     a = seg[:, :, 0:45]
     b = seg[:, :, 45:60]
-    print(seg.shape)
-    print(b.shape)
     segs = torch.split(a, 3, dim=2)
     whole = data_utils.dct2seq(b, frame_n=20)
     frame = []
@@ -185,8 +183,6 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         outputs = model(inputs) # assume the outputs is [batch, node, K]
 
         outputs_dct = seg2whole(outputs, dct_n)
-        print(outputs_dct.shape)
-
 
         # calculate loss and backward
         _, loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
