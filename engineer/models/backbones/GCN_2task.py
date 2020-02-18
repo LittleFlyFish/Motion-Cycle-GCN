@@ -105,6 +105,7 @@ class GCN_2task(nn.Module):
 
         self.gc1 = GraphConvolution(input_feature, hidden_feature, node_n=node_n)
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)
+        self.bn2 = nn.BatchNorm1d(node_n * input_feature)
         self.bn7 = nn.BatchNorm1d(node_n * input_feature)
 
         self.gcbs = []
@@ -118,7 +119,11 @@ class GCN_2task(nn.Module):
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
+        self.act_f1 = nn.LeakyReLU()
         self.residual = residual
+
+        self.fcn = nn.Linear(15*66, 15)
+        self.Soft = nn.Softmax(dim=1)
 
     def forward(self, x):
         y = self.gc1(x)
@@ -135,7 +140,16 @@ class GCN_2task(nn.Module):
             y1 = y1 + x
 
             y2 = self.gc8(y)
-            y2 = y2 + x
+            b, n, f = y2.shape
+            y2 = self.bn2(y2.view(b, -1)).view(b, n, f)
+            y2 = self.act_f(y2)
+            y2 = self.do(y2)
+            y2 = y2.view(-1, 15*66)
+            y2 = self.fcn(y2)
+            y2 = self.act_f1(y2)
+            y2 = self.Soft(y2)
+
+
         #else:
             # y = self.gc7(y)
             # b, n, f = y.shape

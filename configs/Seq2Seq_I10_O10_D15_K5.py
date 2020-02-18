@@ -1,13 +1,14 @@
 import numpy as np
 model = dict(
-    type='GCN_2task',
-    input_feature=15,
-    hidden_feature=256,
-    p_dropout=0.5,
-    num_stage=12,
-    node_n=66
+    type='Seq2Seq',
+    input_size = 45,
+    hidden_size = 64,
+    output_size = 3,
+    dropout = 0.5,
+    max_length = 20,
+    device = "cuda:0"
 )
-dataset_type = 'Hm36Dataset_3dLabel'
+dataset_type = 'Hm36Dataset_seq2seq'
 data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),

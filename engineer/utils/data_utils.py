@@ -723,6 +723,109 @@ def load_data(path_to_dataset, subjects, actions, sample_rate, seq_len, input_n=
 
     return sampled_seq, dimensions_to_ignore, dimensions_to_use, data_mean, data_std
 
+def load_data_3d_label(path_to_dataset, subjects, actions, sample_rate, seq_len):
+    """
+    adapted from
+    https://github.com/una-dinosauria/human-motion-prediction/src/data_utils.py#L216
+    :param path_to_dataset:
+    :param subjects:
+    :param actions:
+    :param sample_rate:
+    :param seq_len:
+    :return:
+    """
+
+    sampled_seq = []
+    complete_seq = []
+    action_seq = []
+    before = 0
+    for subj in subjects:
+        for action_idx in np.arange(len(actions)):
+            action = actions[action_idx]
+            if not (subj == 5):
+                for subact in [1, 2]:  # subactions
+
+                    print("Reading subject {0}, action {1}, subaction {2}".format(subj, action, subact))
+
+                    filename = '{0}/S{1}/{2}_{3}.txt'.format(path_to_dataset, subj, action, subact)
+                    action_sequence = readCSVasFloat(filename)
+                    n, d = action_sequence.shape
+                    even_list = range(0, n, sample_rate)
+                    num_frames = len(even_list)
+                    the_sequence = np.array(action_sequence[even_list, :])
+                    the_seq = Variable(torch.from_numpy(the_sequence)).float().cuda()
+                    # remove global rotation and translation
+                    the_seq[:, 0:6] = 0
+                    p3d = expmap2xyz_torch(the_seq)
+                    the_sequence = p3d.view(num_frames, -1).cpu().data.numpy()
+
+                    fs = np.arange(0, num_frames - seq_len + 1)
+                    fs_sel = fs
+                    for i in np.arange(seq_len - 1):
+                        fs_sel = np.vstack((fs_sel, fs + i + 1))
+                    fs_sel = fs_sel.transpose()
+                    seq_sel = the_sequence[fs_sel, :]
+                    if len(sampled_seq) == 0:
+                        sampled_seq = seq_sel
+                        complete_seq = the_sequence
+                    else:
+                        sampled_seq = np.concatenate((sampled_seq, seq_sel), axis=0)
+                        complete_seq = np.append(complete_seq, the_sequence, axis=0)
+            else:
+                print("Reading subject {0}, action {1}, subaction {2}".format(subj, action, 1))
+                filename = '{0}/S{1}/{2}_{3}.txt'.format(path_to_dataset, subj, action, 1)
+                action_sequence = readCSVasFloat(filename)
+                n, d = action_sequence.shape
+                even_list = range(0, n, sample_rate)
+
+                num_frames1 = len(even_list)
+                the_sequence1 = np.array(action_sequence[even_list, :])
+                the_seq1 = Variable(torch.from_numpy(the_sequence1)).float().cuda()
+                the_seq1[:, 0:6] = 0
+                p3d1 = expmap2xyz_torch(the_seq1)
+                the_sequence1 = p3d1.view(num_frames1, -1).cpu().data.numpy()
+
+                print("Reading subject {0}, action {1}, subaction {2}".format(subj, action, 2))
+                filename = '{0}/S{1}/{2}_{3}.txt'.format(path_to_dataset, subj, action, 2)
+                action_sequence = readCSVasFloat(filename)
+                n, d = action_sequence.shape
+                even_list = range(0, n, sample_rate)
+
+                num_frames2 = len(even_list)
+                the_sequence2 = np.array(action_sequence[even_list, :])
+                the_seq2 = Variable(torch.from_numpy(the_sequence2)).float().cuda()
+                the_seq2[:, 0:6] = 0
+                p3d2 = expmap2xyz_torch(the_seq2)
+                the_sequence2 = p3d2.view(num_frames2, -1).cpu().data.numpy()
+
+                # print("action:{}".format(action))
+                # print("subact1:{}".format(num_frames1))
+                # print("subact2:{}".format(num_frames2))
+                fs_sel1, fs_sel2 = find_indices_srnn(num_frames1, num_frames2, seq_len)
+                seq_sel1 = the_sequence1[fs_sel1, :]
+                seq_sel2 = the_sequence2[fs_sel2, :]
+                if len(sampled_seq) == 0:
+                    sampled_seq = seq_sel1
+                    sampled_seq = np.concatenate((sampled_seq, seq_sel2), axis=0)
+                    complete_seq = the_sequence1
+                    complete_seq = np.append(complete_seq, the_sequence2, axis=0)
+                else:
+                    sampled_seq = np.concatenate((sampled_seq, seq_sel1), axis=0)
+                    sampled_seq = np.concatenate((sampled_seq, seq_sel2), axis=0)
+                    complete_seq = np.append(complete_seq, the_sequence1, axis=0)
+                    complete_seq = np.append(complete_seq, the_sequence2, axis=0)
+            action_seq.extend(action for ___ in range(sampled_seq.shape[0] - before))
+            before = sampled_seq.shape[0]
+
+    # ignore constant joints and joints at same position with other joints
+    joint_to_ignore = np.array([0, 1, 6, 11, 16, 20, 23, 24, 28, 31])
+    dimensions_to_ignore = np.concatenate((joint_to_ignore * 3, joint_to_ignore * 3 + 1, joint_to_ignore * 3 + 2))
+    dimensions_to_use = np.setdiff1d(np.arange(complete_seq.shape[1]), dimensions_to_ignore)
+
+    return sampled_seq, dimensions_to_ignore, dimensions_to_use, action_seq
+
+
+
 def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len):
     """
     adapted from
