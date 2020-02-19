@@ -261,7 +261,7 @@ class Hm36Dataset_3d_ST(Dataset):
 
 
     def __len__(self):
-        return np.shape(self.input)[0]
+        return np.shape(self.input)[1]
 
     def __getitem__(self, item):
         return self.input[item], self.output[item], self.all_seqs[item]
