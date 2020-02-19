@@ -182,10 +182,11 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             targets = Variable(targets.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs_dct = model(inputs.transpose(0,1), targets.transpose(0,1)) # assume the outputs is [batch, node, K]
+        outputs_dct = model(inputs.transpose(0,1), targets.transpose(0,1)) # [seq_len, batch, 198]
 
         print(outputs_dct.shape)
-        loss = nn.MSELoss(outputs_dct, targets)
+        Mloss = nn.MSELoss()
+        loss = Mloss(outputs_dct, targets)
 
 
         # calculate loss and backward
