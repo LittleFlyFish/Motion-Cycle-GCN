@@ -122,6 +122,8 @@ class GCN_2task(nn.Module):
         self.act_f1 = nn.LeakyReLU()
         self.residual = residual
 
+        self.W = nn.Parameter(torch.randn(4))
+
         self.fcn = nn.Linear(15*66, 15)
         self.Soft = nn.Softmax(dim=1)
 
@@ -136,10 +138,15 @@ class GCN_2task(nn.Module):
             y = self.gcbs[i](y)
 
         if self.residual == True:
-            y1 = self.gc7(y)
+            e1 = self.gc7(y)
+            e2 = self.gc8(y)
+
+            y1 = self.W[0]*e1 + self.W[1]*e2
+            y2 = self.W[2]*e1 + self.W[3]*e2
+
             y1 = y1 + x
 
-            y2 = self.gc8(y)
+
             b, n, f = y2.shape
             y2 = self.bn2(y2.view(b, -1)).view(b, n, f)
             y2 = self.act_f(y2)

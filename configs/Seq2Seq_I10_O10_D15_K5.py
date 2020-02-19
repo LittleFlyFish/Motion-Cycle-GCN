@@ -2,7 +2,7 @@ import numpy as np
 model = dict(
     type='Seq2Seq',
     input_size = 45,
-    hidden_size = 64,
+    hidden_size = 12,
     output_size = 3,
     dropout = 0.5,
     max_length = 20,
