@@ -72,7 +72,7 @@ class AttnDecoderRNN(nn.Module):
         a = hidden.transpose(0,1)
         b = embedding.transpose(0,1)
 
-        output, attn_weights = Attention(a,b)
+        output, attn_weights = self.Att(a,b)
         print(output.shape)
         output, hidden = self.gru(output.transpose(0,1), hidden)
 
