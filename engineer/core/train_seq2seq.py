@@ -143,9 +143,8 @@ def train_model(model, datasets, cfg, distributed, optimizer):
 
 def seg2whole(seg, dct_n):
     # tranasfer element from K windows back to the dct of whole feature
-    a = seg[:, :, 0:45]
-    b = seg[:, :, 45:60]
-    segs = torch.split(a, 3, dim=2)
+    # seg [seq_len, batch, 66*3]
+    segs = torch.split(seg, 1, dim=0)
     whole = data_utils.dct2seq(b, frame_n=20)
     frame = []
     for i in range(len(segs)):
@@ -184,10 +183,11 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         outputs_dct = model(inputs.transpose(0,1), targets.transpose(0,1)) # assume the outputs is [batch, node, K]
 
         print(outputs_dct.shape)
+        loss = nn.MSELoss(outputs_dct, targets)
 
 
         # calculate loss and backward
-        _, loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
+        #_, loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
         loss_list.append(loss.item())
@@ -229,7 +229,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs)
+        outputs = model(inputs) # [1, batch, 66*3]
         print(outputs.shape)
         outputs_dct = seg2whole(outputs, dct_n)
 

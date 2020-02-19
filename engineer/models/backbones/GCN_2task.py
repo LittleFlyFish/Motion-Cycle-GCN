@@ -145,7 +145,7 @@ class GCN_2task(nn.Module):
 
             # y1 = self.W[0]*e1 + self.W[1]*e2
             # y2 = self.W[2]*e1 + self.W[3]*e2
-            context = torch.cat([torch.unsqueeze(e1.view(-1, 66*15), dim=1), torch.unsqueeze(e2.view(-1, 66*15), dim=1)], dim=0)
+            context = torch.cat([torch.unsqueeze(e1.view(-1, 66*15), dim=1), torch.unsqueeze(e2.view(-1, 66*15), dim=1)], dim=1)
             ee1, _ = self.att(torch.unsqueeze(e1.view(-1, 66*15), dim=1), context)
             ee2, _ = self.att(torch.unsqueeze(e2.view(-1, 66*15), dim=1), context)
             y1 = ee1.view(b, 66, 15)
