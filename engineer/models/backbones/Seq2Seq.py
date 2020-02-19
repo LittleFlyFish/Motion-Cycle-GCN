@@ -32,6 +32,7 @@ class EncoderRNN(nn.Module):
         self.gru = nn.GRU(input_size, hidden_size)
 
     def forward(self, input, hidden):
+        print(input.shape)
         output, hidden = self.gru(input, hidden)
         return output, hidden
 
