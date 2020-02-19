@@ -7,8 +7,6 @@
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/core/train_seq2seq.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_seq2seq.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/GCN_2task.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/GCN_2task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Seq2Seq.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Seq2Seq.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,13 +108,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00105" summary="&quot;ST-E Three layers&quot;">
-      <created>1581113845955</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1581113845955</updated>
     </task>
     <task id="LOCAL-00106" summary="&quot;ST_E three downsample&quot;">
       <created>1581114216542</created>
@@ -454,7 +445,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582153644390</updated>
     </task>
-    <option name="localTasksCounter" value="154" />
+    <task id="LOCAL-00154" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1582154926642</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1582154926642</updated>
+    </task>
+    <option name="localTasksCounter" value="155" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -490,10 +488,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582016121470" />
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1582153644314">
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1582154926553">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582153644314" />
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582154926553" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -526,10 +524,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1582153648687">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1582154934703">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582153648687" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582154934703" />
     <state x="603" y="166" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581542030629">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>

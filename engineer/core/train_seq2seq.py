@@ -144,18 +144,20 @@ def train_model(model, datasets, cfg, distributed, optimizer):
 def seg2whole(seg, dct_n):
     # tranasfer element from K windows back to the dct of whole feature
     # seg [seq_len, batch, 66*3]
+    b = seg.size(1)
     segs = torch.split(seg, 1, dim=0)
-    whole = data_utils.dct2seq(b, frame_n=20)
     frame = []
+    whole = torch.zeros([b, 20, 66])
     for i in range(len(segs)):
-        seq_i = data_utils.dct2seq(segs[i], frame_n=5)
+        seg_dct = segs[i].view(b, 66, 3)
+        seq_i = data_utils.dct2seq(seg_dct, frame_n=5)
         frame.append(seq_i)
         whole[:, i:i+5, :] = whole[:, i:i+5, :] + seq_i
 
-    whole[:, 5:15, :] = whole[:, 5:15, :]/6
-    whole[:, 15:20, :] = whole[:, 15:20, :]/2
+    whole[:, 5:15, :] = whole[:, 5:15, :]/5
+    whole[:, 15:20, :] = whole[:, 15:20, :]
     for i in range(5):
-        whole[:, i, :] = whole[:, i, :]/(i+2)
+        whole[:, i, :] = whole[:, i, :]/(i+1)
 
     whole_dct = data_utils.seq2dct(whole, dct_n)
 

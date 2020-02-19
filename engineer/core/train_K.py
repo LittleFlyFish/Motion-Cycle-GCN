@@ -231,6 +231,9 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
 
         outputs_dct = seg2whole(outputs, dct_n)
 
+        R_inputs = seg2whole(inputs, dct_n)
+        print(nn.MSELoss(R_inputs - inputs))
+
 
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used_len = len(dim_used)
