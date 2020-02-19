@@ -170,7 +170,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
     for i, (inputs, targets, all_seq) in enumerate(train_loader):
-        batch_size = inputs.shape[1]
+        batch_size = inputs.shape[0]
         print(batch_size)
         print(len(train_loader))
         if batch_size == 1:
@@ -183,6 +183,10 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             targets = Variable(targets.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
+        print(inputs.shape)
+        print(targets.shape)
+        inputs.transpose(0,1)
+        targets.transpose(0,1)
         print(inputs.shape)
         print(targets.shape)
         outputs_dct = model(inputs, targets) # assume the outputs is [batch, node, K]

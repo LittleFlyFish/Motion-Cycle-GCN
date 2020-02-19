@@ -199,12 +199,12 @@ class Hm36Dataset_seq2seq(Dataset):
             K_dct = data_utils.np_seq2dct(K_f, 3)
             self.Kdct.append(np.resize(K_dct, [batch, 66*3]))
 
-        self.input = np.zeros([5, batch, 66*3])
-        self.target = np.zeros([10, batch, 66*3])
+        self.input = np.zeros([batch, 5, 66*3])
+        self.target = np.zeros([batch, 10, 66*3])
         for i in range(5):
-            self.input[i, :, :] = self.Kdct[i]
+            self.input[:, i, :] = self.Kdct[i]
         for i in range(10):
-            self.target[i, :, :] = self.Kdct[i+5]
+            self.target[:, i, :] = self.Kdct[i+5]
 
 
     def __len__(self):
