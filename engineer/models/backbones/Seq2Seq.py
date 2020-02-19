@@ -65,16 +65,15 @@ class AttnDecoderRNN(nn.Module):
     def forward(self, input, hidden, encoder_outputs):
         # input = [seq_len, batch, input_size]
         #print(input.shape) [1, 16, 198]
-        #print(hidden.shape) [1, 16, 12]
-        #print(encoder_outputs.shape) [5, 16, 12]
-        print(input.shape)
+        #print(hidden.shape) [1, 16, h]
+        #print(encoder_outputs.shape) [5, 16, h]
         seq_len, batch, input_size = input.shape
         embedding = self.embbeding(input.view(-1, input_size)).view(seq_len, batch, self.hidden_size)
         a = hidden.transpose(0,1)
         b = embedding.transpose(0,1)
 
         output, attn_weights = self.Att(a,b)
-        print(output.shape)
+        #print(output.shape) [1, 16, h]
         output, hidden = self.gru(output.transpose(0,1), hidden)
 
         #output = F.log_softmax(self.out(output[0]), dim=1)
@@ -118,8 +117,8 @@ class Seq2Seq(nn.Module):
 
         for t in range(1, target_length):
             decoder_output, decoder_hidden, _ = self.decoder(decoder_input, decoder_hidden, encoder_output)
-            print(decoder_output.shape) # [16, 3]
-            print(decoder_hidden.shape) # [1, 16, 12]
+            #print(decoder_output.shape) # [1, 16, h]
+            #print(decoder_hidden.shape) # [1, 16, h]
             outputs = decoder_output
             teacher_force = random.random() < teacher_forcing_ratio
             decoder_input = target_tensor[t] if teacher_force else decoder_output
