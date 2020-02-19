@@ -5,7 +5,7 @@ model = dict(
     hidden_size = 12,
     output_size = 3,
     dropout = 0.5,
-    max_length = 20,
+    max_length = 15,
     device = "cuda:0"
 )
 dataset_type = 'Hm36Dataset_seq2seq'

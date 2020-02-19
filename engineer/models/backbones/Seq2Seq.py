@@ -25,19 +25,20 @@ class EncoderRNN(nn.Module):
     paras: hidden, [n layers * n directions, batch, hidden_size]
     paras: output, [seq_len, batch, hidden_size * n directions]
     """
-    def __init__(self, input_size, hidden_size):
+    def __init__(self, input_size, hidden_size, batch=16):
         super(EncoderRNN, self).__init__()
         #input = [seq_len, batch, input_size]
         self.hidden_size = hidden_size
         self.gru = nn.GRU(input_size, hidden_size)
 
+        self.batch = batch
+
     def forward(self, input, hidden):
-        print(input.shape)
         output, hidden = self.gru(input, hidden)
         return output, hidden
 
     def initHidden(self):
-        return torch.zeros(1, 1, self.hidden_size, device="cuda:0")
+        return torch.zeros(1, self.batch, self.hidden_size, device="cuda:0")
 
 
 class AttnDecoderRNN(nn.Module):
@@ -107,31 +108,22 @@ class Seq2Seq(nn.Module):
         encoder_hidden = self.encoder.initHidden()
         input_length = input_tensor.size(0)
         target_length = target_tensor.size(0)
-        encoder_outputs = torch.zeros(self.max_length, self.encoder.hidden_size, device=self.device)
+        batch = target_tensor.size(1)
+        outputs = torch.zeros(target_length, batch, self.encoder.hidden_size, device=self.device)
 
-        for ei in range(input_length):
-            encoder_output, encoder_hidden = self.encoder(torch.unsqueeze(input_tensor[ei],dim=0), encoder_hidden)
-            encoder_outputs[ei] = encoder_output[0, 0]
+        encoder_output, encoder_hidden = self.encoder(input_tensor, encoder_hidden)
+        print(encoder_output.shape)
+        print(encoder_hidden.shape)
 
-        decoder_input = target_tensor[0, :, :]
+        decoder_input = torch.unsqueeze(target_tensor[0, :, :], dim=0)
         decoder_hidden = encoder_hidden
 
-        use_teacher_forcing = True if random.random() < teacher_forcing_ratio else False
-
-        if use_teacher_forcing:
-            # Teacher forcing: Feed the target as the next input
-            for di in range(target_length):
-                decoder_output, decoder_hidden, decoder_attention = self.decoder(
-                    decoder_input, decoder_hidden, encoder_outputs)
-                decoder_input = target_tensor[di]  # Teacher forcing
-
-        else:
-            # Without teacher forcing: use its own predictions as the next input
-            for di in range(target_length):
-                decoder_output, decoder_hidden, decoder_attention = self.decoder(
-                    decoder_input, decoder_hidden, encoder_outputs)
-                topv, topi = decoder_output.topk(1)
-                decoder_input = topi.squeeze().detach()  # detach from history as input
-
-
-        return decoder_output
+        for t in range(1, target_length):
+            decoder_output, decoder_hidden, _ = self.decoder(decoder_input, decoder_hidden, encoder_output)
+            print(decoder_output.shape)
+            print(decoder_hidden.shape)
+            outputs = decoder_output
+            teacher_force = random.random() < teacher_forcing_ratio
+            top1 = decoder_output.argmax(1)
+            decoder_input = target_tensor[t] if teacher_force else top1
+        return outputs
