@@ -145,8 +145,10 @@ class GCN_2task(nn.Module):
 
             # y1 = self.W[0]*e1 + self.W[1]*e2
             # y2 = self.W[2]*e1 + self.W[3]*e2
-            y1 = self.att(e1.transpose(1,2), e2.transpose(1,2)).transpose(1,2)
-            y2 = self.att(e2.transpose(1,2), e1.transpose(1,2)).transpose(1,2)
+            e1, _ = self.att(e1.transpose(1,2), e2.transpose(1,2))
+            e2, _ = self.att(e2.transpose(1,2), e1.transpose(1,2))
+            y1 = e1.transpose(1,2)
+            y2 = e2.transpose(1,2)
 
             y1 = y1 + x
 
