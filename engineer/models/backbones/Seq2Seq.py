@@ -55,7 +55,7 @@ class AttnDecoderRNN(nn.Module):
         self.max_length = max_length
 
 
-        self.embedding = GraphConvolution(input_size, hidden_size, node_n=node_n)
+        self.embedding = GraphConvolution(input_size, hidden_size, node_n=66)
         self.attn = nn.Linear(self.hidden_size * 2, self.max_length)
         self.attn_combine = nn.Linear(self.hidden_size * 2, self.hidden_size)
         self.dropout = nn.Dropout(self.dropout_p)
@@ -69,7 +69,7 @@ class AttnDecoderRNN(nn.Module):
         print(embedded.shape)
 
         attn_weights = F.softmax(
-            self.attn(torch.cat((embedded[0], hidden[0]), 1)), dim=1)
+            self.attn(torch.cat((input[0], hidden[0]), 1)), dim=1)
         attn_applied = torch.bmm(attn_weights.unsqueeze(0),
                                  encoder_outputs.unsqueeze(0))
 
