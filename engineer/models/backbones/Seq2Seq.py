@@ -64,13 +64,15 @@ class AttnDecoderRNN(nn.Module):
 
     def forward(self, input, hidden, encoder_outputs):
         # input = [seq_len, batch, input_size]
-        print(input.shape)
-        print(hidden.shape)
-        print(encoder_outputs.shape)
+        #print(input.shape) [1, 16, 198]
+        #print(hidden.shape) [1, 16, 12]
+        #print(encoder_outputs.shape) [5, 16, 12]
         seq_len, batch, input_size = input.shape
         embedding = self.embbeding(input.view(-1, input_size)).view(seq_len, batch, self.hidden_size)
+        a = hidden.transpose(0,1)
+        b = embedding.transpose(0,1)
 
-        output, attn_weights = Attention(hidden.transpose(0,1), embedding.transpose(0,1))
+        output, attn_weights = Attention(a,b)
         print(output.shape)
         output, hidden = self.gru(output.transpose(0,1), hidden)
 

@@ -6,7 +6,6 @@
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_2task.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_2task.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/models/backbones/GCN_2task.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/GCN_2task.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Seq2Seq.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Seq2Seq.py" afterDir="false" />
     </list>
@@ -110,20 +109,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00092" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1580856352218</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1580856352218</updated>
-    </task>
-    <task id="LOCAL-00093" summary="&quot;ST_E&quot;">
-      <created>1580911403111</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1580911403112</updated>
     </task>
     <task id="LOCAL-00094" summary="&quot;ST_E 50&quot;">
       <created>1580911650828</created>
@@ -454,7 +439,21 @@
       <option name="project" value="LOCAL" />
       <updated>1582138668273</updated>
     </task>
-    <option name="localTasksCounter" value="141" />
+    <task id="LOCAL-00141" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1582141190663</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1582141190663</updated>
+    </task>
+    <task id="LOCAL-00142" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1582141268147</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1582141268147</updated>
+    </task>
+    <option name="localTasksCounter" value="143" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -490,10 +489,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582016121470" />
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1582141190544">
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1582141268059">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582141190544" />
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582141268059" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -526,10 +525,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1582141196722">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1582141273040">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582141196722" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582141273040" />
     <state x="603" y="166" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581542030629">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>

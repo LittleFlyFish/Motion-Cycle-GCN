@@ -8,6 +8,7 @@ import torch
 from torch.nn.parameter import Parameter
 import math
 from engineer.models.registry import BACKBONES
+from engineer.models.common.Attention import Attention
 
 
 class GraphConvolution(nn.Module):
@@ -121,6 +122,7 @@ class GCN_2task(nn.Module):
         self.act_f = nn.Tanh()
         self.act_f1 = nn.LeakyReLU()
         self.residual = residual
+        self.att = Attention(node_n)
 
         self.W = nn.Parameter(torch.randn(4))
 
@@ -143,8 +145,8 @@ class GCN_2task(nn.Module):
 
             # y1 = self.W[0]*e1 + self.W[1]*e2
             # y2 = self.W[2]*e1 + self.W[3]*e2
-            y1 = e1
-            y2 = e2
+            y1 = self.att(e1.transpose(1,2), e2.transpose(1,2)).transpose(1,2)
+            y2 = self.att(e2.transpose(1,2), e1.transpose(1,2)).transpose(1,2)
 
             y1 = y1 + x
 
