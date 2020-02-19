@@ -230,9 +230,8 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
         outputs = model(inputs)
-
+        print(outputs.shape)
         outputs_dct = seg2whole(outputs, dct_n)
-
 
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used_len = len(dim_used)
