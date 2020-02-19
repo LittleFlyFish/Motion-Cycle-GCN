@@ -141,8 +141,10 @@ class GCN_2task(nn.Module):
             e1 = self.gc7(y)
             e2 = self.gc8(y)
 
-            y1 = self.W[0]*e1 + self.W[1]*e2
-            y2 = self.W[2]*e1 + self.W[3]*e2
+            # y1 = self.W[0]*e1 + self.W[1]*e2
+            # y2 = self.W[2]*e1 + self.W[3]*e2
+            y1 = e1
+            y2 = e2
 
             y1 = y1 + x
 

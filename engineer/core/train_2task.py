@@ -178,7 +178,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         loss2C = nn.CrossEntropyLoss()
         loss2 = loss2C(outputs2, label)
 
-        loss = loss1 + loss2
+        loss = loss1 + 3*loss2
 
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())

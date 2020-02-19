@@ -16,12 +16,13 @@ import random
 import torch.nn.functional as F
 from torch.autograd import Variable
 from engineer.models.common.tgcn import ConvTemporalGraphical
+from engineer.models.common.Attention import Attention
 from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, GC_Block
 
 
 class EncoderRNN(nn.Module):
     """
-    paras: input, [seq_len, batch, input_size]
+    paras: input, [seq_len, batch, input_size] [5, 16, 66*3]
     paras: hidden, [n layers * n directions, batch, hidden_size]
     paras: output, [seq_len, batch, hidden_size]
     """
@@ -56,8 +57,7 @@ class AttnDecoderRNN(nn.Module):
         self.max_length = max_length
 
         self.embbeding = nn.Linear(input_size, hidden_size)
-        self.attn = nn.Linear(self.hidden_size * 2, self.max_length)
-        self.attn_combine = nn.Linear(self.hidden_size * 2, self.hidden_size)
+        self.Att = Attention(hidden_size)
         self.dropout = nn.Dropout(self.dropout_p)
         self.gru = nn.GRU(self.hidden_size, self.hidden_size)
         self.out = nn.Linear(self.hidden_size, self.output_size)
@@ -65,20 +65,14 @@ class AttnDecoderRNN(nn.Module):
     def forward(self, input, hidden, encoder_outputs):
         # input = [seq_len, batch, input_size]
         print(input.shape)
+        print(hidden.shape)
+        print(encoder_outputs.shape)
         seq_len, batch, input_size = input.shape
         embedding = self.embbeding(input.view(-1, input_size)).view(seq_len, batch, self.hidden_size)
 
-        attn_weights = F.softmax(
-            self.attn(torch.cat((embedding[0], hidden[0]), 1)), dim=1)
-        attn_applied = torch.bmm(attn_weights.unsqueeze(0),
-                                 encoder_outputs.unsqueeze(0))
-
-        output = torch.cat((input[0], attn_applied[0]), 1)
-        output = self.attn_combine(output).unsqueeze(0)
-
-        output = F.relu(output)
+        output = Attention(hidden.transpose(0,1), embedding.transpose(0,1))
         print(output.shape)
-        output, hidden = self.gru(output, hidden)
+        output, hidden = self.gru(output.transpose(0,1), hidden)
 
         output = F.log_softmax(self.out(output[0]), dim=1)
         return output, hidden, attn_weights
