@@ -77,7 +77,7 @@ class AttnDecoderRNN(nn.Module):
         print(output.shape)
         output, hidden = self.gru(output.transpose(0,1), hidden)
 
-        output = F.log_softmax(self.out(output[0]), dim=1)
+        #output = F.log_softmax(self.out(output[0]), dim=1)
         return output, hidden, attn_weights
 
     def initHidden(self):
@@ -118,10 +118,9 @@ class Seq2Seq(nn.Module):
 
         for t in range(1, target_length):
             decoder_output, decoder_hidden, _ = self.decoder(decoder_input, decoder_hidden, encoder_output)
-            print(decoder_output.shape)
-            print(decoder_hidden.shape)
+            print(decoder_output.shape) # [16, 3]
+            print(decoder_hidden.shape) # [1, 16, 12]
             outputs = decoder_output
             teacher_force = random.random() < teacher_forcing_ratio
-            top1 = decoder_output.argmax(1)
-            decoder_input = target_tensor[t] if teacher_force else top1
+            decoder_input = target_tensor[t] if teacher_force else decoder_output
         return outputs
