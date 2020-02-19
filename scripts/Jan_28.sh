@@ -48,6 +48,8 @@ python3 tools/train_K.py --config ./configs/K_GCN_I10_O10_D15_Goutput.py
 
 python3 tools/train_2task.py --config ./configs/GCN_2task_I10_O10_D15_G.py
 
+python3 tools/train_2task.py --config ./configs/GCN_2task_I10_O10_D15_GAtt.py
+
 python3 tools/train_seq2seq.py --config ./configs/Seq2Seq_I10_O10_D15_K5.py
 
 

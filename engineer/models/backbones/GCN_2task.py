@@ -145,16 +145,16 @@ class GCN_2task(nn.Module):
 
             # y1 = self.W[0]*e1 + self.W[1]*e2
             # y2 = self.W[2]*e1 + self.W[3]*e2
-            e1, _ = self.att(e1.transpose(1,2), e2.transpose(1,2))
-            e2, _ = self.att(e2.transpose(1,2), e1.transpose(1,2))
-            y1 = e1.transpose(1,2)
-            y2 = e2.transpose(1,2)
+            ee1, _ = self.att(e1.transpose(1,2), e2.transpose(1,2))
+            ee2, _ = self.att(e2.transpose(1,2), e1.transpose(1,2))
+            y1 = ee1.transpose(1,2)
+            y2 = ee2.transpose(1,2)
 
             y1 = y1 + x
 
 
             b, n, f = y2.shape
-            y2 = self.bn2(y2.view(b, -1)).view(b, n, f)
+            y2 = self.bn2(y2.contiguous().view(b, -1)).contiguous().view(b, n, f)
             y2 = self.act_f(y2)
             y2 = self.do(y2)
             y2 = y2.view(-1, 15*66)
