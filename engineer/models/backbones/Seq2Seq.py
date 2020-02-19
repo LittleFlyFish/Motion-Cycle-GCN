@@ -49,11 +49,13 @@ class AttnDecoderRNN(nn.Module):
     """
     def __init__(self, input_size, hidden_size, output_size, dropout_p, max_length):
         super(AttnDecoderRNN, self).__init__()
+        self.input_size = input_size
         self.hidden_size = hidden_size
         self.output_size = output_size
         self.dropout_p = dropout_p
         self.max_length = max_length
 
+        self.embbeding = nn.Linear(input_size, hidden_size)
         self.attn = nn.Linear(self.hidden_size * 2, self.max_length)
         self.attn_combine = nn.Linear(self.hidden_size * 2, self.hidden_size)
         self.dropout = nn.Dropout(self.dropout_p)
@@ -63,9 +65,11 @@ class AttnDecoderRNN(nn.Module):
     def forward(self, input, hidden, encoder_outputs):
         # input = [seq_len, batch, input_size]
         print(input.shape)
+        seq_len, batch, input_size = input.shape
+        embedding = self.embbeding(input.view(-1, input_size)).view(seq_len, batch, self.hidden_size)
 
         attn_weights = F.softmax(
-            self.attn(torch.cat((input[0], hidden[0]), 1)), dim=1)
+            self.attn(torch.cat((embedding[0], hidden[0]), 1)), dim=1)
         attn_applied = torch.bmm(attn_weights.unsqueeze(0),
                                  encoder_outputs.unsqueeze(0))
 
