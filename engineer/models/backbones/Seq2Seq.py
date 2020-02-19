@@ -23,7 +23,7 @@ class EncoderRNN(nn.Module):
     """
     paras: input, [seq_len, batch, input_size]
     paras: hidden, [n layers * n directions, batch, hidden_size]
-    paras: output, [seq_len, batch, hidden_size * n directions]
+    paras: output, [seq_len, batch, hidden_size]
     """
     def __init__(self, input_size, hidden_size, batch=16):
         super(EncoderRNN, self).__init__()
@@ -53,7 +53,7 @@ class AttnDecoderRNN(nn.Module):
         self.output_size = output_size
         self.dropout_p = dropout_p
         self.max_length = max_length
-        node_n = 66
+
 
         self.embedding = GraphConvolution(input_size, hidden_size, node_n=node_n)
         self.attn = nn.Linear(self.hidden_size * 2, self.max_length)
@@ -64,7 +64,9 @@ class AttnDecoderRNN(nn.Module):
 
     def forward(self, input, hidden, encoder_outputs):
         # input = [seq_len, batch, input_size]
+        print(input.shape)
         embedded = self.embedding(input)
+        print(embedded.shape)
 
         attn_weights = F.softmax(
             self.attn(torch.cat((embedded[0], hidden[0]), 1)), dim=1)
@@ -75,6 +77,7 @@ class AttnDecoderRNN(nn.Module):
         output = self.attn_combine(output).unsqueeze(0)
 
         output = F.relu(output)
+        print(output.shape)
         output, hidden = self.gru(output, hidden)
 
         output = F.log_softmax(self.out(output[0]), dim=1)
@@ -112,8 +115,6 @@ class Seq2Seq(nn.Module):
         outputs = torch.zeros(target_length, batch, self.encoder.hidden_size, device=self.device)
 
         encoder_output, encoder_hidden = self.encoder(input_tensor, encoder_hidden)
-        print(encoder_output.shape)
-        print(encoder_hidden.shape)
 
         decoder_input = torch.unsqueeze(target_tensor[0, :, :], dim=0)
         decoder_hidden = encoder_hidden
