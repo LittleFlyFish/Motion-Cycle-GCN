@@ -70,7 +70,7 @@ class AttnDecoderRNN(nn.Module):
         seq_len, batch, input_size = input.shape
         embedding = self.embbeding(input.view(-1, input_size)).view(seq_len, batch, self.hidden_size)
 
-        output = Attention(hidden.transpose(0,1), embedding.transpose(0,1))
+        output, attn_weights = Attention(hidden.transpose(0,1), embedding.transpose(0,1))
         print(output.shape)
         output, hidden = self.gru(output.transpose(0,1), hidden)
 
