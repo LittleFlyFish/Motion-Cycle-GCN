@@ -110,7 +110,7 @@ class Seq2Seq(nn.Module):
         encoder_outputs = torch.zeros(self.max_length, self.encoder.hidden_size, device=self.device)
 
         for ei in range(input_length):
-            encoder_output, encoder_hidden = self.encoder(input_tensor[ei], encoder_hidden)
+            encoder_output, encoder_hidden = self.encoder(torch.unsqueeze(input_tensor[ei],dim=0), encoder_hidden)
             encoder_outputs[ei] = encoder_output[0, 0]
 
         decoder_input = target_tensor[0, :, :]
