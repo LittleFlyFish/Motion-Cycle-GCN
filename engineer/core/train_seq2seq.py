@@ -229,10 +229,11 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
 
         if is_cuda:
             inputs = Variable(inputs.cuda()).float()
+            targets = Variable(targets.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs) # [1, batch, 66*3]
-        print(outputs.shape)
+        outputs = model(inputs.transpose(0, 1), targets.transpose(0, 1))  # [seq_len, batch, 198]
+
         outputs_dct = seg2whole(outputs, dct_n)
 
         n, seq_len, dim_full_len = all_seq.data.shape
@@ -289,9 +290,10 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
 
         if is_cuda:
             inputs = Variable(inputs.cuda()).float()
+            targets = Variable(targets.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs)
+        outputs = model(inputs.transpose(0, 1), targets.transpose(0, 1))  # [seq_len, batch, 198]
 
         outputs_dct = seg2whole(outputs, dct_n)
 
