@@ -105,6 +105,7 @@ class Hm36Dataset_K(Dataset):
         :param dct_used:
         :param split: 0 train, 1 testing, 2 validation
         :param sample_rate:
+        input [batch, 66, 60]
         """
         self.path_to_data = path_to_data
         self.split = split
@@ -216,7 +217,6 @@ class Hm36Dataset_seq2seq(Dataset):
     def __repr__(self):
         return "{} @action {}".format(__class__.__name__,self.actions)
 
-
 @DATASETS.register_module
 class Hm36Dataset_3d_ST(Dataset):
 
@@ -322,6 +322,56 @@ class Hm36Dataset_3d_ST2(Dataset):
 
     def __getitem__(self, item):
         return self.input[item], self.padding_seq[item], self.all_seqs[item]
+    def __repr__(self):
+        return "{} @action {}".format(__class__.__name__,self.actions)
+
+class Hm36Dataset_3d_trans(Dataset):
+
+    def __init__(self, path_to_data, actions, pipeline,input_n=20, output_n=10, dct_used=15, split=0, sample_rate=2):
+        """
+        :param path_to_data:
+        :param actions:
+        :param input_n:
+        :param output_n:
+        :param dct_used:
+        :param split: 0 train, 1 testing, 2 validation
+        :param sample_rate:
+        """
+        self.path_to_data = path_to_data
+        self.split = split
+        self.dct_used = dct_used
+        self.actions = actions
+        subs = np.array([[1, 6, 7, 8, 9], [5], [11]])
+        # subs = np.array([[1], [5], [11]])
+        acts = data_utils.define_actions(actions)
+        subjs = subs[split]
+        self.pipeline = Compose(pipeline)
+        # loader data is in here
+        all_seqs, dim_ignore, dim_used = data_utils.load_data_3d(path_to_data, subjs, acts, sample_rate,
+                                                                 input_n + output_n)
+        self.dim_used = dim_used
+        self.all_seqs = all_seqs
+
+        #self.all_seqs,self.input_dct_seq,self.output_dct_seq = self.pipeline(dict(all_seqs=all_seqs,dim_used=dim_used,input_n=input_n,output_n=output_n,dct_used=dct_used))
+
+        ################################################################################################################
+        ## change the output version to be [batch, 3, frame_n, node_n]
+        all_seqs = all_seqs[:, :, dim_used]
+        batch, frame_n, _ = all_seqs.shape
+        node_n = int(len(dim_used)/3)
+
+        pad_idx = np.repeat([input_n - 1], output_n)
+        i_idx = np.arange(0, input_n)
+        self.input = all_seqs[:, i_idx, :] ## this line of view is not sure
+
+        self.target = all_seqs
+
+
+    def __len__(self):
+        return np.shape(self.input)[0]
+
+    def __getitem__(self, item):
+        return self.input[item], self.target[item], self.all_seqs[item]
     def __repr__(self):
         return "{} @action {}".format(__class__.__name__,self.actions)
 

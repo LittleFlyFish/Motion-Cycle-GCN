@@ -107,6 +107,7 @@ class GCN_2task(nn.Module):
         self.gc1 = GraphConvolution(input_feature, hidden_feature, node_n=node_n)
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)
         self.bn2 = nn.BatchNorm1d(node_n * input_feature)
+        self.bn3 = nn.BatchNorm1d(node_n * input_feature)
         self.bn7 = nn.BatchNorm1d(node_n * input_feature)
 
         self.gcbs = []
@@ -117,12 +118,13 @@ class GCN_2task(nn.Module):
 
         self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
         self.gc8 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
+        self.gc9 = GraphConvolution(input_feature, input_feature, node_n=node_n)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
         self.act_f1 = nn.LeakyReLU()
         self.residual = residual
-        self.att = Attention(node_n * input_feature, "dot")
+        self.att = Attention(15)
 
         self.W = nn.Parameter(torch.randn(4))
 
@@ -143,8 +145,11 @@ class GCN_2task(nn.Module):
             e1 = self.gc7(y)
             e2 = self.gc8(y)
 
-            y1 = (self.W[0]*e1 + self.W[1]*e2)/(self.W[0] + self.W[1])
-            y2 = (self.W[2]*e1 + self.W[3]*e2)/(self.W[2] + self.W[3])
+            y1, _ = self.att(e1, e1)
+            y2, _ = self.att(e2, e2)
+
+            # y1 = (self.W[0]*e1 + self.W[1]*e2)/(self.W[0] + self.W[1])
+            # y2 = (self.W[2]*e1 + self.W[3]*e2)/(self.W[2] + self.W[3])
 
             # context = torch.cat([torch.unsqueeze(e1.view(-1, 66*15), dim=1), torch.unsqueeze(e2.view(-1, 66*15), dim=1)], dim=1)
             # ee1, _ = self.att(torch.unsqueeze(e1.view(-1, 66*15), dim=1), context)
@@ -156,6 +161,12 @@ class GCN_2task(nn.Module):
             #
             # y1 = ee1.transpose(1,2)
             # y2 = ee2.transpose(1,2) # .view(b, 66, 15)
+
+            b, n, f = y1.shape
+            y1 = self.bn3(y1.contiguous().view(b, -1)).contiguous().view(b, n, f)
+            y1 = self.act_f(y1)
+            y1 = self.do(y1)
+            y1 = self.gc9(y1)
 
             y1 = y1 + x
             b, n, f = y2.shape
