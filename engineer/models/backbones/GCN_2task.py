@@ -122,7 +122,7 @@ class GCN_2task(nn.Module):
         self.act_f = nn.Tanh()
         self.act_f1 = nn.LeakyReLU()
         self.residual = residual
-        self.att = Attention(node_n * input_feature)
+        self.att = Attention(node_n * input_feature, "dot")
 
         self.W = nn.Parameter(torch.randn(4))
 
@@ -143,13 +143,19 @@ class GCN_2task(nn.Module):
             e1 = self.gc7(y)
             e2 = self.gc8(y)
 
-            # y1 = self.W[0]*e1 + self.W[1]*e2
-            # y2 = self.W[2]*e1 + self.W[3]*e2
-            context = torch.cat([torch.unsqueeze(e1.view(-1, 66*15), dim=1), torch.unsqueeze(e2.view(-1, 66*15), dim=1)], dim=1)
-            ee1, _ = self.att(torch.unsqueeze(e1.view(-1, 66*15), dim=1), context)
-            ee2, _ = self.att(torch.unsqueeze(e2.view(-1, 66*15), dim=1), context)
-            y1 = ee1.view(b, 66, 15)
-            y2 = ee2.view(b, 66, 15)
+            y1 = (self.W[0]*e1 + self.W[1]*e2)/(self.W[0] + self.W[1])
+            y2 = (self.W[2]*e1 + self.W[3]*e2)/(self.W[2] + self.W[3])
+
+            # context = torch.cat([torch.unsqueeze(e1.view(-1, 66*15), dim=1), torch.unsqueeze(e2.view(-1, 66*15), dim=1)], dim=1)
+            # ee1, _ = self.att(torch.unsqueeze(e1.view(-1, 66*15), dim=1), context)
+            # ee2, _ = self.att(torch.unsqueeze(e2.view(-1, 66*15), dim=1), context)
+
+            # context = torch.cat([e1.transpose(1,2), e2.transpose(1,2)], dim=1)
+            # ee1, _ = self.att(e1.transpose(1,2), context)
+            # ee2, _ = self.att(e2.transpose(1,2), context)
+            #
+            # y1 = ee1.transpose(1,2)
+            # y2 = ee2.transpose(1,2) # .view(b, 66, 15)
 
             y1 = y1 + x
             b, n, f = y2.shape
