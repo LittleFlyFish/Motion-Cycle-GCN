@@ -93,6 +93,7 @@ class Seq2Seq(nn.Module):
         self.encoder = EncoderRNN(input_size=input_size, hidden_size=hidden_size)
         self.decoder = AttnDecoderRNN(input_size=input_size, hidden_size=hidden_size, output_size=output_size, dropout_p=dropout, max_length=max_length)
         self.device = device
+        self.hidden_size = hidden_size
 
         self.max_length = max_length
 
