@@ -5,7 +5,7 @@ model = dict(
     num_encoder_layers =12
 
 )
-dataset_type = 'Hm36Dataset_3d_ST'
+dataset_type = 'Hm36Dataset_3d_trans'
 data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),

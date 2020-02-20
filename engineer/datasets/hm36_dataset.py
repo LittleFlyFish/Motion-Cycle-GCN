@@ -325,6 +325,7 @@ class Hm36Dataset_3d_ST2(Dataset):
     def __repr__(self):
         return "{} @action {}".format(__class__.__name__,self.actions)
 
+@DATASETS.register_module
 class Hm36Dataset_3d_trans(Dataset):
 
     def __init__(self, path_to_data, actions, pipeline,input_n=20, output_n=10, dct_used=15, split=0, sample_rate=2):
@@ -364,7 +365,7 @@ class Hm36Dataset_3d_trans(Dataset):
         i_idx = np.arange(0, input_n)
         self.input = all_seqs[:, i_idx, :] ## this line of view is not sure
 
-        self.target = all_seqs
+        self.target = all_seqs[:, input_n:(input_n+output_n), :]
 
 
     def __len__(self):

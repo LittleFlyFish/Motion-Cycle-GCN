@@ -32,5 +32,8 @@ class Transform(nn.Module):
 
 
     def forward(self, x, targets):
+        print("here")
+        print(x.shape)
+        print(targets.shape)
         y = self.trans(x, targets)
         return y+x

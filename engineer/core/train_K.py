@@ -181,6 +181,12 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
         outputs = model(inputs) # assume the outputs is [batch, node, K]
+        
+        R_inputs = seg2whole(inputs, dct_n)
+        print(R_inputs.shape)
+        print(inputs.shape)
+        Mloss = nn.MSELoss()
+        print(Mloss(R_inputs - inputs))
 
         outputs_dct = seg2whole(outputs, dct_n)
 
@@ -230,14 +236,6 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         outputs = model(inputs)
 
         outputs_dct = seg2whole(outputs, dct_n)
-
-        R_inputs = seg2whole(inputs, dct_n)
-        print(R_inputs.shape)
-        print(inputs.shape)
-        Mloss = nn.MSELoss()
-        print(Mloss(R_inputs - inputs))
-
-
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used_len = len(dim_used)
 
