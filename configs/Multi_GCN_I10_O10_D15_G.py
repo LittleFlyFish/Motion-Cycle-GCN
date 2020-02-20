@@ -5,6 +5,7 @@ model = dict(
     layout = "h36m",
     strategy = "spatial",
     dropout = 0.5,
+    num_stage = [4,4,4],
     residual = True
 )
 dataset_type = 'Hm36Dataset_3d'
@@ -56,9 +57,9 @@ data = dict(
 #
 # optimizer
 optim_para=dict(
-    optimizer = dict(type='Adam',lr=0.01),
-    lr_decay=1,
-    lr_gamma= 0.8
+    optimizer = dict(type='Adam',lr=0.0005),
+    lr_decay=2,
+    lr_gamma= 0.96
 )
 total_epochs = 50
 max_norm= True

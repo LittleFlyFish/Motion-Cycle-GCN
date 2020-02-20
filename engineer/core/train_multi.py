@@ -141,26 +141,6 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     with open(cfg.checkpoints + '/' + script_name + '_loss.csv', 'a') as f:
         df.to_csv(f, header=False, index=False)
 
-def seg2whole(seg, dct_n):
-    # tranasfer element from K windows back to the dct of whole feature
-    a = seg[:, :, 0:45]
-    b = seg[:, :, 45:60]
-    segs = torch.split(a, 3, dim=2)
-    whole = data_utils.dct2seq(b, frame_n=20)
-    frame = []
-    for i in range(len(segs)):
-        seq_i = data_utils.dct2seq(segs[i], frame_n=5)
-        frame.append(seq_i)
-        whole[:, i:i+5, :] = whole[:, i:i+5, :] + seq_i
-
-    whole[:, 5:15, :] = whole[:, 5:15, :]/6
-    whole[:, 15:20, :] = whole[:, 15:20, :]/2
-    for i in range(5):
-        whole[:, i, :] = whole[:, i, :]/(i+2)
-
-    whole_dct = data_utils.seq2dct(whole, dct_n)
-
-    return whole_dct
 
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15, num=1,
           loss_list=[1]):
@@ -180,18 +160,13 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs) # assume the outputs is [batch, node, K]
-
-        R_inputs = seg2whole(inputs, dct_n)
-        print(R_inputs.shape)
-        print(inputs.shape)
-        Mloss = nn.MSELoss()
-        print(Mloss(R_inputs - inputs))
-
-        outputs_dct = seg2whole(outputs, dct_n)
-
+        outputs1, outputs2, outputs3 = model(inputs)
         # calculate loss and backward
-        _, loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
+        _, loss1 = loss_funcs.mpjpe_error_p3d(outputs1, all_seq, dct_n, dim_used)
+        _, loss2 = loss_funcs.mpjpe_error_p3d(outputs2, all_seq, dct_n, dim_used)
+        _, loss3 = loss_funcs.mpjpe_error_p3d(outputs3, all_seq, dct_n, dim_used)
+
+        loss = loss1 + loss2 + loss3
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
         loss_list.append(loss.item())
@@ -233,19 +208,18 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs)
+        _, _, outputs = model(inputs)
 
-        outputs_dct = seg2whole(outputs, dct_n)
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used_len = len(dim_used)
 
         _, idct_m = data_utils.get_dct_matrix(seq_len)
         idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
-        outputs_t = outputs_dct.contiguous().view(-1, dct_n).transpose(0, 1)
+        outputs_t = outputs.view(-1, dct_n).transpose(0, 1)
         outputs_3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                    seq_len).transpose(1,
                                                                                                                       2)
-        _, test_loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
+        _, test_loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
         # plotter.plot('loss', 'test', 'LeakyRelu+No Batch ', i, test_loss.item())
 
         pred_3d = all_seq.clone()
@@ -292,13 +266,11 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs)
-
-        outputs_dct = seg2whole(outputs, dct_n)
+        _, _, outputs = model(inputs)
 
         n, _, _ = all_seq.data.shape
 
-        _, m_err = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
+        _, m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
         # plotter.plot('loss', 'val', 'LeakyRelu+No Batch ', i, m_err.item())
 
         # update the training loss

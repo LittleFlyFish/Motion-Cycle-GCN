@@ -26,20 +26,17 @@ class EncoderRNN(nn.Module):
     paras: hidden, [n layers * n directions, batch, hidden_size]
     paras: output, [seq_len, batch, hidden_size]
     """
-    def __init__(self, input_size, hidden_size, batch=16):
+    def __init__(self, input_size, hidden_size):
         super(EncoderRNN, self).__init__()
         #input = [seq_len, batch, input_size]
         self.hidden_size = hidden_size
         self.gru = nn.GRU(input_size, hidden_size)
 
-        self.batch = batch
 
     def forward(self, input, hidden):
         output, hidden = self.gru(input, hidden)
         return output, hidden
 
-    def initHidden(self):
-        return torch.zeros(1, self.batch, self.hidden_size, device="cuda:0")
 
 
 class AttnDecoderRNN(nn.Module):
@@ -104,10 +101,10 @@ class Seq2Seq(nn.Module):
 
 
     def forward(self, input_tensor, target_tensor, teacher_forcing_ratio=0.5):
-        encoder_hidden = self.encoder.initHidden()
         input_length = input_tensor.size(0)
         target_length = target_tensor.size(0)
         batch = target_tensor.size(1)
+        encoder_hidden = torch.zeros(1, batch, self.hidden_size, device="cuda:0")
         outputs = torch.zeros(target_length, batch, self.encoder.hidden_size, device=self.device)
 
         encoder_output, encoder_hidden = self.encoder(input_tensor, encoder_hidden)

@@ -37,16 +37,15 @@ def dct2seq(dct_feature, frame_n):
 
 def seq2dct(seqs, dct_n):
     batch, frame_n, dim = seqs.shape
-
     dct_m_in, _ = get_dct_matrix(frame_n)
     dct_m_in = Variable(torch.from_numpy(dct_m_in)).float().cuda()
+
     input_dct_seq = torch.matmul(dct_m_in[0:dct_n, :], seqs)
     input_dct_seq = input_dct_seq.transpose(1, 2)
     return input_dct_seq
 
 def np_seq2dct(seqs, dct_n):
     batch, frame_n, dim = np.shape(seqs)
-
     dct_m_in, _ = get_dct_matrix(frame_n)
     input_dct = np.matmul(dct_m_in[0:dct_n, :], seqs)
     input_dct_seq = np.transpose(input_dct, (0, 2, 1))

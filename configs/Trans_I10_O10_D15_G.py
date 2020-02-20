@@ -1,7 +1,7 @@
 import numpy as np
 model = dict(
     type = 'Transform',
-    nhead = 16,
+    nhead = 6,
     num_encoder_layers =12
 
 )
@@ -54,7 +54,7 @@ data = dict(
 #
 # optimizer
 optim_para=dict(
-    optimizer = dict(type='Adam',lr=0.001),
+    optimizer = dict(type='Adam',lr=0.0005),
     lr_decay=2,
     lr_gamma= 0.96
 )
