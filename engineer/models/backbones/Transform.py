@@ -31,6 +31,6 @@ class Transform(nn.Module):
         self.trans = Transformer(d_model=66, nhead = nhead, num_encoder_layers =num_encoder_layers)
 
 
-    def forward(self, x, targets):
+    def forward(self, x, padding, targets):
         y = self.trans(x, targets)
-        return y+x
+        return y + padding

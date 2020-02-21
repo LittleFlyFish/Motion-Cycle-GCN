@@ -149,7 +149,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
     model.train()
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
-    for i, (inputs, targets, all_seq) in enumerate(train_loader):
+    for i, (inputs, padding, targets, all_seq) in enumerate(train_loader):
         batch_size = inputs.shape[0]
         if batch_size == 1:
             continue
@@ -158,15 +158,15 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         if is_cuda:
             inputs = Variable(inputs.cuda()).float()
+            padding = Variable(padding.cuda()).float()
             targets = Variable(targets.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs, targets)
+        outputs = model(inputs, padding, targets)
         # calculate loss and backward
         outputs_dct = data_utils.seq2dct(torch.cat([inputs, outputs], dim=1), dct_n=dct_n)
-        outputs_dct = data_utils.seq2dct(all_seq, dct_n)
+        #outputs_dct = data_utils.seq2dct(all_seq[:, :, dim_used], dct_n)
         _, loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
-        print(loss)
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
         loss_list.append(loss.item())
@@ -206,10 +206,11 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
 
         if is_cuda:
             inputs = Variable(inputs.cuda()).float()
+            padding = Variable(padding.cuda()).float()
             targets = Variable(targets.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs, targets)
+        outputs = model(inputs, padding, targets)
 
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used_len = len(dim_used)
@@ -268,10 +269,11 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
 
         if is_cuda:
             inputs = Variable(inputs.cuda()).float()
+            padding = Variable(padding.cuda()).float()
             targets = Variable(targets.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs, targets)
+        outputs = model(inputs, padding, targets)
 
         n, _, _ = all_seq.data.shape
 
