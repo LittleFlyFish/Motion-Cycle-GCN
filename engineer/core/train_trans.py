@@ -206,7 +206,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
     model.eval()
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
-    for i, (inputs, targets, all_seq) in enumerate(train_loader):
+    for i, (inputs, padding, targets, all_seq) in enumerate(train_loader):
         bt = time.time()
 
         if is_cuda:
@@ -269,7 +269,7 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
     model.eval()
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
-    for i, (inputs, targets, all_seq) in enumerate(train_loader):
+    for i, (inputs, padding, targets, all_seq) in enumerate(train_loader):
         bt = time.time()
 
         if is_cuda:

@@ -120,4 +120,4 @@ class Seq2Seq(nn.Module):
             outputs[t, :, :] = decoder_output[0]
             teacher_force = random.random() < teacher_forcing_ratio
             decoder_input = torch.unsqueeze(target_tensor[t, :, :], dim=0) if teacher_force else decoder_output
-        return outputs
+        return encoder_output
