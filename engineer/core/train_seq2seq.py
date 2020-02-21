@@ -185,7 +185,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         outputs_dct = model(inputs.transpose(0,1), targets.transpose(0,1)) # [seq_len, batch, 198]
 
         Mloss = nn.MSELoss()
-        loss = Mloss(outputs_dct, targets.transpose(0,1))
+        loss = Mloss(inputs.transpose(0,1), targets.transpose(0,1))
         print(loss)
 
         # calculate loss and backward
