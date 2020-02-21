@@ -63,7 +63,6 @@ optim_para=dict(
 )
 total_epochs = 50
 max_norm= True
-model_meta = "./checkpoints/Multi_GCN_I10_O10_D15_G/ckpt_train_multi_3D_in10_out10_dct_n_15_best.pth.tar"
 checkpoints="./checkpoints"
 actions=dict(all = ["walking", "eating", "smoking", "discussion", "directions",
                "greeting", "phoning", "posing", "purchases", "sitting",

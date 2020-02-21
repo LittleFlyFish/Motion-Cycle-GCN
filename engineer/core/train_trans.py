@@ -245,8 +245,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         joint_equal = np.array([13, 19, 22, 13, 27, 30])
         index_to_equal = np.concatenate((joint_equal * 3, joint_equal * 3 + 1, joint_equal * 3 + 2))
 
-        print(torch.cat([inputs, outputs], dim=1).shape)
-        pred_3d[:, :, dim_used] = torch.cat([inputs, outputs], dim=1)
+        pred_3d[:, :, dim_used] = torch.cat([inputs, outputs.transpose(0,1)], dim=1)
         pred_3d[:, :, index_to_ignore] = pred_3d[:, :, index_to_equal]
         pred_p3d = pred_3d.contiguous().view(n, seq_len, -1, 3)[:, input_n:, :, :]
         targ_p3d = all_seq.contiguous().view(n, seq_len, -1, 3)[:, input_n:, :, :]
