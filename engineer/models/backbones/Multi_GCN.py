@@ -66,8 +66,8 @@ class Multi_GCN(nn.Module):
         self.act_f = nn.LeakyReLU()
         self.gc1 = GraphConvolution(in_channels, hidden_feature, node_n=66)
         self.gc2 = GraphConvolution(hidden_feature, in_channels, node_n=66)
-        self.gc3 = GraphConvolution(hidden_feature, in_channels, node_n=66)
-        self.gc4 = GraphConvolution(hidden_feature, in_channels, node_n=66)
+        self.gc3 = GraphConvolution(hidden_feature + in_channels, in_channels, node_n=66)
+        self.gc4 = GraphConvolution(hidden_feature + 2 * in_channels, in_channels, node_n=66)
 
         self.residual = residual
         node_n = 66
@@ -96,6 +96,8 @@ class Multi_GCN(nn.Module):
         # self.fullgcn = Motion_GCN(input_feature=in_channels, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=66, residual=False)
 
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature) # 15 is in_channel
+        self.bn2 = nn.BatchNorm1d(node_n * hidden_feature) # 15 is in_channel
+        self.bn3 = nn.BatchNorm1d(node_n * (hidden_feature + in_channels)) # 15 is in_channel
         self.num_stage = num_stage
 
 
@@ -109,22 +111,25 @@ class Multi_GCN(nn.Module):
         for i in range(self.num_stage[0]):
             y = self.gcbs[i](y)
 
-        y1 = y
-        y1a = self.gc2(y1)
+        y1a = self.gc2(y)
+        b, n, f = y1a.shape
+        y1 = self.bn2(y1a.view(b, -1)).view(b, n, f)
+        y1 = self.act_f(y1)
+        y1 = self.do(y1)
 
         for i in range(self.num_stage[1]):
             y = self.gcbs[i + self.num_stage[0]](y)
 
-        y2 = y1 + y
-        #y2 = torch.cat([y1, y], dim=2)
-        y2a = self.gc3(y2)
+        y2a = self.gc3(torch.cat([y1, y], dim=2))
+        b, n, f = y2a.shape
+        y2 = self.bn3(y2a.view(b, -1)).view(b, n, f)
+        y2 = self.act_f(y2)
+        y2 = self.do(y2)
 
         for i in range(self.num_stage[2]):
             y = self.gcbs[i + self.num_stage[0] + self.num_stage[1]](y)
 
-        y3 = y2 + y
-        #y3 = torch.cat([y2, y], dim=2)
-        y3a = self.gc4(y3)
+        y3a = self.gc4(torch.cat([y2, y], dim=2))
 
         y1a = y1a + x
         y2a = y2a + x
