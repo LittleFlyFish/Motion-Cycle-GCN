@@ -182,12 +182,6 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         outputs = model(inputs) # assume the outputs is [batch, node, K]
 
-        R_inputs = seg2whole(inputs, dct_n)
-        print(R_inputs.shape)
-        print(inputs.shape)
-        Mloss = nn.MSELoss()
-        print(Mloss(R_inputs - inputs))
-
         outputs_dct = seg2whole(outputs, dct_n)
 
         # calculate loss and backward

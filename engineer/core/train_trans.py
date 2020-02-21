@@ -164,7 +164,9 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         outputs = model(inputs, targets)
         # calculate loss and backward
         outputs_dct = data_utils.seq2dct(torch.cat([inputs, outputs], dim=1), dct_n=dct_n)
+        outputs_dct = data_utils.seq2dct(all_seq, dct_n)
         _, loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
+        print(loss)
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
         loss_list.append(loss.item())
@@ -232,6 +234,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         joint_equal = np.array([13, 19, 22, 13, 27, 30])
         index_to_equal = np.concatenate((joint_equal * 3, joint_equal * 3 + 1, joint_equal * 3 + 2))
 
+        print(torch.cat([inputs, outputs], dim=1).shape)
         pred_3d[:, :, dim_used] = torch.cat([inputs, outputs], dim=1)
         pred_3d[:, :, index_to_ignore] = pred_3d[:, :, index_to_equal]
         pred_p3d = pred_3d.contiguous().view(n, seq_len, -1, 3)[:, input_n:, :, :]
