@@ -178,14 +178,14 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda()).float()
-            targets = Variable(targets.cuda()).float()
+            inputs = Variable(inputs.cuda()).float() # [5, batch, 198]
+            targets = Variable(targets.cuda()).float() # [10, batch, 198]
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs_dct = model(inputs.transpose(0,1), targets.transpose(0,1)) # [seq_len, batch, 198]
+        outputs_dct = model(inputs.transpose(0,1), targets.transpose(0,1)) # [10, batch, 198]
 
         Mloss = nn.MSELoss()
-        loss = Mloss(inputs.transpose(0,1), targets.transpose(0,1))
+        loss = Mloss(outputs_dct, targets.transpose(0,1))
         print(loss)
 
         # calculate loss and backward
