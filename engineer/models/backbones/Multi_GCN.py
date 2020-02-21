@@ -96,8 +96,8 @@ class Multi_GCN(nn.Module):
         # self.fullgcn = Motion_GCN(input_feature=in_channels, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=66, residual=False)
 
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature) # 15 is in_channel
-        self.bn2 = nn.BatchNorm1d(node_n * hidden_feature) # 15 is in_channel
-        self.bn3 = nn.BatchNorm1d(node_n * (hidden_feature + in_channels)) # 15 is in_channel
+        self.bn2 = nn.BatchNorm1d(node_n * in_channels) # 15 is in_channel
+        self.bn3 = nn.BatchNorm1d(node_n * in_channels) # 15 is in_channel
         self.num_stage = num_stage
 
 
