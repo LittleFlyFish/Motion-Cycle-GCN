@@ -2,12 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="&quot;GV=G version, Padding=True&quot;">
+      <change afterPath="$PROJECT_DIR$/configs/Multi_GCN_I10_O10_D15_PLUS.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Multi_GCN_I10_O10_D15_G.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Multi_GCN_I10_O10_D15_G.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_multi.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_multi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_seq2seq.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_seq2seq.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/core/train_trans.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_trans.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Seq2Seq.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Seq2Seq.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Multi_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Multi_GCN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Transform.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Transform.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/Jan_28.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Jan_28.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,20 +115,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00120" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1581686794677</created>
-      <option name="number" value="00120" />
-      <option name="presentableId" value="LOCAL-00120" />
-      <option name="project" value="LOCAL" />
-      <updated>1581686794677</updated>
-    </task>
-    <task id="LOCAL-00121" summary="&quot;Input Output dct&quot;">
-      <created>1581788123318</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1581788123318</updated>
     </task>
     <task id="LOCAL-00122" summary="&quot;K_output&quot;">
       <created>1581880729718</created>
@@ -453,7 +445,21 @@
       <option name="project" value="LOCAL" />
       <updated>1582296788493</updated>
     </task>
-    <option name="localTasksCounter" value="169" />
+    <task id="LOCAL-00169" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1582298166616</created>
+      <option name="number" value="00169" />
+      <option name="presentableId" value="LOCAL-00169" />
+      <option name="project" value="LOCAL" />
+      <updated>1582298166616</updated>
+    </task>
+    <task id="LOCAL-00170" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1582298387900</created>
+      <option name="number" value="00170" />
+      <option name="presentableId" value="LOCAL-00170" />
+      <option name="project" value="LOCAL" />
+      <updated>1582298387901</updated>
+    </task>
+    <option name="localTasksCounter" value="171" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -489,10 +495,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582016121470" />
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1582298166556">
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1582298387838">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582298166556" />
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582298387838" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -525,10 +531,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1582296795106">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1582298392629">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582296795106" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582298392629" />
     <state x="603" y="166" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581542030629">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>

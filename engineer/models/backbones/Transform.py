@@ -18,7 +18,7 @@ class Transform(nn.Module):
     '''
     Original Module GCN structure
     '''
-    def __init__(self, nhead = 6, num_encoder_layers =11):
+    def __init__(self, nhead = 1, num_encoder_layers =10):
         """
 
         :param input_feature: num of input feature

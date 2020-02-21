@@ -56,6 +56,8 @@ python3 tools/train_trans.py --config ./configs/Trans_I10_O10_D15_G.py
 
 python3 tools/train_multi.py --config ./configs/Multi_GCN_I10_O10_D15_G.py
 
+python3 tools/train_multi.py --config ./configs/Multi_GCN_I10_O10_D15_PLUS.py
+
 
 
 ###Plan : Multi-scale skills

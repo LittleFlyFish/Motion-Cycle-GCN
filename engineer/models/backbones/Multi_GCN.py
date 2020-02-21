@@ -115,13 +115,15 @@ class Multi_GCN(nn.Module):
         for i in range(self.num_stage[1]):
             y = self.gcbs[i + self.num_stage[0]](y)
 
-        y2 = torch.cat([y1, y], dim=2)
+        y2 = y1 + y
+        #y2 = torch.cat([y1, y], dim=2)
         y2a = self.gc3(y2)
 
         for i in range(self.num_stage[2]):
             y = self.gcbs[i + self.num_stage[0] + self.num_stage[1]](y)
 
-        y3 = torch.cat([y2, y], dim=2)
+        y3 = y2 + y
+        #y3 = torch.cat([y2, y], dim=2)
         y3a = self.gc4(y3)
 
         y1a = y1a + x

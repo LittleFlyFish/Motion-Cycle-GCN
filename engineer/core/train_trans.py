@@ -157,21 +157,23 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda()).float()
-            padding = Variable(padding.cuda()).float()
-            targets = Variable(targets.cuda()).float()
+            inputs = Variable(inputs.cuda()).float() # [16, 10, 66]
+            padding = Variable(padding.cuda()).float() # [16, 10, 66]
+            targets = Variable(targets.cuda()).float() # [16, 10, 66]
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs, padding, targets)
+        a = inputs.transpose(0,1) # [10, 16, 66]
+        b = padding.transpose(0,1)
+        c = targets.transpose(0,1)
+        outputs = model(a, b, c) #[10, 16, 66]
 
-        Mloss = nn.MSELoss()
-        loss = Mloss(outputs_dct, targets.transpose(0,1))
-        print(loss)
+        # Mloss = nn.MSELoss()
+        # loss = Mloss(outputs.transpose(0,1), targets)
 
         # calculate loss and backward
-        outputs_dct = data_utils.seq2dct(torch.cat([inputs, outputs], dim=1), dct_n=dct_n)
-        #outputs_dct = data_utils.seq2dct(all_seq[:, :, dim_used], dct_n)
+        outputs_dct = data_utils.seq2dct(torch.cat([inputs, outputs.transpose(0,1)], dim=1), dct_n=dct_n)
         _, loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
+
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
         loss_list.append(loss.item())
@@ -215,7 +217,10 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
             targets = Variable(targets.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs, padding, targets)
+        a = inputs.transpose(0, 1)  # [10, 16, 66]
+        b = padding.transpose(0, 1)
+        c = targets.transpose(0, 1)
+        outputs = model(a, b, c)  # [10, 16, 66]
 
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used_len = len(dim_used)
@@ -227,7 +232,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         #                                                                                            seq_len).transpose(1,
         #                                                                                                               2)
 
-        outputs_dct = data_utils.seq2dct(torch.cat([inputs, outputs], dim=1), dct_n=dct_n)
+        outputs_dct = data_utils.seq2dct(torch.cat([inputs, outputs.transpose(0,1)], dim=1), dct_n=dct_n)
         _, testloss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
         # plotter.plot('loss', 'test', 'LeakyRelu+No Batch ', i, test_loss.item())
 
@@ -278,11 +283,14 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
             targets = Variable(targets.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs = model(inputs, padding, targets)
+        a = inputs.transpose(0, 1)  # [10, 16, 66]
+        b = padding.transpose(0, 1)
+        c = targets.transpose(0, 1)
+        outputs = model(a, b, c)  # [10, 16, 66]
 
         n, _, _ = all_seq.data.shape
 
-        outputs_dct = data_utils.seq2dct(torch.cat([inputs, outputs], dim=1), dct_n=dct_n)
+        outputs_dct = data_utils.seq2dct(torch.cat([inputs, outputs.transpose(0,1)], dim=1), dct_n=dct_n)
         _, m_err = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
         # plotter.plot('loss', 'val', 'LeakyRelu+No Batch ', i, m_err.item())
 
