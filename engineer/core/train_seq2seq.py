@@ -186,6 +186,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         seg = torch.cat([inputs.transpose(0,1), outputs], dim=0)
         print(seg.shape)
         outputs_dct = seg2whole(seg, dct_n)
+        print(outputs_dct.shape)
 
         # calculate loss and backward
         _, loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)

@@ -1,14 +1,14 @@
 import numpy as np
 model = dict(
     type = 'Transform',
-    nhead = 6,
-    num_encoder_layers =1
+    nhead = 66,
+    num_encoder_layers =30
 
 )
 dataset_type = 'Hm36Dataset_3d_trans'
 data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
-    dict(type='SampleFrames',direction = True),
+    dict(type='SampleFrames', direction=True),
 ]
 
 val_pipeline = [
