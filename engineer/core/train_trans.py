@@ -167,12 +167,13 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         c = targets.transpose(0,1)
         outputs = model(a, b, c) #[10, 16, 66]
 
-        # Mloss = nn.MSELoss()
-        # loss = Mloss(outputs.transpose(0,1), targets)
+        Mloss = nn.MSELoss()
+        loss = Mloss(outputs.transpose(0,1), targets)
+        print(loss)
 
         # calculate loss and backward
         outputs_dct = data_utils.seq2dct(torch.cat([inputs, outputs.transpose(0,1)], dim=1), dct_n=dct_n)
-        _, loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
+        #_, loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
 
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())

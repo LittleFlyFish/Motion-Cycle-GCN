@@ -178,14 +178,12 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda()).float() # [batch, 5 198]
-            targets = Variable(targets.cuda()).float() # [10, batch, 198]
+            inputs = Variable(inputs.cuda()).float() # [batch, 5, 198]
+            targets = Variable(targets.cuda()).float() # [batch, 10, 198]
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        print(inputs.shape)
         outputs = model(inputs.transpose(0,1), targets.transpose(0,1)) # [10, batch, 198]
-        print(outputs.shape)
-        seg = torch.cat([inputs, outputs.transpose(0,1)], dim=0)
+        seg = torch.cat([inputs.transpose(0,1), outputs], dim=0)
         print(seg.shape)
         outputs_dct = seg2whole(seg, dct_n)
 

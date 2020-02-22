@@ -2,7 +2,7 @@ import numpy as np
 model = dict(
     type = 'Transform',
     nhead = 6,
-    num_encoder_layers =12
+    num_encoder_layers =1
 
 )
 dataset_type = 'Hm36Dataset_3d_trans'

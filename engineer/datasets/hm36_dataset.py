@@ -212,7 +212,6 @@ class Hm36Dataset_seq2seq(Dataset):
         return np.shape(self.input)[0]
 
     def __getitem__(self, item):
-        # input = [seq_len, batch, input_size], target = [seq_len, batch, target_size]
         return self.input[item], self.target[item], self.all_seqs[item]
     def __repr__(self):
         return "{} @action {}".format(__class__.__name__,self.actions)

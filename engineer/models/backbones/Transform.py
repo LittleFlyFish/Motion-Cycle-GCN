@@ -18,7 +18,7 @@ class Transform(nn.Module):
     '''
     Original Module GCN structure
     '''
-    def __init__(self, nhead = 1, num_encoder_layers =10):
+    def __init__(self, nhead = 1, num_encoder_layers =100):
         """
 
         :param input_feature: num of input feature
@@ -28,9 +28,8 @@ class Transform(nn.Module):
         :param node_n: number of nodes in graph
         """
         super(Transform, self).__init__()
-        self.trans = Transformer(d_model=66, nhead = nhead, num_encoder_layers =num_encoder_layers)
-
+        self.trans = Transformer(d_model=66, nhead=nhead, num_encoder_layers=num_encoder_layers)
 
     def forward(self, x, padding, targets):
         y = self.trans(x, targets)
-        return y + padding
+        return y
