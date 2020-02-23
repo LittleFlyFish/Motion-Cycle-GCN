@@ -159,8 +159,6 @@ def seg2whole(seg, dct_n):
     for i in range(5):
         whole[:, i, :] = whole[:, i, :]/(i+1)
 
-    whole_dct = data_utils.seq2dct(whole, dct_n)
-
     return whole_dct
 
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15, num=1,
@@ -183,13 +181,11 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
         outputs = model(inputs.transpose(0,1), targets.transpose(0,1)) # [10, batch, 198]
-        seg = torch.cat([inputs.transpose(0,1), outputs], dim=0)
-        print(seg.shape)
-        outputs_dct = seg2whole(seg, dct_n)
-        print(outputs_dct.shape)
+        seg = torch.cat([inputs.transpose(0,1), outputs], dim=0) # [15, 16, 198]
+        outputs = seg2whole(seg, dct_n) # [16, 66, 15]
 
         # calculate loss and backward
-        _, loss = loss_funcs.mpjpe_error_p3d(outputs_dct, all_seq, dct_n, dim_used)
+        _, loss = loss_funcs.mpjpe_error_p3d_seq2seq(outputs, all_seq, dct_n, dim_used)
         print(loss)
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())

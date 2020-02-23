@@ -37,9 +37,11 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
                                              cfg.dataloader.batch_size.test)
     is_cuda = torch.cuda.is_available()
+    meta= "./checkpoints/Multi_GCN_I10_O10_D15_PLUS/ckpt_train_multi_3D_in10_out10_dct_n_15_best.pth.tar"
     if is_cuda:
         model.cuda()
         model.to('cuda:0')
+        model.load_state_dict(torch.load(meta)["state_dict"])
     start_epoch = cfg.resume.start
     lr_now = cfg.optim_para.optimizer.lr
 
