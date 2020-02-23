@@ -185,6 +185,10 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         outputs = seg2whole(seg, dct_n) # [16, 66, 15]
 
         # calculate loss and backward
+        print(outputs.shape)
+        print(all_seq.shape)
+        print(dct_n)
+        print(dim_used)
         _, loss = loss_funcs.mpjpe_error_p3d_seq2seq(outputs, all_seq, dct_n, dim_used)
         print(loss)
         num += 1

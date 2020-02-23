@@ -144,17 +144,11 @@ def mpjpe_error_p3d_seq2seq(outputs, all_seq, dct_n, dim_used):
     outputs_p3d = outputs # [16, 20, 66]
     pred_3d = outputs_p3d.contiguous().view(-1, dim_used_len).view(-1, 3)
     targ_3d = all_seq[:, :, dim_used].contiguous().view(-1, dim_used_len).view(-1, 3)
-    a = torch.randn((7040,3), device="cuda:0")
-    print(a)
 
-    print(targ_3d)
-    print(pred_3d)
-    print(pred_3d - targ_3d)
+    mean_3d_err = torch.mean(torch.norm(pred_3d - targ_3d, 2, 1))
 
-    #mean_3d_err = torch.mean(torch.norm(pred_3d - targ_3d, 2, 1))
+    return outputs_p3d, mean_3d_err
 
-    #return outputs_p3d, mean_3d_err
-    return 10
 
 
 def mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used):

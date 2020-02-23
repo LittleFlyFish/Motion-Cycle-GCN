@@ -35,10 +35,10 @@ class Transform(nn.Module):
 
     def forward(self, x, padding, targets):
         y = self.trans(x, targets)
-        b = y.size(1)
-        y = y.transpose(1, 0).contiguous().view(-1, 66*10)
-        y = self.bn(y)
-        y = self.act(y)
-        y = self.fcn(y)
-        y = y.contiguous().view(b, 10, 66).transpose(0,1)
+        # b = y.size(1)
+        # y = y.transpose(1, 0).contiguous().view(-1, 66*10)
+        # y = self.bn(y)
+        # y = self.act(y)
+        # y = self.fcn(y)
+        # y = y.contiguous().view(b, 10, 66).transpose(0,1)
         return y
