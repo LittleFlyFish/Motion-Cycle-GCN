@@ -10,7 +10,7 @@ import math
 from engineer.models.registry import BACKBONES
 from engineer.models.common.Attention import Attention
 from torch.nn.modules.transformer import Transformer
-
+from torch.nn.parameter import Parameter
 
 
 @BACKBONES.register_module
@@ -29,7 +29,8 @@ class Transform(nn.Module):
         """
         super(Transform, self).__init__()
         self.trans = Transformer(d_model=66, nhead=nhead, num_encoder_layers=num_encoder_layers)
+        self.W = nn.Parameter(torch.Tensor(1))
 
     def forward(self, x, padding, targets):
         y = self.trans(x, targets)
-        return y*100
+        return y*self.W

@@ -141,9 +141,11 @@ def mpjpe_error_p3d_seq2seq(outputs, all_seq, dct_n, dim_used):
     dim_used = np.array(dim_used)
     dim_used_len = len(dim_used)
 
-    outputs_p3d = outputs
-    print(outputs_p3d)
+    outputs_p3d = outputs # [16, 20, 66]
+    print(outputs_p3d.shape)
+    print(dim_used_len)
     pred_3d = outputs_p3d.contiguous().view(-1, dim_used_len).view(-1, 3)
+    print(pred_3d.shape)
     targ_3d = all_seq[:, :, dim_used].contiguous().view(-1, dim_used_len).view(-1, 3)
     print(pred_3d)
     print(pred_3d - targ_3d)
