@@ -169,7 +169,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         Mloss = nn.MSELoss()
         loss = Mloss(outputs.transpose(0,1), targets)
-        print(loss)
+        print(loss.item())
 
         # calculate loss and backward
         outputs_dct = data_utils.seq2dct(torch.cat([inputs, outputs.transpose(0,1)], dim=1), dct_n=dct_n)
