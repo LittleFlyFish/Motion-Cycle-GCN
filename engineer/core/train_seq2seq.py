@@ -148,11 +148,13 @@ def seg2whole(seg, input_dct, dct_n):
     segs = torch.split(seg, 1, dim=0)
     frame = []
     whole = data_utils.dct2seq(input_dct, frame_n=20)
+    print(whole.shape)
     #whole = torch.zeros([b, 20, 66], device="cuda:0")
     for i in range(len(segs)):
         seg_dct = segs[i].view(b, 66, 3)
         seq_i = data_utils.dct2seq(seg_dct, frame_n=5)
         frame.append(seq_i)
+        print(seq_i.shape)
         whole[:, i:i+5, :] = whole[:, i:i+5, :] + seq_i
 
     whole[:, 5:15, :] = whole[:, 5:15, :]/5
