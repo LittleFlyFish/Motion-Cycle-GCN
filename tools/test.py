@@ -1,6 +1,17 @@
 import torch
 import numpy
 from engineer.utils import loss_funcs
+from engineer.utils import data_utils as data_utils
+import time
+import torch
+import torch.nn as nn
+import torch.optim
+from torch.utils.data import DataLoader
+from torch.autograd import Variable
+import numpy as np
+from progress.bar import Bar
+import pandas as pd
+import os
 from torch.nn.modules.transformer import Transformer
 # N is batch size; D_in is input dimension;
 # H is hidden dimension; D_out is output dimension.
@@ -24,6 +35,25 @@ loss_fn = torch.nn.MSELoss()
 # optimizer which Tensors it should update.
 learning_rate = 1e-4
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+def seg2whole(seg, dct_n):
+    # tranasfer element from K windows back to the dct of whole feature
+    # seg [seq_len, batch, 66*3]
+    b = seg.size(1)
+    segs = torch.split(seg, 1, dim=0)
+    frame = []
+    whole = torch.zeros([b, 20, 66], device="cuda:0")
+    for i in range(len(segs)):
+        seg_dct = segs[i].view(b, 66, 3)
+        seq_i = data_utils.dct2seq(seg_dct, frame_n=5)
+        frame.append(seq_i)
+        whole[:, i:i+5, :] = whole[:, i:i+5, :] + seq_i
+
+    whole[:, 5:15, :] = whole[:, 5:15, :]/5
+    whole[:, 15:20, :] = whole[:, 15:20, :]
+    for i in range(5):
+        whole[:, i, :] = whole[:, i, :]/(i+1)
+    return whole
+
 
 dct_n = 15
 dim_used = range(1,67)
@@ -35,9 +65,12 @@ for t in range(500):
     # Compute and print loss.
     #loss = loss_fn(y_pred.transpose(0,1), y.transpose(0,1))
     #outputs = torch.randn((16, 66, 15), device="cuda:0")
-    all_seq = torch.randn((16, 20, 99), device="cuda:0")
-    outputs = torch.randn((16, 20, 66), device="cuda:0")
+    all_seq = torch.randn((16, 20, 96), device="cuda:0")
+    #outputs = torch.randn((16, 20, 66), device="cuda:0")
+    seg = torch.randn((15, 16, 198), device="cuda:0")
+    outputs = seg2whole(seg, 15)
     _, loss = loss_funcs.mpjpe_error_p3d_seq2seq(outputs, all_seq, dct_n, dim_used)
+    loss = Variable(loss, requires_grad=True)
     print(loss)
 
     if t % 100 == 99:
