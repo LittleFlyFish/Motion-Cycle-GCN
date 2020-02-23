@@ -24,7 +24,7 @@ for t in range(500):
     y_pred = model(x, y)
 
     # Compute and print loss.
-    loss = loss_fn(y_pred, y)
+    loss = loss_fn(y_pred.transpose(0,1), y.transpose(0,1))
     if t % 100 == 99:
         print(t, loss.item())
 
