@@ -358,14 +358,13 @@ class Hm36Dataset_3d_trans(Dataset):
         ## change the output version to be [batch, 3, frame_n, node_n]
         all_seqs = all_seqs[:, :, dim_used]
         b, _, _ = all_seqs.shape
+
         # data normalization
-        complete_out = {}
         complete_seqs = np.resize(all_seqs, (b*20, 66))
         data_std, data_mean, _, _ = data_utils.normalization_stats(complete_seqs)
         complete_out = np.divide((complete_seqs[:, 0:99] - data_mean), data_std)
         complete_out = complete_out[:, :]
         all_seqs = np.resize(complete_out, (b, 20, 66))
-        print(all_seqs.shape)
 
         batch, frame_n, _ = all_seqs.shape
         node_n = int(len(dim_used)/3)
