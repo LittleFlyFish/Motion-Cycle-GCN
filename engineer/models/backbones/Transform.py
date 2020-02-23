@@ -30,10 +30,15 @@ class Transform(nn.Module):
         super(Transform, self).__init__()
         self.trans = Transformer(d_model=66, nhead=nhead, num_encoder_layers=num_encoder_layers)
         self.fcn = nn.Linear(66*10, 66*10)
+        self.bn = nn.BatchNorm1d(66*10)
+        self.act = nn.LeakyReLU()
 
     def forward(self, x, padding, targets):
         y = self.trans(x, targets)
-        b = y.size(0)
-        y = self.fcn(y.contiguous().transpose(1, 0).view(-1, 66*10)).contiguous().view(b, 10, 66).transpose(0,1)
-        print(y.shape)
+        b = y.size(1)
+        y = y.transpose(1, 0).contiguous().view(-1, 66*10)
+        y = self.bn(y)
+        y = self.act(y)
+        y = self.fcn(y)
+        y = y.contiguous().view(b, 10, 66).transpose(0,1)
         return y
