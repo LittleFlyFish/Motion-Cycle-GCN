@@ -159,7 +159,7 @@ def seg2whole(seg, dct_n):
     for i in range(5):
         whole[:, i, :] = whole[:, i, :]/(i+1)
 
-    return whole_dct
+    return whole
 
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15, num=1,
           loss_list=[1]):

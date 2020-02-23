@@ -181,8 +181,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         optimizer.zero_grad()
         loss.backward()
-        if max_norm:
-            nn.utils.clip_grad_norm(model.parameters(), max_norm=1)
+        # if max_norm:
+        #     nn.utils.clip_grad_norm(model.parameters(), max_norm=1)
         optimizer.step()
 
         # update the training loss

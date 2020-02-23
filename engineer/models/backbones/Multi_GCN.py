@@ -66,6 +66,8 @@ class Multi_GCN(nn.Module):
         self.act_f = nn.LeakyReLU()
         self.gc1 = GraphConvolution(in_channels, hidden_feature, node_n=66)
         self.gc2 = GraphConvolution(hidden_feature, in_channels, node_n=66)
+        self.gc3 = GraphConvolution(hidden_feature, in_channels, node_n=66)
+        self.gc4 = GraphConvolution(hidden_feature, in_channels, node_n=66)
 
         self.residual = residual
         node_n = 66
