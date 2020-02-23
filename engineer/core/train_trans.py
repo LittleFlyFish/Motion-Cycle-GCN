@@ -165,9 +165,9 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         a = inputs.transpose(0,1) # [10, 16, 66]
         b = padding.transpose(0,1)
         c = targets.transpose(0,1)
-        print(c)
 
-        c = torch.randn((10, 16, 66), device="cuda:0")
+        #c = torch.randn((10, 16, 66), device="cuda:0")
+
         outputs = model(a, b, c) #[10, 16, 66]
 
         Mloss = nn.MSELoss()

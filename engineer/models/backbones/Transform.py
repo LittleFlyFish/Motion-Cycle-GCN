@@ -32,4 +32,4 @@ class Transform(nn.Module):
 
     def forward(self, x, padding, targets):
         y = self.trans(x, targets)
-        return y
+        return y*100
