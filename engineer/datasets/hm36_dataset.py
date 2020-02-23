@@ -185,7 +185,7 @@ class Hm36Dataset_seq2seq(Dataset):
         self.all_seqs,self.input_dct_seq,self.output_dct_seq = self.pipeline(dict(all_seqs=all_seqs,dim_used=dim_used,input_n=input_n,output_n=output_n,dct_used=dct_used))
 
         ## change the output version to be [batch, 3, frame_n, node_n]
-        self.all_seqs = self.all_seqs[:, :, dim_used]
+        all_seqs = self.all_seqs[:, :, dim_used]
         batch, frame_n, _ = self.all_seqs.shape
 
         # pad_idx = np.repeat([input_n - 1], output_n)
@@ -196,7 +196,7 @@ class Hm36Dataset_seq2seq(Dataset):
 
         self.Kdct = []
         for i in range(frame_n-5):
-            K_f = self.all_seqs[:, i:i+5, :]
+            K_f = all_seqs[:, i:i+5, :]
             K_dct = data_utils.np_seq2dct(K_f, 3)
             self.Kdct.append(np.resize(K_dct, [batch, 66*3]))
 
