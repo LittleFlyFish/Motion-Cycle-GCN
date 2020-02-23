@@ -147,9 +147,7 @@ def seg2whole(seg, input_dct, dct_n):
     b = seg.size(1)
     segs = torch.split(seg, 1, dim=0)
     frame = []
-    whole = data_utils.dct2seq(input_dct, frame_n=20)
-    print(whole.shape)
-    #whole = torch.zeros([b, 20, 66], device="cuda:0")
+    whole = torch.zeros([b, 20, 66], device="cuda:0")
     for i in range(len(segs)):
         seg_dct = segs[i].view(b, 66, 3)
         seq_i = data_utils.dct2seq(seg_dct, frame_n=5)
