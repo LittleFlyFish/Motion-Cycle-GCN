@@ -165,11 +165,14 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         a = inputs.transpose(0,1) # [10, 16, 66]
         b = padding.transpose(0,1)
         c = targets.transpose(0,1)
+        a = torch.randn((10, 16, 66), device="cuda:0")
+        b = torch.randn((10, 16, 66), device="cuda:0")
+        #c = torch.randn((10, 16, 66), device="cuda:0")
         outputs = model(a, b, c) #[10, 16, 66]
 
         Mloss = nn.MSELoss()
-        loss = Mloss(outputs.transpose(0,1), targets)
-        print(loss.item())
+        loss = Mloss(outputs, c)
+        print(loss)
 
         # calculate loss and backward
         outputs_dct = data_utils.seq2dct(torch.cat([inputs, outputs.transpose(0,1)], dim=1), dct_n=dct_n)

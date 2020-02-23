@@ -2,14 +2,15 @@ import torch
 from torch.nn.modules.transformer import Transformer
 # N is batch size; D_in is input dimension;
 # H is hidden dimension; D_out is output dimension.
-N, frame, D = 16, 10, 66
+N, frame, D = 10, 16, 66
 
 # Create random Tensors to hold inputs and outputs
-x = torch.randn(N, frame, D)
-y = torch.randn(N, frame, D)
+x = torch.randn((N, frame, D), device="cuda:0")
+y = torch.randn((N, frame, D), device="cuda:0")
 
 # Use the nn package to define our model and loss function.
 model = Transformer(d_model=66, nhead=66, num_encoder_layers=1)
+model.to(device="cuda:0")
 loss_fn = torch.nn.MSELoss()
 
 # Use the optim package to define an Optimizer that will update the weights of
