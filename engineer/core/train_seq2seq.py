@@ -183,12 +183,12 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         outputs = model(inputs.transpose(0,1), targets.transpose(0,1)) # [10, batch, 198]
         seg = torch.cat([inputs.transpose(0,1), outputs], dim=0) # [15, 16, 198]
 
-        outputs = seg2whole(seg, all_seq[:,:,dim_used], dct_n) # [16, 66, 15]
+        #outputs = seg2whole(seg, all_seq[:,:,dim_used], dct_n) # [16, 66, 15]
 
         # calculate loss and backward
-        _, loss = loss_funcs.mpjpe_error_p3d_seq2seq(outputs, all_seq, dct_n, dim_used)
-        # lossM = nn.MSELoss()
-        # loss = lossM(outputs.transpose(0,1), targets)
+        #_, loss = loss_funcs.mpjpe_error_p3d_seq2seq(outputs, all_seq, dct_n, dim_used)
+        lossM = nn.MSELoss()
+        loss = lossM(outputs.transpose(0,1), targets)
         print(loss)
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
