@@ -153,20 +153,6 @@
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
     </task>
-    <task id="LOCAL-00154" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1582154926642</created>
-      <option name="number" value="00154" />
-      <option name="presentableId" value="LOCAL-00154" />
-      <option name="project" value="LOCAL" />
-      <updated>1582154926642</updated>
-    </task>
-    <task id="LOCAL-00155" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1582155355103</created>
-      <option name="number" value="00155" />
-      <option name="presentableId" value="LOCAL-00155" />
-      <option name="project" value="LOCAL" />
-      <updated>1582155355103</updated>
-    </task>
     <task id="LOCAL-00156" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1582155774340</created>
       <option name="number" value="00156" />
@@ -496,7 +482,21 @@
       <option name="project" value="LOCAL" />
       <updated>1582571064835</updated>
     </task>
-    <option name="localTasksCounter" value="203" />
+    <task id="LOCAL-00203" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1582571964729</created>
+      <option name="number" value="00203" />
+      <option name="presentableId" value="LOCAL-00203" />
+      <option name="project" value="LOCAL" />
+      <updated>1582571964729</updated>
+    </task>
+    <task id="LOCAL-00204" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1582571978511</created>
+      <option name="number" value="00204" />
+      <option name="presentableId" value="LOCAL-00204" />
+      <option name="project" value="LOCAL" />
+      <updated>1582571978511</updated>
+    </task>
+    <option name="localTasksCounter" value="205" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -532,10 +532,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582016121470" />
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1582571964623">
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1582573557284">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582571964623" />
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582573557284" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -568,10 +568,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1582571068743">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1582571983479">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582571068743" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582571983479" />
     <state x="603" y="166" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581542030629">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
