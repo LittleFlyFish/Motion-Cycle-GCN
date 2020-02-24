@@ -6,7 +6,6 @@
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_best.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/ckpt_train_cycle_3D_in10_out10_dct_n_15_last.pth.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/Motion_GCN_I10_O10_D15_GG*/train_cycle_3D_in10_out10_dct_n_15.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_seq2seq.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_seq2seq.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +35,7 @@
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/st-gcn-master" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.Calculate">
+  <component name="RunManager" selected="Python.train_seq2seq">
     <configuration name="Calculate" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Motion-Cycle-GCN" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -100,8 +99,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="train_seq2seq" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Motion-Cycle-GCN" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/engineer/core" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/engineer/core/train_seq2seq.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.train_seq2seq" />
         <item itemvalue="Python.Calculate" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.G_Attention_GCN" />
@@ -130,13 +151,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00152" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1582151411351</created>
-      <option name="number" value="00152" />
-      <option name="presentableId" value="LOCAL-00152" />
-      <option name="project" value="LOCAL" />
-      <updated>1582151411351</updated>
     </task>
     <task id="LOCAL-00153" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1582153644390</created>
@@ -474,7 +488,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582565963646</updated>
     </task>
-    <option name="localTasksCounter" value="201" />
+    <task id="LOCAL-00201" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1582568351496</created>
+      <option name="number" value="00201" />
+      <option name="presentableId" value="LOCAL-00201" />
+      <option name="project" value="LOCAL" />
+      <updated>1582568351496</updated>
+    </task>
+    <option name="localTasksCounter" value="202" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -510,10 +531,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582016121470" />
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1582565963570">
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2" timestamp="1582568351435">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582565963570" />
+    <state x="604" y="194" width="783" height="913" key="CommitChangelistDialog2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582568351435" />
     <state x="252" y="114" key="DiffContextDialog" timestamp="1579703128560">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -522,22 +543,22 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="780" y="357" key="FileChooserDialogImpl/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579894477941" />
-    <state width="1832" height="369" key="GridCell.Tab.0.bottom" timestamp="1582557059337">
+    <state width="1832" height="369" key="GridCell.Tab.0.bottom" timestamp="1582568364916">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.bottom/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582557059337" />
-    <state width="1832" height="369" key="GridCell.Tab.0.center" timestamp="1582557059337">
+    <state width="1832" height="369" key="GridCell.Tab.0.bottom/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582568364916" />
+    <state width="1832" height="369" key="GridCell.Tab.0.center" timestamp="1582568364916">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.center/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582557059337" />
-    <state width="1832" height="369" key="GridCell.Tab.0.left" timestamp="1582557059337">
+    <state width="1832" height="369" key="GridCell.Tab.0.center/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582568364916" />
+    <state width="1832" height="369" key="GridCell.Tab.0.left" timestamp="1582568364915">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.left/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582557059337" />
-    <state width="1832" height="369" key="GridCell.Tab.0.right" timestamp="1582557059337">
+    <state width="1832" height="369" key="GridCell.Tab.0.left/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582568364915" />
+    <state width="1832" height="369" key="GridCell.Tab.0.right" timestamp="1582568364916">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state width="1832" height="369" key="GridCell.Tab.0.right/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582557059337" />
+    <state width="1832" height="369" key="GridCell.Tab.0.right/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582568364916" />
     <state x="736" y="312" key="RollbackChangesDialog" timestamp="1579703113854">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
@@ -546,10 +567,10 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="486" y="234" key="SettingsEditor/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1579536210566" />
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1582565967849">
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2" timestamp="1582568421081">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582565967849" />
+    <state x="592" y="335" key="Vcs.Push.Dialog.v2/65.24.1855.1176/1920.0.1920.1200@65.24.1855.1176" timestamp="1582568421081" />
     <state x="603" y="166" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581542030629">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
