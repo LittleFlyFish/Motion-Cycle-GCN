@@ -154,14 +154,14 @@ def seg2whole(seg, all_seq, dct_n):
         seq_i = data_utils.dct2seq(seg_dct, frame_n=5)
         frame.append(seq_i)
         whole[:, i:i+5, :] = whole[:, i:i+5, :] + seq_i
-        print(lossM(all_seq[:, i:i+5, :], seq_i))
+
 
     whole[:, 5:15, :] = whole[:, 5:15, :]/5
     whole[:, 15:20, :] = whole[:, 15:20, :]
     for i in range(5):
         whole[:, i, :] = whole[:, i, :]/(i+1)
 
-
+    print(lossM(all_seq[:, :, :], whole))
     return whole
 
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15, num=1,
