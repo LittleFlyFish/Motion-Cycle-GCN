@@ -141,18 +141,20 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     with open(cfg.checkpoints + '/' + script_name + '_loss.csv', 'a') as f:
         df.to_csv(f, header=False, index=False)
 
-def seg2whole(seg, dct_n):
+def seg2whole(seg, all_seq, dct_n):
     # tranasfer element from K windows back to the dct of whole feature
     # seg [seq_len, batch, 66*3]
     b = seg.size(1)
     segs = torch.split(seg, 1, dim=0)
     frame = []
+    lossM = nn.MSELoss()
     whole = torch.zeros([b, 20, 66], device="cuda:0")
     for i in range(len(segs)):
         seg_dct = segs[i].view(b, 66, 3)
         seq_i = data_utils.dct2seq(seg_dct, frame_n=5)
         frame.append(seq_i)
         whole[:, i:i+5, :] = whole[:, i:i+5, :] + seq_i
+        print(lossM(all_seq[:, i:i+5, :], seq_i))
 
     whole[:, 5:15, :] = whole[:, 5:15, :]/5
     whole[:, 15:20, :] = whole[:, 15:20, :]
@@ -185,7 +187,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         seg = torch.cat([inputs.transpose(0,1), targets.transpose(0,1)], dim=0) # [15, 16, 198]
 
         # calculate loss and backward
-        outputs = seg2whole(seg, dct_n) # [16, 66, 15]
+        outputs = seg2whole(seg, all_seq[:, :, dim_used], dct_n) # [16, 66, 15]
         _, loss = loss_funcs.mpjpe_error_p3d_seq2seq(outputs, all_seq, dct_n, dim_used)
         print(loss)
 
