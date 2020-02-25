@@ -182,7 +182,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
         outputs = model(inputs.transpose(0,1), targets.transpose(0,1)) # [10, batch, 198]
-        seg = torch.cat([inputs.transpose(0,1), targets], dim=0) # [15, 16, 198]
+        seg = torch.cat([inputs.transpose(0,1), targets.transpose(0,1)], dim=0) # [15, 16, 198]
 
         # calculate loss and backward
         outputs = seg2whole(seg, dct_n) # [16, 66, 15]
