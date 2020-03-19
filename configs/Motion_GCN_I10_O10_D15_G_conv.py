@@ -1,6 +1,6 @@
 import numpy as np
 model = dict(
-    type='Motion_GCN',
+    type='ST_conv',
     input_feature=15,
     hidden_feature=256,
     p_dropout=0.5,
