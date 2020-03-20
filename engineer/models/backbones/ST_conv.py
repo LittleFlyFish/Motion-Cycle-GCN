@@ -40,8 +40,8 @@ class ST_conv(nn.Module):
         self.gcbs = nn.ModuleList(self.gcbs)
 
         self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
-        self.conv1 = nn.Conv1d(node_n, node_n, 3, stride=2)
-        self.Iconv1 = nn.ConvTranspose1d(node_n, node_n, 3, stride=2)
+        self.conv1 = nn.Conv1d(node_n, node_n, 4, stride=1)
+        self.Iconv1 = nn.ConvTranspose1d(node_n, node_n, 4, stride=1)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
