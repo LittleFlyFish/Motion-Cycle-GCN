@@ -41,15 +41,19 @@ class ST_conv(nn.Module):
 
         self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
         self.conv1 = nn.Conv1d(node_n, node_n, 3, stride=2)
-        #self.Iconv1 = nn.transpose
+        self.Iconv1 = nn.ConvTranspose1d(node_n, node_n, 3, stride=2)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
         self.residual = residual
 
     def forward(self, x): # x=[16, 20, 66], x  turns to [16, f, 66], [16, 66, f], output [16, 66, f], [16, 66, 20]
+        print(x.shape)
         x1 = self.conv1(x.transpose(1, 2))
         print(x1.shape)
+        x = self.Iconv1(x1)
+        print(x.shape)
+
         y = self.gc1(x)
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
