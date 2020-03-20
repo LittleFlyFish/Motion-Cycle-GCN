@@ -163,10 +163,10 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         outputs_seq = model(inputs)
         outputs = data_utils.seq2dct(outputs_seq, 15)
 
-        Mloss = nn.MSELoss()
-        loss2 = Mloss(outputs_seq, all_seq[:, :, dim_used])
-        loss3 = Mloss(inputs, all_seq[:, :, dim_used])
-        print(loss2, loss3)
+        # Mloss = nn.MSELoss()
+        # loss2 = Mloss(outputs_seq, all_seq[:, :, dim_used])
+        # loss3 = Mloss(inputs, all_seq[:, :, dim_used])
+        # print(loss2, loss3)
 
         # calculate loss and backward
         _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
