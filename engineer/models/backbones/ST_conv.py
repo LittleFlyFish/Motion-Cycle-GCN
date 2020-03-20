@@ -61,8 +61,9 @@ class ST_conv(nn.Module):
 
         if self.residual == True:
             y = self.gc7(y)
-            y = y + x
             y = self.Iconv1(y)
+            y1 = y.transpose(1, 2) + x
+
         #else:
             # y = self.gc7(y)
             # b, n, f = y.shape
@@ -70,4 +71,4 @@ class ST_conv(nn.Module):
             # y = self.act_f(y)
             # y = self.do(y)
 
-        return y.transpose(1, 2)
+        return y1
