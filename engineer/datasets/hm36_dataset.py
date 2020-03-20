@@ -372,16 +372,19 @@ class Hm36Dataset_3d_trans(Dataset):
         pad_idx = np.repeat([input_n - 1], output_n)
         i_idx = np.arange(0, input_n)
         self.input = all_seqs[:, i_idx, :] ## this line of view is not sure
-
         self.padding = all_seqs[:, pad_idx, :]
-
         self.target = all_seqs[:, input_n:(input_n+output_n), :]
+
+        self.input_2 = np.concatenate([self.input, self.padding], axis=1)
+        self.target_2 = all_seqs
 
     def __len__(self):
         return np.shape(self.input)[0]
 
     def __getitem__(self, item):
-        return self.input[item], self.padding[item], self.target[item], self.all_seqs[item]
+        #return self.input[item], self.padding[item], self.target[item], self.all_seqs[item] # for trans
+        return self.input_2[item], self.target_2[item], self.all_seqs[item] # for conv
+
     def __repr__(self):
         return "{} @action {}".format(__class__.__name__,self.actions)
 
