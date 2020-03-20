@@ -32,7 +32,7 @@ class ST_conv(nn.Module):
         self.gc1 = GraphConvolution(input_feature, hidden_feature, node_n=node_n)
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)
         self.bn7 = nn.BatchNorm1d(node_n * input_feature)
-        self.bnc = nn.BatchNorm1d(node_n * 17)
+        self.bnc = nn.BatchNorm1d(node_n * 20)
 
         self.gcbs = []
         for i in range(num_stage):
