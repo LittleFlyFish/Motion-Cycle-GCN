@@ -49,13 +49,13 @@ class ST_conv(nn.Module):
         self.residual = residual
 
     def forward(self, x): # x=[16, 20, 66], x  turns to [16, f, 66], [16, 66, f], output [16, 66, f], [16, 66, 20]
-        y = self.conv1(x.transpose(1, 2)) # [16, 66, 17]
-        b, n, f = y.shape
-        y = self.bnc(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
-        y = self.do(y)
+        # y = self.conv1(x.transpose(1, 2)) # [16, 66, 17]
+        # b, n, f = y.shape
+        # y = self.bnc(y.view(b, -1)).view(b, n, f)
+        # y = self.act_f(y)
+        # y = self.do(y)
 
-        y = self.gc1(y)
+        y = self.gc1(x)
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
@@ -66,11 +66,11 @@ class ST_conv(nn.Module):
 
         if self.residual == True:
             y = self.gc7(y)
-            b, n, f = y.shape
-            y = self.bn7(y.view(b, -1)).view(b, n, f)
-            y = self.act_f(y)
-            y = self.do(y)
-            y = self.Iconv1(y)
+            # b, n, f = y.shape
+            # y = self.bn7(y.view(b, -1)).view(b, n, f)
+            # y = self.act_f(y)
+            # y = self.do(y)
+            # y = self.Iconv1(y)
             y1 = y.transpose(1, 2) + x
 
         #else:
