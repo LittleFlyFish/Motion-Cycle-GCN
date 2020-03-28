@@ -1,7 +1,7 @@
 import numpy as np
 model = dict(
     type='ST_conv',
-    input_feature=15,
+    input_feature=20,
     hidden_feature=256,
     p_dropout=0.5,
     num_stage=12,
