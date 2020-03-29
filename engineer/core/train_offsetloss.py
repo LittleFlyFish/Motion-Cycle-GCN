@@ -219,7 +219,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
                                                                                                                       2)
         _, loss1 = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
         _, loss2 = loss_funcs.mpjpe_error_p3d_offset(outputs, all_seq, dct_n, dim_used)
-        test_loss = loss1 + loss2
+        test_loss = loss1
         # plotter.plot('loss', 'test', 'LeakyRelu+No Batch ', i, test_loss.item())
 
         pred_3d = all_seq.clone()
@@ -272,7 +272,7 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
 
         _, loss1 = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
         _, loss2 = loss_funcs.mpjpe_error_p3d_offset(outputs, all_seq, dct_n, dim_used)
-        m_err = loss1 + loss2
+        m_err = loss1
         # plotter.plot('loss', 'val', 'LeakyRelu+No Batch ', i, m_err.item())
 
         # update the training loss
