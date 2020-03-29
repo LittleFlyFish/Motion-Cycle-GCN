@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="" />
+    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_G_offset.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,13 +149,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00174" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1582321017048</created>
-      <option name="number" value="00174" />
-      <option name="presentableId" value="LOCAL-00174" />
-      <option name="project" value="LOCAL" />
-      <updated>1582321017048</updated>
     </task>
     <task id="LOCAL-00175" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1582322175717</created>
@@ -491,7 +486,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585497562391</updated>
     </task>
-    <option name="localTasksCounter" value="223" />
+    <task id="LOCAL-00223" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1585497921271</created>
+      <option name="number" value="00223" />
+      <option name="presentableId" value="LOCAL-00223" />
+      <option name="project" value="LOCAL" />
+      <updated>1585497921271</updated>
+    </task>
+    <option name="localTasksCounter" value="224" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
