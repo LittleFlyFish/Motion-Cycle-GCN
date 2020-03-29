@@ -71,7 +71,7 @@ class ST_conv(nn.Module):
             # y = self.act_f(y)
             # y = self.do(y)
             # y = self.Iconv1(y)
-            y1 = y.transpose(1, 2) + x
+            #y1 = y.transpose(1, 2) + x
 
         #else:
             # y = self.gc7(y)
@@ -80,4 +80,4 @@ class ST_conv(nn.Module):
             # y = self.act_f(y)
             # y = self.do(y)
 
-        return y1
+        return y+x
