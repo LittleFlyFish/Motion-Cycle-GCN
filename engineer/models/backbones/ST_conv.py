@@ -55,6 +55,7 @@ class ST_conv(nn.Module):
         # y = self.act_f(y)
         # y = self.do(y)
 
+        print(x.shape)
         y = self.gc1(x)
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
