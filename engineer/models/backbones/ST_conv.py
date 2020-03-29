@@ -55,8 +55,7 @@ class ST_conv(nn.Module):
         # y = self.act_f(y)
         # y = self.do(y)
 
-        print(x.shape)
-        y = self.gc1(x)
+        y = self.gc1(x.transpose(1, 2))
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
@@ -72,7 +71,7 @@ class ST_conv(nn.Module):
             # y = self.act_f(y)
             # y = self.do(y)
             # y = self.Iconv1(y)
-            #y1 = y.transpose(1, 2) + x
+            y1 = y.transpose(1, 2) + x
 
         #else:
             # y = self.gc7(y)
@@ -81,4 +80,4 @@ class ST_conv(nn.Module):
             # y = self.act_f(y)
             # y = self.do(y)
 
-        return y+x
+        return y1
