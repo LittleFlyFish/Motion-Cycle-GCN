@@ -25,6 +25,15 @@ class VisdomLinePlotter(object):
         else:
             self.viz.line(X=np.array([x]), Y=np.array([y]), env=self.env, win=self.plots[var_name], name=split_name, update = 'append')
 
+def Offset(seq):
+    """Input is frame_n * 66, output is the offset of the (frame_n-1) * 66"""
+    fn, dim = pred.shape
+    seq_offset = torch.zeros([fn-1, dim], dtype=seq.dtype, device="cuda:0")
+    for i in range(0, fn-1):
+        seq_offset[i, :] = seq[i+1, :] - seq[i, :]
+    return seq_offset
+
+
 def dct2seq(dct_feature, frame_n):
     batch, dim, dct_n = dct_feature.shape
     _, idct_m = get_dct_matrix(frame_n)

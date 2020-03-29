@@ -153,7 +153,6 @@ def mpjpe_error_p3d_seq2seq(outputs, all_seq, dct_n, dim_used):
 
 def mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used):
     """
-
     :param outputs:n*66*dct_n
     :param all_seq:
     :param dct_n:
@@ -174,6 +173,33 @@ def mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used):
     targ_3d = all_seq[:, :, dim_used].contiguous().view(-1, dim_used_len).view(-1, 3)
 
     mean_3d_err = torch.mean(torch.norm(pred_3d - targ_3d, 2, 1))
+
+    return outputs_p3d, mean_3d_err
+
+def mpjpe_error_p3d_offset(outputs, all_seq, dct_n, dim_used):
+    """
+    :param outputs:n*66*dct_n
+    :param all_seq:
+    :param dct_n:
+    :param dim_used:
+    :return:
+    """
+    n, seq_len, dim_full_len = all_seq.data.shape
+    dim_used = np.array(dim_used)
+    dim_used_len = len(dim_used)
+
+    _, idct_m = data_utils.get_dct_matrix(seq_len)
+    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
+    outputs_t = outputs.contiguous().view(-1, dct_n).transpose(0, 1)
+    outputs_p3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
+                                                                                                seq_len).transpose(1,
+                                                                                                                   2)
+    pred= outputs_p3d.contiguous().view(-1, dim_used_len)
+    pred_offset = data_utils.Offset(pred).contiguous().view(-1, 3)
+    targ = all_seq[:, :, dim_used].contiguous().view(-1, dim_used_len)
+    targ_offset = data_utils.Offset(targ).contiguous().view(-1, 3)
+
+    mean_3d_err = torch.mean(torch.norm(pred_offset - targ_offset, 2, 1))
 
     return outputs_p3d, mean_3d_err
 
