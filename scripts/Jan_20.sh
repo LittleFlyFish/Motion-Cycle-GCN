@@ -47,3 +47,4 @@ python3 tools/train_recycle.py --config ./configs/Recycle_G252515P252515.py  # t
 ### Plan F, compare the lr = 0.001,  0.0005, 0.0001, 0.00005, 0.00001
 python3 tools/train_smooth.py --config ./configs/Motion_GCN_I10_O10_D15_G_smooth.py
 python3 tools/train_conv.py --config ./configs/Motion_GCN_I10_O10_D15_G_conv.py
+python3 tools/train_offsetloss.py --config ./configs/Motion_GCN_I10_O10_D15_G.py
