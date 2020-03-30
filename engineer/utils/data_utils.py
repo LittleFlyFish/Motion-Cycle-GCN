@@ -27,10 +27,11 @@ class VisdomLinePlotter(object):
 
 def Offset(seq):
     """Input is frame_n * 66, output is the offset of the (frame_n-1) * 66"""
-    fn, dim = seq.shape
-    seq_offset = torch.zeros([fn-1, dim], dtype=seq.dtype, device="cuda:0")
-    for i in range(0, fn-1):
-        seq_offset[i, :] = seq[i+1, :] - seq[i, :]
+    b, fn, dim = seq.shape
+    seq_offset = torch.zeros([b, fn-1, dim], dtype=seq.dtype, device="cuda:0")
+    for i in range(0, b):
+        for j in range(0, fn-1):
+            seq_offset[i, j, :] = seq[i, j+1, :] - seq[i, j, :]
     return seq_offset
 
 

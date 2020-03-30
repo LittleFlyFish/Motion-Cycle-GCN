@@ -194,10 +194,9 @@ def mpjpe_error_p3d_offset(outputs, all_seq, dct_n, dim_used):
     outputs_p3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                 seq_len).transpose(1,
                                                                                                                    2)
-    pred= outputs_p3d.contiguous().view(-1, dim_used_len)
-    pred_offset = data_utils.Offset(pred).contiguous().view(-1, 3)
-    targ = all_seq[:, :, dim_used].contiguous().view(-1, dim_used_len)
-    targ_offset = data_utils.Offset(targ).contiguous().view(-1, 3)
+    pred_offset = data_utils.Offset(outputs_p3d).contiguous().view(-1, dim_used_len).view(-1, 3)
+    targ = all_seq[:, :, dim_used]
+    targ_offset = data_utils.Offset(targ).contiguous().view(-1, dim_used_len).view(-1, 3)
 
     mean_3d_err = torch.mean(torch.norm(pred_offset - targ_offset, 2, 1))
 
