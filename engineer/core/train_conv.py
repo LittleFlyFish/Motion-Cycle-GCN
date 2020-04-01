@@ -160,8 +160,9 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs_seq = model(inputs)
-        outputs = data_utils.seq2dct(outputs_seq, 15)
+        # outputs_seq = model(inputs)
+        # outputs = data_utils.seq2dct(outputs_seq, 15)
+        outputs = model(inputs)
 
         # Mloss = nn.MSELoss()
         # loss2 = Mloss(outputs_seq, all_seq[:, :, dim_used])
