@@ -50,11 +50,12 @@ class ST_conv(nn.Module):
 
     def forward(self, x): # x=[16, 20, 66], x  turns to [16, f, 66], [16, 66, f], output [16, 66, f], [16, 66, 20]
         y_c = self.conv1(x.transpose(1, 2)) # [16, 66, 17]
+        print(y_c.shape)
         b, n, f = y_c.shape
         y_c = self.bnc(y_c.view(b, -1)).view(b, n, f)
         y_c = self.act_f(y_c)
         y_c = self.do(y_c)
-        print(y_c.shape)
+
 
         y = self.gc1(x.transpose(1, 2))
         y = y + y_c
