@@ -29,7 +29,7 @@ class ST_conv(nn.Module):
         super(ST_conv, self).__init__()
         self.num_stage = num_stage
 
-        self.gc1 = GraphConvolution(input_feature+16, hidden_feature, node_n=node_n)
+        self.gc1 = GraphConvolution(16, hidden_feature, node_n=node_n)
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)
         self.bn7 = nn.BatchNorm1d(node_n * input_feature)
         self.bnc = nn.BatchNorm1d(node_n * 16)
@@ -55,7 +55,8 @@ class ST_conv(nn.Module):
         y_c = self.act_f(y_c)
         y_c = self.do(y_c)
 
-        y = torch.cat((y_c,x.transpose(1, 2)), dim=2)
+        #y = torch.cat((y_c,x.transpose(1, 2)), dim=2)
+        y = y_c
 
         y = self.gc1(y)
         y = y + y_c
