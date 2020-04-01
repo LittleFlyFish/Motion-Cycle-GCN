@@ -41,21 +41,23 @@ class ST_conv(nn.Module):
         self.gcbs = nn.ModuleList(self.gcbs)
 
         self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
-        self.conv1 = nn.Conv1d(node_n, node_n, 1, stride=1)
-        self.Iconv1 = nn.ConvTranspose1d(node_n, node_n, 1, stride=1)
+        self.conv1 = nn.Conv1d(node_n, node_n, 5, stride=1)
+        self.Iconv1 = nn.ConvTranspose1d(node_n, node_n, 5, stride=1)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
         self.residual = residual
 
     def forward(self, x): # x=[16, 20, 66], x  turns to [16, f, 66], [16, 66, f], output [16, 66, f], [16, 66, 20]
-        y = self.conv1(x.transpose(1, 2)) # [16, 66, 17]
-        b, n, f = y.shape
-        y = self.bnc(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
-        y = self.do(y)
+        y_c = self.conv1(x.transpose(1, 2)) # [16, 66, 17]
+        b, n, f = y_c.shape
+        y_c = self.bnc(y_c.view(b, -1)).view(b, n, f)
+        y_c = self.act_f(y_c)
+        y_c = self.do(y_c)
+        print(y_c.shape)
 
         y = self.gc1(x.transpose(1, 2))
+        y = y + y_c
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
