@@ -29,7 +29,7 @@ class ST_conv(nn.Module):
         super(ST_conv, self).__init__()
         self.num_stage = num_stage
 
-        self.gc1 = GraphConvolution(16, hidden_feature, node_n=node_n)
+        self.gc1 = GraphConvolution(input_feature, hidden_feature, node_n=node_n)
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)
         self.bn7 = nn.BatchNorm1d(node_n * input_feature)
         self.bnc = nn.BatchNorm1d(node_n * 16)
@@ -48,7 +48,7 @@ class ST_conv(nn.Module):
         self.act_f = nn.Tanh()
         self.residual = residual
 
-    def forward(self, x): # x=[16, 20, 66], x  turns to [16, f, 66], [16, 66, f], output [16, 66, f], [16, 66, 20]
+    def forward(self, x): # x=[16, 15, 66], x  turns to [16, f, 66], [16, 66, f], output [16, 66, f], [16, 66, 20]
         y_c = self.conv1(x.transpose(1, 2)) # [16, 66, 16]
         b, n, f = y_c.shape
         y_c = self.bnc(y_c.view(b, -1)).view(b, n, f)
@@ -56,7 +56,7 @@ class ST_conv(nn.Module):
         y_c = self.do(y_c)
 
         # y = torch.cat((y_c, x.transpose(1, 2)), dim=2)
-        y = y_c
+        y = x.transpose(1, 2)
 
         y = self.gc1(y)
         b, n, f = y.shape
