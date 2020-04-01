@@ -213,8 +213,9 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs_seq = model(inputs)
-        outputs = data_utils.seq2dct(outputs_seq, 15)
+        # outputs_seq = model(inputs)
+        # outputs = data_utils.seq2dct(outputs_seq, 15)
+        outputs = model(inputs)
 
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used_len = len(dim_used)
@@ -272,8 +273,9 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
             inputs = Variable(inputs.cuda()).float()
             all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
 
-        outputs_seq = model(inputs)
-        outputs = data_utils.seq2dct(outputs_seq, 15)
+        # outputs_seq = model(inputs)
+        # outputs = data_utils.seq2dct(outputs_seq, 15)
+        outputs = model(inputs)
 
         n, _, _ = all_seq.data.shape
 
