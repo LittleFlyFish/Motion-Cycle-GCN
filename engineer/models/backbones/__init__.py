@@ -23,7 +23,7 @@ from .GCN_2task import GCN_2task
 from .Seq2Seq import Seq2Seq
 from .Transform import Transform
 from .ST_conv import ST_conv
-__all__=["Motion_GCN","SemGCN","Cycle_GCN", "P_GCN", "Cycle_P", "Recycle_GCN", "G_NoNorm",
+__all__=["Motion_GCN", "SemGCN", "Cycle_GCN", "P_GCN", "Cycle_P", "Recycle_GCN", "G_NoNorm",
          "G_Attention", "G_Attention_GCN", "Dense_GCN", "Fuse_GCN", "ST_GCN_Dense",
          "ST_A", "ST_B", "ST_C", "NewGCN", "GCNGRU", "ST_D", "ST_E", "Multi_GCN", "K_GCN",
          "GCN_2task", "Seq2Seq", "Transform", "ST_conv"]
