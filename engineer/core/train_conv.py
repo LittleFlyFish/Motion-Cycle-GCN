@@ -18,6 +18,7 @@ from engineer.utils import data_utils as data_utils
 
 
 # plotter = data_utils.VisdomLinePlotter(env_name='Train Plots')
+cuda1 = torch.device('cuda:1')
 
 def build_dataloader(dataset, num_worker, batch_size):
     return DataLoader(
@@ -157,8 +158,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda()).float()
-            all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
+            inputs = Variable(inputs.cuda(cuda1)).float()
+            all_seq = Variable(all_seq.cuda(cuda1, non_blocking=True)).float()
 
         # outputs_seq = model(inputs)
         # outputs = data_utils.seq2dct(outputs_seq, 15)
@@ -214,8 +215,8 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda()).float()
-            all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
+            inputs = Variable(inputs.cuda(cuda1)).float()
+            all_seq = Variable(all_seq.cuda(cuda1, non_blocking=True)).float()
 
         # outputs_seq = model(inputs)
         # outputs = data_utils.seq2dct(outputs_seq, 15)
@@ -229,7 +230,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         dim_used_len = len(dim_used)
 
         _, idct_m = data_utils.get_dct_matrix(seq_len)
-        idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
+        idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(cuda1)
         outputs_t = outputs.contiguous().view(-1, dct_n).transpose(0, 1)
         outputs_3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                    seq_len).transpose(1,
@@ -278,8 +279,8 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda()).float()
-            all_seq = Variable(all_seq.cuda(non_blocking=True)).float()
+            inputs = Variable(inputs.cuda(cuda1)).float()
+            all_seq = Variable(all_seq.cuda(cuda1, non_blocking=True)).float()
 
         # outputs_seq = model(inputs)
         # outputs = data_utils.seq2dct(outputs_seq, 15)
