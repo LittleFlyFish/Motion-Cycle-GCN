@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_conv.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_conv.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_conv.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_conv.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/Calculate.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/Calculate.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -149,13 +151,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00197" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1582496078253</created>
-      <option name="number" value="00197" />
-      <option name="presentableId" value="LOCAL-00197" />
-      <option name="project" value="LOCAL" />
-      <updated>1582496078253</updated>
     </task>
     <task id="LOCAL-00198" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1582497128732</created>
@@ -493,7 +488,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585789074645</updated>
     </task>
-    <option name="localTasksCounter" value="246" />
+    <task id="LOCAL-00246" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1585833722570</created>
+      <option name="number" value="00246" />
+      <option name="presentableId" value="LOCAL-00246" />
+      <option name="project" value="LOCAL" />
+      <updated>1585833722571</updated>
+    </task>
+    <option name="localTasksCounter" value="247" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

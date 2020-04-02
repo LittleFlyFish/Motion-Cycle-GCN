@@ -162,7 +162,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         # outputs_seq = model(inputs)
         # outputs = data_utils.seq2dct(outputs_seq, 15)
-        pad_idx = np.repeat([10- 1], 10)
+        pad_idx = np.repeat([10 - 1], 10)
         i_idx = np.append(np.arange(0, 10), pad_idx)
         seq = all_seq[:, :, dim_used]
         seq = seq[:, i_idx, :]
