@@ -55,7 +55,7 @@ class ST_conv(nn.Module):
         y_c = self.act_f(y_c)
         y_c = self.do(y_c)
 
-        # y = torch.cat((y_c, x.transpose(1, 2)), dim=2)
+        # y = torch.cat((y_c, x), dim=2)
         y = x
 
         y = self.gc1(y)

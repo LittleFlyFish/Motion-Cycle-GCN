@@ -283,7 +283,8 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
         # outputs = data_utils.seq2dct(outputs_seq, 15)
         pad_idx = np.repeat([10 - 1], 10)
         i_idx = np.append(np.arange(0, 10), pad_idx)
-        seq = all_seq[:, pad_idx, dim_used]
+        seq = all_seq[:, :, dim_used]
+        seq = seq[:, i_idx, :]
         outputs = model(inputs, seq)
 
         n, _, _ = all_seq.data.shape
