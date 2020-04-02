@@ -48,15 +48,15 @@ class ST_conv(nn.Module):
         self.act_f = nn.Tanh()
         self.residual = residual
 
-    def forward(self, x): # x=[16, 15, 66], x  turns to [16, f, 66], [16, 66, f], output [16, 66, f], [16, 66, 20]
-        y_c = self.conv1(x.transpose(1, 2)) # [16, 66, 16]
+    def forward(self, x, seq): # x = [16, 66, 15], seq = [16, 20, 66], output = [16, 66, 15]
+        y_c = self.conv1(seq.transpose(1, 2)) # [16, 66, 16]
         b, n, f = y_c.shape
         y_c = self.bnc(y_c.view(b, -1)).view(b, n, f)
         y_c = self.act_f(y_c)
         y_c = self.do(y_c)
 
         # y = torch.cat((y_c, x.transpose(1, 2)), dim=2)
-        y = x.transpose(1, 2)
+        y = x
 
         y = self.gc1(y)
         b, n, f = y.shape
@@ -74,7 +74,7 @@ class ST_conv(nn.Module):
             # y = self.act_f(y)
             # y = self.do(y)
             # y = self.Iconv1(y)
-            y1 = y.transpose(1, 2) + x
+            y1 = y + x
 
         #else:
             # y = self.gc7(y)
