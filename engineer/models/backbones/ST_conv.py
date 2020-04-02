@@ -65,7 +65,7 @@ class ST_conv(nn.Module):
         y_c2 = self.act_f(y_c2)
         y_c2 = self.do(y_c2)
 
-        y_c3 = self.conv2(seq.transpose(1, 2)) # [16, 66, 11]
+        y_c3 = self.conv3(seq.transpose(1, 2)) # [16, 66, 11]
         b, n, f = y_c3.shape
         y_c3 = self.bnc3(y_c3.view(b, -1)).view(b, n, f)
         y_c3 = self.act_f(y_c3)
