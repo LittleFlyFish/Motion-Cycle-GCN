@@ -18,7 +18,6 @@ from engineer.utils import data_utils as data_utils
 
 
 # plotter = data_utils.VisdomLinePlotter(env_name='Train Plots')
-cuda1 = torch.device('cuda:1')
 
 def build_dataloader(dataset, num_worker, batch_size):
     return DataLoader(
@@ -38,9 +37,10 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
                                              cfg.dataloader.batch_size.test)
     is_cuda = torch.cuda.is_available()
+    cuda_num = cfg.cuda
     if is_cuda:
         model.cuda()
-        model.to('cuda:1')
+        model.to(cuda_num)
     start_epoch = cfg.resume.start
     lr_now = cfg.optim_para.optimizer.lr
 
@@ -78,14 +78,14 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         head = np.array(['epoch'])
         # training on per epoch
         lr_now, t_l, train_num, train_loss_plot = train(train_loader, model, optimizer, lr_now=lr_now,
-                                                        max_norm=cfg.max_norm, is_cuda=is_cuda,
+                                                        max_norm=cfg.max_norm, is_cuda=is_cuda, cuda_num=cuda_num,
                                                         dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used,
                                                         num=train_num, loss_list=train_loss_plot)
         ret_log = np.append(ret_log, [lr_now, t_l])
         head = np.append(head, ['lr', 't_l'])
 
         # val evaluation
-        v_3d = val(val_loader, model, is_cuda=is_cuda, dim_used=train_dataset.dim_used, dct_n=cfg.data.val.dct_used)
+        v_3d = val(val_loader, model, is_cuda=is_cuda, cuda_num=cuda_num, dim_used=train_dataset.dim_used, dct_n=cfg.data.val.dct_used)
         ret_log = np.append(ret_log, [v_3d])
         head = np.append(head, ['v_3d'])
 
@@ -94,7 +94,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_3d_head = np.array([])
         for act in acts:
             test_l, test_3d = test(test_loaders[act], model, input_n=cfg.data.test.input_n,
-                                   output_n=cfg.data.test.output_n, is_cuda=is_cuda,
+                                   output_n=cfg.data.test.output_n, is_cuda=is_cuda, cuda_num=cuda_num,
                                    dim_used=train_dataset.dim_used, dct_n=cfg.data.test.dct_used)
             # ret_log = np.append(ret_log, test_l)
             ret_log = np.append(ret_log, test_3d)
@@ -143,7 +143,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         df.to_csv(f, header=False, index=False)
 
 
-def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15, num=1,
+def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, cuda_num='cuda:0', dim_used=[], dct_n=15, num=1,
           loss_list=[1]):
     t_l = utils.AccumLoss()
 
@@ -158,8 +158,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda(cuda1)).float()
-            all_seq = Variable(all_seq.cuda(cuda1, non_blocking=True)).float()
+            inputs = Variable(inputs.cuda(cuda_num)).float()
+            all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
         # outputs_seq = model(inputs)
         # outputs = data_utils.seq2dct(outputs_seq, 15)
@@ -175,7 +175,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # print(loss2, loss3)
 
         # calculate loss and backward
-        _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
         loss_list.append(loss.item())
@@ -199,7 +199,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
 #
 #
-def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15):
+def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, cuda_num='cuda:0',dim_used=[], dct_n=15):
     N = 0
     t_l = 0
     if output_n == 25:
@@ -215,8 +215,8 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda(cuda1)).float()
-            all_seq = Variable(all_seq.cuda(cuda1, non_blocking=True)).float()
+            inputs = Variable(inputs.cuda(cuda_num)).float()
+            all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
         # outputs_seq = model(inputs)
         # outputs = data_utils.seq2dct(outputs_seq, 15)
@@ -230,12 +230,12 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         dim_used_len = len(dim_used)
 
         _, idct_m = data_utils.get_dct_matrix(seq_len)
-        idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(cuda1)
+        idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(cuda_num)
         outputs_t = outputs.contiguous().view(-1, dct_n).transpose(0, 1)
         outputs_3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                    seq_len).transpose(1,
                                                                                                                       2)
-        _, test_loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        _, test_loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         # plotter.plot('loss', 'test', 'LeakyRelu+No Batch ', i, test_loss.item())
 
         pred_3d = all_seq.clone()
@@ -269,7 +269,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
 
 #
 #
-def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
+def val(train_loader, model, is_cuda=False, cuda_num='cuda:0', dim_used=[], dct_n=15):
     t_3d = utils.AccumLoss()
 
     model.eval()
@@ -279,8 +279,8 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda(cuda1)).float()
-            all_seq = Variable(all_seq.cuda(cuda1, non_blocking=True)).float()
+            inputs = Variable(inputs.cuda(cuda_num)).float()
+            all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
         # outputs_seq = model(inputs)
         # outputs = data_utils.seq2dct(outputs_seq, 15)
@@ -292,7 +292,7 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
 
         n, _, _ = all_seq.data.shape
 
-        _, m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
+        _, m_err = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         # plotter.plot('loss', 'val', 'LeakyRelu+No Batch ', i, m_err.item())
 
         # update the training loss
