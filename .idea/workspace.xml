@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_G_convRELU.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/Dense_GCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/Dense_GCN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_conv.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_conv.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/March_30.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/March_30.sh" afterDir="false" />
-    </list>
+    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +43,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Calculate">
+  <component name="RunManager" selected="Python.Dense_GCN_I10_O10_D15_G">
     <configuration name="Calculate" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Motion-Cycle-GCN" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -62,6 +57,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tools/Calculate.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Dense_GCN_I10_O10_D15_G" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Motion-Cycle-GCN" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\buliy\AppData\Local\Programs\Python\Python37\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/configs" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/configs/Dense_GCN_I10_O10_D15_G.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -135,6 +151,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Dense_GCN_I10_O10_D15_G" />
         <item itemvalue="Python.Calculate" />
         <item itemvalue="Python.train_seq2seq" />
         <item itemvalue="Python.test" />
@@ -152,13 +169,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00202" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1582571064834</created>
-      <option name="number" value="00202" />
-      <option name="presentableId" value="LOCAL-00202" />
-      <option name="project" value="LOCAL" />
-      <updated>1582571064835</updated>
     </task>
     <task id="LOCAL-00203" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1582571964729</created>
@@ -496,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585860444585</updated>
     </task>
-    <option name="localTasksCounter" value="251" />
+    <task id="LOCAL-00251" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1585863878957</created>
+      <option name="number" value="00251" />
+      <option name="presentableId" value="LOCAL-00251" />
+      <option name="project" value="LOCAL" />
+      <updated>1585863878957</updated>
+    </task>
+    <option name="localTasksCounter" value="252" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
