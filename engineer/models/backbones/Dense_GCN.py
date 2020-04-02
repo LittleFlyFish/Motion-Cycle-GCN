@@ -88,7 +88,6 @@ class Dense_GCN(nn.Module):
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.LeakyReLU()
-        self.residual = residual
 
     def forward(self, x, seq):
         y_c1 = self.conv1(seq.transpose(1, 2)) # [16, 66, 16]
