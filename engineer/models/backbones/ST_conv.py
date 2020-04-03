@@ -29,7 +29,8 @@ class ST_conv(nn.Module):
         super(ST_conv, self).__init__()
         self.num_stage = num_stage
 
-        self.gc1 = GraphConvolution(input_feature + 16 + 14 + 11, hidden_feature, node_n=node_n)
+        # self.gc1 = GraphConvolution(input_feature + 16 + 14 + 11, hidden_feature, node_n=node_n)
+        self.gc1 = GraphConvolution(input_feature + 16, hidden_feature, node_n=node_n)
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)
         self.bn7 = nn.BatchNorm1d(node_n * input_feature)
         self.bnc1 = nn.BatchNorm1d(node_n * 16)
