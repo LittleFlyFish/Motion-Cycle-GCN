@@ -25,17 +25,19 @@ def build_dataloader(dataset,num_worker,batch_size):
         num_workers=num_worker,
         pin_memory=True)
 
-def train_model(model,datasets,cfg,distributed,optimizer):
-    train_dataset,val_dataset,test_datasets = datasets
-    train_loader = build_dataloader(train_dataset,cfg.dataloader.num_worker,cfg.dataloader.batch_size.train)
-    val_loader = build_dataloader(val_dataset,cfg.dataloader.num_worker,cfg.dataloader.batch_size.test)
+def train_model(model, datasets, cfg, distributed, optimizer):
+    train_dataset, val_dataset, test_datasets = datasets
+    train_loader = build_dataloader(train_dataset, cfg.dataloader.num_worker, cfg.dataloader.batch_size.train)
+    val_loader = build_dataloader(val_dataset, cfg.dataloader.num_worker, cfg.dataloader.batch_size.test)
     test_loaders = dict()
     for key in test_datasets.keys():
-        test_loaders[key] = build_dataloader(test_datasets[key],cfg.dataloader.num_worker,cfg.dataloader.batch_size.test)
+        test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
+                                             cfg.dataloader.batch_size.test)
     is_cuda = torch.cuda.is_available()
+    cuda_num = cfg.cuda_num
     if is_cuda:
         model.cuda()
-        model.to('cuda:0')
+        model.to(cuda_num)
     start_epoch = cfg.resume.start
     lr_now = cfg.optim_para.optimizer.lr
 
@@ -47,13 +49,14 @@ def train_model(model,datasets,cfg,distributed,optimizer):
 
     model.train()
     acts = test_loaders.keys()
-    test_best =dict()
+    test_best = dict()
     for act in acts:
         test_best[act] = float("inf")
 
-    #save_pre_fix
+    # save_pre_fix
     script_name = os.path.basename(__file__).split('.')[0]
-    script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n, cfg.data.train.dct_used)
+    script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n,
+                                                                       cfg.data.train.dct_used) + cfg.flag
     err_best = float("inf")
     is_best_ret_log = None
     train_num = 0
@@ -66,42 +69,48 @@ def train_model(model,datasets,cfg,distributed,optimizer):
         if (epoch + 1) % cfg.optim_para.lr_decay == 0:
             lr_now = utils.lr_decay(optimizer, lr_now, cfg.optim_para.lr_gamma)
 
-
         logger.info('==========================')
         logger.info('>>> epoch: {} | lr: {:.5f}'.format(epoch + 1, lr_now))
         ret_log = np.array([epoch + 1])
         head = np.array(['epoch'])
         # training on per epoch
-        lr_now, t_l, train_num, train_loss_plot = train(train_loader, model, optimizer, lr_now=lr_now, max_norm=cfg.max_norm, is_cuda=is_cuda,
-                            dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used, num=train_num, loss_list=train_loss_plot)
+        lr_now, t_l, train_num, train_loss_plot = train(train_loader, model, optimizer, lr_now=lr_now,
+                                                        max_norm=cfg.max_norm, is_cuda=is_cuda, cuda_num=cuda_num,
+                                                        dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used,
+                                                        num=train_num, loss_list=train_loss_plot)
         ret_log = np.append(ret_log, [lr_now, t_l])
         head = np.append(head, ['lr', 't_l'])
 
-        #val evaluation
-        v_3d = val(val_loader, model, is_cuda=is_cuda, dim_used=train_dataset.dim_used, dct_n=cfg.data.val.dct_used)
+        # val evaluation
+        v_3d = val(val_loader, model, is_cuda=is_cuda, cuda_num=cuda_num, dim_used=train_dataset.dim_used, dct_n=cfg.data.val.dct_used)
         ret_log = np.append(ret_log, [v_3d])
         head = np.append(head, ['v_3d'])
 
-
-        #test_results
+        # test_results
         test_3d_temp = np.array([])
         test_3d_head = np.array([])
+        test_loss = 0
         for act in acts:
-            test_l, test_3d = test(test_loaders[act], model, input_n=cfg.data.test.input_n, output_n=cfg.data.test.output_n, is_cuda=is_cuda,
+            test_l, test_3d = test(test_loaders[act], model, input_n=cfg.data.test.input_n,
+                                   output_n=cfg.data.test.output_n, is_cuda=is_cuda, cuda_num=cuda_num,
                                    dim_used=train_dataset.dim_used, dct_n=cfg.data.test.dct_used)
+            test_loss = test_loss + test_l
             # ret_log = np.append(ret_log, test_l)
             ret_log = np.append(ret_log, test_3d)
-            test_best[act] = min(test_best[act],test_3d[0])
+            test_best[act] = min(test_best[act], test_3d[0])
             head = np.append(head,
                              [act + '3d80', act + '3d160', act + '3d320', act + '3d400'])
             if cfg.data.test.output_n > 10:
                 head = np.append(head, [act + '3d560', act + '3d1000'])
+
+        ret_log = np.append(ret_log, [test_loss.data])
+        head = np.append(head, ['test_loss'])
+
         ret_log = np.append(ret_log, test_3d_temp)
         head = np.append(head, test_3d_head)
 
-
         # update log file and save checkpoint
-        #output_result
+        # output_result
         df = pd.DataFrame(np.expand_dims(ret_log, axis=0))
         if epoch == start_epoch:
             df.to_csv(cfg.checkpoints + '/' + script_name + '.csv', header=head, index=False)
@@ -123,21 +132,22 @@ def train_model(model,datasets,cfg,distributed,optimizer):
                         is_best=is_best,
                         file_name=file_name)
         for key in test_best.keys():
-            logger.info("{}:{:.4f}".format(key,test_best[key]))
+            logger.info("{}:{:.4f}".format(key, test_best[key]))
 
         if is_best:
             is_best_ret_log = ret_log.copy()
-    #best ret_log information to save
+    # best ret_log information to save
     df = pd.DataFrame(np.expand_dims(is_best_ret_log, axis=0))
     with open(cfg.checkpoints + '/' + script_name + '.csv', 'a') as f:
         df.to_csv(f, header=False, index=False)
-        
+
     df2 = pd.DataFrame(data={"train_loss": train_loss_plot})
     with open(cfg.checkpoints + '/' + script_name + '_loss.csv', 'a') as f:
         df.to_csv(f, header=False, index=False)
-        
-    
-def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=15, num=1, loss_list=[1]):
+
+
+def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, cuda_num='cuda:0', dim_used=[], dct_n=15, num=1,
+          loss_list=[1]):
     t_l = utils.AccumLoss()
 
     model.train()
@@ -151,16 +161,32 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda()).float()
-            all_seq = Variable(all_seq.cuda(non_blocking = True)).float()
+            inputs = Variable(inputs.cuda(cuda_num)).float()
+            all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
+        # outputs_seq = model(inputs)
+        # outputs = data_utils.seq2dct(outputs_seq, 15)
         outputs = model(inputs)
-        # calculate loss and backward
-        _,loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used)
-        num += 1
-        #plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
-        loss_list.append(loss.item())
 
+        # Mloss = nn.MSELoss()
+        # loss2 = Mloss(outputs_seq, all_seq[:, :, dim_used])
+        # loss3 = Mloss(inputs, all_seq[:, :, dim_used])
+        # print(loss2, loss3)
+
+        # calculate loss and backward
+        with torch.enable_grad():
+            reg = 1e-6
+            l2_loss = torch.zeros(1).to(cuda_num)
+            for name, param in model.named_parameters():
+                if 'bias' not in name:
+                    l2_loss = l2_loss + (0.5 * reg * torch.sum(torch.pow(param, 2)))
+        # print(l2_loss)
+        _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
+        loss = loss + l2_loss
+        num += 1
+        # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
+        loss_list.append(loss.item())
+        # for test
 
         optimizer.zero_grad()
         loss.backward()
@@ -171,13 +197,13 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # update the training loss
         t_l.update(loss.item() * batch_size, batch_size)
 
-        bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i+1, len(train_loader), time.time() - bt,
+        bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i + 1, len(train_loader), time.time() - bt,
                                                                          time.time() - st)
         bar.next()
     bar.finish()
     return lr_now, t_l.avg, num, loss_list
 
-#
+
 #
 def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15):
     N = 0
