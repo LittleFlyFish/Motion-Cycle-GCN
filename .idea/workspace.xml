@@ -4,7 +4,7 @@
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_G_conv.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_G_conv.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_conv.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_conv.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_conv.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_conv.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -173,13 +173,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00222" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1585497562391</created>
-      <option name="number" value="00222" />
-      <option name="presentableId" value="LOCAL-00222" />
-      <option name="project" value="LOCAL" />
-      <updated>1585497562391</updated>
     </task>
     <task id="LOCAL-00223" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1585497921271</created>
@@ -517,7 +510,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585932092348</updated>
     </task>
-    <option name="localTasksCounter" value="271" />
+    <task id="LOCAL-00271" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1585935019758</created>
+      <option name="number" value="00271" />
+      <option name="presentableId" value="LOCAL-00271" />
+      <option name="project" value="LOCAL" />
+      <updated>1585935019758</updated>
+    </task>
+    <option name="localTasksCounter" value="272" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
