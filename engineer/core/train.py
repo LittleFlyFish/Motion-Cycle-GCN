@@ -235,7 +235,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, cuda_num='
         outputs_3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                    seq_len).transpose(1,
                                                                                                                       2)
-        _, test_loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
+        _, t_l = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         #plotter.plot('loss', 'test', 'LeakyRelu+No Batch ', i, test_loss.item())
         
         pred_3d = all_seq.clone()
