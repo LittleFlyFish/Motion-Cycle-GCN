@@ -49,7 +49,7 @@ class ST_conv(nn.Module):
         self.Iconv1 = nn.ConvTranspose1d(node_n, node_n, 5, stride=1)
 
         self.do = nn.Dropout(p_dropout)
-        self.act_f = nn.LeakyReLU()
+        self.act_f = nn.Tanh()
         self.residual = residual
 
     def forward(self, x, seq): # x = [16, 66, 15], seq = [16, 20, 66], output = [16, 66, 15]
