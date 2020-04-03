@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_conv.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_conv.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/Calculate.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/Calculate.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +48,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Dense_GCN_I10_O10_D15_G">
+  <component name="RunManager" selected="Python.Calculate">
     <configuration name="Calculate" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Motion-Cycle-GCN" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -153,8 +156,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Dense_GCN_I10_O10_D15_G" />
         <item itemvalue="Python.Calculate" />
+        <item itemvalue="Python.Dense_GCN_I10_O10_D15_G" />
         <item itemvalue="Python.train_seq2seq" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.G_Attention_GCN" />
@@ -171,13 +174,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00209" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1582638715553</created>
-      <option name="number" value="00209" />
-      <option name="presentableId" value="LOCAL-00209" />
-      <option name="project" value="LOCAL" />
-      <updated>1582638715553</updated>
     </task>
     <task id="LOCAL-00210" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1582641011544</created>
@@ -515,7 +511,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585870681741</updated>
     </task>
-    <option name="localTasksCounter" value="258" />
+    <task id="LOCAL-00258" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1585871110895</created>
+      <option name="number" value="00258" />
+      <option name="presentableId" value="LOCAL-00258" />
+      <option name="project" value="LOCAL" />
+      <updated>1585871110895</updated>
+    </task>
+    <option name="localTasksCounter" value="259" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

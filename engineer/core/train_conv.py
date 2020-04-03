@@ -37,7 +37,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
                                              cfg.dataloader.batch_size.test)
     is_cuda = torch.cuda.is_available()
-    cuda_num = cfg.cuda
+    cuda_num = cfg.cuda_num
     if is_cuda:
         model.cuda()
         model.to(cuda_num)
