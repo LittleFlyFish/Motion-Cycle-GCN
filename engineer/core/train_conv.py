@@ -59,7 +59,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     # save_pre_fix
     script_name = os.path.basename(__file__).split('.')[0]
     script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n,
-                                                                       cfg.data.train.dct_used, cfg.flag)
+                                                                       cfg.data.train.dct_used) + cfg.flag
     err_best = float("inf")
     is_best_ret_log = None
     train_num = 0
@@ -92,10 +92,12 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         # test_results
         test_3d_temp = np.array([])
         test_3d_head = np.array([])
+        test_loss = 0
         for act in acts:
             test_l, test_3d = test(test_loaders[act], model, input_n=cfg.data.test.input_n,
                                    output_n=cfg.data.test.output_n, is_cuda=is_cuda, cuda_num=cuda_num,
                                    dim_used=train_dataset.dim_used, dct_n=cfg.data.test.dct_used)
+            test_loss = test_loss + test_l
             # ret_log = np.append(ret_log, test_l)
             ret_log = np.append(ret_log, test_3d)
             test_best[act] = min(test_best[act], test_3d[0])
@@ -103,8 +105,13 @@ def train_model(model, datasets, cfg, distributed, optimizer):
                              [act + '3d80', act + '3d160', act + '3d320', act + '3d400'])
             if cfg.data.test.output_n > 10:
                 head = np.append(head, [act + '3d560', act + '3d1000'])
+        ret_log = np.append(ret_log, [test_loss])
+        head = np.append(head, ['test_loss'])
+
         ret_log = np.append(ret_log, test_3d_temp)
         head = np.append(head, test_3d_head)
+
+
 
         # update log file and save checkpoint
         # output_result
