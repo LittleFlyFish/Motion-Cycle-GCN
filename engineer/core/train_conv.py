@@ -188,7 +188,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             for name, param in model.named_parameters():
                 if 'bias' not in name:
                     l2_loss = l2_loss + (0.5 * reg * torch.sum(torch.pow(param, 2)))
-        #print(l2_loss)
+        # print(l2_loss)
         _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         loss = loss + l2_loss
         num += 1
