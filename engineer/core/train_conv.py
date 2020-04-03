@@ -58,7 +58,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
 
     # save_pre_fix
     script_name = os.path.basename(__file__).split('.')[0]
-    script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n,
+    script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n,
                                                                        cfg.data.train.dct_used) + cfg.flag
     err_best = float("inf")
     is_best_ret_log = None

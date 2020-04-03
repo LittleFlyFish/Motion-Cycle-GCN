@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_conv.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_conv.py" afterDir="false" />
-    </list>
+    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,20 +169,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00213" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1585347861347</created>
-      <option name="number" value="00213" />
-      <option name="presentableId" value="LOCAL-00213" />
-      <option name="project" value="LOCAL" />
-      <updated>1585347861347</updated>
-    </task>
-    <task id="LOCAL-00214" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1585349729624</created>
-      <option name="number" value="00214" />
-      <option name="presentableId" value="LOCAL-00214" />
-      <option name="project" value="LOCAL" />
-      <updated>1585349729624</updated>
     </task>
     <task id="LOCAL-00215" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1585350499922</created>
@@ -516,7 +499,21 @@
       <option name="project" value="LOCAL" />
       <updated>1585929069041</updated>
     </task>
-    <option name="localTasksCounter" value="262" />
+    <task id="LOCAL-00262" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1585929976566</created>
+      <option name="number" value="00262" />
+      <option name="presentableId" value="LOCAL-00262" />
+      <option name="project" value="LOCAL" />
+      <updated>1585929976566</updated>
+    </task>
+    <task id="LOCAL-00263" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1585930147213</created>
+      <option name="number" value="00263" />
+      <option name="presentableId" value="LOCAL-00263" />
+      <option name="project" value="LOCAL" />
+      <updated>1585930147213</updated>
+    </task>
+    <option name="localTasksCounter" value="264" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
