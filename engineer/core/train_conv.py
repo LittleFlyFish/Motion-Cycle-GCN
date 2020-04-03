@@ -213,7 +213,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
 #
 #
-def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, cuda_num='cuda:0',dim_used=[], dct_n=15):
+def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, cuda_num='cuda:0', dim_used=[], dct_n=15):
     N = 0
     t_l = 0
     if output_n == 25:
