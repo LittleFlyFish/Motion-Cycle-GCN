@@ -105,13 +105,12 @@ def train_model(model, datasets, cfg, distributed, optimizer):
                              [act + '3d80', act + '3d160', act + '3d320', act + '3d400'])
             if cfg.data.test.output_n > 10:
                 head = np.append(head, [act + '3d560', act + '3d1000'])
+
         ret_log = np.append(ret_log, [test_loss])
         head = np.append(head, ['test_loss'])
 
         ret_log = np.append(ret_log, test_3d_temp)
         head = np.append(head, test_3d_head)
-
-
 
         # update log file and save checkpoint
         # output_result
@@ -250,7 +249,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, cuda_num='
         outputs_3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                    seq_len).transpose(1,
                                                                                                                       2)
-        _, test_loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
+        _, t_l = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         # plotter.plot('loss', 'test', 'LeakyRelu+No Batch ', i, test_loss.item())
 
         pred_3d = all_seq.clone()
