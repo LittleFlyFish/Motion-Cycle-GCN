@@ -58,8 +58,8 @@ def train_model(model, datasets, cfg, distributed, optimizer):
 
     # save_pre_fix
     script_name = os.path.basename(__file__).split('.')[0]
-    script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n,
-                                                                       cfg.data.train.dct_used)
+    script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n,
+                                                                       cfg.data.train.dct_used, cfg.flag)
     err_best = float("inf")
     is_best_ret_log = None
     train_num = 0
@@ -175,7 +175,15 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # print(loss2, loss3)
 
         # calculate loss and backward
+        with torch.enable_grad():
+            reg = 1e-6
+            l2_loss = torch.zeros(1)
+            for name, param in model.named_parameters():
+                if 'bias' not in name:
+                    l2_loss = l2_loss + (0.5 * reg * torch.sum(torch.pow(W, 2)))
+        print(l2_loss)
         _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
+        loss = loss + l2_loss
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
         loss_list.append(loss.item())

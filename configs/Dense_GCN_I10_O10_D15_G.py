@@ -13,6 +13,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num ='cuda:1'
+flag = 'Dense+conv3+RELU'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),

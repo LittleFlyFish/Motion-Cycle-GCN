@@ -72,6 +72,7 @@ class ST_conv(nn.Module):
         y_c3 = self.do(y_c3)
 
         y = torch.cat((y_c1, y_c2, y_c3, x), dim=2)
+        y = self.do(y)
         # y = y_c
 
         y = self.gc1(y)
