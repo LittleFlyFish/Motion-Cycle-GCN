@@ -103,7 +103,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
             if cfg.data.test.output_n > 10:
                 head = np.append(head, [act + '3d560', act + '3d1000'])
 
-        ret_log = np.append(ret_log, [test_loss])
+        ret_log = np.append(ret_log, [test_loss.item()])
         head = np.append(head, ['test_loss'])
 
         ret_log = np.append(ret_log, test_3d_temp)
