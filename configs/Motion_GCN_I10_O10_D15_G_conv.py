@@ -14,6 +14,7 @@ train_pipeline = [
 ]
 cuda_num ='cuda:0'
 flag = '3Conv+L2'
+meta ="./checkpoints/_tempconfig/ckpt_train_conv_3D_in10_out10_dct_n_153Conv+L2_best.pth.tar",
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
