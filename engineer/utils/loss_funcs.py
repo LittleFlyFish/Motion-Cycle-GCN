@@ -164,7 +164,7 @@ def mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda="cuda:0"):
     dim_used_len = len(dim_used)
 
     _, idct_m = data_utils.get_dct_matrix(seq_len)
-    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(torch.device(cuda_num))
+    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(torch.device(cuda))
     idct_m = idct_m.to(cuda)
     outputs_t = outputs.contiguous().view(-1, dct_n).transpose(0, 1)
     outputs_p3d = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
