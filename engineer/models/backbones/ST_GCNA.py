@@ -62,7 +62,7 @@ class ST_GCNA(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
-        y2 = self.ga1(y.view(b, 22, -1), torch.squeeze(self.A, 0))
+        y2 = self.ga1(x.view(b, 22, -1), torch.squeeze(self.A, 0))
         b, n, f = y2.shape
         y2 = self.ba1(y2.view(b, -1)).view(b, 3*n, -1)
         y2 = self.act_f(y2)
