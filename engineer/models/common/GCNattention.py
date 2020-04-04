@@ -116,6 +116,10 @@ class SpGraphAttentionLayer(nn.Module):
              N = input.size()[0]  # 2708
              edge = adj.nonzero().t()  # non zero edge
 
+             print(input.shape)
+             print(N)
+             print(edge.shape)
+
              h = torch.mm(input, self.W)  # [2708, 8]
              # h: N x out
              assert not torch.isnan(h).any()
@@ -138,6 +142,9 @@ class SpGraphAttentionLayer(nn.Module):
              assert not torch.isnan(h_prime).any()
              # h_prime: N x out
 
+             print(h_prime.shape)
+             print(e_rowsum.shape)
+             print(e_rowsum)
              h_prime = h_prime.div(e_rowsum)
              # h_prime: N x out
              assert not torch.isnan(h_prime).any()
