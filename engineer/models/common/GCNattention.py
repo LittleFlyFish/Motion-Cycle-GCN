@@ -111,6 +111,7 @@ class SpGraphAttentionLayer(nn.Module):
          t = 0
          ResultList = [None]*b
          for input in inputList:
+             input.squeeze(0)
              N = input.size()[0]  # 2708
              edge = adj.nonzero().t()  # non zero edge
 
@@ -146,7 +147,7 @@ class SpGraphAttentionLayer(nn.Module):
              else:
                  # if this layer is last layer,
                  results = h_prime
-             ResultList[t] = results
+             ResultList[t] = results.unsqueeze(0)
              t = t + 1
          results = torch.cat(ResultList, dim=0)
          return results
