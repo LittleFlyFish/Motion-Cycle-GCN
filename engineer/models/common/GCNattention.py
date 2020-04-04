@@ -9,6 +9,7 @@ from torch.nn.parameter import Parameter
 import math
 from engineer.models.registry import BACKBONES
 import numpy as np
+import torch.nn.functional as F
 
 class GraphAttentionLayer(nn.Module):
     """
