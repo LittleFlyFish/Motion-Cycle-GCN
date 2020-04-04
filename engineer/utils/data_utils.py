@@ -890,7 +890,7 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len):
 
                 num_frames1 = len(even_list)
                 the_sequence1 = np.array(action_sequence[even_list, :])
-                the_seq1 = Variable(torch.from_numpy(the_sequence1)).float().cuda()
+                the_seq1 = Variable(torch.from_numpy(the_sequence1)).float().cuda('cuda:2')
                 the_seq1[:, 0:6] = 0
                 p3d1 = expmap2xyz_torch(the_seq1)
                 the_sequence1 = p3d1.view(num_frames1, -1).cpu().data.numpy()
