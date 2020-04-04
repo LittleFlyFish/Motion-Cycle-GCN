@@ -38,6 +38,7 @@ class ST_GCNA(nn.Module):
 
         self.gc1 = GraphConvolution(input_feature, hidden_feature, node_n=node_n)
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)
+        self.ba1 = nn.BatchNorm1d(node_n * hidden_feature)
         self.bn7 = nn.BatchNorm1d(node_n * input_feature)
 
         self.gcbs = []
@@ -48,7 +49,7 @@ class ST_GCNA(nn.Module):
 
         self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
 
-        self.ga1 = GraphAttentionLayer(3*hidden_feature, hidden_feature, dropout=0.5, alpha=0.2, concat=True)
+        self.ga1 = GraphAttentionLayer(3*hidden_feature, 3*hidden_feature, dropout=0.5, alpha=0.2, concat=True)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
@@ -61,10 +62,13 @@ class ST_GCNA(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
-        print(torch.squeeze(self.A, 0))
-        print(torch.squeeze(self.A, 0).size())
         y2 = self.ga1(y.view(b, 22, -1), torch.squeeze(self.A, 0))
-        print(y2.shape)
+        b, n, f = y2.shape
+        y2 = self.ba1(y2.view(b, -1)).view(b, 3*n, -1)
+        y2 = self.act_f(y2)
+        y2 = self.do(y2)
+
+        y = y2
 
         for i in range(self.num_stage):
             y = self.gcbs[i](y)
