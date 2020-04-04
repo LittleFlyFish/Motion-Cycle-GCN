@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/Calculate.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/Calculate.py" afterDir="false" />
-    </list>
+    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,13 +169,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00270" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1585932092348</created>
-      <option name="number" value="00270" />
-      <option name="presentableId" value="LOCAL-00270" />
-      <option name="project" value="LOCAL" />
-      <updated>1585932092348</updated>
     </task>
     <task id="LOCAL-00271" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1585935019758</created>
@@ -516,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586039667525</updated>
     </task>
-    <option name="localTasksCounter" value="319" />
+    <task id="LOCAL-00319" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1586040277902</created>
+      <option name="number" value="00319" />
+      <option name="presentableId" value="LOCAL-00319" />
+      <option name="project" value="LOCAL" />
+      <updated>1586040277902</updated>
+    </task>
+    <option name="localTasksCounter" value="320" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
