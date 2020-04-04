@@ -36,7 +36,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     is_cuda = torch.cuda.is_available()
     cuda_num = cfg.cuda_num
     if is_cuda:
-        model.cuda()
+        model.cuda(cuda_num)
         model.to(cuda_num)
     start_epoch = cfg.resume.start
     lr_now = cfg.optim_para.optimizer.lr
