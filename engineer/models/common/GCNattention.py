@@ -44,6 +44,8 @@ class GraphAttentionLayer(nn.Module):
         attention = torch.where(adj > 0, e, zero_vec)
         attention = F.softmax(attention, dim=1)
         attention = F.dropout(attention, self.dropout, training=self.training)
+        print(h.shape)
+        print(h.permute(1, 2, 0).shape)
         h_p = torch.matmul(attention, h.permute(1, 2, 0))
         print(h_p.shape)
         h_prime = h_p.permute(2, 0, 1)
