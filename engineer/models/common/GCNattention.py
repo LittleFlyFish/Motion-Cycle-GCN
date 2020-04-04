@@ -38,13 +38,13 @@ class GraphAttentionLayer(nn.Module):
         N = h.size()[1] #[node]
 
         a_input = torch.cat([h.repeat(1, 1, N).view(b, N * N, -1), h.repeat(1, N, 1)], dim=2).view(b, N, -1, 2 * self.out_features)
-        e = self.leakyrelu(torch.matmul(a_input, self.a).squeeze(2))
+        e = self.leakyrelu(torch.matmul(a_input, self.a).squeeze(3)) #[16, 22, 22]
 
         zero_vec = -9e15*torch.ones_like(e)
         print(a_input.shape)
         print(e.shape)
         attention = torch.where(adj > 0, e, zero_vec)
-        attention = F.softmax(attention, dim=1)
+        attention = F.softmax(attention, dim=2)
         attention = F.dropout(attention, self.dropout, training=self.training)
         print(h.shape)
         print(h.permute(0, 2, 1).shape)

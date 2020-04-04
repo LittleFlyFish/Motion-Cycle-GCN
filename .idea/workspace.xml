@@ -170,13 +170,6 @@
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
     </task>
-    <task id="LOCAL-00260" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1585929034003</created>
-      <option name="number" value="00260" />
-      <option name="presentableId" value="LOCAL-00260" />
-      <option name="project" value="LOCAL" />
-      <updated>1585929034003</updated>
-    </task>
     <task id="LOCAL-00261" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1585929069041</created>
       <option name="number" value="00261" />
@@ -513,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586019077335</updated>
     </task>
-    <option name="localTasksCounter" value="309" />
+    <task id="LOCAL-00309" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1586019975334</created>
+      <option name="number" value="00309" />
+      <option name="presentableId" value="LOCAL-00309" />
+      <option name="project" value="LOCAL" />
+      <updated>1586019975335</updated>
+    </task>
+    <option name="localTasksCounter" value="310" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
