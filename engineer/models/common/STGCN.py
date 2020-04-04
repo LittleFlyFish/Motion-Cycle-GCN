@@ -37,7 +37,7 @@ class st_gcn(nn.Module):
                  dropout=0,
                  residual=True,
                  Transpose=False):
-        super().__init__()
+        super(st_gcn).__init__()
 
         assert len(kernel_size) == 2
         assert kernel_size[0] % 2 == 1
