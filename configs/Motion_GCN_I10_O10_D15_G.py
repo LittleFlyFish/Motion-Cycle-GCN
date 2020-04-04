@@ -12,8 +12,8 @@ data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
-cuda_num = 'cuda:1'
-flag = 'Original+L2'
+cuda_num = 'cuda:3'
+flag = 'Original+L1'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
