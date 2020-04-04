@@ -70,12 +70,13 @@ class ST_GCNA(nn.Module):
 
         y = y2
 
-        for i in range(self.num_stage):
-            y = self.gcbs[i](y)
-
-        if self.residual == True:
-            y = self.gc7(y)
-            y = y + x
+        # for i in range(self.num_stage):
+        #     y = self.gcbs[i](y)
+        #
+        # if self.residual == True:
+        #     y = self.gc7(y)
+        #     y = y + x
+        y = y + x
         #else:
             # y = self.gc7(y)
             # b, n, f = y.shape
