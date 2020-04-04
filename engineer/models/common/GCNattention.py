@@ -106,7 +106,7 @@ class SpGraphAttentionLayer(nn.Module):
          self.special_spmm = SpecialSpmm()
 
      def forward(self, inputBatch, adj):
-         b = inputBatch.size[0]
+         b = inputBatch.size()[0]
          inputList = torch.split(inputBatch,1,dim=0)
          t = 0
          ResultList = [None]*b
