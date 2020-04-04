@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_G_conv.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_G_conv.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_conv.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_conv.py" afterDir="false" />
-    </list>
+    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,20 +169,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00279" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1585951227130</created>
-      <option name="number" value="00279" />
-      <option name="presentableId" value="LOCAL-00279" />
-      <option name="project" value="LOCAL" />
-      <updated>1585951227130</updated>
-    </task>
-    <task id="LOCAL-00280" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1585953885390</created>
-      <option name="number" value="00280" />
-      <option name="presentableId" value="LOCAL-00280" />
-      <option name="project" value="LOCAL" />
-      <updated>1585953885390</updated>
     </task>
     <task id="LOCAL-00281" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1585954041248</created>
@@ -517,7 +499,21 @@
       <option name="project" value="LOCAL" />
       <updated>1586043486245</updated>
     </task>
-    <option name="localTasksCounter" value="328" />
+    <task id="LOCAL-00328" summary="&quot;GV=G version, Padding=True&quot;">
+      <created>1586043804112</created>
+      <option name="number" value="00328" />
+      <option name="presentableId" value="LOCAL-00328" />
+      <option name="project" value="LOCAL" />
+      <updated>1586043804112</updated>
+    </task>
+    <task id="LOCAL-00329" summary=" &quot;nice&quot;">
+      <created>1586044035391</created>
+      <option name="number" value="00329" />
+      <option name="presentableId" value="LOCAL-00329" />
+      <option name="project" value="LOCAL" />
+      <updated>1586044035391</updated>
+    </task>
+    <option name="localTasksCounter" value="330" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -534,7 +530,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="&quot;ST_B Ulink version&quot;" />
     <MESSAGE value="&quot;gcn NUM_STAGE = 3 VERSION&quot;" />
     <MESSAGE value="&quot;Motion_GCN num_stage=1&quot;" />
     <MESSAGE value="&quot;ST_GCN_DENSE residual version&quot;" />
@@ -559,7 +554,8 @@
     <MESSAGE value="&quot;Input Output dct&quot;" />
     <MESSAGE value="&quot;K_output&quot;" />
     <MESSAGE value="&quot;GV=G version, Padding=True&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;GV=G version, Padding=True&quot;" />
+    <MESSAGE value=" &quot;nice&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value=" &quot;nice&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="558" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1582016121470">
