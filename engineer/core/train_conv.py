@@ -42,7 +42,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     if is_cuda:
         model.cuda()
         model.to(cuda_num)
-    model.load_state_dict(torch.load(io.BytesIO(cfg.meta))["state_dict"])
+    model.load_state_dict(torch.load(cfg.meta)["state_dict"])
     start_epoch = cfg.resume.start
     lr_now = cfg.optim_para.optimizer.lr
 
