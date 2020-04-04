@@ -63,7 +63,7 @@ class ST_GCNA(nn.Module):
 
         print(torch.squeeze(self.A, 0))
         print(torch.squeeze(self.A, 0).size())
-        y2 = self.ga1(y, torch.squeeze(self.A, 0))
+        y2 = self.ga1(y.view(b, 22, -1), torch.squeeze(self.A, 0))
         print(y2.shape)
 
         for i in range(self.num_stage):
