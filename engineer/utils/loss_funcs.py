@@ -151,7 +151,7 @@ def mpjpe_error_p3d_seq2seq(outputs, all_seq, dct_n, dim_used):
 
 
 
-def mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num):
+def mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda="cuda:0"):
     """
     :param outputs:n*66*dct_n
     :param all_seq:
