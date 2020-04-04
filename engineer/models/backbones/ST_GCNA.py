@@ -61,9 +61,9 @@ class ST_GCNA(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
-        print(self.A)
-        print(self.A.size())
-        y2 = self.ga1(y, self.A)
+        print(torch.squeeze(self.A, 0))
+        print(torch.squeeze(self.A, 0).size())
+        y2 = self.ga1(y, torch.squeeze(self.A, 0))
         print(y2.shape)
 
         for i in range(self.num_stage):
