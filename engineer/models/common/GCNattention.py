@@ -44,7 +44,8 @@ class GraphAttentionLayer(nn.Module):
         attention = torch.where(adj > 0, e, zero_vec)
         attention = F.softmax(attention, dim=1)
         attention = F.dropout(attention, self.dropout, training=self.training)
-        h_prime = torch.matmul(attention, h)
+        h_p = torch.matmul(attention, torch.transpose(h, 0, 2))
+        h_prime = torch.transpose(h_p, 0, 2)
 
         if self.concat:
             return F.elu(h_prime)
