@@ -18,7 +18,7 @@ class ST_GCNA(nn.Module):
     '''
     Original Module GCN structure
     '''
-    def __init__(self, input_feature, hidden_feature, p_dropout, layerout, strategy, num_stage=1, node_n=48, residual=True):
+    def __init__(self, input_feature, hidden_feature, p_dropout, layout, strategy, num_stage=1, node_n=48, residual=True):
         """
         input = [batch, node, dct_n]
         :param input_feature: num of input feature
