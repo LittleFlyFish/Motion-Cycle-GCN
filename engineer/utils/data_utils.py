@@ -863,7 +863,7 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len):
                     even_list = range(0, n, sample_rate)
                     num_frames = len(even_list)
                     the_sequence = np.array(action_sequence[even_list, :])
-                    the_seq = Variable(torch.from_numpy(the_sequence)).float().cuda()
+                    the_seq = Variable(torch.from_numpy(the_sequence)).float().cuda('cuda:2')
                     # remove global rotation and translation
                     the_seq[:, 0:6] = 0
                     p3d = expmap2xyz_torch(the_seq)
@@ -903,7 +903,7 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len):
 
                 num_frames2 = len(even_list)
                 the_sequence2 = np.array(action_sequence[even_list, :])
-                the_seq2 = Variable(torch.from_numpy(the_sequence2)).float().cuda()
+                the_seq2 = Variable(torch.from_numpy(the_sequence2)).float().cuda('cuda:2')
                 the_seq2[:, 0:6] = 0
                 p3d2 = expmap2xyz_torch(the_seq2)
                 the_sequence2 = p3d2.view(num_frames2, -1).cpu().data.numpy()
