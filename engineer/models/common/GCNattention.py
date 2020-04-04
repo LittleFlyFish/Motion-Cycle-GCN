@@ -107,12 +107,11 @@ class SpGraphAttentionLayer(nn.Module):
 
      def forward(self, inputBatch, adj):
          b = inputBatch.size()[0]
-         inputList = torch.split(inputBatch,1,dim=0)
+         inputList = torch.split(inputBatch, 1, dim=0)
          t = 0
          ResultList = [None]*b
          for input in inputList:
-             input.squeeze(0)
-             print(input.shape)
+             input = input.squeeze(0)
              N = input.size()[0]  # 2708
              edge = adj.nonzero().t()  # non zero edge
 
