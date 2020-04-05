@@ -125,6 +125,7 @@ class SpGraphAttentionLayer(nn.Module):
              # edge: 2*D x E
 
              edge_e = torch.exp(-self.leakyrelu(self.a.mm(edge_h).squeeze()))
+             edge_e[edge_e != edge_e] = 0
              assert not torch.isnan(edge_e).any()
              # edge_e: E
 
