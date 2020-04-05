@@ -12,8 +12,8 @@ data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames', direction = True),
 ]
-cuda_num ='cuda:3' # need to change cuda devices in load_data_3d as well
-flag = '3Conv+L1'
+cuda_num ='cuda:0' # need to change cuda devices in load_data_3d as well
+flag = 'Conv+L1'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
