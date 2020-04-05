@@ -112,13 +112,10 @@ class SpGraphAttentionLayer(nn.Module):
          t = 0
          ResultList = [None]*b
          for input in inputList:
-             input = input.squeeze(0)
-             N = input.size()[0]  # 2708
-             edge = adj.nonzero().t()  # non zero edge
+             input = input.squeeze(0) # [22, 45]
+             N = input.size()[0]  # 22
+             edge = adj.nonzero().t()  # non zero edge [2， 52]
 
-             print(input.shape)
-             print(N)
-             print(edge.shape)
 
              h = torch.mm(input, self.W)  # [2708, 8]
              # h: N x out
@@ -135,16 +132,15 @@ class SpGraphAttentionLayer(nn.Module):
              e_rowsum = self.special_spmm(edge, edge_e, torch.Size([N, N]), torch.ones(size=(N, 1), device=dv))
              # e_rowsum: N x 1
 
+             print(torch.nozero(e_rowsum))
+
              edge_e = self.dropout(edge_e)
              # edge_e: E
 
-             h_prime = self.special_spmm(edge, edge_e, torch.Size([N, N]), h)  # [2708, 8]
+             h_prime = self.special_spmm(edge, edge_e, torch.Size([N, N]), h)  # [22, 3*256]
              assert not torch.isnan(h_prime).any()
              # h_prime: N x out
 
-             print(h_prime.shape)
-             print(e_rowsum.shape)
-             print(e_rowsum)
              h_prime = h_prime.div(e_rowsum)
              # h_prime: N x out
              assert not torch.isnan(h_prime).any()
