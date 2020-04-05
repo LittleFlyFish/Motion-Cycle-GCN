@@ -42,13 +42,12 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     if is_cuda:
         model.cuda()
         model.to(cuda_num)
-   # model.load_state_dict(torch.load(cfg.meta)["state_dict"])
     start_epoch = cfg.resume.start
     lr_now = cfg.optim_para.optimizer.lr
 
     # ###############################################
     # ## test the checkpoint
-    # G_meta = "./checkpoints/Motion_GCN_I10_O10_D15_G/ckpt_train_3D_in10_out10_dct_n_15_best.pth.tar"
+    # G_meta = './checkpoints/_tempconfig/ckpt_train_conv_3D_in10_out10_dct_n_15Conv+L2_best.pth.tar'
     # model.load_state_dict(torch.load(G_meta)["state_dict"])
     # ###############################################
 

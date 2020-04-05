@@ -14,7 +14,6 @@ train_pipeline = [
 ]
 cuda_num ='cuda:3' # need to change cuda devices in load_data_3d as well
 flag = 'Conv+L1'
-meta ='./checkpoints/_tempconfig/ckpt_train_conv_3D_in10_out10_dct_n_15Conv+L2_best.pth.tar'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
