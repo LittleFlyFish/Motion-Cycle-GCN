@@ -2,7 +2,7 @@ import numpy as np
 model = dict(
     type='ST_GCNA',
     input_feature=15,
-    hidden_feature=256,
+    hidden_feature=128,
     p_dropout=0.5,
     layout='h36m',
     strategy='uniform',

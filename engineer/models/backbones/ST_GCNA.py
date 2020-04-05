@@ -49,7 +49,7 @@ class ST_GCNA(nn.Module):
 
         self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
 
-        self.ga1 = SpGraphAttentionLayer(3*input_feature, 3*hidden_feature, dropout=0.5, alpha=0.2, concat=True)
+        self.ga1 = GraphAttentionLayer(3*input_feature, 3*hidden_feature, dropout=0.5, alpha=0.2, concat=True)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
