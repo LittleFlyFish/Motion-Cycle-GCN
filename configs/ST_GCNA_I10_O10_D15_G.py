@@ -2,7 +2,7 @@ import numpy as np
 model = dict(
     type='ST_GCNA',
     input_feature=15,
-    hidden_feature=28,
+    hidden_feature=128,
     p_dropout=0,
     layout='h36m',
     strategy='uniform',
@@ -14,8 +14,8 @@ data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
-cuda_num = 'cuda:1'
-flag = 'ga1+gc1+gc2'
+cuda_num = 'cuda:3'
+flag = 'GAT_4h_128'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
