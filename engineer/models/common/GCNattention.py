@@ -132,7 +132,7 @@ class SpGraphAttentionLayer(nn.Module):
              O_e_rowsum = self.special_spmm(edge, edge_e, torch.Size([N, N]), torch.ones(size=(N, 1), device=dv))
              # e_rowsum: N x 1
 
-             nonzeros = torch.nonzero(e_rowsum)
+             nonzeros = torch.nonzero(O_e_rowsum)
              e_rowsum = torch.ones(size=(N, 1), device=dv)
              e_rowsum[nonzeros[:, 0]] = O_e_rowsum[nonzeros[:, 0]]
 
