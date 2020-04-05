@@ -835,7 +835,7 @@ def load_data_3d_label(path_to_dataset, subjects, actions, sample_rate, seq_len)
 
 
 
-def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len):
+def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len, cuda= 'cuda:3'):
     """
     adapted from
     https://github.com/una-dinosauria/human-motion-prediction/src/data_utils.py#L216
@@ -863,7 +863,7 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len):
                     even_list = range(0, n, sample_rate)
                     num_frames = len(even_list)
                     the_sequence = np.array(action_sequence[even_list, :])
-                    the_seq = Variable(torch.from_numpy(the_sequence)).float().cuda('cuda:2')
+                    the_seq = Variable(torch.from_numpy(the_sequence)).float().cuda(cuda)
                     # remove global rotation and translation
                     the_seq[:, 0:6] = 0
                     p3d = expmap2xyz_torch(the_seq)
@@ -890,7 +890,7 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len):
 
                 num_frames1 = len(even_list)
                 the_sequence1 = np.array(action_sequence[even_list, :])
-                the_seq1 = Variable(torch.from_numpy(the_sequence1)).float().cuda('cuda:2')
+                the_seq1 = Variable(torch.from_numpy(the_sequence1)).float().cuda(cuda)
                 the_seq1[:, 0:6] = 0
                 p3d1 = expmap2xyz_torch(the_seq1)
                 the_sequence1 = p3d1.view(num_frames1, -1).cpu().data.numpy()
@@ -903,7 +903,7 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len):
 
                 num_frames2 = len(even_list)
                 the_sequence2 = np.array(action_sequence[even_list, :])
-                the_seq2 = Variable(torch.from_numpy(the_sequence2)).float().cuda('cuda:2')
+                the_seq2 = Variable(torch.from_numpy(the_sequence2)).float().cuda(cuda)
                 the_seq2[:, 0:6] = 0
                 p3d2 = expmap2xyz_torch(the_seq2)
                 the_sequence2 = p3d2.view(num_frames2, -1).cpu().data.numpy()
