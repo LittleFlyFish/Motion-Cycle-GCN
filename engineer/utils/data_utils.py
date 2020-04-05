@@ -627,14 +627,14 @@ def expmap2rotmat_torch(r):
     return R
 
 
-def expmap2xyz_torch(expmap):
+def expmap2xyz_torch(expmap, cuda='cuda:3'):
     """
     convert expmaps to joint locations
     :param expmap: N*99
     :return: N*32*3
     """
     parent, offset, rotInd, expmapInd = forward_kinematics._some_variables()
-    xyz = forward_kinematics.fkl_torch(expmap, parent, offset, rotInd, expmapInd)
+    xyz = forward_kinematics.fkl_torch(expmap, parent, offset, rotInd, expmapInd, cuda)
     return xyz
 
 
@@ -866,7 +866,7 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len, cuda=
                     the_seq = Variable(torch.from_numpy(the_sequence)).float().cuda(cuda)
                     # remove global rotation and translation
                     the_seq[:, 0:6] = 0
-                    p3d = expmap2xyz_torch(the_seq)
+                    p3d = expmap2xyz_torch(the_seq, cuda)
                     the_sequence = p3d.view(num_frames, -1).cpu().data.numpy()
 
                     fs = np.arange(0, num_frames - seq_len + 1)
@@ -892,7 +892,7 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len, cuda=
                 the_sequence1 = np.array(action_sequence[even_list, :])
                 the_seq1 = Variable(torch.from_numpy(the_sequence1)).float().cuda(cuda)
                 the_seq1[:, 0:6] = 0
-                p3d1 = expmap2xyz_torch(the_seq1)
+                p3d1 = expmap2xyz_torch(the_seq1, cuda)
                 the_sequence1 = p3d1.view(num_frames1, -1).cpu().data.numpy()
 
                 print("Reading subject {0}, action {1}, subaction {2}".format(subj, action, 2))
