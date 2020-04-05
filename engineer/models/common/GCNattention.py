@@ -116,13 +116,7 @@ class SpGraphAttentionLayer(nn.Module):
              N = input.size()[0]  # 22
              edge = adj.nonzero().t()  # non zero edge [2， 52]
              h = torch.mm(input, self.W)  # [22, 3*256]
-             print(h)
-             print("W")
-             print(self.W)
-             print("Input")
-             print(input)
-             print("h")
-             # h[h != h] = 0
+             h[h != h] = 0
              # h: N x out
              assert not torch.isnan(h).any()
 
@@ -145,10 +139,12 @@ class SpGraphAttentionLayer(nn.Module):
              # edge_e: E
 
              h_prime = self.special_spmm(edge, edge_e, torch.Size([N, N]), h)  # [22, 3*256]
+             h_prime[h_prime != h_prime] = 0
              assert not torch.isnan(h_prime).any()
              # h_prime: N x out
 
              h_prime = h_prime.div(e_rowsum)
+             h_prime[h_prime != h_prime] = 0
              # h_prime: N x out
              assert not torch.isnan(h_prime).any()
 
