@@ -15,7 +15,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num = 'cuda:1'
-flag = 'gc1+gc2'
+flag = 'ga1+gc1+gc2'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
