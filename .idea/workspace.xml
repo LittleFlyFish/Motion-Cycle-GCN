@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/ST_GCNA_I10_O10_D15_G.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/ST_GCNA_I10_O10_D15_G.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/models/backbones/ST_GCNA.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/models/backbones/ST_GCNA.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -171,20 +173,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00320" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1586040837436</created>
-      <option name="number" value="00320" />
-      <option name="presentableId" value="LOCAL-00320" />
-      <option name="project" value="LOCAL" />
-      <updated>1586040837436</updated>
-    </task>
-    <task id="LOCAL-00321" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1586041874481</created>
-      <option name="number" value="00321" />
-      <option name="presentableId" value="LOCAL-00321" />
-      <option name="project" value="LOCAL" />
-      <updated>1586041874481</updated>
     </task>
     <task id="LOCAL-00322" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1586042260801</created>
@@ -515,7 +503,21 @@
       <option name="project" value="LOCAL" />
       <updated>1586118759997</updated>
     </task>
-    <option name="localTasksCounter" value="369" />
+    <task id="LOCAL-00369" summary=" &quot;nice&quot;">
+      <created>1586119682835</created>
+      <option name="number" value="00369" />
+      <option name="presentableId" value="LOCAL-00369" />
+      <option name="project" value="LOCAL" />
+      <updated>1586119682835</updated>
+    </task>
+    <task id="LOCAL-00370" summary=" &quot;nice&quot;">
+      <created>1586119730999</created>
+      <option name="number" value="00370" />
+      <option name="presentableId" value="LOCAL-00370" />
+      <option name="project" value="LOCAL" />
+      <updated>1586119730999</updated>
+    </task>
+    <option name="localTasksCounter" value="371" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
