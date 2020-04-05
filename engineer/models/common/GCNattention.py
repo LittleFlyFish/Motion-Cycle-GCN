@@ -178,11 +178,12 @@ class GAT(nn.Module):
         self.out_att = GraphAttentionLayer(nhid * nheads, nclass, dropout=dropout, alpha=alpha, concat=False)
 
     def forward(self, x, adj):
-        x = F.dropout(x, self.dropout, training=self.training)
-        x = torch.cat([att(x, adj) for att in self.attentions], dim=1)
-        x = F.dropout(x, self.dropout, training=self.training)
-        x = F.elu(self.out_att(x, adj))
-        return F.log_softmax(x, dim=1)
+        """Input: [node, nfeat], output: [node, nclass]"""
+        x = F.dropout(x, self.dropout, training=self.training) # [node, nfeat]
+        x = torch.cat([att(x, adj) for att in self.attentions], dim=1) # [node, nhid * nhead]
+        x = F.dropout(x, self.dropout, training=self.training) # [node, nhid * nhead]
+        x = F.elu(self.out_att(x, adj)) # [node, nclass]
+        return x
 
 
 class SpGAT(nn.Module):
@@ -211,3 +212,5 @@ class SpGAT(nn.Module):
         x = F.dropout(x, self.dropout, training=self.training)
         x = F.elu(self.out_att(x, adj))
         return F.log_softmax(x, dim=1)
+
+
