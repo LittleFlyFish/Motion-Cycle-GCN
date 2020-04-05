@@ -35,7 +35,7 @@ class Hm36Dataset_3d(Dataset):
         self.pipeline = Compose(pipeline)
         # loader data is in here
         all_seqs, dim_ignore, dim_used = data_utils.load_data_3d(path_to_data, subjs, acts, sample_rate,
-                                                                 input_n + output_n, cuda='cuda:0')
+                                                                 input_n + output_n, cuda='cuda:1')
         self.dim_used = dim_used
 
         self.all_seqs,self.input_dct_seq,self.output_dct_seq = self.pipeline(dict(all_seqs=all_seqs,dim_used=dim_used,input_n=input_n,output_n=output_n,dct_used=dct_used))

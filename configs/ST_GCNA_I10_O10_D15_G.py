@@ -3,7 +3,7 @@ model = dict(
     type='ST_GCNA',
     input_feature=15,
     hidden_feature=128,
-    p_dropout=0.8,
+    p_dropout=0.3,
     layout='h36m',
     strategy='uniform',
     num_stage=12,
@@ -14,8 +14,8 @@ data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
-cuda_num = 'cuda:0'
-flag = 'ST_GCNA_0.8'
+cuda_num = 'cuda:1'
+flag = 'ST_GCNA_0.3'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
