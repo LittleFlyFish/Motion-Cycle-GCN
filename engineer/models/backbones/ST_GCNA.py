@@ -37,8 +37,8 @@ class ST_GCNA(nn.Module):
         self.num_stage = num_stage
 
         self.gc1 = GraphConvolution(input_feature, 128, node_n=node_n)
-        self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)
-        self.ba1 = nn.BatchNorm1d(node_n * hidden_feature)
+        self.bn1 = nn.BatchNorm1d(node_n * 128)
+        self.ba1 = nn.BatchNorm1d(node_n * 128)
         self.bn7 = nn.BatchNorm1d(node_n * input_feature)
 
         self.gcbs = []
