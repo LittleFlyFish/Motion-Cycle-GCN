@@ -605,7 +605,7 @@ def expmap2quat_torch(exp):
     return q
 
 
-def expmap2rotmat_torch(r):
+def expmap2rotmat_torch(r, cuda = 'cuda:3'):
     """
     Converts expmap matrix to rotation
     batch pytorch version ported from the corresponding method above
@@ -621,7 +621,7 @@ def expmap2rotmat_torch(r):
     r1 = r1.view(-1, 3, 3)
     r1 = r1 - r1.transpose(1, 2)
     n = r1.data.shape[0]
-    R = Variable(torch.eye(3, 3).repeat(n, 1, 1)).float().cuda('cuda:2') + torch.mul(
+    R = Variable(torch.eye(3, 3).repeat(n, 1, 1)).float().cuda(cuda) + torch.mul(
         torch.sin(theta).unsqueeze(1).repeat(1, 9).view(-1, 3, 3), r1) + torch.mul(
         (1 - torch.cos(theta).unsqueeze(1).repeat(1, 9).view(-1, 3, 3)), torch.matmul(r1, r1))
     return R
@@ -905,7 +905,7 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len, cuda=
                 the_sequence2 = np.array(action_sequence[even_list, :])
                 the_seq2 = Variable(torch.from_numpy(the_sequence2)).float().cuda(cuda)
                 the_seq2[:, 0:6] = 0
-                p3d2 = expmap2xyz_torch(the_seq2)
+                p3d2 = expmap2xyz_torch(the_seq2, cuda)
                 the_sequence2 = p3d2.view(num_frames2, -1).cpu().data.numpy()
 
                 # print("action:{}".format(action))
