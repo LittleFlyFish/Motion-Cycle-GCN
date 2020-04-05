@@ -129,10 +129,12 @@ class SpGraphAttentionLayer(nn.Module):
              assert not torch.isnan(edge_e).any()
              # edge_e: E
 
-             e_rowsum = self.special_spmm(edge, edge_e, torch.Size([N, N]), torch.ones(size=(N, 1), device=dv))
+             O_e_rowsum = self.special_spmm(edge, edge_e, torch.Size([N, N]), torch.ones(size=(N, 1), device=dv))
              # e_rowsum: N x 1
 
-             print(torch.nonzero(e_rowsum))
+             nonzeros = torch.nonzero(e_rowsum)
+             e_rowsum = torch.ones(size=(N, 1), device=dv)
+             e_rowsum[nonzeros[:, 0]] = O_e_rowsum[nonzeros[:, 0]]
 
              edge_e = self.dropout(edge_e)
              # edge_e: E
