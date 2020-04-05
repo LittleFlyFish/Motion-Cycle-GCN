@@ -12,7 +12,7 @@ data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames', direction = True),
 ]
-cuda_num ='cuda:1'
+cuda_num ='cuda:3'
 flag = 'Conv+L1'
 meta ='./checkpoints/_tempconfig/ckpt_train_conv_3D_in10_out10_dct_n_15Conv+L2_best.pth.tar'
 
