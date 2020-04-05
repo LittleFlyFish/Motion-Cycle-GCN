@@ -179,9 +179,9 @@ class GAT(nn.Module):
 
     def forward(self, x, adj):
         """Input: [node, nfeat], output: [node, nclass]"""
-        x = F.dropout(x, self.dropout, training=self.training) # [node, nfeat]
-        x = torch.cat([att(x, adj) for att in self.attentions], dim=1) # [node, nhid * nhead]
-        x = F.dropout(x, self.dropout, training=self.training) # [node, nhid * nhead]
+        x = F.dropout(x, self.dropout, training=self.training) # [batch, node, nfeat]
+        x = torch.cat([att(x, adj) for att in self.attentions], dim=2) # [batch, node, nhid * nhead]
+        x = F.dropout(x, self.dropout, training=self.training) # [batch, node, nhid * nhead]
         x = F.elu(self.out_att(x, adj)) # [node, nclass]
         return x
 
