@@ -2,8 +2,8 @@ import numpy as np
 model = dict(
     type='ST_GCNA',
     input_feature=15,
-    hidden_feature=256*2,
-    p_dropout=0.5,
+    hidden_feature=128,
+    p_dropout=0.8,
     layout='h36m',
     strategy='uniform',
     num_stage=12,
@@ -15,7 +15,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num = 'cuda:0'
-flag = 'ST_GCNA'
+flag = 'ST_GCNA_0.8'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
