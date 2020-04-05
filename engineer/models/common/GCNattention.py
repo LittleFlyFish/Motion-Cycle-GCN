@@ -115,8 +115,14 @@ class SpGraphAttentionLayer(nn.Module):
              input = input.squeeze(0) # [22, 45]
              N = input.size()[0]  # 22
              edge = adj.nonzero().t()  # non zero edge [2， 52]
-             h = torch.mm(input, self.W)  # [45, 3*256]
-             print(torch.isnan(h))
+             h = torch.mm(input, self.W)  # [22, 3*256]
+             print(h)
+             print("W")
+             print(self.W)
+             print("Input")
+             print(input)
+             print("h")
+             # h[h != h] = 0
              # h: N x out
              assert not torch.isnan(h).any()
 
