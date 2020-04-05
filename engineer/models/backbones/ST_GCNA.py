@@ -52,37 +52,37 @@ class ST_GCNA(nn.Module):
         self.ga1 = GraphAttentionLayer(3 * input_feature, 3*hidden_feature, dropout=0, alpha=0.2, concat=True)
         self.ga7 = GraphAttentionLayer(3 * hidden_feature, 3 * input_feature, dropout=0, alpha=0.2, concat=True)
 
-        self.GAT = GAT(3*input_feature, 3*hidden_feature, 3*input_feature, dropout=p_dropout, alpha=0.2, nheads=2)
+        self.GAT = GAT(3*input_feature, 3*hidden_feature, 3*input_feature, dropout=p_dropout, alpha=0.2, nheads=4)
 
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.Tanh()
         self.residual = residual
 
     def forward(self, x):
-        y = self.gc1(x)
-        b, n, f = y.shape
-        y = self.bn1(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
-        y = self.do(y)
-
-        y2 = self.ga1(x.view(b, 22, -1), torch.squeeze(self.A, 0))
-        b, n, f = y2.shape
-        y2 = self.ba1(y2.view(b, -1)).view(b, 3*n, -1)
-        y2 = self.act_f(y2)
-        y2 = self.do(y2)
-
-        y = torch.cat((y2, y), dim=2)
-
-        # for i in range(self.num_stage):
-        #     y = self.gcbs[i](y)
+        # y = self.gc1(x)
+        # b, n, f = y.shape
+        # y = self.bn1(y.view(b, -1)).view(b, n, f)
+        # y = self.act_f(y)
+        # y = self.do(y)
         #
-        if self.residual == True:
-            # y = self.ga7(y.view(b, 22, -1), torch.squeeze(self.A, 0))
-            # b, n, f = y.shape
-            # y = y.view(b, -1).view(b, 3 * n, -1)
-            # y = y + x
-            y = self.gc7(y)
-            y = y + x
+        # y2 = self.ga1(x.view(b, 22, -1), torch.squeeze(self.A, 0))
+        # b, n, f = y2.shape
+        # y2 = self.ba1(y2.view(b, -1)).view(b, 3*n, -1)
+        # y2 = self.act_f(y2)
+        # y2 = self.do(y2)
+        #
+        # y = torch.cat((y2, y), dim=2)
+        #
+        # # for i in range(self.num_stage):
+        # #     y = self.gcbs[i](y)
+        # #
+        # if self.residual == True:
+        #     # y = self.ga7(y.view(b, 22, -1), torch.squeeze(self.A, 0))
+        #     # b, n, f = y.shape
+        #     # y = y.view(b, -1).view(b, 3 * n, -1)
+        #     # y = y + x
+        #     y = self.gc7(y)
+        #     y = y + x
 
         #else:
             # y = self.gc7(y)
@@ -91,9 +91,9 @@ class ST_GCNA(nn.Module):
             # y = self.act_f(y)
             # y = self.do(y)
 
-        # b, n, f = x.shape
-        # y = self.GAT(x.view(b, 22, -1), torch.squeeze(self.A, 0))
-        # y = y.view(b, -1).view(b, n, -1)
-        # y = y + x
+        b, n, f = x.shape
+        y = self.GAT(x.view(b, 22, -1), torch.squeeze(self.A, 0))
+        y = y.view(b, -1).view(b, n, -1)
+        y = y + x
 
         return y
