@@ -89,6 +89,7 @@ class ST_GCNA(nn.Module):
         #     # y = self.act_f(y)
         #     # y = self.do(y)
 
+        b, n, f = x.shape
         y = self.GAT(x.view(b, 22, -1), torch.squeeze(self.A, 0))
         y = y.view(b, -1).view(b, 3 * n, -1)
         y = y + x
