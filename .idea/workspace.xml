@@ -174,27 +174,6 @@
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
     </task>
-    <task id="LOCAL-00322" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1586042260801</created>
-      <option name="number" value="00322" />
-      <option name="presentableId" value="LOCAL-00322" />
-      <option name="project" value="LOCAL" />
-      <updated>1586042260802</updated>
-    </task>
-    <task id="LOCAL-00323" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1586042404750</created>
-      <option name="number" value="00323" />
-      <option name="presentableId" value="LOCAL-00323" />
-      <option name="project" value="LOCAL" />
-      <updated>1586042404750</updated>
-    </task>
-    <task id="LOCAL-00324" summary="&quot;GV=G version, Padding=True&quot;">
-      <created>1586042705994</created>
-      <option name="number" value="00324" />
-      <option name="presentableId" value="LOCAL-00324" />
-      <option name="project" value="LOCAL" />
-      <updated>1586042705994</updated>
-    </task>
     <task id="LOCAL-00325" summary="&quot;GV=G version, Padding=True&quot;">
       <created>1586043245086</created>
       <option name="number" value="00325" />
@@ -517,7 +496,28 @@
       <option name="project" value="LOCAL" />
       <updated>1586119730999</updated>
     </task>
-    <option name="localTasksCounter" value="371" />
+    <task id="LOCAL-00371" summary=" &quot;nice&quot;">
+      <created>1586121897066</created>
+      <option name="number" value="00371" />
+      <option name="presentableId" value="LOCAL-00371" />
+      <option name="project" value="LOCAL" />
+      <updated>1586121897066</updated>
+    </task>
+    <task id="LOCAL-00372" summary=" &quot;nice&quot;">
+      <created>1586121964839</created>
+      <option name="number" value="00372" />
+      <option name="presentableId" value="LOCAL-00372" />
+      <option name="project" value="LOCAL" />
+      <updated>1586121964839</updated>
+    </task>
+    <task id="LOCAL-00373" summary=" &quot;nice&quot;">
+      <created>1586121989740</created>
+      <option name="number" value="00373" />
+      <option name="presentableId" value="LOCAL-00373" />
+      <option name="project" value="LOCAL" />
+      <updated>1586121989740</updated>
+    </task>
+    <option name="localTasksCounter" value="374" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
