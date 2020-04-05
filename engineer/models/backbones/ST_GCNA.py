@@ -49,8 +49,8 @@ class ST_GCNA(nn.Module):
 
         self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
 
-        self.ga1 = GraphAttentionLayer(3 * input_feature, 3*hidden_feature, dropout=p_dropout, alpha=0.2, concat=True)
-        self.ga7 = GraphAttentionLayer(3 * hidden_feature, 3 * input_feature, dropout=p_dropout, alpha=0.2, concat=True)
+        self.ga1 = GraphAttentionLayer(3 * input_feature, 3*hidden_feature, dropout=0.5, alpha=0.2, concat=True)
+        self.ga7 = GraphAttentionLayer(3 * hidden_feature, 3 * input_feature, dropout=0.5, alpha=0.2, concat=True)
 
         self.GAT = GAT(3*input_feature, 3*hidden_feature, 3*input_feature, dropout=p_dropout, alpha=0.2, nheads=2)
 

@@ -15,7 +15,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num = 'cuda:1'
-flag = 'GAT_2ga_alld0_head2'
+flag = 'GAT_2ga_d0.5_head2'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
