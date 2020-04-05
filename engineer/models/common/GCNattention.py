@@ -115,9 +115,8 @@ class SpGraphAttentionLayer(nn.Module):
              input = input.squeeze(0) # [22, 45]
              N = input.size()[0]  # 22
              edge = adj.nonzero().t()  # non zero edge [2， 52]
-
-
-             h = torch.mm(input, self.W)  # [2708, 8]
+             h = torch.mm(input, self.W)  # [45, 3*256]
+             print(torch.isnan(h))
              # h: N x out
              assert not torch.isnan(h).any()
 
@@ -152,8 +151,7 @@ class SpGraphAttentionLayer(nn.Module):
                  results = F.elu(h_prime)
              else:
                  # if this layer is last layer,
-                 results = h_prime
-             print(results.shape)
+                 results = h_prime # [22, 3 * 256]
              ResultList[t] = results.unsqueeze(0)
              t = t + 1
          results = torch.cat(ResultList, dim=0)
