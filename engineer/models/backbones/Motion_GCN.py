@@ -116,7 +116,7 @@ class Motion_GCN(nn.Module):
         self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
 
         self.do = nn.Dropout(p_dropout)
-        self.act_f = nn.Tanh()
+        self.act_f = nn.Elu()
         self.residual = residual
 
     def forward(self, x):

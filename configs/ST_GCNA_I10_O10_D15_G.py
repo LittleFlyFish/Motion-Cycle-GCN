@@ -12,7 +12,7 @@ model = dict(
 dataset_type = 'Hm36Dataset_3d'
 data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
-    dict(type='SampleFrames',direction = True),
+    dict(type='SampleFrames', direction = True),
 ]
 cuda_num = 'cuda:3'
 flag = 'ST_GCNA_256'
