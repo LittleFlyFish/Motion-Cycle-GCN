@@ -8,6 +8,7 @@ import torch
 from torch.nn.parameter import Parameter
 import math
 from engineer.models.registry import BACKBONES
+import torch.nn.functional as F
 
 
 class GraphConvolution(nn.Module):
@@ -64,19 +65,19 @@ class GC_Block(nn.Module):
         self.bn2 = nn.BatchNorm1d(node_n * in_features)
 
         self.do = nn.Dropout(p_dropout)
-        self.act_f = nn.Tanh()
+        #F.elu = nn.Tanh()
 
     def forward(self, x):
         y = self.gc1(x)
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
+        y = F.elu(y)
         y = self.do(y)
 
         y = self.gc2(y)
         b, n, f = y.shape
         y = self.bn2(y.view(b, -1)).view(b, n, f) 
-        y = self.act_f(y)
+        y = F.elu(y)
         y = self.do(y)
 
         return y + x
@@ -116,14 +117,14 @@ class Motion_GCN(nn.Module):
         self.gc7 = GraphConvolution(hidden_feature, input_feature, node_n=node_n)
 
         self.do = nn.Dropout(p_dropout)
-        self.act_f = nn.Elu()
+        F.elu = nn.F.Elu()
         self.residual = residual
 
     def forward(self, x):
         y = self.gc1(x)
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
+        y = F.elu(y)
         y = self.do(y)
 
         for i in range(self.num_stage):
@@ -136,7 +137,7 @@ class Motion_GCN(nn.Module):
             # y = self.gc7(y)
             # b, n, f = y.shape
             # y = self.bn7(y.view(b, -1)).view(b, n, f)
-            # y = self.act_f(y)
+            # y = F.elu(y)
             # y = self.do(y)
 
         return y
