@@ -189,7 +189,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
                     l1_loss = l1_loss + (0.5 * reg * torch.sum(torch.pow(param, 1)))
         # print(l2_loss)
         _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
-        loss = loss + l1_loss
+        # loss = loss + l1_loss
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
         loss_list.append(loss.item())
