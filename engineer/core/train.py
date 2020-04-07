@@ -41,11 +41,11 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     start_epoch = cfg.resume.start
     lr_now = cfg.optim_para.optimizer.lr
 
-    ###############################################
-    ## test the checkpoint
-    G_meta = "./checkpoints/_tempconfig/ckpt_train_3D_in10_out10_dct_n_15Original+L1_best.pth.tar"
-    model.load_state_dict(torch.load(G_meta)["state_dict"])
-    ###############################################
+    # ###############################################
+    # ## test the checkpoint
+    # G_meta = "./checkpoints/_tempconfig/ckpt_train_3D_in10_out10_dct_n_15Original+L1_best.pth.tar"
+    # model.load_state_dict(torch.load(G_meta)["state_dict"])
+    # ###############################################
 
     model.train()
     acts = test_loaders.keys()
