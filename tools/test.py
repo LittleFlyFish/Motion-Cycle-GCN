@@ -3,6 +3,7 @@ import numpy
 from engineer.utils import loss_funcs
 from engineer.utils import data_utils as data_utils
 import time
+import random
 import torch
 import torch.nn as nn
 import torch.optim

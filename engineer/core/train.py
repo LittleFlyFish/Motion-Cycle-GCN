@@ -2,6 +2,7 @@ import engineer.utils.logging as logging
 logger = logging.get_logger(__name__)
 from engineer.utils import utils
 import time
+import random
 import torch
 import torch.nn as nn
 import torch.optim
@@ -166,7 +167,13 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         # outputs_seq = model(inputs)
         # outputs = data_utils.seq2dct(outputs_seq, 15)
-        outputs = model(inputs)
+        r1 = random.randint(0, 66)
+        r2 = random.randint(0, 1)
+        if r2 == 0:
+            outputs = model(inputs)
+        else:
+            inputs[:, r1, :] = 0
+            outputs = model(inputs)
 
         # Mloss = nn.MSELoss()
         # loss2 = Mloss(outputs_seq, all_seq[:, :, dim_used])
