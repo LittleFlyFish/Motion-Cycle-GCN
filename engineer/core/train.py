@@ -43,7 +43,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
 
     ###############################################
     ## test the checkpoint
-    G_meta = "./checkpoints/_tempconfig/ckpt_train_3D_in10_out10_dct_n_15Original+L1_best.pth"
+    G_meta = "./checkpoints/_tempconfig/ckpt_train_3D_in10_out10_dct_n_15Original+L1_best.pth.tar"
     model.load_state_dict(torch.load(G_meta)["state_dict"])
     ###############################################
 
