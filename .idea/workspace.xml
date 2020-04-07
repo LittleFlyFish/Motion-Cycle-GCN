@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -171,13 +171,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00341" summary=" &quot;nice&quot;">
-      <created>1586049223014</created>
-      <option name="number" value="00341" />
-      <option name="presentableId" value="LOCAL-00341" />
-      <option name="project" value="LOCAL" />
-      <updated>1586049223014</updated>
     </task>
     <task id="LOCAL-00342" summary=" &quot;nice&quot;">
       <created>1586049492766</created>
@@ -515,7 +508,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586276111197</updated>
     </task>
-    <option name="localTasksCounter" value="390" />
+    <task id="LOCAL-00390" summary=" &quot;nice&quot;">
+      <created>1586283852491</created>
+      <option name="number" value="00390" />
+      <option name="presentableId" value="LOCAL-00390" />
+      <option name="project" value="LOCAL" />
+      <updated>1586283852492</updated>
+    </task>
+    <option name="localTasksCounter" value="391" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

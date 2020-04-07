@@ -167,7 +167,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         # outputs_seq = model(inputs)
         # outputs = data_utils.seq2dct(outputs_seq, 15)
-        r1 = random.randint(0, 66)
+        r1 = random.randint(0, 65)
         r2 = random.randint(0, 1)
         if r2 == 0:
             outputs = model(inputs)
