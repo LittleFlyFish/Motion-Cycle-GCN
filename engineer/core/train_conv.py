@@ -174,7 +174,14 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         i_idx = np.append(np.arange(0, 10), pad_idx)
         seq = all_seq[:, :, dim_used]
         seq = seq[:, i_idx, :]
-        outputs = model(inputs, seq)
+        # outputs = model(inputs, seq)
+        r1 = random.randint(0, 65)
+        r2 = random.randint(0, 1)
+        if r2 == 0:
+            outputs = model(inputs, seq)
+        else:
+            inputs[:, r1, :] = 0
+            outputs = model(inputs, seq)
 
         # Mloss = nn.MSELoss()
         # loss2 = Mloss(outputs_seq, all_seq[:, :, dim_used])
@@ -239,7 +246,14 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, cuda_num='
         i_idx = np.append(np.arange(0, 10), pad_idx)
         seq = all_seq[:, :, dim_used]
         seq = seq[:, i_idx, :]
-        outputs = model(inputs, seq)
+        # outputs = model(inputs, seq)
+        r1 = random.randint(0, 65)
+        r2 = random.randint(0, 1)
+        if r2 == 0:
+            outputs = model(inputs, seq)
+        else:
+            inputs[:, r1, :] = 0
+            outputs = model(inputs, seq)
 
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used_len = len(dim_used)
@@ -303,7 +317,14 @@ def val(train_loader, model, is_cuda=False, cuda_num='cuda:0', dim_used=[], dct_
         i_idx = np.append(np.arange(0, 10), pad_idx)
         seq = all_seq[:, :, dim_used]
         seq = seq[:, i_idx, :]
-        outputs = model(inputs, seq)
+        # outputs = model(inputs, seq)
+        r1 = random.randint(0, 65)
+        r2 = random.randint(0, 1)
+        if r2 == 0:
+            outputs = model(inputs, seq)
+        else:
+            inputs[:, r1, :] = 0
+            outputs = model(inputs, seq)
 
         n, _, _ = all_seq.data.shape
 
