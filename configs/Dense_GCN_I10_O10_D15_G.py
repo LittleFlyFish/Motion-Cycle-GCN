@@ -12,8 +12,8 @@ data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
-cuda_num ='cuda:3'
-flag = 'Dense+conv3+RELU'
+cuda_num ='cuda:0'
+flag = 'Dense+Conv3+DropNode'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
