@@ -13,7 +13,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num ='cuda:2'
-flag = 'Dense+DropNode'
+flag = 'Dense+NewPCycle'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),

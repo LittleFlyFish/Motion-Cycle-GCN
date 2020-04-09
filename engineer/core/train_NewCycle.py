@@ -199,6 +199,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # print(loss2, loss3)
 
         # calculate loss and backward
+        loss = Variable(loss, requires_grad=True)
+        loss_cycle = Variable(loss_cycle, requires_grad=True)
         with torch.enable_grad():
             reg = 1e-6
             l1_loss = torch.zeros(1).to(cuda_num)
