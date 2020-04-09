@@ -176,5 +176,5 @@ class P_GCN(nn.Module):
         # right_I = self.P(left_I)
         # x[:, self.rightdim, :] = right_I
         y, _ = self.attention(x, x)
-        #y = self.P(y)
+        # y = self.P(x)
         return y
