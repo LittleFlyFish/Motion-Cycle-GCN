@@ -170,17 +170,17 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             inputs = Variable(inputs.cuda(cuda_num)).float()
             all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
-        left = np.array([0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16])  # the index of left parts of INPUT data
-        leftdim = np.concatenate((left * 3, left * 3 + 1, left * 3 + 2))
-        right = np.array(
-            [4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21])  # the index of the right parts of the INPUT data
-        rightdim = np.concatenate((right * 3, right * 3 + 1, right * 3 + 2))
-        left_input = inputs
-        right_input = inputs
-        left_input[:, leftdim, :] = 0
-        right_input[:, rightdim, :] = 0
-        left_outputs = model(left_input)
-        right_outputs = model(right_input)
+        # left = np.array([0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16])  # the index of left parts of INPUT data
+        # leftdim = np.concatenate((left * 3, left * 3 + 1, left * 3 + 2))
+        # right = np.array(
+        #     [4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21])  # the index of the right parts of the INPUT data
+        # rightdim = np.concatenate((right * 3, right * 3 + 1, right * 3 + 2))
+        # left_input = inputs
+        # right_input = inputs
+        # left_input[:, leftdim, :] = 0
+        # right_input[:, rightdim, :] = 0
+        # left_outputs = model(left_input)
+        # right_outputs = model(right_input)
         outputs = model(inputs)
 
         # Mloss = nn.MSELoss()
@@ -197,8 +197,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
                     l1_loss = l1_loss + (0.5 * reg * torch.sum(torch.pow(param, 1)))
         # print(l2_loss)
         _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
-        _, loss_left = loss_funcs.mpjpe_error_p3d(left_outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
-        _, loss_right = loss_funcs.mpjpe_error_p3d(right_outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
+        # _, loss_left = loss_funcs.mpjpe_error_p3d(left_outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
+        # _, loss_right = loss_funcs.mpjpe_error_p3d(right_outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         loss = loss# + loss_left + loss_right
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())

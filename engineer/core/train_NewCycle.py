@@ -187,11 +187,11 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         right_outputs = model(right_input)
         right_outputs[:, leftdim, :] = 0
         R_outputs = model(right_outputs)
-
-        outputs = model(inputs)
         Cycle_outputs = inputs
         Cycle_outputs[:, leftdim, :] = R_outputs[:, leftdim, :]
         Cycle_outputs[:, rightdim, :] = L_outputs[:, rightdim, :]
+
+        outputs = model(inputs)
 
         # Mloss = nn.MSELoss()
         # loss2 = Mloss(outputs_seq, all_seq[:, :, dim_used])

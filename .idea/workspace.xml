@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_NewCycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_NewCycle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/core/train_NewPCycle.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_NewPCycle.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -171,13 +172,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00362" summary=" &quot;nice&quot;">
-      <created>1586113510732</created>
-      <option name="number" value="00362" />
-      <option name="presentableId" value="LOCAL-00362" />
-      <option name="project" value="LOCAL" />
-      <updated>1586113510732</updated>
     </task>
     <task id="LOCAL-00363" summary=" &quot;nice&quot;">
       <created>1586113603835</created>
@@ -515,7 +509,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586473997402</updated>
     </task>
-    <option name="localTasksCounter" value="411" />
+    <task id="LOCAL-00411" summary=" &quot;nice&quot;">
+      <created>1586475594677</created>
+      <option name="number" value="00411" />
+      <option name="presentableId" value="LOCAL-00411" />
+      <option name="project" value="LOCAL" />
+      <updated>1586475594678</updated>
+    </task>
+    <option name="localTasksCounter" value="412" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
