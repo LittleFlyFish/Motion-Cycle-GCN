@@ -171,10 +171,10 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
         left = np.array([0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16])  # the index of left parts of INPUT data
-        leftdim = np.concatenate((self.left * 3, self.left * 3 + 1, self.left * 3 + 2))
+        leftdim = np.concatenate((left * 3, left * 3 + 1, left * 3 + 2))
         right = np.array(
             [4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21])  # the index of the right parts of the INPUT data
-        rightdim = np.concatenate((self.right * 3, self.right * 3 + 1, self.right * 3 + 2))
+        rightdim = np.concatenate((right * 3, right * 3 + 1, right * 3 + 2))
         left_input = inputs
         right_input = inputs
         left_input[:, leftdim, :] = 0
