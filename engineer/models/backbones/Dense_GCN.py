@@ -66,8 +66,8 @@ class Dense_GCN(nn.Module):
         super(Dense_GCN, self).__init__()
         self.num_stage = num_stage
 
-        # self.gc1 = GraphConvolution(input_feature + 16 + 14 + 11, hidden_feature, node_n=node_n)
-        self.gc1 = GraphConvolution(input_feature, hidden_feature, node_n=node_n)
+        self.gc1 = GraphConvolution(input_feature + 16 + 14 + 11, hidden_feature, node_n=node_n)
+        # self.gc1 = GraphConvolution(input_feature, hidden_feature, node_n=node_n)
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)
         self.bn7 = nn.BatchNorm1d(node_n * input_feature)
         self.bnc1 = nn.BatchNorm1d(node_n * 16)
@@ -109,8 +109,8 @@ class Dense_GCN(nn.Module):
         y_c3 = self.act_f(y_c3)
         y_c3 = self.do(y_c3)
 
-        # y = torch.cat((y_c1, y_c2, y_c3, x), dim=2)
-        y = x
+        y = torch.cat((y_c1, y_c2, y_c3, x), dim=2)
+        # y = x
 
         y = self.gc1(y)
         b, n, f = y.shape
