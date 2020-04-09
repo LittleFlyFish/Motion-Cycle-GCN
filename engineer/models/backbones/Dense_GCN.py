@@ -90,24 +90,24 @@ class Dense_GCN(nn.Module):
         self.do = nn.Dropout(p_dropout)
         self.act_f = nn.LeakyReLU()
 
-    def forward(self, x, seq):
-        y_c1 = self.conv1(seq.transpose(1, 2)) # [16, 66, 16]
-        b, n, f = y_c1.shape
-        y_c1 = self.bnc1(y_c1.view(b, -1)).view(b, n, f)
-        y_c1 = self.act_f(y_c1)
-        y_c1 = self.do(y_c1)
-
-        y_c2 = self.conv2(seq.transpose(1, 2)) # [16, 66, 14]
-        b, n, f = y_c2.shape
-        y_c2 = self.bnc2(y_c2.view(b, -1)).view(b, n, f)
-        y_c2 = self.act_f(y_c2)
-        y_c2 = self.do(y_c2)
-
-        y_c3 = self.conv3(seq.transpose(1, 2)) # [16, 66, 11]
-        b, n, f = y_c3.shape
-        y_c3 = self.bnc3(y_c3.view(b, -1)).view(b, n, f)
-        y_c3 = self.act_f(y_c3)
-        y_c3 = self.do(y_c3)
+    def forward(self, x):
+        # y_c1 = self.conv1(seq.transpose(1, 2)) # [16, 66, 16]
+        # b, n, f = y_c1.shape
+        # y_c1 = self.bnc1(y_c1.view(b, -1)).view(b, n, f)
+        # y_c1 = self.act_f(y_c1)
+        # y_c1 = self.do(y_c1)
+        #
+        # y_c2 = self.conv2(seq.transpose(1, 2)) # [16, 66, 14]
+        # b, n, f = y_c2.shape
+        # y_c2 = self.bnc2(y_c2.view(b, -1)).view(b, n, f)
+        # y_c2 = self.act_f(y_c2)
+        # y_c2 = self.do(y_c2)
+        #
+        # y_c3 = self.conv3(seq.transpose(1, 2)) # [16, 66, 11]
+        # b, n, f = y_c3.shape
+        # y_c3 = self.bnc3(y_c3.view(b, -1)).view(b, n, f)
+        # y_c3 = self.act_f(y_c3)
+        # y_c3 = self.do(y_c3)
 
         # y = torch.cat((y_c1, y_c2, y_c3, x), dim=2)
         y = x
