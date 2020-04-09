@@ -199,8 +199,6 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # print(loss2, loss3)
 
         # calculate loss and backward
-        loss = Variable(loss, requires_grad=True)
-        loss_cycle = Variable(loss_cycle, requires_grad=True)
         with torch.enable_grad():
             reg = 1e-6
             l1_loss = torch.zeros(1).to(cuda_num)
@@ -211,6 +209,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         _, loss_cycle = loss_funcs.mpjpe_error_p3d(Cycle_outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         loss = loss + loss_cycle
+        loss = Variable(loss, requires_grad=True)
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
         loss_list.append(loss.item())
