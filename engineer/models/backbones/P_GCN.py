@@ -155,10 +155,10 @@ class P_GCN(nn.Module):
         """
         super(P_GCN, self).__init__()
         self.num_stage = num_stage
-        # self.left = np.array([0,1,2,3,8,9,10,11,12,13,14,15,16]) # the index of left parts of INPUT data
-        # self.leftdim = np.concatenate((self.left * 3, self.left * 3 + 1, self.left * 3 + 2))
-        # self.right = np.array([4,5,6,7,8,9,10,11,17,18,19,20,21]) # the index of the right parts of the INPUT data
-        # self.rightdim = np.concatenate((self.right * 3, self.right * 3 + 1, self.right * 3 + 2))
+        self.left = np.array([0,1,2,3,8,9,10,11,12,13,14,15,16]) # the index of left parts of INPUT data
+        self.leftdim = np.concatenate((self.left * 3, self.left * 3 + 1, self.left * 3 + 2))
+        self.right = np.array([4,5,6,7,8,9,10,11,17,18,19,20,21]) # the index of the right parts of the INPUT data
+        self.rightdim = np.concatenate((self.right * 3, self.right * 3 + 1, self.right * 3 + 2))
 
         # when H3.6M
         #       left_index = []
@@ -175,6 +175,6 @@ class P_GCN(nn.Module):
         # left_I = x[:, self.leftdim, :]
         # right_I = self.P(left_I)
         # x[:, self.rightdim, :] = right_I
-        y, _ = self.attention(x, x)
+        # y, _ = self.attention(x, x)
         # y = self.P(x)
         return y
