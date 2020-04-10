@@ -172,8 +172,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
 
         left = np.array([0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16])  # the index of left parts of INPUT data
         leftdim = np.concatenate((left * 3, left * 3 + 1, left * 3 + 2))
-        right = np.array(
-            [4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21])  # the index of the right parts of the INPUT data
+        right = np.array([4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21])  # the index of the right parts of the INPUT data
         rightdim = np.concatenate((right * 3, right * 3 + 1, right * 3 + 2))
         left_input = inputs
         right_input = inputs
@@ -209,13 +208,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # print(l2_loss)
         _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         _, loss_cycle = loss_funcs.mpjpe_error_p3d(Cycle_outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
-        print('loss')
-        print(loss)
-        print('loss-cycle')
-        print(loss_cycle)
-        print('cycle')
-        loss = loss + loss_cycle
-        print(loss)
+        # loss = loss + loss_cycle
         loss = Variable(loss, requires_grad=True)
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
