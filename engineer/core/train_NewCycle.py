@@ -165,7 +165,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             continue
 
         bt = time.time()
-        loss = 0
+        loss = torch.zeros(1).to(cuda_num)
         loss = Variable(loss, requires_grad=True)
 
         if is_cuda:
