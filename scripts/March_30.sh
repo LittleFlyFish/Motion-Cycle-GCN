@@ -12,4 +12,4 @@ python3 tools/train_offsetloss.py --config ./configs/Motion_GCN_I10_O10_D15_G_of
 python3 tools/train_NewCycle.py --config ./configs/Motion_GCN_I10_O10_D15_G.py
 python3 tools/train_NewPCycle.py --config ./configs/Motion_GCN_I10_O10_D15_G.py # window4, cuda1
 python3 tools/train_NewCycle.py --config ./configs/Dense_GCN_I10_O10_D15_G.py
-python3 tools/train_NewPCycle.py --config ./configs/Dense_GCN_I10_O10_D15_G.py
+python3 tools/train_NewPCycle.py --config ./configs/Dense_GCN_I10_O10_D15_G.py # window3, cuda2
