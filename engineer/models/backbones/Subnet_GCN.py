@@ -116,6 +116,7 @@ class Subnet_GCN(nn.Module):
         for i in range(self.num_stage):
             yr = self.gcbsr[i](yr)
 
+        ytotal= y.clone()
         ytotal[:, 0:33, :] = yl
         ytotal[:, 33:66, :] = yr
 
