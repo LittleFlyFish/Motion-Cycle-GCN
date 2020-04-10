@@ -41,17 +41,9 @@ class Subnet_GCN(nn.Module):
         """
         super(Subnet_GCN, self).__init__()
 
-        # build networks
-        spatial_kernel_size = A.size(0)
-        temporal_kernel_size = 9
-        kernel_size = (temporal_kernel_size, spatial_kernel_size)
         in_channels = 15
         self.hidden_feature = hidden_feature
         self.in_channels = in_channels
-
-        spatial_kernel_size = A_d1.size(0)
-        temporal_kernel_size = 9
-        kernel_size_d1 = (temporal_kernel_size, spatial_kernel_size)
 
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
