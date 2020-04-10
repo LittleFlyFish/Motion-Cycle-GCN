@@ -13,7 +13,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num = 'cuda:0'
-flag = 'Original + Cycle'
+flag = 'Original_lr=0.1'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
