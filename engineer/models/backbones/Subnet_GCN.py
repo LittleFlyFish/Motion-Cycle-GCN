@@ -109,7 +109,7 @@ class Subnet_GCN(nn.Module):
 
         yr = self.gc1r(x_right)
         b, n, f = yr.shape
-        yr = self.bn1(yr.view(b, -1)).view(b, n, f)
+        yr = self.bn1r(yr.view(b, -1)).view(b, n, f)
         yr = self.act(yr)
         yr = self.do(yr)
 
