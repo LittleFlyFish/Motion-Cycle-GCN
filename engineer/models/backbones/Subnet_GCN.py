@@ -30,7 +30,7 @@ class Subnet_GCN(nn.Module):
     the out feature of encoder is  [batch, node_dim, feature_len], this is dct feature version.
     '''
 
-    def __init__(self, hidden_feature, dropout, num_stage, residual= True, **kwargs):
+    def __init__(self, hidden_feature, dropout, num_stage=1, node_n=48, residual=True):
         """
 
         :param input_feature: num of input feature, dct_n
@@ -46,7 +46,7 @@ class Subnet_GCN(nn.Module):
         self.in_channels = in_channels
 
         self.do = nn.Dropout(dropout)
-        self.act_f = nn.LeakyReLU()
+        self.act = nn.Tanh() # nn.LeakyReLU()
         self.gc1 = GraphConvolution(in_channels, hidden_feature, node_n=66)
         self.gc1l = GraphConvolution(in_channels, hidden_feature, node_n=33)
         self.gc1r = GraphConvolution(in_channels, hidden_feature, node_n=33)
