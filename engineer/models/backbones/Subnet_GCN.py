@@ -63,13 +63,13 @@ class Subnet_GCN(nn.Module):
 
         self.gcbsl = []
         for i in range(num_stage):
-            self.gcbsl.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=node_n))
+            self.gcbsl.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=33))
 
         self.gcbsl = nn.ModuleList(self.gcbsl)
 
         self.gcbsr = []
         for i in range(num_stage):
-            self.gcbsr.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=node_n))
+            self.gcbsr.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=33))
 
         self.gcbsr = nn.ModuleList(self.gcbsr)
 
