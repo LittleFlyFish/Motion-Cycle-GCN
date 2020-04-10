@@ -30,7 +30,7 @@ class Subnet_GCN(nn.Module):
     the out feature of encoder is  [batch, node_dim, feature_len], this is dct feature version.
     '''
 
-    def __init__(self, hidden_feature, dropout, num_stage=1, node_n=48, residual=True):
+    def __init__(self, input_feature, hidden_feature, dropout, num_stage=1, node_n=48, residual=True):
         """
 
         :param input_feature: num of input feature, dct_n
@@ -41,7 +41,7 @@ class Subnet_GCN(nn.Module):
         """
         super(Subnet_GCN, self).__init__()
 
-        in_channels = 15
+        in_channels = input_feature
         self.hidden_feature = hidden_feature
         self.in_channels = in_channels
 
