@@ -107,7 +107,7 @@ class Subnet_GCN(nn.Module):
         for i in range(self.num_stage):
             yl = self.gcbsl[i](yl)
 
-        yr = self.gc1(x_right)
+        yr = self.gc1r(x_right)
         b, n, f = yr.shape
         yr = self.bn1(yr.view(b, -1)).view(b, n, f)
         yr = self.act(yr)
