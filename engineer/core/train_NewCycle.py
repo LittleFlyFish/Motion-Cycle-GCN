@@ -170,16 +170,15 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             inputs = Variable(inputs.cuda(cuda_num)).float()
             all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
-        [a, b, c] = inputs.shape
 
         left = np.array([0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16])  # the index of left parts of INPUT data
         leftdim = np.concatenate((left * 3, left * 3 + 1, left * 3 + 2))
         right = np.array([4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21])  # the index of the right parts of the INPUT data
         rightdim = np.concatenate((right * 3, right * 3 + 1, right * 3 + 2))
-        left_input = torch.zeros([a, b, c], dtype=inputs.dtype, device=cuda_num)
-        right_input = torch.zeros([a, b, c], dtype=inputs.dtype, device=cuda_num)
-        left_input[:, rightdim, :] = inputs[:, rightdim, :]
-        right_input[:, leftdim, :] = inputs[:, leftdim, :]
+        left_input = inputs.clone()
+        right_input = inputs.clone()
+        left_input[:, leftdim, :] = 0
+        right_input[:, rightdim, :] = 0
 
         left_outputs = model(left_input)
         left_outputs[:, rightdim, :] = 0
@@ -189,7 +188,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         right_outputs[:, leftdim, :] = 0
         R_outputs = model(right_outputs)
 
-        Cycle_outputs = torch.zeros([a, b, c], dtype=inputs.dtype, device=cuda_num)
+        Cycle_outputs = inputs.clone()
         Cycle_outputs[:, leftdim, :] = R_outputs[:, leftdim, :]
         Cycle_outputs[:, rightdim, :] = L_outputs[:, rightdim, :]
 
