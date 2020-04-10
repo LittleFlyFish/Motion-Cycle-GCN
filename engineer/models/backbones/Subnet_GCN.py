@@ -22,16 +22,15 @@ from engineer.models.common.GraphDownUp import GraphDownSample, GraphUpSample
 from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, GC_Block
 
 
-
-
 @BACKBONES.register_module
-class Multi_GCN(nn.Module):
+class Subnet_GCN(nn.Module):
     '''
     Use GCN as encoder, and then use gcn as a decoder
     The input is [batch, node_dim, dct_n]   # for example, [16, 66, 15]
     the out feature of encoder is  [batch, node_dim, feature_len], this is dct feature version.
     '''
-    def __init__(self,  hidden_feature, layout, strategy, dropout, num_stage, residual, **kwargs):
+
+    def __init__(self, hidden_feature, layout, strategy, dropout, num_stage, residual, **kwargs):
         """
 
         :param input_feature: num of input feature, dct_n
@@ -40,7 +39,7 @@ class Multi_GCN(nn.Module):
         :param num_stage: number of residual blocks
         :param node_n: number of nodes in graph
         """
-        super(Multi_GCN, self).__init__()
+        super(Subnet_GCN, self).__init__()
         # load graph
         self.graph = Graph(layout=layout, strategy=strategy)
         A = torch.tensor(self.graph.A, dtype=torch.float32, requires_grad=False)
@@ -65,19 +64,30 @@ class Multi_GCN(nn.Module):
         self.do = nn.Dropout(dropout)
         self.act_f = nn.LeakyReLU()
         self.gc1 = GraphConvolution(in_channels, hidden_feature, node_n=66)
-        self.gc2 = GraphConvolution(hidden_feature, in_channels, node_n=66)
-        self.gc3 = GraphConvolution(hidden_feature, in_channels, node_n=66)
-        self.gc4 = GraphConvolution(hidden_feature, in_channels, node_n=66)
+        self.gc1l = GraphConvolution(in_channels, hidden_feature, node_n=33)
+        self.gc1r = GraphConvolution(in_channels, hidden_feature, node_n=33)
+        self.gc7 = GraphConvolution(2 * hidden_feature, in_channels, node_n=66)
 
         self.residual = residual
         node_n = 66
 
         self.gcbs = []
-        for i in range(num_stage[0] + num_stage[1] + num_stage[2]):
+        for i in range(num_stage):
             self.gcbs.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=node_n))
 
         self.gcbs = nn.ModuleList(self.gcbs)
 
+        self.gcbsl = []
+        for i in range(num_stage):
+            self.gcbsl.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=node_n))
+
+        self.gcbsl = nn.ModuleList(self.gcbsl)
+
+        self.gcbsr = []
+        for i in range(num_stage):
+            self.gcbsr.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=node_n))
+
+        self.gcbsr = nn.ModuleList(self.gcbsr)
 
         # #list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
         # list1 = [[0,1], [1,2], [2,3], [4,5], [5,6], [6,7], [8,9], [9,10], [10,11],
@@ -85,48 +95,50 @@ class Multi_GCN(nn.Module):
         #
         # list2 = [[0,1,2], [3,4,5], [6,7,8], [9,10,11,12], [13,14,15,16]]
         # list3 = [[0,1,2,3,4]]
-        # self.gd1 = GraphDownSample(in_channels, in_channels, list1)
-        # self.gu1 = GraphUpSample(in_channels + hidden_feature, in_channels + hidden_feature, list1)
-        #
-        # self.gd2 = GraphDownSample(hidden_feature, hidden_feature, list2)
-        # self.gu2= GraphUpSample(hidden_feature, hidden_feature, list2)
-        #
-        # self.gcn = Motion_GCN(input_feature=in_channels + hidden_feature, hidden_feature= hidden_feature, p_dropout=0.5, num_stage=12, node_n=17*3, residual=False)
-        #
-        # self.fullgcn = Motion_GCN(input_feature=in_channels, hidden_feature=hidden_feature, p_dropout=0.5, num_stage=12, node_n=66, residual=False)
 
-        self.bn1 = nn.BatchNorm1d(node_n * hidden_feature) # 15 is in_channel
+        self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)  # 15 is in_channel
+        self.bn1l = nn.BatchNorm1d(33 * hidden_feature)  # 15 is in_channel
+        self.bn1r = nn.BatchNorm1d(33 * hidden_feature)  # 15 is in_channel
         self.num_stage = num_stage
 
-
     def forward(self, x):
+
+        x_left = x[:, 0:33, :]
+        x_right = x[:, 33:66, :]
         y = self.gc1(x)
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
-        y = self.act_f(y)
+        y = self.act(y)
         y = self.do(y)
 
-        for i in range(self.num_stage[0]):
+        for i in range(self.num_stage):
             y = self.gcbs[i](y)
 
-        y1 = y
-        y1a = self.gc2(y)
+        yl = self.gc1l(x_left)
+        b, n, f = yl.shape
+        yl = self.bn1l(yl.view(b, -1)).view(b, n, f)
+        yl = self.act(yl)
+        yl = self.do(yl)
 
+        for i in range(self.num_stage):
+            yl = self.gcbsl[i](yl)
 
-        for i in range(self.num_stage[1]):
-            y = self.gcbs[i + self.num_stage[0]](y)
+        yr = self.gc1(x_right)
+        b, n, f = yr.shape
+        yr = self.bn1(yr.view(b, -1)).view(b, n, f)
+        yr = self.act(yr)
+        yr = self.do(yr)
 
-        y2 = y1 + y
-        y2a = self.gc3(y2)
+        for i in range(self.num_stage):
+            yr = self.gcbsr[i](yr)
 
-        for i in range(self.num_stage[2]):
-            y = self.gcbs[i + self.num_stage[0] + self.num_stage[1]](y)
+        ytotal[:, 0:33, :] = yl
+        ytotal[:, 33:66, :] = yr
 
-        y3 = y2 + y
-        y3a = self.gc4(y3)
+        y = torch.cat([ytotal, y], dim=2)
 
-        y1a = y1a + x
-        y2a = y2a + x
-        y3a = y3a + x
+        if self.residual == True:
+            y = self.gc7(y)
+            y = y + x
 
-        return y1a, y2a, y3a
+        return y
