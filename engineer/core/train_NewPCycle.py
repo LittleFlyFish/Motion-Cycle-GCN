@@ -201,7 +201,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         _, loss_left = loss_funcs.mpjpe_error_p3d(left_outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         _, loss_right = loss_funcs.mpjpe_error_p3d(right_outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
-        loss = loss + 0.1 * (loss_left + loss_right)
+        loss = loss + 0.01 * (loss_left + loss_right)
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
         loss_list.append(loss.item())
