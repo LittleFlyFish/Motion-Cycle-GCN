@@ -187,6 +187,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         right_outputs = model(right_input)
         right_outputs[:, leftdim, :] = 0
         R_outputs = model(right_outputs)
+
         Cycle_outputs = inputs
         Cycle_outputs[:, leftdim, :] = R_outputs[:, leftdim, :]
         Cycle_outputs[:, rightdim, :] = L_outputs[:, rightdim, :]
@@ -208,6 +209,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # print(l2_loss)
         _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         _, loss_cycle = loss_funcs.mpjpe_error_p3d(Cycle_outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
+        print(loss)
+        print(loss_cycle)
         loss = loss + loss_cycle
         loss = Variable(loss, requires_grad=True)
         num += 1
