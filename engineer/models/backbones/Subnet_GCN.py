@@ -30,7 +30,7 @@ class Subnet_GCN(nn.Module):
     the out feature of encoder is  [batch, node_dim, feature_len], this is dct feature version.
     '''
 
-    def __init__(self, hidden_feature, layout, strategy, dropout, num_stage, residual, **kwargs):
+    def __init__(self, hidden_feature, dropout, num_stage, residual, **kwargs):
         """
 
         :param input_feature: num of input feature, dct_n
@@ -40,14 +40,6 @@ class Subnet_GCN(nn.Module):
         :param node_n: number of nodes in graph
         """
         super(Subnet_GCN, self).__init__()
-        # load graph
-        self.graph = Graph(layout=layout, strategy=strategy)
-        A = torch.tensor(self.graph.A, dtype=torch.float32, requires_grad=False)
-        self.register_buffer('A', A)
-
-        self.graph_d1 = Graph(layout="h36m_d1", strategy=strategy)
-        A_d1 = torch.tensor(self.graph_d1.A, dtype=torch.float32, requires_grad=False)
-        self.register_buffer('A_d1', A_d1)
 
         # build networks
         spatial_kernel_size = A.size(0)
