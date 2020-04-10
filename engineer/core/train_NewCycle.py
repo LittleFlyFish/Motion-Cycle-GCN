@@ -165,6 +165,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             continue
 
         bt = time.time()
+        loss = 0
+        loss = Variable(loss, requires_grad=True)
 
         if is_cuda:
             inputs = Variable(inputs.cuda(cuda_num)).float()
@@ -206,10 +208,10 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
                 if 'bias' not in name:
                     l1_loss = l1_loss + (0.5 * reg * torch.sum(torch.pow(param, 1)))
         # print(l2_loss)
-        _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
-        # _, loss_cycle = loss_funcs.mpjpe_error_p3d(Cycle_outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
-        # loss = loss1 + 0.1 * loss_cycle
-        # loss = Variable(loss, requires_grad=True)
+        _, loss1 = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
+        _, loss_cycle = loss_funcs.mpjpe_error_p3d(Cycle_outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
+        loss = loss1# + 0.1 * loss_cycle
+
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
         loss_list.append(loss.item())
