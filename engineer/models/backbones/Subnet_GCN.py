@@ -51,6 +51,8 @@ class Subnet_GCN(nn.Module):
         self.gc1l = GraphConvolution(in_channels, hidden_feature, node_n=33)
         self.gc1r = GraphConvolution(in_channels, hidden_feature, node_n=33)
         self.gc7 = GraphConvolution(2 * hidden_feature, in_channels, node_n=66)
+        self.gc7l = GraphConvolution(in_channels, hidden_feature, node_n=33)
+        self.gc7r = GraphConvolution(in_channels, hidden_feature, node_n=33)
 
         self.residual = residual
         node_n = 66
@@ -125,5 +127,9 @@ class Subnet_GCN(nn.Module):
         if self.residual == True:
             y = self.gc7(y)
             y = y + x
+            yr = self.gc7r(yr)
+            yr = yr + x_right
+            yl = self.gc7l(yl)
+            yl = yl + x_left
 
         return y, yl, yr
