@@ -202,7 +202,7 @@ class Subnet_GCN(nn.Module):
         yV[:, self.V4dim, :] = yv4
 
         y = torch.cat([yV, ytotal, y], dim=2)
-        y = torch.cat([ytotal, y], dim=2)
+        # y = torch.cat([ytotal, y], dim=2)
 
         if self.residual == True:
             y = self.gc7(y)
