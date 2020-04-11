@@ -170,11 +170,14 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
             inputs = Variable(inputs.cuda(cuda_num)).float()
             all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
-
+        left = np.array([0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16])  # the index of left parts of INPUT data
+        leftdim = np.concatenate((left * 3, left * 3 + 1, left * 3 + 2))
+        right = np.array([4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21])  # the index of the right parts of the INPUT data
+        rightdim = np.concatenate((right * 3, right * 3 + 1, right * 3 + 2))
         outputs, YL, YR = model(inputs)
         outputs_Sub = outputs.clone()
-        outputs_Sub[:, 0:33, :] = YL
-        outputs_Sub[:, 33:66, :] = YR
+        outputs_Sub[:, leftdim, :] = YL
+        outputs_Sub[:, rightdim, :] = YR
 
         # Mloss = nn.MSELoss()
         # loss2 = Mloss(outputs_seq, all_seq[:, :, dim_used])
