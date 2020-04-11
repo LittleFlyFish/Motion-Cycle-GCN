@@ -46,7 +46,7 @@ class Subnet_GCN(nn.Module):
         self.in_channels = in_channels
 
         self.do = nn.Dropout(dropout)
-        self.act =  nn.LeakyReLU()
+        self.act =  nn.Tanh() #nn.LeakyReLU()
         self.gc1 = GraphConvolution(in_channels, hidden_feature, node_n=66)
         self.gc1l = GraphConvolution(in_channels, hidden_feature, node_n=39)
         self.gc1r = GraphConvolution(in_channels, hidden_feature, node_n=39)
@@ -101,12 +101,6 @@ class Subnet_GCN(nn.Module):
             self.gcbv4.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=6))
         self.gcbv4 = nn.ModuleList(self.gcbv4)
 
-        # #list1 = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15,16], [17,18,19,20,21]]
-        # list1 = [[0,1], [1,2], [2,3], [4,5], [5,6], [6,7], [8,9], [9,10], [10,11],
-        #            [12,13], [13,14], [15], [14,16], [17,18], [18,19], [20], [19,21]] #17
-        #
-        # list2 = [[0,1,2], [3,4,5], [6,7,8], [9,10,11,12], [13,14,15,16]]
-        # list3 = [[0,1,2,3,4]]
 
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)  # 15 is in_channel
         self.bn1l = nn.BatchNorm1d(39 * hidden_feature)  # 15 is in_channel
@@ -136,10 +130,10 @@ class Subnet_GCN(nn.Module):
 
         x_left = x[:, self.leftdim, :]
         x_right = x[:, self.rightdim, :]
-        # x_V1 = x[:, self.V1dim, :]
-        # x_V2 = x[:, self.V2dim, :]
-        # x_V3 = x[:, self.V3dim, :]
-        # x_V4 = x[:, self.V4dim, :]
+        x_V1 = x[:, self.V1dim, :]
+        x_V2 = x[:, self.V2dim, :]
+        x_V3 = x[:, self.V3dim, :]
+        x_V4 = x[:, self.V4dim, :]
 
         y = self.gc1(x)
         b, n, f = y.shape
@@ -166,57 +160,57 @@ class Subnet_GCN(nn.Module):
         for i in range(self.num_stage):
             yr = self.gcbsr[i](yr)
 
-        # yv1 = self.gc1v1()
-        # b, n, f = yv1.shape
-        # yv1 = self.bn1v1(yv1.view(b, -1)).view(b, n, f)
-        # yv1 = self.act(yv1)
-        # yv1 = self.do(yv1)
-        # for i in range(self.num_stage):
-        #     yv1 = self.gcbv1[i](yv1)
-        #
-        # yv1 = self.gc1v1(x_V1)
-        # b, n, f = yv1.shape
-        # yv1 = self.bn1v1(yv1.view(b, -1)).view(b, n, f)
-        # yv1 = self.act(yv1)
-        # yv1 = self.do(yv1)
-        # for i in range(self.num_stage):
-        #     yv1 = self.gcbv1[i](yv1)
-        #
-        # yv2 = self.gc1v2(x_V2)
-        # b, n, f = yv2.shape
-        # yv2 = self.bn1v2(yv2.view(b, -1)).view(b, n, f)
-        # yv2 = self.act(yv2)
-        # yv2 = self.do(yv2)
-        # for i in range(self.num_stage):
-        #     yv2 = self.gcbv2[i](yv2)
-        #
-        # yv3 = self.gc1v3(x_V3)
-        # b, n, f = yv3.shape
-        # yv3 = self.bn1v3(yv3.view(b, -1)).view(b, n, f)
-        # yv3 = self.act(yv3)
-        # yv3 = self.do(yv3)
-        # for i in range(self.num_stage):
-        #     yv3 = self.gcbv3[i](yv3)
-        #
-        # yv4 = self.gc1v4(x_V4)
-        # b, n, f = yv4.shape
-        # yv4 = self.bn1v4(yv4.view(b, -1)).view(b, n, f)
-        # yv4 = self.act(yv4)
-        # yv4 = self.do(yv4)
-        # for i in range(self.num_stage):
-        #     yv4 = self.gcbv4[i](yv4)
+        yv1 = self.gc1v1()
+        b, n, f = yv1.shape
+        yv1 = self.bn1v1(yv1.view(b, -1)).view(b, n, f)
+        yv1 = self.act(yv1)
+        yv1 = self.do(yv1)
+        for i in range(self.num_stage):
+            yv1 = self.gcbv1[i](yv1)
+
+        yv1 = self.gc1v1(x_V1)
+        b, n, f = yv1.shape
+        yv1 = self.bn1v1(yv1.view(b, -1)).view(b, n, f)
+        yv1 = self.act(yv1)
+        yv1 = self.do(yv1)
+        for i in range(self.num_stage):
+            yv1 = self.gcbv1[i](yv1)
+
+        yv2 = self.gc1v2(x_V2)
+        b, n, f = yv2.shape
+        yv2 = self.bn1v2(yv2.view(b, -1)).view(b, n, f)
+        yv2 = self.act(yv2)
+        yv2 = self.do(yv2)
+        for i in range(self.num_stage):
+            yv2 = self.gcbv2[i](yv2)
+
+        yv3 = self.gc1v3(x_V3)
+        b, n, f = yv3.shape
+        yv3 = self.bn1v3(yv3.view(b, -1)).view(b, n, f)
+        yv3 = self.act(yv3)
+        yv3 = self.do(yv3)
+        for i in range(self.num_stage):
+            yv3 = self.gcbv3[i](yv3)
+
+        yv4 = self.gc1v4(x_V4)
+        b, n, f = yv4.shape
+        yv4 = self.bn1v4(yv4.view(b, -1)).view(b, n, f)
+        yv4 = self.act(yv4)
+        yv4 = self.do(yv4)
+        for i in range(self.num_stage):
+            yv4 = self.gcbv4[i](yv4)
 
         ytotal= y.clone()
         yV = y.clone()
         ytotal[:, self.leftdim, :] = yl
         ytotal[:, self.rightdim, :] = yr
-        # yV[:, self.V1dim, :] = yv1
-        # yV[:, self.V2dim, :] = yv2
-        # yV[:, self.V3dim, :] = yv3
-        # yV[:, self.V4dim, :] = yv4
+        yV[:, self.V1dim, :] = yv1
+        yV[:, self.V2dim, :] = yv2
+        yV[:, self.V3dim, :] = yv3
+        yV[:, self.V4dim, :] = yv4
 
-        #y = torch.cat([yV, ytotal, y], dim=2)
-        y = torch.cat([ytotal, y], dim=2)
+        y = torch.cat([yV, ytotal, y], dim=2)
+        # y = torch.cat([ytotal, y], dim=2)
 
         if self.residual == True:
             y = self.gc7(y)
