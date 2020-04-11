@@ -48,15 +48,15 @@ class Subnet_GCN(nn.Module):
         self.do = nn.Dropout(dropout)
         self.act = nn.LeakyReLU()
         self.gc1 = GraphConvolution(in_channels, hidden_feature, node_n=66)
-        self.gc1l = GraphConvolution(in_channels, hidden_feature, node_n=33)
-        self.gc1r = GraphConvolution(in_channels, hidden_feature, node_n=33)
+        self.gc1l = GraphConvolution(in_channels, hidden_feature, node_n=39)
+        self.gc1r = GraphConvolution(in_channels, hidden_feature, node_n=39)
         self.gc1v1 = GraphConvolution(in_channels, hidden_feature, node_n=7)
         self.gc1v2 = GraphConvolution(in_channels, hidden_feature, node_n=6)
         self.gc1v3 = GraphConvolution(in_channels, hidden_feature, node_n=7)
         self.gc1v4 = GraphConvolution(in_channels, hidden_feature, node_n=6)
         self.gc7 = GraphConvolution(2 * hidden_feature, in_channels, node_n=66)
-        self.gc7l = GraphConvolution(hidden_feature, in_channels,  node_n=33)
-        self.gc7r = GraphConvolution(hidden_feature, in_channels, node_n=33)
+        self.gc7l = GraphConvolution(hidden_feature, in_channels,  node_n=39)
+        self.gc7r = GraphConvolution(hidden_feature, in_channels, node_n=39)
         self.gc7v1 = GraphConvolution(hidden_feature, in_channels, node_n=7)
         self.gc7v2 = GraphConvolution(hidden_feature, in_channels, node_n=6)
         self.gc7v3 = GraphConvolution(hidden_feature, in_channels, node_n=7)
@@ -72,13 +72,13 @@ class Subnet_GCN(nn.Module):
 
         self.gcbsl = []
         for i in range(num_stage):
-            self.gcbsl.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=33))
+            self.gcbsl.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=39))
 
         self.gcbsl = nn.ModuleList(self.gcbsl)
 
         self.gcbsr = []
         for i in range(num_stage):
-            self.gcbsr.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=33))
+            self.gcbsr.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=39))
         self.gcbsr = nn.ModuleList(self.gcbsr)
 
         self.gcbv1 = []
