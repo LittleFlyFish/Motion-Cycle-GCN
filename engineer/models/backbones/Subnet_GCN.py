@@ -50,17 +50,17 @@ class Subnet_GCN(nn.Module):
         self.gc1 = GraphConvolution(in_channels, hidden_feature, node_n=66)
         self.gc1l = GraphConvolution(in_channels, hidden_feature, node_n=39)
         self.gc1r = GraphConvolution(in_channels, hidden_feature, node_n=39)
-        self.gc1v1 = GraphConvolution(in_channels, hidden_feature, node_n=7)
-        self.gc1v2 = GraphConvolution(in_channels, hidden_feature, node_n=6)
-        self.gc1v3 = GraphConvolution(in_channels, hidden_feature, node_n=7)
-        self.gc1v4 = GraphConvolution(in_channels, hidden_feature, node_n=6)
+        self.gc1v1 = GraphConvolution(in_channels, hidden_feature, node_n=7*3)
+        self.gc1v2 = GraphConvolution(in_channels, hidden_feature, node_n=6*3)
+        self.gc1v3 = GraphConvolution(in_channels, hidden_feature, node_n=7*3)
+        self.gc1v4 = GraphConvolution(in_channels, hidden_feature, node_n=6*3)
         self.gc7 = GraphConvolution(2 * hidden_feature, in_channels, node_n=66)
         self.gc7l = GraphConvolution(hidden_feature, in_channels,  node_n=39)
         self.gc7r = GraphConvolution(hidden_feature, in_channels, node_n=39)
-        self.gc7v1 = GraphConvolution(hidden_feature, in_channels, node_n=7)
-        self.gc7v2 = GraphConvolution(hidden_feature, in_channels, node_n=6)
-        self.gc7v3 = GraphConvolution(hidden_feature, in_channels, node_n=7)
-        self.gc7v4 = GraphConvolution(hidden_feature, in_channels, node_n=6)
+        self.gc7v1 = GraphConvolution(hidden_feature, in_channels, node_n=7*3)
+        self.gc7v2 = GraphConvolution(hidden_feature, in_channels, node_n=6*3)
+        self.gc7v3 = GraphConvolution(hidden_feature, in_channels, node_n=7*3)
+        self.gc7v4 = GraphConvolution(hidden_feature, in_channels, node_n=6*3)
 
         self.residual = residual
         node_n = 66
@@ -83,32 +83,32 @@ class Subnet_GCN(nn.Module):
 
         self.gcbv1 = []
         for i in range(num_stage):
-            self.gcbv1.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=7))
+            self.gcbv1.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=7*3))
         self.gcbv1 = nn.ModuleList(self.gcbv1)
 
         self.gcbv2 = []
         for i in range(num_stage):
-            self.gcbv2.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=6))
+            self.gcbv2.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=6*3))
         self.gcbv2 = nn.ModuleList(self.gcbv2)
 
         self.gcbv3 = []
         for i in range(num_stage):
-            self.gcbv3.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=7))
+            self.gcbv3.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=7*3))
         self.gcbv3 = nn.ModuleList(self.gcbv3)
 
         self.gcbv4 = []
         for i in range(num_stage):
-            self.gcbv4.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=6))
+            self.gcbv4.append(GC_Block(hidden_feature, p_dropout=dropout, node_n=6*3))
         self.gcbv4 = nn.ModuleList(self.gcbv4)
 
 
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)  # 15 is in_channel
         self.bn1l = nn.BatchNorm1d(39 * hidden_feature)  # 15 is in_channel
         self.bn1r = nn.BatchNorm1d(39 * hidden_feature)  # 15 is in_channel
-        self.bn1v1 = nn.BatchNorm1d(7 * hidden_feature)  # 15 is in_channel
-        self.bn1v2 = nn.BatchNorm1d(6 * hidden_feature)  # 15 is in_channel
-        self.bn1v3 = nn.BatchNorm1d(7 * hidden_feature)  # 15 is in_channel
-        self.bn1v4 = nn.BatchNorm1d(6 * hidden_feature)  # 15 is in_channel
+        self.bn1v1 = nn.BatchNorm1d(7*3 * hidden_feature)  # 15 is in_channel
+        self.bn1v2 = nn.BatchNorm1d(6*3 * hidden_feature)  # 15 is in_channel
+        self.bn1v3 = nn.BatchNorm1d(7*3 * hidden_feature)  # 15 is in_channel
+        self.bn1v4 = nn.BatchNorm1d(6*3 * hidden_feature)  # 15 is in_channel
         self.num_stage = num_stage
 
         left = np.array([0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16])  # the index of left parts of INPUT data
