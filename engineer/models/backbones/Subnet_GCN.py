@@ -109,8 +109,8 @@ class Subnet_GCN(nn.Module):
         # list3 = [[0,1,2,3,4]]
 
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)  # 15 is in_channel
-        self.bn1l = nn.BatchNorm1d(33 * hidden_feature)  # 15 is in_channel
-        self.bn1r = nn.BatchNorm1d(33 * hidden_feature)  # 15 is in_channel
+        self.bn1l = nn.BatchNorm1d(39 * hidden_feature)  # 15 is in_channel
+        self.bn1r = nn.BatchNorm1d(39 * hidden_feature)  # 15 is in_channel
         self.bn1v1 = nn.BatchNorm1d(7 * hidden_feature)  # 15 is in_channel
         self.bn1v2 = nn.BatchNorm1d(6 * hidden_feature)  # 15 is in_channel
         self.bn1v3 = nn.BatchNorm1d(7 * hidden_feature)  # 15 is in_channel
