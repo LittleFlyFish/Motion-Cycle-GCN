@@ -13,7 +13,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num = 'cuda:0'
-flag = 'Subnet_GCN_lr=0.00005'
+flag = 'Subnet_GCN_lr=0.001+LR+TwoLoss'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
@@ -58,7 +58,7 @@ data = dict(
 #
 # optimizer
 optim_para=dict(
-    optimizer = dict(type='Adam',lr=0.0005),
+    optimizer = dict(type='Adam',lr=0.001),
     lr_decay=2,
     lr_gamma= 0.96
 )

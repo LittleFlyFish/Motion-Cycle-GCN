@@ -87,10 +87,17 @@ class Subnet_GCN(nn.Module):
         self.bn1r = nn.BatchNorm1d(33 * hidden_feature)  # 15 is in_channel
         self.num_stage = num_stage
 
+        left = np.array([0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16])  # the index of left parts of INPUT data
+        self.leftdim = np.concatenate((left * 3, left * 3 + 1, left * 3 + 2))
+        right = np.array(
+            [4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21])  # the index of the right parts of the INPUT data
+        self.rightdim = np.concatenate((right * 3, right * 3 + 1, right * 3 + 2))
+
+
     def forward(self, x):
 
-        x_left = x[:, 0:33, :]
-        x_right = x[:, 33:66, :]
+        x_left = x[:, self.leftdim, :]
+        x_right = x[:, self.rightdim, :]
         y = self.gc1(x)
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
@@ -119,8 +126,8 @@ class Subnet_GCN(nn.Module):
             yr = self.gcbsr[i](yr)
 
         ytotal= y.clone()
-        ytotal[:, 0:33, :] = yl
-        ytotal[:, 33:66, :] = yr
+        ytotal[:, self.leftdim, :] = yl
+        ytotal[:, self.rightdim, :] = yr
 
         y = torch.cat([ytotal, y], dim=2)
 
