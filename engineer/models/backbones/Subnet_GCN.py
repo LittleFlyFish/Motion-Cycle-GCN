@@ -160,14 +160,6 @@ class Subnet_GCN(nn.Module):
         for i in range(self.num_stage):
             yr = self.gcbsr[i](yr)
 
-        yv1 = self.gc1v1()
-        b, n, f = yv1.shape
-        yv1 = self.bn1v1(yv1.view(b, -1)).view(b, n, f)
-        yv1 = self.act(yv1)
-        yv1 = self.do(yv1)
-        for i in range(self.num_stage):
-            yv1 = self.gcbv1[i](yv1)
-
         yv1 = self.gc1v1(x_V1)
         b, n, f = yv1.shape
         yv1 = self.bn1v1(yv1.view(b, -1)).view(b, n, f)
