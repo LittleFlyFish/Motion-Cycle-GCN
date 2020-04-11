@@ -13,7 +13,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num = 'cuda:3'
-flag = 'Subnet_GCN_lr=0.001+V4+TwoLoss'
+flag = 'Subnet_GCN_lr=0.001+V4+TwoLoss+RELU'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
