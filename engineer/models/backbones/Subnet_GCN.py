@@ -126,4 +126,4 @@ class Subnet_GCN(nn.Module):
             y = self.gc7(y)
             y = y + x
 
-        return y
+        return y, yl, yr
