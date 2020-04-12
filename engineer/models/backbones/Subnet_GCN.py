@@ -46,7 +46,7 @@ class Subnet_GCN(nn.Module):
         self.in_channels = in_channels
 
         self.do = nn.Dropout(dropout)
-        self.act = nn.LeakyReLU()
+        self.act = nn.Tanh() #nn.LeakyReLU()
         self.gc1 = GraphConvolution(in_channels, hidden_feature, node_n=66)
         self.gc1l = GraphConvolution(in_channels, hidden_feature, node_n=39)
         self.gc1r = GraphConvolution(in_channels, hidden_feature, node_n=39)
@@ -54,7 +54,7 @@ class Subnet_GCN(nn.Module):
         self.gc1v2 = GraphConvolution(in_channels, hidden_feature, node_n=6*3)
         self.gc1v3 = GraphConvolution(in_channels, hidden_feature, node_n=7*3)
         self.gc1v4 = GraphConvolution(in_channels, hidden_feature, node_n=6*3)
-        self.gc7 = GraphConvolution(3 * hidden_feature, in_channels, node_n=66)
+        self.gc7 = GraphConvolution(2 * hidden_feature, in_channels, node_n=66)
         self.gc7l = GraphConvolution(hidden_feature, in_channels,  node_n=39)
         self.gc7r = GraphConvolution(hidden_feature, in_channels, node_n=39)
         self.gc7v1 = GraphConvolution(hidden_feature, in_channels, node_n=7*3)
