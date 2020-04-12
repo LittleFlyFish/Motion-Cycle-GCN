@@ -12,7 +12,7 @@ data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
-cuda_num = 'cuda:2'
+cuda_num = 'cuda:0'
 flag = 'Subnet_GCN_lr=0.001_f=128+LR+TwoLoss'
 
 val_pipeline = [
