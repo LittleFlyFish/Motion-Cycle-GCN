@@ -2,7 +2,7 @@ import numpy as np
 model = dict(
     type='Motion_GCN',
     input_feature=15,
-    hidden_feature=256,
+    hidden_feature=512,
     p_dropout=0.5,
     num_stage=12,
     node_n=66
@@ -12,8 +12,8 @@ data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
-cuda_num = 'cuda:1'
-flag = 'Original + NewPCycle + lamda=0.1'
+cuda_num = 'cuda:0'
+flag = 'Original_lr=0.001_f512'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),

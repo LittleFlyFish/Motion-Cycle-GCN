@@ -2,7 +2,7 @@ import numpy as np
 model = dict(
     type='Subnet_GCN',
     input_feature=15,
-    hidden_feature=128,
+    hidden_feature=256,
     dropout=0.5,
     num_stage=12,
     node_n=66
@@ -13,7 +13,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num = 'cuda:0'
-flag = 'Subnet_GCN_lr=0.001_f=128+LR+TwoLoss'
+flag = 'Subnet_GCN_lr=0.001_V5+LR'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
