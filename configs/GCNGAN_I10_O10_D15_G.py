@@ -11,11 +11,11 @@ model = dict(
     ),
     Discriminator=dict(
     type='Discriminator',
-    input_feature=5,
     hidden_feature=256,
-    p_dropout=0.5,
-    num_stage=12,
-    node_n=39
+    layout='h36m',
+    strategy='uniform',
+    dropout=0.5,
+    residual=True,
     ),
 )
 dataset_type = 'Hm36Dataset_3d'
