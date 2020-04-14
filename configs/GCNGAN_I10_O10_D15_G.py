@@ -1,7 +1,5 @@
 import numpy as np
-model = dict(
-    type= "GCNGAN",
-    Generator=dict(
+Generator=dict(
     type='Motion_GCN',
     input_feature=15,
     hidden_feature=256,
@@ -9,7 +7,7 @@ model = dict(
     num_stage=12,
     node_n=66
     ),
-    Discriminator=dict(
+Discriminator=dict(
     type='Discriminator',
     hidden_feature=256,
     layout='h36m',
@@ -17,7 +15,8 @@ model = dict(
     dropout=0.5,
     residual=True,
     ),
-)
+
+
 dataset_type = 'Hm36Dataset_3d'
 data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
@@ -68,7 +67,12 @@ data = dict(
 )
 #
 # optimizer
-optim_para=dict(
+optim_para_G=dict(
+    optimizer = dict(type='Adam',lr=0.001),
+    lr_decay=2,
+    lr_gamma= 0.96
+)
+optim_para_D=dict(
     optimizer = dict(type='Adam',lr=0.001),
     lr_decay=2,
     lr_gamma= 0.96

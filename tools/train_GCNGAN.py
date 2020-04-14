@@ -95,13 +95,17 @@ def main():
         set_random_seed(args.seed)
 
     #build model and print model info
-    model = build_backbone(cfg.model)
-    misc.log_model_info(model)
+    Generator = build_backbone(cfg.model)
+    misc.log_model_info(Generator)
+
+    Discriminator = build_backbone(cfg.model)
+    misc.log_model_info(Discriminator)
 
     #optimizer build
     #follow the paper optimize we use here
     if cfg.optim_para['optimizer']['type'] == "Adam":
-        optimizer = torch.optim.Adam(model.parameters(), lr=cfg.optim_para['optimizer']['lr'])
+        optimizer_G = torch.optim.Adam(Generator.parameters(), lr=cfg.optim_para_G['optimizer']['lr'])
+        optimizer_D = torch.optim.Adam(Discriminator.parameters(), lr=cfg.optim_para_D['optimizer']['lr'])
 
     #datasets build
     test_datasets=dict()
@@ -116,11 +120,13 @@ def main():
 
     # add an attribute for visualization convenience
     train_model(
-        model,
+        Generator,
+        Discriminator,
         [train_dataset,val_dataset,test_datasets],
         cfg,
         distributed=distributed,
-        optimizer = optimizer
+        optimizer_G = optimizer_G,
+        optimizer_D = optimizer_D
         )
 
 

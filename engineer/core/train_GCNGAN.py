@@ -29,15 +29,11 @@ def build_dataloader(dataset, num_worker, batch_size):
         pin_memory=True)
 
 
-def train_model(model, datasets, cfg, distributed, optimizer):
+def train_model(Generator, Discriminator, datasets, cfg, distributed, optimizer_G, optimizer_D):
     train_dataset, val_dataset, test_datasets = datasets
     train_loader = build_dataloader(train_dataset, cfg.dataloader.num_worker, cfg.dataloader.batch_size.train)
     val_loader = build_dataloader(val_dataset, cfg.dataloader.num_worker, cfg.dataloader.batch_size.test)
     test_loaders = dict()
-
-    # Optimizers
-    optimizer_G = torch.optim.Adam(model.G.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
-    optimizer_D = torch.optim.Adam(model.D.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
 
     for key in test_datasets.keys():
         test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
@@ -45,8 +41,10 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     is_cuda = torch.cuda.is_available()
     cuda_num = cfg.cuda_num
     if is_cuda:
-        model.cuda(torch.device(cuda_num))
-        model.to(cuda_num)
+        Generator.cuda(torch.device(cuda_num))
+        Generator.to(cuda_num)
+        Discriminator.cuda(torch.device(cuda_num))
+        Discriminator.to(cuda_num)
     start_epoch = cfg.resume.start
     lr_now = cfg.optim_para.optimizer_G.lr
 
@@ -56,7 +54,8 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     # model.load_state_dict(torch.load(G_meta)["state_dict"])
     # ###############################################
 
-    model.train()
+    Generator.train()
+    Discriminator.train()
     acts = test_loaders.keys()
     test_best = dict()
     for act in acts:
@@ -83,7 +82,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         ret_log = np.array([epoch + 1])
         head = np.array(['epoch'])
         # training on per epoch
-        lr_now, t_l, train_num, train_loss_plot = train(train_loader, model, optimizer_G, optimizer_D, lr_now=lr_now,
+        lr_now, t_l, train_num, train_loss_plot = train(train_loader, Generator, Discriminator, optimizer_G, optimizer_D, lr_now=lr_now,
                                                         max_norm=cfg.max_norm, is_cuda=is_cuda, cuda_num=cuda_num,
                                                         dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used,
                                                         num=train_num, loss_list=train_loss_plot)
@@ -91,7 +90,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         head = np.append(head, ['lr', 't_l'])
 
         # val evaluation
-        v_3d = val(val_loader, model, is_cuda=is_cuda, cuda_num=cuda_num, dim_used=train_dataset.dim_used,
+        v_3d = val(val_loader, Generator, is_cuda=is_cuda, cuda_num=cuda_num, dim_used=train_dataset.dim_used,
                    dct_n=cfg.data.val.dct_used)
         ret_log = np.append(ret_log, [v_3d])
         head = np.append(head, ['v_3d'])
@@ -101,7 +100,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_3d_head = np.array([])
         test_loss = 0
         for act in acts:
-            test_l, test_3d = test(test_loaders[act], model, input_n=cfg.data.test.input_n,
+            test_l, test_3d = test(test_loaders[act], Generator, input_n=cfg.data.test.input_n,
                                    output_n=cfg.data.test.output_n, is_cuda=is_cuda, cuda_num=cuda_num,
                                    dim_used=train_dataset.dim_used, dct_n=cfg.data.test.dct_used)
             test_loss = test_loss + test_l
@@ -156,13 +155,15 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         df.to_csv(f, header=False, index=False)
 
 
-def train(train_loader, model,  optimizer_G, optimizer_D, lr_now=None, max_norm=True, is_cuda=False, cuda_num='cuda:0', dim_used=[],
+def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_now=None, max_norm=True, is_cuda=False, cuda_num='cuda:0', dim_used=[],
           dct_n=15, num=1,
           loss_list=[1]):
     t_l = utils.AccumLoss()
     adversarial_loss = torch.nn.MSELoss()
 
-    model.train()
+    Generator.train()
+    Discriminator.train()
+
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
     for i, (inputs, targets, all_seq) in enumerate(train_loader):
@@ -184,8 +185,8 @@ def train(train_loader, model,  optimizer_G, optimizer_D, lr_now=None, max_norm=
         valid = Variable(Tensor(inputs.shape[0], *patch).fill_(1.0), requires_grad=False)
         fake = Variable(Tensor(inputs.shape[0], *patch).fill_(0.0), requires_grad=False)
 
-        outputs = model.G(inputs)
-        label = model.D(outputs)
+        outputs = Generator(inputs)
+        label = Discriminator(outputs)
 
         # Adversarial and pixelwise loss
         _, loss_G = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
@@ -208,12 +209,13 @@ def train(train_loader, model,  optimizer_G, optimizer_D, lr_now=None, max_norm=
         optimizer_D.zero_grad()
 
         # Measure discriminator's ability to classify real from generated samples
-        real_loss = adversarial_loss(model.D(targets), valid)
-        fake_loss = adversarial_loss(model.D(outputs), fake)
+        real_loss = adversarial_loss(Discriminator(targets), valid)
+        fake_loss = adversarial_loss(Discriminator(outputs), fake)
         d_loss = 0.5 * (real_loss + fake_loss)
 
         if max_norm:
-            nn.utils.clip_grad_norm(model.parameters(), max_norm=1)
+            nn.utils.clip_grad_norm(Generator.parameters(), max_norm=1)
+            nn.utils.clip_grad_norm(Discriminator.parameters(), max_norm=1)
         d_loss.backward()
         optimizer_D.step()
 
