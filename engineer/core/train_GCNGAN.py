@@ -36,8 +36,8 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     test_loaders = dict()
 
     # Optimizers
-    optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
-    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
+    optimizer_G = torch.optim.Adam(model.G.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
+    optimizer_D = torch.optim.Adam(model.D.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
 
     for key in test_datasets.keys():
         test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
