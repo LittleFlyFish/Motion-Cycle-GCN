@@ -1,7 +1,7 @@
 import numpy as np
 model = dict(
     type= "GCNGAN",
-    G=dict(
+    Generator=dict(
     type='Motion_GCN',
     input_feature=15,
     hidden_feature=256,
@@ -9,7 +9,7 @@ model = dict(
     num_stage=12,
     node_n=66
     ),
-    D=dict(
+    Discriminator=dict(
     type='Discriminator',
     input_feature=5,
     hidden_feature=256,
