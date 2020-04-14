@@ -25,10 +25,12 @@ from .Transform import Transform
 from .ST_conv import ST_conv
 from .ST_GCNA import ST_GCNA
 from .Subnet_GCN import Subnet_GCN
+from .GCNGAN import GCNGAN, Discriminator
 __all__=["Motion_GCN", "SemGCN", "Cycle_GCN", "P_GCN", "Cycle_P", "Recycle_GCN", "G_NoNorm",
          "G_Attention", "G_Attention_GCN", "Dense_GCN", "Fuse_GCN", "ST_GCN_Dense",
          "ST_A", "ST_B", "ST_C", "NewGCN", "GCNGRU", "ST_D", "ST_E", "Multi_GCN", "K_GCN",
-         "GCN_2task", "Seq2Seq", "Transform", "ST_conv", "ST_GCNA", "Subnet_GCN"]
+         "GCN_2task", "Seq2Seq", "Transform", "ST_conv", "ST_GCNA", "Subnet_GCN", "GCNGAN",
+         "Discriminator"]
 
 # ST_A : 5 layer ST_GCN as encoder, ST_GCN as decoder, only downsample on frames
 # ST_B: ST_GCN autoencoder, only 2 downsample upsample layers
