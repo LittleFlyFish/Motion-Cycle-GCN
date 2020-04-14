@@ -103,8 +103,9 @@ def main():
 
     #optimizer build
     #follow the paper optimize we use here
-    if cfg.optim_para['optimizer']['type'] == "Adam":
+    if cfg.optim_para_G['optimizer']['type'] == "Adam":
         optimizer_G = torch.optim.Adam(Generator.parameters(), lr=cfg.optim_para_G['optimizer']['lr'])
+    if cfg.optim_para_D['optimizer']['type'] == "Adam":
         optimizer_D = torch.optim.Adam(Discriminator.parameters(), lr=cfg.optim_para_D['optimizer']['lr'])
 
     #datasets build
