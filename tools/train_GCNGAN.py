@@ -95,10 +95,10 @@ def main():
         set_random_seed(args.seed)
 
     #build model and print model info
-    Generator = build_backbone(cfg.model)
+    Generator = build_backbone(cfg.Generator)
     misc.log_model_info(Generator)
 
-    Discriminator = build_backbone(cfg.model)
+    Discriminator = build_backbone(cfg.Discriminator)
     misc.log_model_info(Discriminator)
 
     #optimizer build
