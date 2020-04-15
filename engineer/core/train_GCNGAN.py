@@ -217,21 +217,21 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
         optimizer_G.step()
 
 
-        # # ---------------------
-        # #  Train Discriminator
-        # # ---------------------
-        # optimizer_D.zero_grad()
-        #
-        # # Measure discriminator's ability to classify real from generated samples
-        # real_loss = adversarial_loss(Discriminator(targets), valid)
-        # fake_loss = adversarial_loss(Discriminator(outputs), fake)
-        # d_loss = 0.5 * (real_loss + fake_loss)
-        #
-        # if max_norm:
-        #     nn.utils.clip_grad_norm(Generator.parameters(), max_norm=1)
-        #     nn.utils.clip_grad_norm(Discriminator.parameters(), max_norm=1)
-        # d_loss.backward(retain_graph=True)
-        # optimizer_D.step()
+        # ---------------------
+        #  Train Discriminator
+        # ---------------------
+
+
+        # Measure discriminator's ability to classify real from generated samples
+        real_loss = adversarial_loss(Discriminator(targets), valid)
+        fake_loss = adversarial_loss(Discriminator(outputs), fake)
+        d_loss = 0.5 * (real_loss + fake_loss)
+
+        optimizer_D.zero_grad()
+        if max_norm:
+            nn.utils.clip_grad_norm(Discriminator.parameters(), max_norm=1)
+        d_loss.backward(retain_graph=True)
+        optimizer_D.step()
 
         # update the training loss
         t_l.update(g_loss.item() * batch_size, batch_size)
