@@ -46,7 +46,8 @@ def train_model(Generator, Discriminator, datasets, cfg, distributed, optimizer_
         Discriminator.cuda(torch.device(cuda_num))
         Discriminator.to(cuda_num)
     start_epoch = cfg.resume.start
-    lr_now = cfg.optim_para.optimizer_G.lr
+    lr_now_G = cfg.optim_para_G.optimizer.lr
+    lr_now_D = cfg.optim_para_D.optimizer.lr
 
     # ###############################################
     # ## test the checkpoint
@@ -75,18 +76,20 @@ def train_model(Generator, Discriminator, datasets, cfg, distributed, optimizer_
     for epoch in range(start_epoch, cfg.total_epochs):
         pass
         if (epoch + 1) % cfg.optim_para.lr_decay == 0:
-            lr_now = utils.lr_decay(optimizer_G, lr_now, cfg.optim_para.lr_gamma)
+            lr_now_G = utils.lr_decay(optimizer_G, lr_now_G, cfg.optim_para_G.lr_gamma)
+            lr_now_D = utils.lr_decay(optimizer_D, lr_now_D, cfg.optim_para_D.lr_gamma)
 
         logger.info('==========================')
         logger.info('>>> epoch: {} | lr: {:.5f}'.format(epoch + 1, lr_now))
         ret_log = np.array([epoch + 1])
         head = np.array(['epoch'])
         # training on per epoch
-        lr_now, t_l, train_num, train_loss_plot = train(train_loader, Generator, Discriminator, optimizer_G, optimizer_D, lr_now=lr_now,
+        lr_now_G, lr_now_D, t_l, train_num, train_loss_plot = train(train_loader, Generator, Discriminator, optimizer_G, optimizer_D,
+                                                        lr_now_G=lr_now_G, lr_now_D=lr_now_D,
                                                         max_norm=cfg.max_norm, is_cuda=is_cuda, cuda_num=cuda_num,
                                                         dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used,
                                                         num=train_num, loss_list=train_loss_plot)
-        ret_log = np.append(ret_log, [lr_now, t_l])
+        ret_log = np.append(ret_log, [lr_now_G, t_l])
         head = np.append(head, ['lr', 't_l'])
 
         # val evaluation
@@ -155,7 +158,7 @@ def train_model(Generator, Discriminator, datasets, cfg, distributed, optimizer_
         df.to_csv(f, header=False, index=False)
 
 
-def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_now=None, max_norm=True, is_cuda=False, cuda_num='cuda:0', dim_used=[],
+def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_now_G=None,lr_now_D=None, max_norm=True, is_cuda=False, cuda_num='cuda:0', dim_used=[],
           dct_n=15, num=1,
           loss_list=[1]):
     t_l = utils.AccumLoss()
@@ -226,7 +229,7 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
                                                                          time.time() - st)
         bar.next()
     bar.finish()
-    return lr_now, t_l.avg, num, loss_list
+    return lr_now_G, lr_now_D, t_l.avg, num, loss_list
 
 
 #
