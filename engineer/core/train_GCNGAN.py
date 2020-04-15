@@ -81,7 +81,7 @@ def train_model(Generator, Discriminator, datasets, cfg, distributed, optimizer_
             lr_now_D = utils.lr_decay(optimizer_D, lr_now_D, cfg.optim_para_D.lr_gamma)
 
         logger.info('==========================')
-        logger.info('>>> epoch: {} | lr: {:.5f}'.format(epoch + 1, lr_now))
+        logger.info('>>> epoch: {} | lr: {:.5f}'.format(epoch + 1, lr_now_G))
         ret_log = np.array([epoch + 1])
         head = np.array(['epoch'])
         # training on per epoch
@@ -137,7 +137,7 @@ def train_model(Generator, Discriminator, datasets, cfg, distributed, optimizer_
             is_best = False
         file_name = ['ckpt_' + script_name + '_best.pth.tar', 'ckpt_' + script_name + '_last.pth.tar']
         utils.save_ckpt({'epoch': epoch + 1,
-                         'lr': lr_now,
+                         'lr': lr_now_G,
                          'err': test_3d[0],
                          'state_dict': model.state_dict(),
                          'optimizer': optimizer.state_dict()},
