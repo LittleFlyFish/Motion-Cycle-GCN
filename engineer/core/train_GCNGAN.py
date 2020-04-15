@@ -139,7 +139,7 @@ def train_model(Generator, Discriminator, datasets, cfg, distributed, optimizer_
         utils.save_ckpt({'epoch': epoch + 1,
                          'lr': lr_now_G,
                          'err': test_3d[0],
-                         'state_dict': model.state_dict(),
+                         'state_dict': Generator.state_dict(),
                          'optimizer': optimizer.state_dict()},
                         ckpt_path=cfg.checkpoints,
                         is_best=is_best,
@@ -319,7 +319,7 @@ def val(train_loader, model, is_cuda=False, cuda_num='cuda:0', dim_used=[], dct_
             all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
         z = Variable(torch.ones(inputs.shape[0], 66, 1).cuda(cuda_num)).float()
-        outputs = model(inputs, z)
+        outputs = model(inputs, z
 
         n, _, _ = all_seq.data.shape
 
