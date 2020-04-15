@@ -120,7 +120,7 @@ class Motion_GCN(nn.Module):
         self.act = nn.Tanh()
         self.residual = residual
 
-    def forward(self, x, z):
+    def forward(self, x):
         # y = torch.cat((x, z), dim=2)
         y = self.gc1(x)
         b, n, f = y.shape
