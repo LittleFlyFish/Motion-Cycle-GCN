@@ -186,8 +186,8 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
         # -----------------
 
         # Adversarial ground truths
-        valid = Variable(torch.ones(inputs.shape[0], 1), requires_grad=False)
-        fake = Variable(torch.zeros(inputs.shape[0], 1), requires_grad=False)
+        valid = Variable(torch.ones(inputs.shape[0], 1).cuda(cuda_num), requires_grad=False)
+        fake = Variable(torch.zeros(inputs.shape[0], 1).cuda(cuda_num), requires_grad=False)
 
         outputs = Generator(inputs)
         label = Discriminator(outputs)
