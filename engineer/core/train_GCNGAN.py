@@ -179,6 +179,7 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
 
         if is_cuda:
             inputs = Variable(inputs.cuda(cuda_num)).float()
+            targets = Variable(targets.cuda(cuda_num)).float()
             all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
         # -----------------
