@@ -203,9 +203,6 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
 
         # Total loss
         #g_loss = 0.001 * loss_D + 0.999 * loss_G
-        print("here")
-        print(loss_G)
-        print(loss_D)
         g_loss = loss_G
 
         num += 1
