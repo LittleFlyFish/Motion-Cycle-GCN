@@ -177,7 +177,7 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
 
         bt = time.time()
 
-        Tensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
+        Tensor = torch.cuda.FloatTensor if is_cuda else torch.FloatTensor
         # Sample noise as generator input
         z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], 66, 1))))
 
