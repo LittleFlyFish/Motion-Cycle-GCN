@@ -258,7 +258,9 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, cuda_num='
             inputs = Variable(inputs.cuda(cuda_num)).float()
             all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
-        outputs = model(inputs)
+        # Sample noise as generator input
+        z = Variable(torch.ones(inputs.shape[0], 66, 1).cuda(cuda_num)).float()
+        outputs = model(inputs, z)
 
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used_len = len(dim_used)
@@ -316,7 +318,8 @@ def val(train_loader, model, is_cuda=False, cuda_num='cuda:0', dim_used=[], dct_
             inputs = Variable(inputs.cuda(cuda_num)).float()
             all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
-        outputs = model(inputs)
+        z = Variable(torch.ones(inputs.shape[0], 66, 1).cuda(cuda_num)).float()
+        outputs = model(inputs, z)
 
         n, _, _ = all_seq.data.shape
 
