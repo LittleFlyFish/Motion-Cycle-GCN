@@ -9,11 +9,11 @@ Generator = dict(
 )
 Discriminator = dict(
     type='Discriminator',
+    input_feature=15,
     hidden_feature=256,
-    layout='h36m',
-    strategy='uniform',
-    dropout=0.5,
-    residual=True,
+    p_dropout=0.5,
+    num_stage=12,
+    node_n=66
 )
 
 
