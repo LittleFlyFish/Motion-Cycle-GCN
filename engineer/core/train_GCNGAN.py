@@ -75,8 +75,9 @@ def train_model(Generator, Discriminator, datasets, cfg, distributed, optimizer_
 
     for epoch in range(start_epoch, cfg.total_epochs):
         pass
-        if (epoch + 1) % cfg.optim_para.lr_decay == 0:
+        if (epoch + 1) % cfg.optim_para_G.lr_decay == 0:
             lr_now_G = utils.lr_decay(optimizer_G, lr_now_G, cfg.optim_para_G.lr_gamma)
+        if (epoch + 1) % cfg.optim_para_D.lr_decay == 0:
             lr_now_D = utils.lr_decay(optimizer_D, lr_now_D, cfg.optim_para_D.lr_gamma)
 
         logger.info('==========================')
