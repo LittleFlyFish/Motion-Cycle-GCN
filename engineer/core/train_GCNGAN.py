@@ -319,7 +319,7 @@ def val(train_loader, model, is_cuda=False, cuda_num='cuda:0', dim_used=[], dct_
             all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
         z = Variable(torch.ones(inputs.shape[0], 66, 1).cuda(cuda_num)).float()
-        outputs = model(inputs, z
+        outputs = model(inputs, z)
 
         n, _, _ = all_seq.data.shape
 
