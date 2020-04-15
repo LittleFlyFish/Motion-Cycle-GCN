@@ -140,7 +140,7 @@ def train_model(Generator, Discriminator, datasets, cfg, distributed, optimizer_
                          'lr': lr_now_G,
                          'err': test_3d[0],
                          'state_dict': Generator.state_dict(),
-                         'optimizer': optimizer.state_dict()},
+                         'optimizer': optimizer_G.state_dict()},
                         ckpt_path=cfg.checkpoints,
                         is_best=is_best,
                         file_name=file_name)
