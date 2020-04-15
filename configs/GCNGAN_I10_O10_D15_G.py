@@ -23,7 +23,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num = 'cuda:1'
-flag = 'Original_lr=0.001_f768'
+flag = 'GCNGAN'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
