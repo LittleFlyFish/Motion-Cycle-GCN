@@ -212,6 +212,10 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
 
         optimizer_G.zero_grad()
         g_loss.backward(retain_graph=True)
+        if max_norm:
+            nn.utils.clip_grad_norm(Generator.parameters(), max_norm=1)
+        optimizer_G.step()
+
 
         # # ---------------------
         # #  Train Discriminator
