@@ -72,7 +72,7 @@ class Discriminator(nn.Module):
 
         if self.residual == True:
             y = self.gc7(y)
-            y = self.fcn(y)
+            y = self.fcn(y.view(b, -1))
             y = self.Softmax(y)
         #else:
             # y = self.gc7(y)
