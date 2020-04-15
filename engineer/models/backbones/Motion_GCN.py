@@ -121,8 +121,8 @@ class Motion_GCN(nn.Module):
         self.residual = residual
 
     def forward(self, x, z):
-        x = torch.cat((x, z), dim=2)
-        y = self.gc1(x)
+        y = torch.cat((x, z), dim=2)
+        y = self.gc1(y)
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
         y = self.act(y)
