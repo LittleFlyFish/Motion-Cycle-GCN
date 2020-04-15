@@ -210,7 +210,7 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
         # for test
 
         optimizer_G.zero_grad()
-        g_loss.backward()
+        g_loss.backward(retain_graph=True)
 
         # ---------------------
         #  Train Discriminator
