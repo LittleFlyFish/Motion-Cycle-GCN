@@ -197,7 +197,7 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
         valid = Variable(Tensor(batch_size, 1).fill_(1.0).cuda(cuda_num), requires_grad=False)
         fake = Variable(Tensor(batch_size, 1).fill_(0.0).cuda(cuda_num), requires_grad=False)
 
-        outputs = Generator(inputs, z)
+        outputs = Generator(inputs)
         label = Discriminator(outputs)
 
         # Adversarial and pixelwise loss
@@ -205,8 +205,8 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
         loss_D = adversarial_loss(label, valid)
 
         # Total loss
-        # g_loss = 0.001 * loss_D + 0.999 * loss_G
-        g_loss = loss_G
+        g_loss = 0.001 * loss_D + 0.999 * loss_G
+        # g_loss = loss_G
 
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
@@ -268,7 +268,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, cuda_num='
 
         # Sample noise as generator input
         z = Variable(torch.ones(inputs.shape[0], 66, 1).cuda(cuda_num)).float()
-        outputs = model(inputs, z)
+        outputs = model(inputs)
 
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used_len = len(dim_used)
@@ -327,7 +327,7 @@ def val(train_loader, model, is_cuda=False, cuda_num='cuda:0', dim_used=[], dct_
             all_seq = Variable(all_seq.cuda(cuda_num, non_blocking=True)).float()
 
         z = Variable(torch.ones(inputs.shape[0], 66, 1).cuda(cuda_num)).float()
-        outputs = model(inputs, z)
+        outputs = model(inputs)
 
         n, _, _ = all_seq.data.shape
 

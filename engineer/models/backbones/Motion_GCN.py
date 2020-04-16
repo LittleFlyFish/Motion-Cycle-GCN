@@ -104,7 +104,7 @@ class Motion_GCN(nn.Module):
         super(Motion_GCN, self).__init__()
         self.num_stage = num_stage
 
-        self.gc1 = GraphConvolution(input_feature+1, hidden_feature, node_n=node_n)
+        self.gc1 = GraphConvolution(input_feature, hidden_feature, node_n=node_n)
         self.bn1 = nn.BatchNorm1d(node_n * hidden_feature)
         self.bn7 = nn.BatchNorm1d(node_n * input_feature)
 
@@ -120,9 +120,9 @@ class Motion_GCN(nn.Module):
         self.act = nn.Tanh()
         self.residual = residual
 
-    def forward(self, x, z):
-        y = torch.cat((x, z), dim=2)
-        y = self.gc1(y)
+    def forward(self, x):
+        # y = torch.cat((x, z), dim=2)
+        y = self.gc1(x)
         b, n, f = y.shape
         y = self.bn1(y.view(b, -1)).view(b, n, f)
         y = self.act(y)
