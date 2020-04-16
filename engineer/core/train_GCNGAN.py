@@ -194,8 +194,8 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
         # Adversarial ground truths
         #valid = Variable(torch.ones(inputs.shape[0], 1).cuda(cuda_num), requires_grad=False)
         #fake = Variable(torch.zeros(inputs.shape[0], 1).cuda(cuda_num), requires_grad=False)
-        valid = Variable(Tensor(batch_size, 1).fill_(1.0), requires_grad=False)
-        fake = Variable(Tensor(batch_size, 1).fill_(0.0), requires_grad=False)
+        valid = Variable(Tensor(batch_size, 1).fill_(1.0).cuda(cuda_num), requires_grad=False)
+        fake = Variable(Tensor(batch_size, 1).fill_(0.0).cuda(cuda_num), requires_grad=False)
 
         outputs = Generator(inputs, z)
         label = Discriminator(outputs)
@@ -203,7 +203,6 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
         # Adversarial and pixelwise loss
         _, loss_G = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         loss_D = adversarial_loss(label, valid)
-        loss_D = loss_D.cuda(cuda_num)
 
         # Total loss
         # g_loss = 0.001 * loss_D + 0.999 * loss_G
