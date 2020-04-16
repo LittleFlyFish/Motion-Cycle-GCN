@@ -202,7 +202,7 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
 
         # Adversarial and pixelwise loss
         _, loss_G = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
-        loss_D = adversarial_loss(label, valid)
+        loss_D = adversarial_loss(label, valid).cuda(cuda_num)
 
         # Total loss
         # g_loss = 0.001 * loss_D + 0.999 * loss_G
@@ -228,7 +228,7 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
         # Measure discriminator's ability to classify real from generated samples
         real_loss = adversarial_loss(Discriminator(targets), valid)
         fake_loss = adversarial_loss(Discriminator(outputs), fake)
-        d_loss = 0.5 * (real_loss + fake_loss)
+        d_loss = 0.5 * (real_loss + fake_loss).cuda(cuda_num)
 
         optimizer_D.zero_grad()
         if max_norm:
