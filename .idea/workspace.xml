@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/configs/GCNGAN_I10_O10_D15_G.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/GCNGAN_I10_O10_D15_G.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/datasets/hm36_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/datasets/hm36_dataset.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -171,13 +172,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00476" summary=" &quot;nice&quot;">
-      <created>1586658112803</created>
-      <option name="number" value="00476" />
-      <option name="presentableId" value="LOCAL-00476" />
-      <option name="project" value="LOCAL" />
-      <updated>1586658112803</updated>
     </task>
     <task id="LOCAL-00477" summary=" &quot;nice&quot;">
       <created>1586706901145</created>
@@ -515,7 +509,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586997636020</updated>
     </task>
-    <option name="localTasksCounter" value="525" />
+    <task id="LOCAL-00525" summary=" &quot;nice&quot;">
+      <created>1586997859787</created>
+      <option name="number" value="00525" />
+      <option name="presentableId" value="LOCAL-00525" />
+      <option name="project" value="LOCAL" />
+      <updated>1586997859787</updated>
+    </task>
+    <option name="localTasksCounter" value="526" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
