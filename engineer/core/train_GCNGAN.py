@@ -179,7 +179,7 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
 
         Tensor = torch.cuda.FloatTensor if is_cuda else torch.FloatTensor
         # Sample noise as generator input
-        z = Variable(Tensor(np.random.normal(0, 1, (inputs.shape[0], 66, 1))))
+        # z = Variable(Tensor(np.random.normal(0, 1, (inputs.shape[0], 66, 1))))
         z = Variable(Tensor(np.ones((inputs.shape[0], 66, 1))))
 
         if is_cuda:
@@ -202,7 +202,8 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
 
         # Adversarial and pixelwise loss
         _, loss_G = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
-        loss_D = adversarial_loss(label, valid).cuda(cuda_num)
+        loss_D = adversarial_loss(label, valid)
+        loss_D = loss_D.cuda(cuda_num)
 
         # Total loss
         # g_loss = 0.001 * loss_D + 0.999 * loss_G
