@@ -191,8 +191,10 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
         # -----------------
 
         # Adversarial ground truths
-        valid = Variable(torch.ones(inputs.shape[0], 1).cuda(cuda_num), requires_grad=False)
-        fake = Variable(torch.zeros(inputs.shape[0], 1).cuda(cuda_num), requires_grad=False)
+        #valid = Variable(torch.ones(inputs.shape[0], 1).cuda(cuda_num), requires_grad=False)
+        #fake = Variable(torch.zeros(inputs.shape[0], 1).cuda(cuda_num), requires_grad=False)
+        valid = Variable(FloatTensor(batch_size, 1).fill_(1.0), requires_grad=False)
+        fake = Variable(FloatTensor(batch_size, 1).fill_(0.0), requires_grad=False)
 
         outputs = Generator(inputs)
         label = Discriminator(outputs)
@@ -202,8 +204,8 @@ def train(train_loader, Generator, Discriminator,  optimizer_G, optimizer_D, lr_
         loss_D = adversarial_loss(label, valid)
 
         # Total loss
-        #g_loss = 0.001 * loss_D + 0.999 * loss_G
-        g_loss = loss_G
+        g_loss = 0.001 * loss_D + 0.999 * loss_G
+        # g_loss = loss_G
 
         num += 1
         # plotter.plot('loss', 'train', 'LeakyRelu+No Batch ', num, loss.item())
