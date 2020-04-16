@@ -58,7 +58,7 @@ from engineer.models.backbones.Motion_GCN import Motion_GCN, GraphConvolution, G
 #         self.act = nn.Tanh()
 #         self.residual = residual
 #         self.Softmax = nn.Softmax()
-#         self.fcn = nn.Linear(node_n*input_feature, 2)
+#         self.fcn = nn.Linear(node_n*input_feature, 1)
 #
 #     def forward(self, x):
 #         y = self.gc1(x)
@@ -140,7 +140,7 @@ class Discriminator(nn.Module):
         self.bn3 = nn.BatchNorm1d(15 * hidden_feature)
         self.bn4 = nn.BatchNorm1d(3 * hidden_feature)
 
-        self.fcn = nn.Linear(3 * hidden_feature, 2)
+        self.fcn = nn.Linear(3 * hidden_feature, 1)
         self.Softmax = nn.Softmax()
 
     def forward(self, x):
