@@ -36,6 +36,7 @@ flag = 'GCNGAN'
 val_pipeline = [
     dict(type='SampleFrames', direction=True),
 ]
+
 data = dict(
     videos_per_gpu=2,
     workers_per_gpu=0,

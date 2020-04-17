@@ -14,7 +14,7 @@ data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames', direction = True),
 ]
-cuda_num = 'cuda:3'
+cuda_num = 'cuda:0'
 flag = 'ST_GCNA_256'
 
 val_pipeline = [
