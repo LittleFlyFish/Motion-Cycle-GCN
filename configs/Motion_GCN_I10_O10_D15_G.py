@@ -4,7 +4,7 @@ model = dict(
     input_feature=15,
     hidden_feature=128*3,
     p_dropout=0.5,
-    num_stage=12,
+    num_stage=10,
     node_n=66
 )
 dataset_type = 'Hm36Dataset_3d'
