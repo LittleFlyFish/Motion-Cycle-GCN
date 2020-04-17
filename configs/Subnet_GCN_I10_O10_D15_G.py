@@ -2,7 +2,7 @@ import numpy as np
 model = dict(
     type='Subnet_GCN',
     input_feature=15,
-    hidden_feature=256,
+    hidden_feature=128,
     dropout=0.5,
     num_stage=12,
     node_n=66
