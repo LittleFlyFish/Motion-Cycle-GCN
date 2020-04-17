@@ -4,7 +4,7 @@ model = dict(
     input_feature=15,
     hidden_feature=128*3,
     p_dropout=0.5,
-    num_stage=10,
+    num_stage=12,
     node_n=66
 )
 dataset_type = 'Hm36Dataset_3d'
@@ -12,7 +12,7 @@ data_root = './engineer/datasets/h3.6m/dataset'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
-cuda_num = 'cuda:3'
+cuda_num = 'cuda:2'
 flag = 'Original_lr=0.001_f384'
 
 val_pipeline = [
