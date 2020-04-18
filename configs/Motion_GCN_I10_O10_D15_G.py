@@ -72,7 +72,7 @@ actions=dict(all = ["walking", "eating", "smoking", "discussion", "directions",
             all_srnn= ["walking", "eating", "smoking", "discussion"]
              )
 dataloader=dict(
-    num_worker=10,
+    num_worker=4,
     batch_size=dict(
         train=16,
         test=128
