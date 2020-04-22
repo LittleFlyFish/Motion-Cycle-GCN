@@ -1,42 +1,23 @@
 import numpy as np
-Generator = dict(
+model = dict(
     type='Motion_GCN',
     input_feature=15,
-    hidden_feature=256,
+    hidden_feature=128*3,
     p_dropout=0.5,
     num_stage=12,
     node_n=66
 )
-# Discriminator = dict(
-#     type='Discriminator',
-#     input_feature=15,
-#     hidden_feature=256,
-#     p_dropout=0.5,
-#     num_stage=12,
-#     node_n=66
-# )
-Discriminator = dict(
-    type='Discriminator',
-    hidden_feature=256,
-    dropout=0.5,
-    layout='h36m',
-    strategy='uniform',
-    residual= True,
-)
-
-
-dataset_type = 'Hm36Dataset_3d'
-data_root = './engineer/datasets/h3.6m/dataset'
+dataset_type = 'Pose3dPW'
+data_root = './engineer/datasets/D3P/'
 train_pipeline = [
-    dict(type='SampleFrames', direction = True),
+    dict(type='SampleFrames',direction = True),
 ]
-cuda_num = 'cuda:1'
-flag = 'GCNGAN'
+cuda_num = 'cuda:0'
+flag = 'Original_lr=0.001_f384'
 
 val_pipeline = [
     dict(type='SampleFrames', direction = True),
 ]
-
 data = dict(
     videos_per_gpu=2,
     workers_per_gpu=0,
@@ -76,12 +57,7 @@ data = dict(
 )
 #
 # optimizer
-optim_para_G=dict(
-    optimizer = dict(type='Adam',lr=0.001),
-    lr_decay=2,
-    lr_gamma= 0.96
-)
-optim_para_D=dict(
+optim_para=dict(
     optimizer = dict(type='Adam',lr=0.001),
     lr_decay=2,
     lr_gamma= 0.96
@@ -96,7 +72,7 @@ actions=dict(all = ["walking", "eating", "smoking", "discussion", "directions",
             all_srnn= ["walking", "eating", "smoking", "discussion"]
              )
 dataloader=dict(
-    num_worker=10,
+    num_worker=4,
     batch_size=dict(
         train=16,
         test=128
