@@ -8,7 +8,7 @@ model = dict(
     node_n=69
 )
 dataset_type = 'Pose3dPW3D'
-data_root = '/home/qlt/motion/D3p/sequenceFiles'
+data_root = './engineer/datasets/D3P'
 train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
