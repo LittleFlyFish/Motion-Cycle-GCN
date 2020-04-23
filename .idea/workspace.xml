@@ -1,71 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/._sequenceFiles" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_arguing_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_bar_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_bus_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_cafe_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_car_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_crossStreets_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_downstairs_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_enterShop_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_rampAndStairs_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_runForBus_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_runForBus_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_sitOnStairs_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_stairs_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_upstairs_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_walkBridge_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_walkUphill_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_walking_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_warmWelcome_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_weeklyMarket_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._downtown_windowShopping_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._flat_guitar_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._flat_packBags_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._office_phoneCall_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/test/._outdoors_fencing_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_arguing_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_backpack_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_basketball_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_bodyScannerMotions_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_box_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_capoeira_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_captureSelfies_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_dancing_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_giveDirections_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_golf_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_goodNews_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_jacket_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_laceShoe_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_rangeOfMotions_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_relaxOnBench_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_relaxOnBench_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_shakeHands_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._courtyard_warmWelcome_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._outdoors_climbing_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._outdoors_climbing_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._outdoors_climbing_02.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._outdoors_freestyle_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._outdoors_slalom_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/train/._outdoors_slalom_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._courtyard_basketball_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._courtyard_dancing_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._courtyard_drinking_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._courtyard_hug_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._courtyard_jumpBench_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._courtyard_rangeOfMotions_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._downtown_walkDownhill_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._outdoors_crosscountry_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._outdoors_freestyle_01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._outdoors_golf_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._outdoors_parcours_00.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._outdoors_parcours_01.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/datasets/d3p_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/datasets/d3p_dataset.py" afterDir="false" />
-    </list>
+    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,13 +169,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00497" summary=" &quot;nice&quot;">
-      <created>1586911121284</created>
-      <option name="number" value="00497" />
-      <option name="presentableId" value="LOCAL-00497" />
-      <option name="project" value="LOCAL" />
-      <updated>1586911121284</updated>
     </task>
     <task id="LOCAL-00498" summary=" &quot;nice&quot;">
       <created>1586911387382</created>
@@ -577,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587667061792</updated>
     </task>
-    <option name="localTasksCounter" value="546" />
+    <task id="LOCAL-00546" summary=" &quot;nice&quot;">
+      <created>1587668200218</created>
+      <option name="number" value="00546" />
+      <option name="presentableId" value="LOCAL-00546" />
+      <option name="project" value="LOCAL" />
+      <updated>1587668200218</updated>
+    </task>
+    <option name="localTasksCounter" value="547" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

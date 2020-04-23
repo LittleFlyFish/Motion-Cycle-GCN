@@ -149,7 +149,8 @@ class Pose3dPW3D(Dataset):
                     else:
                         all_seqs = np.concatenate((all_seqs, seq_sel), axis=0)
 
-        print(all_seqs.shape)
+        print(len(all_seqs))
+        print(all_seqs[1].shape)
 
         self.all_seqs = all_seqs[:, (their_input_n - input_n):, :]
 
