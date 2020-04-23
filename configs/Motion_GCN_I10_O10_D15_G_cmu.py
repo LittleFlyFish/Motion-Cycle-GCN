@@ -27,9 +27,8 @@ data = dict(
         actions="all",
         input_n=10,
         output_n=10,
-        #dct_used=15,
+        dct_n = 15,
         split=0,
-        sample_rate=2,
         pipeline=train_pipeline
     ),
     test=dict(
@@ -38,9 +37,8 @@ data = dict(
         actions="all",
         input_n=10,
         output_n=10,
-        #dct_used=15,
+        dct_n = 15,
         split=1,
-        sample_rate=2,
         pipeline = val_pipeline
     )
 )
