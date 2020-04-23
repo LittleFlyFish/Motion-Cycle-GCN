@@ -10,7 +10,7 @@ model = dict(
 dataset_type = 'Hm36Dataset_3d'
 data_root = './engineer/datasets/cmu_mocap'
 train_pipeline = [
-    dict(type='SampleFrames',direction = True),
+    dict(type='SampleFrames', direction = True),
 ]
 cuda_num = 'cuda:0'
 flag = 'Original_CMU'

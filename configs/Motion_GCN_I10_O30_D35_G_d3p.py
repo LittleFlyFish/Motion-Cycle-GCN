@@ -10,7 +10,7 @@ model = dict(
 dataset_type = 'Pose3dPW3D'
 data_root = './engineer/datasets/D3P'
 train_pipeline = [
-    dict(type='SampleFrames',direction = True),
+    dict(type='SampleFrames', direction = True),
 ]
 
 val_pipeline = [

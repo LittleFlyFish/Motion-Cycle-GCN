@@ -26,10 +26,11 @@ def build_dataloader(dataset,num_worker,batch_size):
         shuffle=True,
         num_workers=num_worker,
         pin_memory=True)
+
 def train_model(model,datasets,cfg,optimizer):
 
     train_dataset,val_dataset,test_dataset = datasets
-    train_loader = build_dataloader(train_dataset,cfg.dataloader.num_worker,cfg.dataloader.batch_size.train)
+    train_loader = build_dataloader(train_dataset,cfg.dataloader.num_worker, cfg.dataloader.batch_size.train)
     val_loader = build_dataloader(val_dataset,cfg.dataloader.num_worker,cfg.dataloader.batch_size.test)
     test_loader = build_dataloader(test_dataset, cfg.dataloader.num_worker, cfg.dataloader.batch_size.test)
 
@@ -125,6 +126,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
     model.train()
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
+    print(len(train_loader))
     for i, (inputs, targets, all_seq) in enumerate(train_loader):
         batch_size = inputs.shape[0]
         if batch_size == 1:
