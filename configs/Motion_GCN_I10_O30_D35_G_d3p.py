@@ -14,7 +14,7 @@ train_pipeline = [
 ]
 
 val_pipeline = [
-    dict(type='SampleFrames', direction=True),
+    dict(type='SampleFrames', direction = True),
 ]
 data = dict(
     videos_per_gpu=2,
