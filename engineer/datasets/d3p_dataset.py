@@ -65,6 +65,8 @@ class Pose3dPW(Dataset):
                         all_seqs = np.concatenate((all_seqs, seq_sel), axis=0)
             # break
 
+        print(their_input_n)
+        print(input_n)
         self.all_seqs = all_seqs[:, (their_input_n - input_n):, :]
 
         # first 3 values are global rotation
