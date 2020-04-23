@@ -879,12 +879,9 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len, cuda=
                     if len(sampled_seq) == 0:
                         sampled_seq = seq_sel
                         complete_seq = the_sequence
-                        print(complete_seq.size)
                     else:
                         sampled_seq = np.concatenate((sampled_seq, seq_sel), axis=0)
-                        print(complete_seq.size)
                         complete_seq = np.append(complete_seq, the_sequence, axis=0)
-                        print(complete_seq.size)
             else:
                 print("Reading subject {0}, action {1}, subaction {2}".format(subj, action, 1))
                 filename = '{0}/S{1}/{2}_{3}.txt'.format(path_to_dataset, subj, action, 1)
@@ -933,6 +930,7 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len, cuda=
     joint_to_ignore = np.array([0, 1, 6, 11, 16, 20, 23, 24, 28, 31])
     dimensions_to_ignore = np.concatenate((joint_to_ignore * 3, joint_to_ignore * 3 + 1, joint_to_ignore * 3 + 2))
     dimensions_to_use = np.setdiff1d(np.arange(complete_seq.shape[1]), dimensions_to_ignore)
+    print(complete_seq.size)
 
     return sampled_seq, dimensions_to_ignore, dimensions_to_use
 
