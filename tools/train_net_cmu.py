@@ -110,9 +110,9 @@ def main():
     data_mean = train_dataset.data_mean
     dim_used = train_dataset.dim_used
 
-    cfg.data.test[data_mean] = data_mean
-    cfg.data.test[data_std] = data_std
-    cfg.data.test[dim_used] = dim_used
+    cfg.data.test['data_mean'] = data_mean
+    cfg.data.test['data_std'] = data_std
+    cfg.data.test['dim_used'] = dim_used
 
     test_datasets=dict()
     for act in cfg.actions['all']:
