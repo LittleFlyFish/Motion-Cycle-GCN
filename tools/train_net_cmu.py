@@ -108,16 +108,15 @@ def main():
     for act in cfg.actions['all']:
         cfg.data.test.actions=act
         test_datasets[act] = build_dataset(cfg.data.test)
-    val_dataset = build_dataset(cfg.data.val)
     train_dataset = build_dataset(cfg.data.train)
     logger.info(">>> data loaded !")
     logger.info(">>> train data {}".format(train_dataset.__len__()))
-    logger.info(">>> validation data {}".format(val_dataset.__len__()))
+    logger.info(">>> test data {}".format(test_dataset.__len__()))
 
     # add an attribute for visualization convenience
     train_model(
         model,
-        [train_dataset,val_dataset,test_datasets],
+        [train_dataset,test_datasets],
         cfg,
         distributed=distributed,
         optimizer = optimizer

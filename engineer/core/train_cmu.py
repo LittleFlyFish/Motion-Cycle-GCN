@@ -30,9 +30,9 @@ def build_dataloader(dataset, num_worker, batch_size):
 
 
 def train_model(model, datasets, cfg, distributed, optimizer):
-    train_dataset, val_dataset, test_datasets = datasets
+    train_dataset, test_datasets = datasets
     train_loader = build_dataloader(train_dataset, cfg.dataloader.num_worker, cfg.dataloader.batch_size.train)
-    val_loader = build_dataloader(val_dataset, cfg.dataloader.num_worker, cfg.dataloader.batch_size.test)
+    # val_loader = build_dataloader(val_dataset, cfg.dataloader.num_worker, cfg.dataloader.batch_size.test)
     test_loaders = dict()
     for key in test_datasets.keys():
         test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
