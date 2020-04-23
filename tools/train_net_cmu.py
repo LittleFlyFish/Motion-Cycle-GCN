@@ -121,7 +121,6 @@ def main():
 
     logger.info(">>> data loaded !")
     logger.info(">>> train data {}".format(train_dataset.__len__()))
-    logger.info(">>> test data {}".format(test_dataset.__len__()))
 
     # add an attribute for visualization convenience
     train_model(
