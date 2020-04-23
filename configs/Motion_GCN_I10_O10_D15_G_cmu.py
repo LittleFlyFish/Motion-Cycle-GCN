@@ -15,9 +15,7 @@ train_pipeline = [
 cuda_num = 'cuda:0'
 flag = 'Original_CMU'
 
-val_pipeline = [
-    dict(type='SampleFrames', direction=True),
-]
+
 data = dict(
     videos_per_gpu=2,
     workers_per_gpu=0,
@@ -28,8 +26,7 @@ data = dict(
         input_n=10,
         output_n=10,
         dct_n = 15,
-        split=0,
-        pipeline=train_pipeline
+        split=0
     ),
     test=dict(
         type=dataset_type,
@@ -38,14 +35,13 @@ data = dict(
         input_n=10,
         output_n=10,
         dct_n = 15,
-        split=1,
-        pipeline = val_pipeline
+        split=1
     )
 )
 #
 # optimizer
 optim_para=dict(
-    optimizer = dict(type='Adam',lr=0.001),
+    optimizer = dict(type='Adam',lr=0.0005),
     lr_decay=2,
     lr_gamma= 0.96
 )
