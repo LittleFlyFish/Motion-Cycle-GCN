@@ -23,3 +23,4 @@ python3 tools/train_GCNGAN.py --config ./configs/GCNGAN_I10_O10_D15_G.py #window
 
 #################################D3P
 python3 tools/train_net_d3p.py --config ./configs/Motion_GCN_I10_O30_D35_G_d3p.py
+python3 tools/train_net_cmu.py --config ./configs/Motion_GCN_I10_O10_D15_G_cmu.py
