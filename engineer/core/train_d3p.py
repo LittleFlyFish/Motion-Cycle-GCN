@@ -50,8 +50,6 @@ def train_model(model,datasets,cfg,optimizer):
     is_best_ret_log = None
     train_num = 0
 
-
-
     for epoch in range(0, cfg.total_epochs):
 
         if (epoch + 1) % cfg.optim_para.lr_decay == 0:
@@ -126,9 +124,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
     model.train()
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
-    print(len(train_loader))
     for i, (inputs, targets, all_seq) in enumerate(train_loader):
-        print(i)
         batch_size = inputs.shape[0]
         if batch_size == 1:
             break

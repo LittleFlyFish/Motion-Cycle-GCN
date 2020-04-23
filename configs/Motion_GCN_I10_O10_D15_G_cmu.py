@@ -5,9 +5,9 @@ model = dict(
     hidden_feature=128,
     p_dropout=0.5,
     num_stage=12,
-    node_n=66
+    node_n=64
 )
-dataset_type = 'Hm36Dataset_3d'
+dataset_type = 'CMU_Motion'
 data_root = './engineer/datasets/cmu_mocap'
 train_pipeline = [
     dict(type='SampleFrames', direction = True),
@@ -65,11 +65,8 @@ optim_para=dict(
 total_epochs = 50
 max_norm= True
 checkpoints="./checkpoints"
-actions=dict(all = ["walking", "eating", "smoking", "discussion", "directions",
-               "greeting", "phoning", "posing", "purchases", "sitting",
-               "sittingdown", "takingphoto", "waiting", "walkingdog",
-               "walkingtogether"],
-            all_srnn= ["walking", "eating", "smoking", "discussion"]
+actions=dict(all = ["basketball", "basketball_signal", "directing_traffic", "jumping", "running", "soccer", "walking",
+               "washwindow"]
              )
 dataloader=dict(
     num_worker=4,

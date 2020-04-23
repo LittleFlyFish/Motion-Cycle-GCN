@@ -144,7 +144,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
 
     df2 = pd.DataFrame(data={"train_loss": train_loss_plot})
     with open(cfg.checkpoints + '/' + script_name + '_loss.csv', 'a') as f:
-        df.to_csv(f, header=False, index=False)
+        df2.to_csv(f, header=False, index=False)
 
 
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, cuda_num='cuda:0', dim_used=[], dct_n=15, num=1,
