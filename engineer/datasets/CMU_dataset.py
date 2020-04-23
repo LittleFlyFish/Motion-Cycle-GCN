@@ -37,7 +37,7 @@ class CMU_Motion(Dataset):
             path_to_data = path_to_data + '/test/'
             is_test = True
 
-        all_seqs, dim_ignore, dim_use, data_mean, data_std = data_utils.load_data_cmu(path_to_data, actions,
+        all_seqs, dim_ignore, dim_use, data_mean, data_std = data_utils.load_data(path_to_data, actions,
                                                                                       input_n, output_n,
                                                                                       data_std=data_std,
                                                                                       data_mean=data_mean,
