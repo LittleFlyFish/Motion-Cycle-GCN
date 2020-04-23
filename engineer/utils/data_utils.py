@@ -441,6 +441,8 @@ def load_data_cmu(path_to_dataset, actions, input_n, output_n, data_std=0, data_
     dimensions_to_use = []
     dimensions_to_ignore.extend(list(np.where(data_std < 1e-4)[0]))
     dimensions_to_use.extend(list(np.where(data_std >= 1e-4)[0]))
+    print(data_std.size)
+    print(dimensions_to_ignore)
     data_std[dimensions_to_ignore] = 1.0
     data_mean[dimensions_to_ignore] = 0.0
 

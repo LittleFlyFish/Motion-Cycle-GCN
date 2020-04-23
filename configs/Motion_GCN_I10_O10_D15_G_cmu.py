@@ -9,12 +9,9 @@ model = dict(
 )
 dataset_type = 'CMU_Motion'
 data_root = './engineer/datasets/cmu_mocap'
-train_pipeline = [
-    dict(type='SampleFrames', direction = True),
-]
+
 cuda_num = 'cuda:0'
 flag = 'Original_CMU'
-
 
 data = dict(
     videos_per_gpu=2,
