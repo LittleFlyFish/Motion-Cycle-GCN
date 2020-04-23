@@ -128,6 +128,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
     bar = Bar('>>>', fill='>', max=len(train_loader))
     print(len(train_loader))
     for i, (inputs, targets, all_seq) in enumerate(train_loader):
+        print(i)
         batch_size = inputs.shape[0]
         if batch_size == 1:
             break
