@@ -429,9 +429,12 @@ def load_data_cmu(path_to_dataset, actions, input_n, output_n, data_std=0, data_
                     if len(sampled_seq) == 0:
                         sampled_seq = seq_sel
                         complete_seq = the_sequence
+                        print(complete_seq.size)
                     else:
                         sampled_seq = np.concatenate((sampled_seq, seq_sel), axis=0)
+                        print(complete_seq.size)
                         complete_seq = np.append(complete_seq, the_sequence, axis=0)
+                        print(complete_seq.size)
 
     if not is_test:
         data_std = np.std(complete_seq, axis=0)
@@ -441,9 +444,6 @@ def load_data_cmu(path_to_dataset, actions, input_n, output_n, data_std=0, data_
     dimensions_to_use = []
     dimensions_to_ignore.extend(list(np.where(data_std < 1e-4)[0]))
     dimensions_to_use.extend(list(np.where(data_std >= 1e-4)[0]))
-    print(complete_seq.size)
-    print(data_std)
-    print(dimensions_to_ignore)
 
     data_std[dimensions_to_ignore] = 1.0
     data_mean[dimensions_to_ignore] = 0.0
