@@ -158,7 +158,6 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i, len(train_loader), time.time() - bt,
                                                                          time.time() - st)
         bar.next()
-        break
     bar.finish()
     return lr_now, t_3d.avg
 
