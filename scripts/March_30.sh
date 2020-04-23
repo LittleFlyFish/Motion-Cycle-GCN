@@ -19,3 +19,5 @@ python3 tools/train_net.py --config ./configs/Motion_GCN_I10_O10_D15_G.py # wind
 python3 tools/train_net.py --config ./configs/Subnet_GCN_I10_O10_D15_G.py #window5, cuda0
 python3 tools/train_Subnet.py --config ./configs/Subnet_GCN_I10_O10_D15_G.py #window4, cuda2
 python3 tools/train_GCNGAN.py --config ./configs/GCNGAN_I10_O10_D15_G.py #window4, cuda2
+
+python3 tools/train_net_d3p.py --config ./configs/Motion_GCN_I10_O10_D15_G_d3p.py
