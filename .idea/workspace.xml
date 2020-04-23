@@ -63,6 +63,7 @@
       <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._outdoors_golf_00.pkl" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._outdoors_parcours_00.pkl" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/engineer/datasets/__MACOSX/sequenceFiles/validation/._outdoors_parcours_01.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engineer/datasets/d3p_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/datasets/d3p_dataset.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -232,13 +233,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00496" summary=" &quot;nice&quot;">
-      <created>1586910852848</created>
-      <option name="number" value="00496" />
-      <option name="presentableId" value="LOCAL-00496" />
-      <option name="project" value="LOCAL" />
-      <updated>1586910852848</updated>
     </task>
     <task id="LOCAL-00497" summary=" &quot;nice&quot;">
       <created>1586911121284</created>
@@ -576,7 +570,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587666963887</updated>
     </task>
-    <option name="localTasksCounter" value="545" />
+    <task id="LOCAL-00545" summary=" &quot;nice&quot;">
+      <created>1587667061792</created>
+      <option name="number" value="00545" />
+      <option name="presentableId" value="LOCAL-00545" />
+      <option name="project" value="LOCAL" />
+      <updated>1587667061792</updated>
+    </task>
+    <option name="localTasksCounter" value="546" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
