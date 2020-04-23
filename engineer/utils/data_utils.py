@@ -930,7 +930,6 @@ def load_data_3d(path_to_dataset, subjects, actions, sample_rate, seq_len, cuda=
     joint_to_ignore = np.array([0, 1, 6, 11, 16, 20, 23, 24, 28, 31])
     dimensions_to_ignore = np.concatenate((joint_to_ignore * 3, joint_to_ignore * 3 + 1, joint_to_ignore * 3 + 2))
     dimensions_to_use = np.setdiff1d(np.arange(complete_seq.shape[1]), dimensions_to_ignore)
-    print(complete_seq.size)
 
     return sampled_seq, dimensions_to_ignore, dimensions_to_use
 

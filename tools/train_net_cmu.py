@@ -104,11 +104,17 @@ def main():
         optimizer = torch.optim.Adam(model.parameters(), lr=cfg.optim_para['optimizer']['lr'])
 
     #datasets build
+
+    train_dataset = build_dataset(cfg.data.train)
+    data_std = train_dataset.data_std
+    data_mean = train_dataset.data_mean
+    dim_used = train_dataset.dim_used
+
     test_datasets=dict()
     for act in cfg.actions['all']:
-        cfg.data.test.actions=act
-        test_datasets[act] = build_dataset(cfg.data.test)
-    train_dataset = build_dataset(cfg.data.train)
+        cfg.data.test.actions = act
+        test_datasets[act] = build_dataset(cfg.data.test, data_mean=data_mean, data_std=data_std, dim_used=dim_used)
+
     logger.info(">>> data loaded !")
     logger.info(">>> train data {}".format(train_dataset.__len__()))
     logger.info(">>> test data {}".format(test_dataset.__len__()))
