@@ -30,12 +30,12 @@ def build_dataloader(dataset, num_worker, batch_size):
 
 
 def train_model(model, datasets, cfg, distributed, optimizer):
-    train_dataset, test_datasets = datasets
-    train_loader = build_dataloader(train_dataset, cfg.dataloader.num_worker, cfg.dataloader.batch_size.train)
+    train_data, test_data = datasets
+    train_loader = build_dataloader(train_data, cfg.dataloader.num_worker, cfg.dataloader.batch_size.train)
     # val_loader = build_dataloader(val_dataset, cfg.dataloader.num_worker, cfg.dataloader.batch_size.test)
     test_loaders = dict()
-    for key in test_datasets.keys():
-        test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
+    for key in test_data.keys():
+        test_loaders[key] = build_dataloader(test_data[key], cfg.dataloader.num_worker,
                                              cfg.dataloader.batch_size.test)
     is_cuda = torch.cuda.is_available()
     cuda_num = cfg.cuda_num
@@ -78,7 +78,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         head = np.array(['epoch'])
         # per epoch
         lr_now, t_l, t_e, t_3d = train(train_loader, model, optimizer, input_n=cfg.data.train.input_n, lr_now=lr_now,
-                                       max_norm=cfg.max_norm, is_cuda=is_cuda, dim_used=train_dataset.dim_used,
+                                       max_norm=cfg.max_norm, is_cuda=is_cuda, dim_used=train_data.dim_used,
                                        dct_n=cfg.data.train.dct_n, cuda=cuda_num)
         ret_log = np.append(ret_log, [lr_now, t_l, t_e, t_3d])
         head = np.append(head, ['lr', 't_l', 't_e', 't_3d'])
@@ -96,7 +96,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_3d_head = np.array([])
         for act in acts:
             test_e, test_3d = test(test_data[act], model, input_n=cfg.data.test.input_n, output_n=cfg.data.test.output_n,
-                                   is_cuda=is_cuda, dim_used=test_datasets.dim_used, dct_n=cfg.data.test.dct_n, cuda=cuda_num)
+                                   is_cuda=is_cuda, dim_used=test_data.dim_used, dct_n=cfg.data.test.dct_n, cuda=cuda_num)
 
             ret_log = np.append(ret_log, test_e)
             test_3d_temp = np.append(test_3d_temp, test_3d)
