@@ -68,17 +68,17 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     test_loss_plot = [1]
     val_loss_plot = [1]
 
-    for epoch in range(start_epoch, opt.epochs):
+    for epoch in range(start_epoch, cfg.total_epochs):
 
-        if (epoch + 1) % opt.lr_decay == 0:
-            lr_now = utils.lr_decay(optimizer, lr_now, opt.lr_gamma)
+        if (epoch + 1) % cfg.optim_para.lr_decay == 0:
+            lr_now = utils.lr_decay(optimizer, lr_now, cfg.optim_para.lr_gamma)
         print('==========================')
         print('>>> epoch: {} | lr: {:.5f}'.format(epoch + 1, lr_now))
         ret_log = np.array([epoch + 1])
         head = np.array(['epoch'])
         # per epoch
         lr_now, t_l, t_e, t_3d = train(train_loader, model, optimizer, input_n=input_n, lr_now=lr_now,
-                                       max_norm=opt.max_norm, is_cuda=is_cuda, dim_used=dim_used, dct_n=dct_n)
+                                       max_norm=cfg.max_norm, is_cuda=is_cuda, dim_used=dim_used, dct_n=dct_n)
         ret_log = np.append(ret_log, [lr_now, t_l, t_e, t_3d])
         head = np.append(head, ['lr', 't_l', 't_e', 't_3d'])
 
@@ -113,9 +113,9 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         # update log file
         df = pd.DataFrame(np.expand_dims(ret_log, axis=0))
         if epoch == start_epoch:
-            df.to_csv(opt.ckpt + '/' + script_name + '.csv', header=head, index=False)
+            df.to_csv(cfg.checkpoints  + '/' + script_name + '.csv', header=head, index=False)
         else:
-            with open(opt.ckpt + '/' + script_name + '.csv', 'a') as f:
+            with open(cfg.checkpoints  + '/' + script_name + '.csv', 'a') as f:
                 df.to_csv(f, header=False, index=False)
         # save ckpt
         if not np.isnan(t_e):
@@ -129,7 +129,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
                          'err': test_e[0],
                          'state_dict': model.state_dict(),
                          'optimizer': optimizer.state_dict()},
-                        ckpt_path=opt.ckpt,
+                        ckpt_path=cfg.checkpoints,
                         is_best=is_best,
                         file_name=file_name)
 
