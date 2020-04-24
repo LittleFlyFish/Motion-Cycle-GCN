@@ -635,13 +635,13 @@ def expmap2xyz_torch(expmap, cuda='cuda:0'):
     :return: N*32*3
     """
     parent, offset, rotInd, expmapInd = forward_kinematics._some_variables()
-    xyz = forward_kinematics.fkl_torch(expmap, parent, offset, rotInd, expmapInd, cuda)
+    xyz = forward_kinematics.fkl_torch(expmap, parent, offset, rotInd, expmapInd, cuda=cuda)
     return xyz
 
 
-def expmap2xyz_torch_cmu(expmap):
+def expmap2xyz_torch_cmu(expmap, cuda='cuda:0'):
     parent, offset, rotInd, expmapInd = forward_kinematics._some_variables_cmu()
-    xyz = forward_kinematics.fkl_torch(expmap, parent, offset, rotInd, expmapInd)
+    xyz = forward_kinematics.fkl_torch(expmap, parent, offset, rotInd, expmapInd, cuda=cuda)
     return xyz
 
 
