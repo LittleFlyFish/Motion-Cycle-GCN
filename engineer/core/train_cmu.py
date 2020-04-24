@@ -174,7 +174,7 @@ def train(train_loader, model, optimizer, cuda='cuda:0', input_n=20, lr_now=None
         n, _, _ = all_seq.data.shape
 
         m_err = loss_funcs.mpjpe_error_cmu(outputs, all_seq, input_n, dim_used=dim_used, dct_n=dct_n, cuda=cuda)
-        e_err = loss_funcs.euler_error(outputs, all_seq, input_n, dim_used=dim_used, dct_n=dct_n)
+        e_err = loss_funcs.euler_error(outputs, all_seq, input_n, dim_used=dim_used, dct_n=dct_n, cuda=cuda)
 
         # update the training loss
         t_l.update(loss.cpu().data.numpy()[0] * n, n)
