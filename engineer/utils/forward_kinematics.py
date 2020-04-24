@@ -216,7 +216,7 @@ def _some_variables_cmu():
     return parent, offset, posInd, expmapInd
 
 
-def fkl_torch(angles, parent, offset, rotInd, expmapInd, cuda ='cuda:3'):
+def fkl_torch(angles, parent, offset, rotInd, expmapInd, cuda ='cuda:0'):
     """
     pytorch version of fkl.
 

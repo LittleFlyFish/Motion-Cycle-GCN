@@ -383,7 +383,7 @@ def define_actions_cmu(action):
     raise (ValueError, "Unrecognized action: %d" % action)
 
 
-def load_data_cmu(path_to_dataset, actions, input_n, output_n, data_std=0, data_mean=0, is_test=False):
+def load_data_cmu(path_to_dataset, actions, input_n, output_n, data_std=0, data_mean=0, is_test=False, cuda='cuda:1'):
     seq_len = input_n + output_n
     nactions = len(actions)
     sampled_seq = []
@@ -628,7 +628,7 @@ def expmap2rotmat_torch(r, cuda = 'cuda:3'):
     return R
 
 
-def expmap2xyz_torch(expmap, cuda='cuda:3'):
+def expmap2xyz_torch(expmap, cuda='cuda:0'):
     """
     convert expmaps to joint locations
     :param expmap: N*99

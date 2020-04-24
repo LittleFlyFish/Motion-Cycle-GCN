@@ -104,7 +104,7 @@ def mpjpe_error(outputs, all_seq, input_n, dim_used, dct_n):
     return mean_3d_err
 
 
-def mpjpe_error_cmu(outputs, all_seq, input_n, dim_used, dct_n):
+def mpjpe_error_cmu(outputs, all_seq, input_n, dim_used, dct_n, cuda='cuda:0'):
     n, seq_len, dim_full_len = all_seq.data.shape
     dim_used_len = len(dim_used)
 
@@ -121,8 +121,8 @@ def mpjpe_error_cmu(outputs, all_seq, input_n, dim_used, dct_n):
     pred_expmap[:, 0:6] = 0
     targ_expmap[:, 0:6] = 0
 
-    targ_p3d = data_utils.expmap2xyz_torch_cmu(targ_expmap).view(-1, 3)
-    pred_p3d = data_utils.expmap2xyz_torch_cmu(pred_expmap).view(-1, 3)
+    targ_p3d = data_utils.expmap2xyz_torch_cmu(targ_expmap, cuda).view(-1, 3)
+    pred_p3d = data_utils.expmap2xyz_torch_cmu(pred_expmap, cuda).view(-1, 3)
 
     mean_3d_err = torch.mean(torch.norm(targ_p3d - pred_p3d, 2, 1))
 

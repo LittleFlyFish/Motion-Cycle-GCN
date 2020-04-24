@@ -79,7 +79,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         # per epoch
         lr_now, t_l, t_e, t_3d = train(train_loader, model, optimizer, input_n=cfg.data.train.input_n, lr_now=lr_now,
                                        max_norm=cfg.max_norm, is_cuda=is_cuda, dim_used=train_dataset.dim_used,
-                                       dct_n=cfg.data.train.dct_n)
+                                       dct_n=cfg.data.train.dct_n, cuda=cuda_num)
         ret_log = np.append(ret_log, [lr_now, t_l, t_e, t_3d])
         head = np.append(head, ['lr', 't_l', 't_e', 't_3d'])
 
@@ -96,7 +96,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_3d_head = np.array([])
         for act in acts:
             test_e, test_3d = test(test_data[act], model, input_n=cfg.data.test.input_n, output_n=cfg.data.test.output_n,
-                                   is_cuda=is_cuda, dim_used=test_datasets.dim_used, dct_n=cfg.data.test.dct_n)
+                                   is_cuda=is_cuda, dim_used=test_datasets.dim_used, dct_n=cfg.data.test.dct_n, cuda=cuda_num)
 
             ret_log = np.append(ret_log, test_e)
             test_3d_temp = np.append(test_3d_temp, test_3d)
@@ -144,7 +144,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         df2.to_csv(f, header=False, index=False)
 
 
-def train(train_loader, model, optimizer, input_n=20, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=20):
+def train(train_loader, model, optimizer, cuda='cuda:0', input_n=20, lr_now=None, max_norm=True, is_cuda=False, dim_used=[], dct_n=20):
     t_l = utils.AccumLoss()
     t_e = utils.AccumLoss()
     t_3d = utils.AccumLoss()
@@ -173,7 +173,7 @@ def train(train_loader, model, optimizer, input_n=20, lr_now=None, max_norm=True
         optimizer.step()
         n, _, _ = all_seq.data.shape
 
-        m_err = loss_funcs.mpjpe_error_cmu(outputs, all_seq, input_n, dim_used=dim_used, dct_n=dct_n)
+        m_err = loss_funcs.mpjpe_error_cmu(outputs, all_seq, input_n, dim_used=dim_used, dct_n=dct_n, cuda=cuda)
         e_err = loss_funcs.euler_error(outputs, all_seq, input_n, dim_used=dim_used, dct_n=dct_n)
 
         # update the training loss
@@ -188,7 +188,7 @@ def train(train_loader, model, optimizer, input_n=20, lr_now=None, max_norm=True
     return lr_now, t_l.avg, t_e.avg, t_3d.avg
 
 
-def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=20):
+def test(train_loader, model, cuda='cuda:0', input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=20):
     N = 0
     if output_n == 25:
         eval_frame = [1, 3, 7, 9, 13, 24]
@@ -229,13 +229,13 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         pred_expmap = pred_expmap.view(-1, 3)
         targ_expmap = targ_expmap.view(-1, 3)
 
-        pred_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(pred_expmap))
+        pred_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(pred_expmap, cuda=cuda))
         pred_eul = pred_eul.view(-1, dim_full_len).view(-1, output_n, dim_full_len)  # [:, :, dim_used]
-        targ_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(targ_expmap))
+        targ_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(targ_expmap, cuda=cuda))
         targ_eul = targ_eul.view(-1, dim_full_len).view(-1, output_n, dim_full_len)  # [:, :, dim_used]
 
-        targ_p3d = data_utils.expmap2xyz_torch_cmu(targ_expmap.view(-1, dim_full_len)).view(n, output_n, -1, 3)
-        pred_p3d = data_utils.expmap2xyz_torch_cmu(pred_expmap.view(-1, dim_full_len)).view(n, output_n, -1, 3)
+        targ_p3d = data_utils.expmap2xyz_torch_cmu(targ_expmap.view(-1, dim_full_len), cuda=cuda).view(n, output_n, -1, 3)
+        pred_p3d = data_utils.expmap2xyz_torch_cmu(pred_expmap.view(-1, dim_full_len), cuda=cuda).view(n, output_n, -1, 3)
 
         for k in np.arange(0, len(eval_frame)):
             j = eval_frame[k]
