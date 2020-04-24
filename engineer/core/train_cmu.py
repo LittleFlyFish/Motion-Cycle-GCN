@@ -77,8 +77,9 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         ret_log = np.array([epoch + 1])
         head = np.array(['epoch'])
         # per epoch
-        lr_now, t_l, t_e, t_3d = train(train_loader, model, optimizer, input_n=input_n, lr_now=lr_now,
-                                       max_norm=cfg.max_norm, is_cuda=is_cuda, dim_used=dim_used, dct_n=dct_n)
+        lr_now, t_l, t_e, t_3d = train(train_loader, model, optimizer, input_n=cfg.data.train.input_n, lr_now=lr_now,
+                                       max_norm=cfg.max_norm, is_cuda=is_cuda, dim_used=train_dataset.dim_used,
+                                       dct_n=cfg.data.train.dct_n)
         ret_log = np.append(ret_log, [lr_now, t_l, t_e, t_3d])
         head = np.append(head, ['lr', 't_l', 't_e', 't_3d'])
 
@@ -94,8 +95,8 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_3d_temp = np.array([])
         test_3d_head = np.array([])
         for act in acts:
-            test_e, test_3d = test(test_data[act], model, input_n=input_n, output_n=output_n, is_cuda=is_cuda,
-                                   dim_used=dim_used, dct_n=dct_n)
+            test_e, test_3d = test(test_data[act], model, input_n=cfg.data.test.input_n, output_n=cfg.data.test.output_n,
+                                   is_cuda=is_cuda, dim_used=test_datasets.dim_used, dct_n=cfg.data.test.dct_n)
 
             ret_log = np.append(ret_log, test_e)
             test_3d_temp = np.append(test_3d_temp, test_3d)
