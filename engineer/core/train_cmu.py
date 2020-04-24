@@ -177,6 +177,8 @@ def train(train_loader, model, optimizer, cuda='cuda:0', input_n=20, lr_now=None
         e_err = loss_funcs.euler_error(outputs, all_seq, input_n, dim_used=dim_used, dct_n=dct_n, cuda=cuda)
 
         # update the training loss
+        print(loss.cpu().data.numpy())
+        print(loss.cpu().data.numpy()[0])
         t_l.update(loss.cpu().data.numpy()[0] * n, n)
         t_e.update(e_err.cpu().data.numpy()[0] * n, n)
         t_3d.update(m_err.cpu().data.numpy()[0] * n, n)
