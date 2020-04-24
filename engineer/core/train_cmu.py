@@ -96,7 +96,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_3d_head = np.array([])
         for act in acts:
             test_e, test_3d = test(test_data[act], model, input_n=cfg.data.test.input_n, output_n=cfg.data.test.output_n,
-                                   is_cuda=is_cuda, dim_used=test_data.dim_used, dct_n=cfg.data.test.dct_n, cuda=cuda_num)
+                                   is_cuda=is_cuda, dim_used=train_data.dim_used, dct_n=cfg.data.test.dct_n, cuda=cuda_num)
 
             ret_log = np.append(ret_log, test_e)
             test_3d_temp = np.append(test_3d_temp, test_3d)
