@@ -95,7 +95,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_3d_temp = np.array([])
         test_3d_head = np.array([])
         for act in acts:
-            test_e, test_3d = test(test_data[act], model, input_n=cfg.data.test.input_n, output_n=cfg.data.test.output_n,
+            test_e, test_3d = test(test_loaders[act], model, input_n=cfg.data.test.input_n, output_n=cfg.data.test.output_n,
                                    is_cuda=is_cuda, dim_used=train_data.dim_used, dct_n=cfg.data.test.dct_n, cuda=cuda_num)
 
             ret_log = np.append(ret_log, test_e)
@@ -156,8 +156,8 @@ def train(train_loader, model, optimizer, cuda='cuda:0', input_n=20, lr_now=None
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda()).float()
-            all_seq = Variable(all_seq.cuda(async=True)).float()
+            inputs = Variable(inputs.cuda(cuda)).float()
+            all_seq = Variable(all_seq.cuda(cuda, async=True)).float()
 
         outputs = model(inputs)
         n = outputs.shape[0]
@@ -204,8 +204,8 @@ def test(train_loader, model, cuda='cuda:0', input_n=20, output_n=50, is_cuda=Fa
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda()).float()
-            all_seq = Variable(all_seq.cuda(async=True)).float()
+            inputs = Variable(inputs.cuda(cuda)).float()
+            all_seq = Variable(all_seq.cuda(cuda, async=True)).float()
 
         outputs = model(inputs)
 

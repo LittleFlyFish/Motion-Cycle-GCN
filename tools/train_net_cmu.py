@@ -114,7 +114,7 @@ def main():
     cfg.data.test['data_std'] = data_std
     cfg.data.test['dim_used'] = dim_used
 
-    test_datasets=dict()
+    test_datasets = dict()
     for act in cfg.actions['all']:
         cfg.data.test.actions = act
         test_datasets[act] = build_dataset(cfg.data.test)
