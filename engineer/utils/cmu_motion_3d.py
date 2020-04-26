@@ -1,6 +1,6 @@
 from torch.utils.data import Dataset
 import numpy as np
-from utils import data_utils
+from engineer.utils import data_utils
 
 
 class CMU_Motion3D(Dataset):
