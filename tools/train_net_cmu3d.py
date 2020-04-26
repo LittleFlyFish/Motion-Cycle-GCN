@@ -26,7 +26,7 @@ import engineer.utils.logging as logging
 from engineer import __version__,__author__
 import engineer.utils.misc as misc
 from engineer.datasets.builder import build_dataset
-from engineer.core.train_cmu3d import train_model
+from .engineer.core.train_cmu3d import train_model
 import os
 
 logger = logging.get_logger(__name__)
