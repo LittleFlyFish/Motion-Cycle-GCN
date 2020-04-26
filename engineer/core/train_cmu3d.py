@@ -15,10 +15,10 @@ from progress.bar import Bar
 import pandas as pd
 
 from engineer.utils import loss_funcs, utils as utils
-from utils.opt import Options
-from utils.cmu_motion_3d import CMU_Motion3D
-import utils.model as nnmodel
-import utils.data_utils as data_utils
+from engineer.utils.opt import Options
+from engineer.utils.cmu_motion_3d import CMU_Motion3D
+import engineer.utils.model as nnmodel
+import engineer.utils.data_utils as data_utils
 
 
 # plotter = data_utils.VisdomLinePlotter(env_name='Train Plots')
