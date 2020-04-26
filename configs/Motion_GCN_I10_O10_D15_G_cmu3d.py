@@ -5,7 +5,7 @@ model = dict(
     hidden_feature=256,
     p_dropout=0.5,
     num_stage=12,
-    node_n=64
+    node_n=75
 )
 dataset_type = 'CMU_Motion3D'
 data_root = './engineer/datasets/cmu_mocap'
