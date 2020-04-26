@@ -623,8 +623,8 @@ def expmap2rotmat_torch(r, cuda = 'cuda:3'):
     r1 = r1 - r1.transpose(1, 2)
     n = r1.data.shape[0]
     R = Variable(torch.eye(3, 3).repeat(n, 1, 1)).float().cuda(cuda) + torch.mul(
-        torch.sin(theta).unsqueeze(1).repeat(1, 9).view(-1, 3, 3), r1) + torch.mul(
-        (1 - torch.cos(theta).unsqueeze(1).repeat(1, 9).view(-1, 3, 3)), torch.matmul(r1, r1))
+        torch.sin(theta).unsqueeze(1).repeat(1, 9).view(-1, 3, 3), r1).cuda(cuda)  + torch.mul(
+        (1 - torch.cos(theta).unsqueeze(1).repeat(1, 9).view(-1, 3, 3)), torch.matmul(r1, r1)).cuda(cuda) 
     return R
 
 
