@@ -464,7 +464,7 @@ def load_data_cmu_3d(path_to_dataset, actions, input_n, output_n, data_std=0, da
             action_sequence = readCSVasFloat(filename)
             n, d = action_sequence.shape
             exptmps = Variable(torch.from_numpy(action_sequence)).float().cuda()
-            xyz = expmap2xyz_torch_cmu(exptmps, cuda)
+            xyz = expmap2xyz_torch_cmu(exptmps, cuda=cuda)
             xyz = xyz.view(-1, 38 * 3)
             xyz = xyz.cpu().data.numpy()
             action_sequence = xyz
