@@ -19,6 +19,7 @@ from engineer.utils.opt import Options
 from engineer.utils.cmu_motion_3d import CMU_Motion3D
 import engineer.utils.model as nnmodel
 import engineer.utils.data_utils as data_utils
+import logging.handlers
 
 
 # plotter = data_utils.VisdomLinePlotter(env_name='Train Plots')
