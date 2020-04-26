@@ -168,7 +168,7 @@ def train(train_loader, model, optimizer, cuda='cuda:0', input_n=20, lr_now=None
         dim_used_len = len(dim_used)
 
         _, idct_m = data_utils.get_dct_matrix(seq_len)
-        idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
+        idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(cuda)
         outputs_t = outputs.view(-1, dct_n).transpose(0, 1)
         outputs_p3d = torch.matmul(idct_m[:, :dct_n], outputs_t).transpose(0, 1).contiguous()
         outputs_p3d = outputs_p3d.view(-1, dim_used_len, seq_len).transpose(1, 2).contiguous().view(-1, 3)
