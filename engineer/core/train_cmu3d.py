@@ -14,7 +14,7 @@ import numpy as np
 from progress.bar import Bar
 import pandas as pd
 
-from utils import loss_funcs, utils as utils
+from engineer.utils import loss_funcs, utils as utils
 from utils.opt import Options
 from utils.cmu_motion_3d import CMU_Motion3D
 import utils.model as nnmodel
