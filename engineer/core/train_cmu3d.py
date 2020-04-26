@@ -61,7 +61,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_best[act] = float("inf")
 
     # save_pre_fix
-    script_name = os.path.basename(__file__).split('.')[0]
+    script_name = os.path.basename(__file__).split('.')
     script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n,
                                                                        cfg.data.train.dct_n) + cfg.flag
     err_best = float("inf")
@@ -129,7 +129,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         file_name = ['ckpt_' + script_name + '_best.pth.tar', 'ckpt_' + script_name + '_last.pth.tar']
         utils.save_ckpt({'epoch': epoch + 1,
                          'lr': lr_now,
-                         'err': test_e[0],
+                         'err': test_e,
                          'state_dict': model.state_dict(),
                          'optimizer': optimizer.state_dict()},
                         ckpt_path=cfg.checkpoints,
@@ -183,7 +183,7 @@ def train(train_loader, model, optimizer, cuda='cuda:0', input_n=20, lr_now=None
         if max_norm:
             nn.utils.clip_grad_norm(model.parameters(), max_norm=1)
         optimizer.step()
-        t_l.update(loss.cpu().data.numpy()[0] * n, n)
+        t_l.update(loss.cpu().data.numpy() * n, n)
 
         bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i + 1, len(train_loader), time.time() - bt,
                                                                          time.time() - st)
@@ -239,7 +239,7 @@ def test(train_loader, model, cuda='cuda:0', input_n=20, output_n=50, is_cuda=Fa
             j = eval_frame[k]
             t_3d[k] += torch.mean(torch.norm(
                 targ_p3d[:, j, :, :].contiguous().view(-1, 3) - pred_p3d[:, j, :, :].contiguous().view(-1, 3), 2,
-                1)).cpu().data.numpy()[0] * n
+                1)).cpu().data.numpy() * n
 
         N += n
 
