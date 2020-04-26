@@ -448,7 +448,7 @@ def load_data_cmu(path_to_dataset, actions, input_n, output_n, data_std=0, data_
     return sampled_seq, dimensions_to_ignore, dimensions_to_use, data_mean, data_std
 
 
-def load_data_cmu_3d(path_to_dataset, actions, input_n, output_n, data_std=0, data_mean=0, is_test=False):
+def load_data_cmu_3d(path_to_dataset, actions, input_n, output_n, data_std=0, data_mean=0, is_test=False, cuda='cuda:1'):
     seq_len = input_n + output_n
     nactions = len(actions)
     sampled_seq = []
@@ -464,7 +464,7 @@ def load_data_cmu_3d(path_to_dataset, actions, input_n, output_n, data_std=0, da
             action_sequence = readCSVasFloat(filename)
             n, d = action_sequence.shape
             exptmps = Variable(torch.from_numpy(action_sequence)).float().cuda()
-            xyz = expmap2xyz_torch_cmu(exptmps)
+            xyz = expmap2xyz_torch_cmu(exptmps, cuda)
             xyz = xyz.view(-1, 38 * 3)
             xyz = xyz.cpu().data.numpy()
             action_sequence = xyz

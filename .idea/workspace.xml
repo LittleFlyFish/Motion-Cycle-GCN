@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/configs/Dense_GCN_I10_O10_D15_G_cmu.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O10_D15_G_cmu3d.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engineer/core/train_cmu3d.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/train_net_cmu3d.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/datasets/CMU_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/datasets/CMU_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engineer/utils/data_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/utils/data_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/March_30.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/March_30.sh" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -171,13 +177,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00538" summary=" &quot;nice&quot;">
-      <created>1587244392338</created>
-      <option name="number" value="00538" />
-      <option name="presentableId" value="LOCAL-00538" />
-      <option name="project" value="LOCAL" />
-      <updated>1587244392338</updated>
     </task>
     <task id="LOCAL-00539" summary=" &quot;nice&quot;">
       <created>1587498481855</created>
@@ -515,7 +514,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587936984395</updated>
     </task>
-    <option name="localTasksCounter" value="587" />
+    <task id="LOCAL-00587" summary=" &quot;nice&quot;">
+      <created>1587937173707</created>
+      <option name="number" value="00587" />
+      <option name="presentableId" value="LOCAL-00587" />
+      <option name="project" value="LOCAL" />
+      <updated>1587937173707</updated>
+    </task>
+    <option name="localTasksCounter" value="588" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -633,6 +639,11 @@
           <url>file://$PROJECT_DIR$/engineer/models/backbones/GCNGAN.py</url>
           <line>2</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/engineer/core/train_cmu3d.py</url>
+          <line>27</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

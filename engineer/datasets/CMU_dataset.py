@@ -94,7 +94,8 @@ class CMU_Motion3D(Dataset):
                                                                                          input_n, output_n,
                                                                                          data_std=data_std,
                                                                                          data_mean=data_mean,
-                                                                                         is_test=is_test)
+                                                                                         is_test=is_test,
+                                                                                         cuda='cuda:1')
         if not is_test:
             dim_used = dim_use
 
