@@ -1,9 +1,23 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from __future__ import print_function, absolute_import, division
+
+import os
+import time
+import torch
+import torch.nn as nn
+import torch.optim
+from torch.utils.data import DataLoader
+from torch.autograd import Variable
+from torch.nn import functional
+import numpy as np
+from progress.bar import Bar
+import pandas as pd
+
 import argparse
 import os
 import random
 
-import numpy as np
-import torch
 import sys
 sys.path.append("./")
 from mmcv import Config
