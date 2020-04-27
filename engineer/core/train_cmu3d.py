@@ -61,7 +61,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         test_best[act] = float("inf")
 
     # save_pre_fix
-    script_name = os.path.basename(__file__).split('.')
+    script_name = os.path.basename(__file__).split('.')[0]
     script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n,
                                                                        cfg.data.train.dct_n) + cfg.flag
     err_best = float("inf")
