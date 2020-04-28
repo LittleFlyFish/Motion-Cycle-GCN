@@ -83,8 +83,8 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         lr_now, t_l, t_e, t_3d = train(train_loader, model, optimizer, input_n=cfg.data.train.input_n, lr_now=lr_now,
                                        max_norm=cfg.max_norm, is_cuda=is_cuda, dim_used=train_data.dim_used,
                                        dct_n=cfg.data.train.dct_n, cuda=cuda_num)
-        ret_log = np.append(ret_log, [lr_now, t_l, t_3d])
-        head = np.append(head, ['lr', 't_l', 't_3d'])
+        ret_log = np.append(ret_log, [lr_now, t_3d])
+        head = np.append(head, ['lr', 't_3d'])
 
         # v_l, v_e, v_3d = val(val_loader, model, optimizer, adj, input_n=input_n, output_n=output_n,
         #                      lr_now=lr_now, max_norm=opt.max_norm, is_cuda=is_cuda, epoch=epoch + 1,
@@ -113,10 +113,6 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         ret_log = np.append(ret_log, test_3d_temp)
         head = np.append(head, test_3d_head)
 
-        print(len(ret_log))
-        print(len(head))
-        print(ret_log)
-        print(head)
 
         # update log file
         df = pd.DataFrame(np.expand_dims(ret_log, axis=0))
