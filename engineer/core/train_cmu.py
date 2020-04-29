@@ -127,7 +127,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         file_name = ['ckpt_' + script_name + '_best.pth.tar', 'ckpt_' + script_name + '_last.pth.tar']
         utils.save_ckpt({'epoch': epoch + 1,
                          'lr': lr_now,
-                         'err': test_e[0],
+                         'err': err_best,
                          'state_dict': model.state_dict(),
                          'optimizer': optimizer.state_dict()},
                         ckpt_path=cfg.checkpoints,
