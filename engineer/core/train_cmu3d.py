@@ -162,8 +162,6 @@ def train(train_loader, model, optimizer, cuda='cuda:0', input_n=20, lr_now=None
             inputs = Variable(inputs.cuda(cuda)).float()
             all_seq = Variable(all_seq.cuda(cuda, async=True)).float()
 
-        print(cuda)
-
         outputs = model(inputs)
 
 
@@ -211,8 +209,8 @@ def test(train_loader, model, cuda='cuda:0', input_n=20, output_n=50, is_cuda=Fa
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda()).float()
-            all_seq = Variable(all_seq.cuda(async=True)).float()
+            inputs = Variable(inputs.cuda(cuda)).float()
+            all_seq = Variable(all_seq.cuda(cuda, async=True)).float()
 
         outputs = model(inputs)
 
