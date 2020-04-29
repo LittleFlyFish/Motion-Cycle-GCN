@@ -162,7 +162,10 @@ def train(train_loader, model, optimizer, cuda='cuda:0', input_n=20, lr_now=None
             inputs = Variable(inputs.cuda(cuda)).float()
             all_seq = Variable(all_seq.cuda(cuda, async=True)).float()
 
+        print(cuda)
+
         outputs = model(inputs)
+
 
         n, seq_len, dim_full_len = all_seq.data.shape
         dim_used = np.array(dim_used)
