@@ -113,6 +113,10 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         ret_log = np.append(ret_log, test_3d_temp)
         head = np.append(head, test_3d_head)
 
+        print(len(ret_log))
+        print(len(head))
+        print(ret_log)
+        print(head)
 
         # update log file
         df = pd.DataFrame(np.expand_dims(ret_log, axis=0))
