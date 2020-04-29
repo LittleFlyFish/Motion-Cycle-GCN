@@ -10,7 +10,7 @@ model = dict(
 dataset_type = 'CMU_Motion3D'
 data_root = './engineer/datasets/cmu_mocap'
 
-cuda_num = 'cuda:0'
+cuda_num = 'cuda:1'
 flag = 'Dense+CMU3D'
 
 data = dict(

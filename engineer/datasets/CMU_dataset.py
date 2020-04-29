@@ -42,7 +42,7 @@ class CMU_Motion(Dataset):
                                                                                       data_std=data_std,
                                                                                       data_mean=data_mean,
                                                                                       is_test=is_test,
-                                                                                      cuda='cuda:1')
+                                                                                      cuda='cuda:0')
         if not is_test:
             dim_used = dim_use[6:]
 
