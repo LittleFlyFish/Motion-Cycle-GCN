@@ -101,25 +101,18 @@ def train_model(model, datasets, cfg, distributed, optimizer):
             test_3d = test(test_loaders[act], model, input_n=cfg.data.test.input_n, output_n=cfg.data.test.output_n,
                                    is_cuda=is_cuda, dim_used=train_data.dim_used, dct_n=cfg.data.test.dct_n, cuda=cuda_num)
 
-            print(test_3d)
 
             test_3d_temp = np.append(test_3d_temp, test_3d)
             test_3d_head = np.append(test_3d_head,
                                      [act + '3d80', act + '3d160', act + '3d320', act + '3d400'])
 
-            head = np.append(head, [act + '80', act + '160', act + '320', act + '400'])
             if cfg.data.train.output_n > 10:
                 head = np.append(head, [act + '560', act + '1000'])
                 test_3d_head = np.append(test_3d_head,
                                          [act + '3d560', act + '3d1000'])
-        print(len(test_3d_temp))
         ret_log = np.append(ret_log, test_3d_temp)
         head = np.append(head, test_3d_head)
 
-        print(len(ret_log))
-        print(len(head))
-        print(ret_log)
-        print(head)
 
         # update log file
         df = pd.DataFrame(np.expand_dims(ret_log, axis=0))
