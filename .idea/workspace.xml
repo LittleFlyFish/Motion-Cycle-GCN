@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/configs/Dense_GCN_I10_O10_D15_G_d3p.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/March_30.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/March_30.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Dense_GCN_I10_O10_D15_G_d3p.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Dense_GCN_I10_O30_D15_G_d3p.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -173,13 +171,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00567" summary=" &quot;nice&quot;">
-      <created>1587685578276</created>
-      <option name="number" value="00567" />
-      <option name="presentableId" value="LOCAL-00567" />
-      <option name="project" value="LOCAL" />
-      <updated>1587685578276</updated>
     </task>
     <task id="LOCAL-00568" summary=" &quot;nice&quot;">
       <created>1587685865864</created>
@@ -517,7 +508,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588205199700</updated>
     </task>
-    <option name="localTasksCounter" value="616" />
+    <task id="LOCAL-00616" summary=" &quot;nice&quot;">
+      <created>1588266363947</created>
+      <option name="number" value="00616" />
+      <option name="presentableId" value="LOCAL-00616" />
+      <option name="project" value="LOCAL" />
+      <updated>1588266363949</updated>
+    </task>
+    <option name="localTasksCounter" value="617" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
