@@ -178,7 +178,7 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         outputs = outputs.view(n, -1)
         # targets = targets.view(n, -1)
 
-        loss = loss_funcs.sen_loss(outputs, all_seq, dim_used, dct_n)
+        loss = loss_funcs.sen_loss(outputs, all_seq, dim_used, dct_n, cuda=cuda_num)
 
         # calculate loss and backward
         optimizer.zero_grad()

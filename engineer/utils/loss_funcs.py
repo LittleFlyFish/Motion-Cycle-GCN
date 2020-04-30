@@ -4,7 +4,7 @@ from torch.autograd import Variable
 from engineer.utils import data_utils
 
 
-def sen_loss(outputs, all_seq, dim_used, dct_n):
+def sen_loss(outputs, all_seq, dim_used, dct_n, cuda='cuda:1'):
     """
 
     :param outputs: N * (seq_len*dim_used_len)
@@ -18,7 +18,7 @@ def sen_loss(outputs, all_seq, dim_used, dct_n):
     dim_used = np.array(dim_used)
 
     _, idct_m = data_utils.get_dct_matrix(seq_len)
-    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
+    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(cuda)
     outputs_t = outputs.view(-1, dct_n).transpose(0, 1)
     pred_expmap = torch.matmul(idct_m[:, :dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                seq_len).transpose(1, 2)
