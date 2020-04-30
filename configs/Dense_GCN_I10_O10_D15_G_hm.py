@@ -5,7 +5,7 @@ model = dict(
     hidden_feature=256,
     p_dropout=0.5,
     num_stage=12,
-    node_n=66
+    node_n=48
 )
 dataset_type = 'H36motion'
 data_root = './engineer/datasets/h3.6m/dataset'
