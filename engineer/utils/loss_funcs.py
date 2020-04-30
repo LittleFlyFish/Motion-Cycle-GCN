@@ -57,10 +57,10 @@ def euler_error(outputs, all_seq, input_n, dim_used, dct_n, cuda='cuda:0'):
     pred_expmap = pred_expmap.view(-1, 3)
     targ_expmap = targ_expmap.view(-1, 3)
 
-    pred_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(pred_expmap, cuda=cuda))
+    pred_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(pred_expmap, cuda=cuda), cuda=cuda)
     pred_eul = pred_eul.view(-1, dim_full_len)
 
-    targ_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(targ_expmap, cuda=cuda))
+    targ_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(targ_expmap, cuda=cuda), cuda=cuda)
     targ_eul = targ_eul.view(-1, dim_full_len)
     mean_errors = torch.mean(torch.norm(pred_eul - targ_eul, 2, 1))
 
