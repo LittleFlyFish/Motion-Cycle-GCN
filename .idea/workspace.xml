@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/configs/Dense_GCN_I10_O30_D35_G_d3p_3d.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engineer/core/train_d3p_3d.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/train_net_d3p_3d.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/Dense_GCN_I10_O30_D35_G_d3p.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Dense_GCN_I10_O30_D35_G_d3p.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/Motion_GCN_I10_O30_D35_G_d3p.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Motion_GCN_I10_O30_D35_G_d3p_3d.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/core/train_d3p.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/core/train_d3p.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/engineer/utils/loss_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/March_30.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/March_30.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/train_net_d3p.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/train_net_d3p.py" afterDir="false" />
-    </list>
+    <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,20 +169,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00580" summary=" &quot;nice&quot;">
-      <created>1587688800720</created>
-      <option name="number" value="00580" />
-      <option name="presentableId" value="LOCAL-00580" />
-      <option name="project" value="LOCAL" />
-      <updated>1587688800720</updated>
-    </task>
-    <task id="LOCAL-00581" summary=" &quot;nice&quot;">
-      <created>1587689227781</created>
-      <option name="number" value="00581" />
-      <option name="presentableId" value="LOCAL-00581" />
-      <option name="project" value="LOCAL" />
-      <updated>1587689227781</updated>
     </task>
     <task id="LOCAL-00582" summary=" &quot;nice&quot;">
       <created>1587690306369</created>
@@ -524,7 +499,21 @@
       <option name="project" value="LOCAL" />
       <updated>1588274009845</updated>
     </task>
-    <option name="localTasksCounter" value="629" />
+    <task id="LOCAL-00629" summary=" &quot;nice&quot;">
+      <created>1588277454890</created>
+      <option name="number" value="00629" />
+      <option name="presentableId" value="LOCAL-00629" />
+      <option name="project" value="LOCAL" />
+      <updated>1588277454890</updated>
+    </task>
+    <task id="LOCAL-00630" summary=" &quot;nice&quot;">
+      <created>1588277630149</created>
+      <option name="number" value="00630" />
+      <option name="presentableId" value="LOCAL-00630" />
+      <option name="project" value="LOCAL" />
+      <updated>1588277630149</updated>
+    </task>
+    <option name="localTasksCounter" value="631" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

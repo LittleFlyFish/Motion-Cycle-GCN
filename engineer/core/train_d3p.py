@@ -70,7 +70,7 @@ def train_model(model,datasets,cfg,optimizer):
                              is_cuda=is_cuda,
                              dct_n=cfg.data.train.dct_n,
                              dim_used=train_dataset.dim_used,
-                            cuda=cfg.data.cuda_num)
+                            cuda=cfg.cuda_num)
 
         ret_log = np.append(ret_log, [lr_now, t_l, t_err])
         head = np.append(head, ['lr', 't_l', 't_err'])
@@ -79,7 +79,7 @@ def train_model(model,datasets,cfg,optimizer):
                    is_cuda=is_cuda,
                    dct_n=cfg.data.val.dct_n,
                    dim_used=val_dataset.dim_used,
-                   cuda = cfg.data.cuda_num)
+                   cuda = cfg.cuda_num)
 
         ret_log = np.append(ret_log, v_err)
         head = np.append(head, ['v_err'])
@@ -90,7 +90,7 @@ def train_model(model,datasets,cfg,optimizer):
                        is_cuda=is_cuda,
                        dim_used=test_dataset.dim_used,
                        dct_n=cfg.data.test.dct_n,
-                       cuda=cfg.data.cuda_num
+                       cuda=cfg.cuda_num
                        )
 
         ret_log = np.append(ret_log, test_3d)
