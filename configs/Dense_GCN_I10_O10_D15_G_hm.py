@@ -9,15 +9,11 @@ model = dict(
 )
 dataset_type = 'H36motion'
 data_root = './engineer/datasets/h3.6m/dataset'
-train_pipeline = [
-    dict(type='SampleFrames',direction = True),
-]
+
 cuda_num ='cuda:1'
 flag = 'Dense+HM3.6_angle'
 
-val_pipeline = [
-    dict(type='SampleFrames', direction=True),
-]
+
 data = dict(
     videos_per_gpu=2,
     workers_per_gpu=0,
@@ -29,8 +25,7 @@ data = dict(
         output_n=10,
         dct_n=15,
         split=2,
-        sample_rate=2,
-        pipeline=val_pipeline
+        sample_rate=2
     ),
     train=dict(
         type=dataset_type,
@@ -40,8 +35,7 @@ data = dict(
         output_n=10,
         dct_n=15,
         split=0,
-        sample_rate=2,
-        pipeline=train_pipeline
+        sample_rate=2
     ),
     test=dict(
         type=dataset_type,
@@ -51,8 +45,7 @@ data = dict(
         output_n=10,
         dct_n=15,
         split=1,
-        sample_rate=2,
-        pipeline = val_pipeline
+        sample_rate=2
     )
 )
 #
