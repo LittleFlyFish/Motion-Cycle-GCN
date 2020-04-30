@@ -42,7 +42,8 @@ class H36motion(Dataset):
                                                                                   input_n + output_n,
                                                                                   data_mean=data_mean,
                                                                                   data_std=data_std,
-                                                                                  input_n=input_n)
+                                                                                  input_n=input_n,
+                                                                                  cuda= 'cuda:1')
 
         self.data_mean = data_mean
         self.data_std = data_std

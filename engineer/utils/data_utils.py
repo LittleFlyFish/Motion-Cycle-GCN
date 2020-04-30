@@ -646,7 +646,7 @@ def expmap2xyz_torch_cmu(expmap, cuda='cuda:0'):
 
 
 
-def load_data(path_to_dataset, subjects, actions, sample_rate, seq_len, input_n=10, data_mean=None, data_std=None):
+def load_data(path_to_dataset, subjects, actions, sample_rate, seq_len, input_n=10, data_mean=None, data_std=None, cuda='cuda:1'):
     """
     adapted from
     https://github.com/una-dinosauria/human-motion-prediction/src/data_utils.py#L216
