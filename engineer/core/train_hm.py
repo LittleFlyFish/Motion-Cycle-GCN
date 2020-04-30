@@ -60,7 +60,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
     # save_pre_fix
     script_name = os.path.basename(__file__).split('.')[0]
     script_name = script_name + '_3D_in{:d}_out{:d}_dct_n_{:d}'.format(cfg.data.train.input_n, cfg.data.train.output_n,
-                                                                       cfg.data.train.dct_used) + cfg.flag
+                                                                       cfg.data.train.dct_n) + cfg.flag
     err_best = float("inf")
     is_best_ret_log = None
     train_num = 0
@@ -80,14 +80,14 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         # training on per epoch
         lr_now, t_l, t_e, t_3d= train(train_loader, model, optimizer, lr_now=lr_now,
                                                         max_norm=cfg.max_norm, is_cuda=is_cuda, cuda_num=cuda_num,
-                                                        dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used,
+                                                        dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_n,
                                                         num=train_num, loss_list=train_loss_plot)
         ret_log = np.append(ret_log, [lr_now, t_l, t_e, t_3d])
         head = np.append(head, ['lr', 't_l', 't_e', 't_3d'])
 
         # val evaluation
         v_e, v_3d = val(val_loader, model, is_cuda=is_cuda, cuda_num=cuda_num, dim_used=train_dataset.dim_used,
-                   dct_n=cfg.data.val.dct_used)
+                   dct_n=cfg.data.val.dct_n)
         ret_log = np.append(ret_log, [v_e, v_3d])
         head = np.append(head, ['v_e', 'v_3d'])
 
@@ -98,7 +98,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         for act in acts:
             test_e, test_3d = test(test_loaders[act], model, input_n=cfg.data.test.input_n,
                                    output_n=cfg.data.test.output_n, is_cuda=is_cuda, cuda_num=cuda_num,
-                                   dim_used=train_dataset.dim_used, dct_n=cfg.data.test.dct_used)
+                                   dim_used=train_dataset.dim_used, dct_n=cfg.data.test.dct_n)
             test_loss = test_loss + test_l
             # ret_log = np.append(ret_log, test_l)
             ret_log = np.append(ret_log, test_e)
