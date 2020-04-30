@@ -287,11 +287,11 @@ def R_mpjpe_error_p3d(Gv_Final, allseqs, frame_n, dct_n, dim_used, select_dim):
 
     return mean_3d_err
 
-def mpjpe_error_3dpw(outputs, all_seq, dct_n, dim_used):
+def mpjpe_error_3dpw(outputs, all_seq, dct_n, dim_used, cuda='cuda:0'):
     n, seq_len, dim_full_len = all_seq.data.shape
 
     _, idct_m = data_utils.get_dct_matrix(seq_len)
-    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
+    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(cuda)
     outputs_t = outputs.view(-1, dct_n).transpose(0, 1)
     outputs_exp = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_full_len - 3,
                                                                                                 seq_len).transpose(1,

@@ -7,11 +7,11 @@ model = dict(
     num_stage=12,
     node_n=69
 )
-dataset_type = 'Pose3dPW'
+dataset_type = 'Pose3dPW3D'
 data_root = './engineer/datasets/D3P'
 
 cuda_num = 'cuda:0'
-flag = 'Dense+d3p'
+flag = 'Dense+d3p_3D'
 
 
 train_pipeline = [

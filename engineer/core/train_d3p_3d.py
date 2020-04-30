@@ -63,26 +63,25 @@ def train_model(model,datasets,cfg,optimizer):
         # lr_now, t_l, train_num, train_loss_plot = train(train_loader, model, optimizer, lr_now=lr_now, max_norm=cfg.max_norm, is_cuda=is_cuda,
         #                     dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_used, num=train_num, loss_list=train_loss_plot)
 
-        lr_now, t_l, t_err = train(train_loader, model,
+        lr_now, t_3d = train(train_loader, model,
                              optimizer,
                              lr_now=lr_now,
                              max_norm=cfg.max_norm,
                              is_cuda=is_cuda,
                              dct_n=cfg.data.train.dct_n,
-                             dim_used=train_dataset.dim_used,
-                            cuda=cfg.data.cuda_num)
+                             dim_used=train_dataset.dim_used)
 
-        ret_log = np.append(ret_log, [lr_now, t_l, t_err])
-        head = np.append(head, ['lr', 't_l', 't_err'])
 
-        v_err = val(val_loader, model,
+        ret_log = np.append(ret_log, [lr_now, t_3d * 1000])
+        head = np.append(head, ['lr', 't_3d'])
+
+        v_3d = val(val_loader, model,
                    is_cuda=is_cuda,
                    dct_n=cfg.data.val.dct_n,
-                   dim_used=val_dataset.dim_used,
-                   cuda = cfg.data.cuda_num)
+                   dim_used=val_dataset.dim_used)
 
-        ret_log = np.append(ret_log, v_err)
-        head = np.append(head, ['v_err'])
+        ret_log = np.append(ret_log, v_3d * 1000)
+        head = np.append(head, ['v_3d'])
 
         test_3d = test(test_loader, model,
                        input_n=cfg.data.test.input_n,
@@ -90,13 +89,11 @@ def train_model(model,datasets,cfg,optimizer):
                        is_cuda=is_cuda,
                        dim_used=test_dataset.dim_used,
                        dct_n=cfg.data.test.dct_n,
-                       cuda=cfg.data.cuda_num
                        )
-
-        ret_log = np.append(ret_log, test_3d)
-        if output_n == 15:
+        ret_log = np.append(ret_log, test_3d * 1000)
+        if cfg.data.test.output_n == 15:
             head = np.append(head, ['1003d', '2003d', '3003d', '4003d', '5003d'])
-        elif output_n == 30:
+        elif cfg.data.test.output_n == 30:
             head = np.append(head, ['1003d', '2003d', '3003d', '4003d', '5003d', '6003d', '7003d', '8003d', '9003d',
                                     '10003d'])
 
@@ -121,59 +118,53 @@ def train_model(model,datasets,cfg,optimizer):
                         file_name=file_name)
 
 
-def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dct_n=15, dim_used=[], cuda='cuda:0'):
-    sen_l = utils.AccumLoss()
-    eul_err = utils.AccumLoss()
+def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dct_n=15, dim_used=[]):
+    t_3d = utils.AccumLoss()
 
     model.train()
     st = time.time()
     bar = Bar('>>>', fill='>', max=len(train_loader))
     for i, (inputs, targets, all_seq) in enumerate(train_loader):
-
         batch_size = inputs.shape[0]
-        # batch size is 1 do not train
         if batch_size == 1:
             break
-
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda(cuda, )).float()
+            inputs = Variable(inputs.cuda()).float()
             # targets = Variable(targets.cuda(async=True)).float()
-            all_seq = Variable(all_seq.cuda(cuda, async=True)).float()
+            all_seq = Variable(all_seq.cuda(async=True)).float()
         else:
             inputs = Variable(inputs).float()
             # targets = Variable(targets).float()
             all_seq = Variable(all_seq).float()
         outputs = model(inputs)
-        loss = loss_funcs.sen_loss(outputs, all_seq, dim_used, dct_n, cuda=cuda)
+        m_err = loss_funcs.mpjpe_error_3dpw(outputs, all_seq, dct_n, dim_used)
 
         # calculate loss and backward
         optimizer.zero_grad()
-        loss.backward()
+        m_err.backward()
         if max_norm:
             nn.utils.clip_grad_norm(model.parameters(), max_norm=1)
         optimizer.step()
+
         n, seq_len, _ = all_seq.data.shape
-        # update the training loss
-        e_err = loss_funcs.euler_error(outputs, all_seq, input_n, dim_used, dct_n, cuda=cuda)
-        sen_l.update(loss.cpu().data.numpy()[0] * n * seq_len, n * seq_len)
-        eul_err.update(e_err.cpu().data.numpy()[0] * n * seq_len, n * seq_len)
+        t_3d.update(m_err.item() * n * seq_len, n * seq_len)
 
         bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i, len(train_loader), time.time() - bt,
                                                                          time.time() - st)
         bar.next()
     bar.finish()
-    return lr_now, sen_l.avg, eul_err.avg
+    return lr_now, t_3d.avg
 
 
-def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15, cuda='cuda:0'):
+def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[], dct_n=15):
     N = 0
     if output_n == 15:
         eval_frame = [2, 5, 8, 11, 14]
     elif output_n == 30:
         eval_frame = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29]
-    t_err = np.zeros(len(eval_frame))
+    t_3d = np.zeros(len(eval_frame))
 
     model.eval()
     st = time.time()
@@ -182,9 +173,9 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda(cuda)).float()
+            inputs = Variable(inputs.cuda()).float()
             # targets = Variable(targets.cuda(async=True)).float()
-            all_seq = Variable(all_seq.cuda(cuda, async=True)).float()
+            all_seq = Variable(all_seq.cuda(async=True)).float()
         else:
             inputs = Variable(inputs).float()
             # targets = Variable(targets).float()
@@ -194,19 +185,20 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
         n, seq_len, dim_full_len = all_seq.data.shape
 
         _, idct_m = data_utils.get_dct_matrix(seq_len)
-        idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(cuda)
+        idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
         outputs_t = outputs.view(-1, dct_n).transpose(0, 1)
-        outputs_exp = torch.matmul(idct_m[:, :dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_full_len - 3,
-                                                                                                   seq_len).transpose(1,
-                                                                                                                      2)
-        pred_exp = all_seq.clone()
-        pred_exp[:, :, dim_used] = outputs_exp
-        pred_exp = pred_exp.contiguous().view(n, seq_len, -1)[:, input_n:, :]
-        targ_exp = all_seq.contiguous().view(n, seq_len, -1)[:, input_n:, :]
+        outputs_exp = torch.matmul(idct_m[:, 0:dct_n], outputs_t).transpose(0, 1).contiguous().view \
+            (-1, dim_full_len - 3, seq_len).transpose(1, 2)
+        pred_3d = all_seq.clone()
+        pred_3d[:, :, dim_used] = outputs_exp
+        pred_p3d = pred_3d.contiguous().view(n, seq_len, -1, 3)[:, input_n:, :, :]
+        targ_p3d = all_seq.contiguous().view(n, seq_len, -1, 3)[:, input_n:, :, :]
 
         for k in np.arange(0, len(eval_frame)):
             j = eval_frame[k]
-            t_err[k] += torch.mean(torch.norm(targ_exp[:, j, :] - pred_exp[:, j, :], p=2, dim=1)).cpu().data.numpy() * n
+            t_3d[k] += torch.mean(torch.norm(
+                targ_p3d[:, j, :, :].contiguous().view(-1, 3) - pred_p3d[:, j, :, :].contiguous().view(-1, 3), 2,
+                1)).item() * n
 
         # update the training loss
         N += n
@@ -215,11 +207,11 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
                                                                          time.time() - st)
         bar.next()
     bar.finish()
-    return t_err / N
+    return t_3d / N
 
 
-def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15, cuda='cuda:0'):
-    t_err = utils.AccumLoss()
+def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15):
+    t_3d = utils.AccumLoss()
 
     model.eval()
     st = time.time()
@@ -228,24 +220,23 @@ def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15, cuda='cuda:0'
         bt = time.time()
 
         if is_cuda:
-            inputs = Variable(inputs.cuda(cuda)).float()
+            inputs = Variable(inputs.cuda()).float()
             # targets = Variable(targets.cuda(async=True)).float()
-            all_seq = Variable(all_seq.cuda(cuda, async=True)).float()
+            all_seq = Variable(all_seq.cuda(async=True)).float()
         else:
             inputs = Variable(inputs).float()
             # targets = Variable(targets).float()
             all_seq = Variable(all_seq).float()
         outputs = model(inputs)
-        e_err = loss_funcs.euler_error(outputs, all_seq, input_n, dim_used, dct_n, cuda=cuda)
+        m_err = loss_funcs.mpjpe_error_3dpw(outputs, all_seq, dct_n=dct_n, dim_used=dim_used)
 
         n, seq_len, _ = all_seq.data.shape
         # update the training loss
-        t_err.update(e_err.cpu().data.numpy() * n * seq_len, n * seq_len)
+        t_3d.update(m_err.item() * n * seq_len, n * seq_len)
 
         bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i, len(train_loader), time.time() - bt,
                                                                          time.time() - st)
         bar.next()
     bar.finish()
-    return t_err.avg
-
+    return t_3d.avg
 
