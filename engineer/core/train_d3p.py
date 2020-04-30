@@ -70,7 +70,7 @@ def train_model(model,datasets,cfg,optimizer):
                              is_cuda=is_cuda,
                              dct_n=cfg.data.train.dct_n,
                              dim_used=train_dataset.dim_used,
-                             input= cfg.data.train.input_n,
+                             input_n= cfg.data.train.input_n,
                              cuda=cfg.cuda_num)
 
         ret_log = np.append(ret_log, [lr_now, t_l, t_err])
@@ -80,7 +80,7 @@ def train_model(model,datasets,cfg,optimizer):
                    is_cuda=is_cuda,
                    dct_n=cfg.data.val.dct_n,
                    dim_used=val_dataset.dim_used,
-                   input=cfg.data.val.input_n,
+                   input_n=cfg.data.val.input_n,
                    cuda = cfg.cuda_num)
 
         ret_log = np.append(ret_log, v_err)
@@ -92,7 +92,6 @@ def train_model(model,datasets,cfg,optimizer):
                        is_cuda=is_cuda,
                        dim_used=test_dataset.dim_used,
                        dct_n=cfg.data.test.dct_n,
-                       input=cfg.data.test.input_n,
                        cuda=cfg.cuda_num
                        )
 
@@ -124,7 +123,7 @@ def train_model(model,datasets,cfg,optimizer):
                         file_name=file_name)
 
 
-def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dct_n=15, dim_used=[], cuda='cuda:0', input= 15):
+def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, dct_n=15, dim_used=[], cuda='cuda:0', input_n= 15):
     sen_l = utils.AccumLoss()
     eul_err = utils.AccumLoss()
 
@@ -221,7 +220,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, dim_used=[
     return t_err / N
 
 
-def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15, cuda='cuda:0', input= 15):
+def val(train_loader, model, is_cuda=False, dim_used=[], dct_n=15, cuda='cuda:0', input_n= 15):
     t_err = utils.AccumLoss()
 
     model.eval()
