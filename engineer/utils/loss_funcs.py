@@ -41,7 +41,7 @@ def euler_error(outputs, all_seq, input_n, dim_used, dct_n, cuda='cuda:0'):
     dim_used_len = len(dim_used)
 
     _, idct_m = data_utils.get_dct_matrix(seq_len)
-    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
+    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(cuda)
     outputs_t = outputs.view(-1, dct_n).transpose(0, 1)
     outputs_exp = torch.matmul(idct_m[:, :dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                seq_len).transpose(1, 2)
@@ -67,7 +67,7 @@ def euler_error(outputs, all_seq, input_n, dim_used, dct_n, cuda='cuda:0'):
     return mean_errors
 
 
-def mpjpe_error(outputs, all_seq, input_n, dim_used, dct_n):
+def mpjpe_error(outputs, all_seq, input_n, dim_used, dct_n, cuda='cuda:0'):
     """
 
     :param outputs:
@@ -82,7 +82,7 @@ def mpjpe_error(outputs, all_seq, input_n, dim_used, dct_n):
     dim_used_len = len(dim_used)
 
     _, idct_m = data_utils.get_dct_matrix(seq_len)
-    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda()
+    idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(cuda)
     outputs_t = outputs.view(-1, dct_n).transpose(0, 1)
     outputs_exp = torch.matmul(idct_m[:, :dct_n], outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                                seq_len).transpose(1, 2)
@@ -95,9 +95,9 @@ def mpjpe_error(outputs, all_seq, input_n, dim_used, dct_n):
     pred_expmap[:, 0:6] = 0
     targ_expmap[:, 0:6] = 0
 
-    targ_p3d = data_utils.expmap2xyz_torch(targ_expmap).view(-1, 3)
+    targ_p3d = data_utils.expmap2xyz_torch(targ_expmap, cuda=cuda).view(-1, 3)
 
-    pred_p3d = data_utils.expmap2xyz_torch(pred_expmap).view(-1, 3)
+    pred_p3d = data_utils.expmap2xyz_torch(pred_expmap, cuda=cuda).view(-1, 3)
 
     mean_3d_err = torch.mean(torch.norm(targ_p3d - pred_p3d, 2, 1))
 

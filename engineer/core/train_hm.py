@@ -189,10 +189,10 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         n, _, _ = all_seq.data.shape
 
         # 3d error
-        m_err = loss_funcs.mpjpe_error(outputs, all_seq, input_n, dim_used, dct_n)
+        m_err = loss_funcs.mpjpe_error(outputs, all_seq, input_n, dim_used, dct_n, cuda=cuda_num)
 
         # angle space error
-        e_err = loss_funcs.euler_error(outputs, all_seq, input_n, dim_used, dct_n)
+        e_err = loss_funcs.euler_error(outputs, all_seq, input_n, dim_used, dct_n, cuda=cuda_num)
 
         # update the training loss
         t_l.update(loss.cpu().data.numpy()* n, n)
@@ -310,8 +310,8 @@ def val(train_loader, model, is_cuda=False, cuda_num='cuda:0', input_n = 15, dim
         # loss = loss_funcs.sen_loss(outputs, all_seq, dim_used)
 
         n, _, _ = all_seq.data.shape
-        m_err = loss_funcs.mpjpe_error(outputs, all_seq, input_n, dim_used, dct_n)
-        e_err = loss_funcs.euler_error(outputs, all_seq, input_n, dim_used, dct_n)
+        m_err = loss_funcs.mpjpe_error(outputs, all_seq, input_n, dim_used, dct_n, cuda=cuda_num)
+        e_err = loss_funcs.euler_error(outputs, all_seq, input_n, dim_used, dct_n, cuda=cuda_num)
 
         # t_l.update(loss.cpu().data.numpy()[0] * n, n)
         t_e.update(e_err.cpu().data.numpy() * n, n)
