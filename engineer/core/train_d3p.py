@@ -96,9 +96,9 @@ def train_model(model,datasets,cfg,optimizer):
                        )
 
         ret_log = np.append(ret_log, test_3d)
-        if output_n == 15:
+        if cfg.data.train.output_n == 15:
             head = np.append(head, ['1003d', '2003d', '3003d', '4003d', '5003d'])
-        elif output_n == 30:
+        elif cfg.data.train.output_n == 30:
             head = np.append(head, ['1003d', '2003d', '3003d', '4003d', '5003d', '6003d', '7003d', '8003d', '9003d',
                                     '10003d'])
 
