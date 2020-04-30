@@ -78,7 +78,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
         ret_log = np.array([epoch + 1])
         head = np.array(['epoch'])
         # training on per epoch
-        lr_now, t_l, t_e, t_3d= train(train_loader, model, optimizer, lr_now=lr_now,
+        lr_now, t_l, t_e, t_3d= train(train_loader, model, optimizer, lr_now=lr_now, input_n=cfg.data.train.input_n,
                                                         max_norm=cfg.max_norm, is_cuda=is_cuda, cuda_num=cuda_num,
                                                         dim_used=train_dataset.dim_used, dct_n=cfg.data.train.dct_n,
                                                         num=train_num, loss_list=train_loss_plot)
@@ -87,7 +87,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
 
         # val evaluation
         v_e, v_3d = val(val_loader, model, is_cuda=is_cuda, cuda_num=cuda_num, dim_used=train_dataset.dim_used,
-                   dct_n=cfg.data.val.dct_n)
+                   dct_n=cfg.data.val.dct_n, input_n=cfg.data.val.input_n)
         ret_log = np.append(ret_log, [v_e, v_3d])
         head = np.append(head, ['v_e', 'v_3d'])
 
@@ -151,7 +151,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
 
 
 def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=False, cuda_num='cuda:0', dim_used=[],
-          dct_n=15, num=1,
+          dct_n=15, num=1, input_n=15,
           loss_list=[1]):
     t_l = utils.AccumLoss()
     t_e = utils.AccumLoss()
@@ -286,7 +286,7 @@ def test(train_loader, model, input_n=20, output_n=50, is_cuda=False, cuda_num='
 
 #
 #
-def val(train_loader, model, is_cuda=False, cuda_num='cuda:0', dim_used=[], dct_n=15):
+def val(train_loader, model, is_cuda=False, cuda_num='cuda:0', input_n = 15, dim_used=[], dct_n=15):
     # t_l = utils.AccumLoss()
     t_e = utils.AccumLoss()
     t_3d = utils.AccumLoss()
