@@ -159,8 +159,8 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         n, seq_len, _ = all_seq.data.shape
         # update the training loss
         e_err = loss_funcs.euler_error(outputs, all_seq, input_n, dim_used, dct_n, cuda=cuda)
-        sen_l.update(loss.cpu().data.numpy()[0] * n * seq_len, n * seq_len)
-        eul_err.update(e_err.cpu().data.numpy()[0] * n * seq_len, n * seq_len)
+        sen_l.update(loss.cpu().data.numpy() * n * seq_len, n * seq_len)
+        eul_err.update(e_err.cpu().data.numpy() * n * seq_len, n * seq_len)
 
         bar.suffix = '{}/{}|batch time {:.4f}s|total time{:.2f}s'.format(i, len(train_loader), time.time() - bt,
                                                                          time.time() - st)
