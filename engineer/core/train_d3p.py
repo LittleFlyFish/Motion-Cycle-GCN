@@ -110,8 +110,8 @@ def train_model(model,datasets,cfg,optimizer):
             with open(cfg.checkpoints + '/' + script_name + '.csv', 'a') as f:
                 df.to_csv(f, header=False, index=False)
         # save ckpt
-        is_best = v_3d < err_best
-        err_best = min(v_3d, err_best)
+        is_best = v_err < err_best
+        err_best = min(v_err, err_best)
         file_name = ['ckpt_' + script_name + '_best.pth.tar', 'ckpt_' + script_name + '_last.pth.tar']
         utils.save_ckpt({'epoch': epoch + 1,
                          'lr': lr_now,
