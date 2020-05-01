@@ -104,7 +104,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
             test_3d_head = np.append(test_3d_head,
                                      [act + '3d80', act + '3d160', act + '3d320', act + '3d400'])
             head = np.append(head, [act + '80', act + '160', act + '320', act + '400'])
-            if output_n > 10:
+            if cfg.data.train.output_n > 10:
                 head = np.append(head, [act + '560', act + '1000'])
                 test_3d_head = np.append(test_3d_head,
                                          [act + '3d560', act + '3d1000'])
