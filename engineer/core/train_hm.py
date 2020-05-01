@@ -99,7 +99,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
             test_e, test_3d = test(test_loaders[act], model, input_n=cfg.data.test.input_n,
                                    output_n=cfg.data.test.output_n, is_cuda=is_cuda, cuda_num=cuda_num,
                                    dim_used=train_dataset.dim_used, dct_n=cfg.data.test.dct_n)
-            test_loss = test_loss + test_l
+            test_loss = test_loss + test_e
             # ret_log = np.append(ret_log, test_l)
             ret_log = np.append(ret_log, test_e)
             test_3d_temp = np.append(test_3d_temp, test_3d)
