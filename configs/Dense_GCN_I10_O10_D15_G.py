@@ -13,7 +13,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num ='cuda:1'
-flag = 'Dense+HM3.63D'
+flag = 'NewDense+HM3.63D'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),

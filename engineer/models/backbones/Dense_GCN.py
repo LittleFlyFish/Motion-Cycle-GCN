@@ -36,13 +36,15 @@ class GC_Block_NoRes(nn.Module):
         y = self.act_f(y)
         y = self.do(y)
 
+        y1 = y
+
         y = self.gc2(y)
         b, n, f = y.shape
         y = self.bn2(y.view(b, -1)).view(b, n, f)
         y = self.act_f(y)
         y = self.do(y)
 
-        return y
+        return y + y1
 
     def __repr__(self):
         return self.__class__.__name__ + ' (' \
