@@ -21,7 +21,7 @@ class GC_Block_NoRes(nn.Module):
         self.out_features = out_features
 
         self.gc1 = GraphConvolution(in_features, out_features, node_n=node_n, bias=bias)
-        self.bn1 = nn.BatchNorm1d(node_n * in_features)
+        self.bn1 = nn.BatchNorm1d(node_n * out_features)
 
         self.gc2 = GraphConvolution(out_features, out_features, node_n=node_n, bias=bias)
         self.bn2 = nn.BatchNorm1d(node_n * out_features)
