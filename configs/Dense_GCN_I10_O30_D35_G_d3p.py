@@ -57,7 +57,7 @@ optim_para=dict(
     lr_decay=2,
     lr_gamma= 0.96
 )
-total_epochs = 50
+total_epochs = 80
 max_norm= True
 checkpoints="./checkpoints"
 actions=dict(all = ["walking", "eating", "smoking", "discussion", "directions",
