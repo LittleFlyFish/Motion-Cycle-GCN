@@ -10,7 +10,7 @@ model = dict(
 dataset_type = 'H36motion'
 data_root = './engineer/datasets/h3.6m/dataset'
 
-cuda_num ='cuda:1'
+cuda_num ='cuda:0'
 flag = 'Dense+HM3.6_angle'
 
 
@@ -22,7 +22,7 @@ data = dict(
         path_to_data=data_root,
         actions="all",
         input_n=10,
-        output_n=10,
+        output_n=30,
         dct_n=15,
         split=2,
         sample_rate=2
@@ -32,7 +32,7 @@ data = dict(
         path_to_data=data_root,
         actions="all",
         input_n=10,
-        output_n=10,
+        output_n=30,
         dct_n=15,
         split=0,
         sample_rate=2
@@ -42,7 +42,7 @@ data = dict(
         path_to_data=data_root,
         actions=None,
         input_n=10,
-        output_n=10,
+        output_n=30,
         dct_n=15,
         split=1,
         sample_rate=2
