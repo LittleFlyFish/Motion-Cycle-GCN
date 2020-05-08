@@ -181,12 +181,12 @@ def train(train_loader, model, optimizer, lr_now=None, max_norm=True, is_cuda=Fa
         # print(loss2, loss3)
 
         # calculate loss and backward
-        with torch.enable_grad():
-            reg = 1e-6
-            l1_loss = torch.zeros(1).to(cuda_num)
-            for name, param in model.named_parameters():
-                if 'bias' not in name:
-                    l1_loss = l1_loss + (0.5 * reg * torch.sum(torch.pow(param, 1)))
+        # with torch.enable_grad():
+        #     reg = 1e-6
+        #     l1_loss = torch.zeros(1).to(cuda_num)
+        #     for name, param in model.named_parameters():
+        #         if 'bias' not in name:
+        #             l1_loss = l1_loss + (0.5 * reg * torch.sum(torch.pow(param, 1)))
         # print(l2_loss)
         _, loss = loss_funcs.mpjpe_error_p3d(outputs, all_seq, dct_n, dim_used, cuda=cuda_num)
         # loss = loss + l1_loss

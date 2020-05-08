@@ -100,6 +100,7 @@ def train_model(model, datasets, cfg, distributed, optimizer):
                                    dim_used=train_dataset.dim_used, dct_n=cfg.data.test.dct_n)
             # ret_log = np.append(ret_log, test_l)
             ret_log = np.append(ret_log, test_e)
+            test_best[act] = min(test_best[act], test_3d[0])
             test_3d_temp = np.append(test_3d_temp, test_3d)
             test_3d_head = np.append(test_3d_head,
                                      [act + '3d80', act + '3d160', act + '3d320', act + '3d400'])
