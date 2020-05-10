@@ -10,7 +10,7 @@ model = dict(
 dataset_type = 'Pose3dPW3D'
 data_root = './engineer/datasets/D3P'
 
-cuda_num = 'cuda:0'
+cuda_num = 'cuda:1'
 flag = 'Dense+d3p_3D'
 
 

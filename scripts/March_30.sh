@@ -30,5 +30,6 @@ python3 tools/train_net_cmu3d.py --config ./configs/Motion_GCN_I10_O10_D15_G_cmu
 python3 tools/train_net_cmu3d.py --config ./configs/Dense_GCN_I10_O10_D15_G_cmu3d.py
 python3 tools/train_hm.py --config ./configs/Dense_GCN_I10_O10_D15_G_hm.py    #H3.6M_angle
 python3 tools/train_net_d3p.py --config ./configs/Dense_GCN_I10_O30_D35_G_d3p.py
+python3 tools/train_net_d3p_3d.py --config ./configs/Dense_GCN_I10_O30_D35_G_d3p_3d.py
 
 python main_cmu.py --data_dir_cmu "/home/yanran/Yanran/Projects/Motion-Cycle-GCN/engineer/datasets/cmu_mocap/" --input_n 10 --output_n 25 --dct_n 35 --exp "/home/yanran/Yanran/Projects/LearnTrajDep/checkpoint"
