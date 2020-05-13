@@ -21,7 +21,7 @@ data = dict(
         path_to_data=data_root,
         actions="all",
         input_n=10,
-        output_n=10,
+        output_n=25,
         dct_n = 15,
         split=0
     ),
@@ -30,7 +30,7 @@ data = dict(
         path_to_data=data_root,
         actions="all",
         input_n=10,
-        output_n=10,
+        output_n=25,
         dct_n = 15,
         split=1
     )
@@ -42,7 +42,7 @@ optim_para=dict(
     lr_decay=2,
     lr_gamma= 0.96
 )
-total_epochs = 50
+total_epochs = 80
 max_norm= True
 checkpoints="./checkpoints"
 actions=dict(all = ["basketball", "basketball_signal", "directing_traffic", "jumping", "running", "soccer", "walking",
