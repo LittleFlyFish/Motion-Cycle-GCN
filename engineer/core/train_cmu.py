@@ -229,9 +229,9 @@ def test(train_loader, model, cuda='cuda:0', input_n=20, output_n=50, is_cuda=Fa
         pred_expmap = pred_expmap.view(-1, 3)
         targ_expmap = targ_expmap.view(-1, 3)
 
-        pred_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(pred_expmap, cuda=cuda))
+        pred_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(pred_expmap, cuda=cuda), cuda=cuda)
         pred_eul = pred_eul.view(-1, dim_full_len).view(-1, output_n, dim_full_len)  # [:, :, dim_used]
-        targ_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(targ_expmap, cuda=cuda))
+        targ_eul = data_utils.rotmat2euler_torch(data_utils.expmap2rotmat_torch(targ_expmap, cuda=cuda), cuda=cuda)
         targ_eul = targ_eul.view(-1, dim_full_len).view(-1, output_n, dim_full_len)  # [:, :, dim_used]
 
         targ_p3d = data_utils.expmap2xyz_torch_cmu(targ_expmap.view(-1, dim_full_len), cuda=cuda).view(n, output_n, -1, 3)
