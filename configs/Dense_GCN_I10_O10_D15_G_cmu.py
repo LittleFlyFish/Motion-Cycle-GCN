@@ -15,7 +15,7 @@ flag = 'Dense+CMU+B8'
 
 data = dict(
     videos_per_gpu=2,
-    workers_per_gpu=0,
+    workers_per_gpu=2,
     train=dict(
         type=dataset_type,
         path_to_data=data_root,

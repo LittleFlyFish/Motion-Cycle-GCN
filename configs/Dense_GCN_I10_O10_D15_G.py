@@ -4,7 +4,7 @@ model = dict(
     input_feature=15,
     hidden_feature=256,
     p_dropout=0.5,
-    num_stage=12,
+    num_stage=8,
     node_n=66
 )
 dataset_type = 'Hm36Dataset_3d'
@@ -20,7 +20,7 @@ val_pipeline = [
 ]
 data = dict(
     videos_per_gpu=2,
-    workers_per_gpu=0,
+    workers_per_gpu=2,
     val=dict(
         type=dataset_type,
         path_to_data=data_root,
