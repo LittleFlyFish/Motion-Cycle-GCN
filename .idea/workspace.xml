@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/Dense_GCN_I10_O10_D15_G_cmu.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/Dense_GCN_I10_O10_D15_G_cmu.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -171,13 +172,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00606" summary=" &quot;nice&quot;">
-      <created>1588116942218</created>
-      <option name="number" value="00606" />
-      <option name="presentableId" value="LOCAL-00606" />
-      <option name="project" value="LOCAL" />
-      <updated>1588116942219</updated>
     </task>
     <task id="LOCAL-00607" summary=" &quot;nice&quot;">
       <created>1588118148760</created>
@@ -515,7 +509,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589348695640</updated>
     </task>
-    <option name="localTasksCounter" value="655" />
+    <task id="LOCAL-00655" summary=" &quot;nice&quot;">
+      <created>1589395125944</created>
+      <option name="number" value="00655" />
+      <option name="presentableId" value="LOCAL-00655" />
+      <option name="project" value="LOCAL" />
+      <updated>1589395125951</updated>
+    </task>
+    <option name="localTasksCounter" value="656" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
