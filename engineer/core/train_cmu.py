@@ -163,7 +163,7 @@ def train(train_loader, model, optimizer, cuda='cuda:0', input_n=20, lr_now=None
         n = outputs.shape[0]
         outputs = outputs.view(n, -1)
 
-        loss = loss_funcs.sen_loss(outputs, all_seq, dim_used=dim_used, dct_n=dct_n)
+        loss = loss_funcs.sen_loss(outputs, all_seq, dim_used=dim_used, dct_n=dct_n, cuda=cuda)
 
         # calculate loss and backward
         optimizer.zero_grad()
