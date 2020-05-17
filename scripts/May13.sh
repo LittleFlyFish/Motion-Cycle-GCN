@@ -2,7 +2,8 @@
 
 
 #################################D3P
-# python3 tools/train_net.py --config ./configs/Dense_GCN_I10_O10_D15_G.py # H3.6M3D
+
+python3 tools/train_net.py --config ./configs/Dense_GCN_I10_O10_D15_G.py # H3.6M3D
 python3 tools/train_net_cmu.py --config ./configs/Dense_GCN_I10_O10_D15_G_cmu.py
 # the cuda_num setting should be the same as CMU_dataset.py line 45
 python3 tools/train_net_cmu3d.py --config ./configs/Dense_GCN_I10_O10_D15_G_cmu3d.py
