@@ -15,12 +15,12 @@ from progress.bar import Bar
 import pandas as pd
 from matplotlib import pyplot as plt
 
-from utils import loss_funcs, utils as utils
-from utils.opt import Options
-from utils.h36motion import H36motion
-import utils.model as nnmodel
-import utils.data_utils as data_utils
-import utils.viz as viz
+from engineer.utils import loss_funcs, utils as utils
+from engineer.utils.opt import Options
+from engineer.utils.h36motion import H36motion
+import engineer.utils.model as nnmodel
+import engineer.utils.data_utils as data_utils
+import engineer.utils.viz as viz
 
 
 def main(opt):
