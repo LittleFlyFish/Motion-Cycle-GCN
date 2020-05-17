@@ -14,6 +14,7 @@ import numpy as np
 from progress.bar import Bar
 import pandas as pd
 from matplotlib import pyplot as plt
+import logging.handlers
 
 from engineer.utils import loss_funcs, utils as utils
 from engineer.utils.opt import Options

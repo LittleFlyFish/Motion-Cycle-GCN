@@ -15,4 +15,4 @@ python3 tools/train_net_d3p_3d.py --config ./configs/Dense_GCN_I10_O30_D35_G_d3p
 
 python3 tools/demo.py --input_n 10 --output_n 10 --dct_n 20 --data_dir ./engineer/core/h3.6m/dataset/
 
-# export PYTHONPATH="/home/yanran/Yanran/Projects/Motion-Cycle-GCN/":"${PYTHONPATH}"
+# export PYTHONPATH="/home/yanran/Yanran/Projects/Motion-Cycle-GCN/engineer/utils/":"${PYTHONPATH}"
