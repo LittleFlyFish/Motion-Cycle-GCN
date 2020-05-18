@@ -178,12 +178,11 @@ def main():
 
             _, idct_m = data_utils.get_dct_matrix(seq_len)
             idct_m = Variable(torch.from_numpy(idct_m)).float().cuda(cfg.cuda_num)
-            outputs_t = outputs.view(-1, seq_len).transpose(0, 1)
+            outputs_t = outputs.view(-1, cfg.data.train.dct_used).transpose(0, 1)
             outputs_exp = torch.matmul(idct_m, outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                             seq_len).transpose(1, 2)
             pred_expmap = all_seq.clone()
-            print(pred_expmap.shape)
-            print(all_seq.data.shape)
+            print(outputs_exp.shape)
             dim_used = np.array(dim_used)
             pred_expmap[:, :, dim_used] = outputs_exp
             targ_expmap = all_seq
