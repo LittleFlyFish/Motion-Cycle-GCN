@@ -171,6 +171,9 @@ def main():
             outputs = model(inputs)
 
             n, seq_len, dim_full_len = all_seq.data.shape
+
+            print(outputs.shape)
+            print(n)
             dim_used_len = len(dim_used)
 
             _, idct_m = data_utils.get_dct_matrix(seq_len)
