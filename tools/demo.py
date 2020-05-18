@@ -33,7 +33,6 @@ import os
 from engineer.utils import loss_funcs, utils as utils
 from engineer.utils.opt import Options
 from engineer.utils.h36motion import H36motion
-import engineer.utils.model as nnmodel
 import engineer.utils.data_utils as data_utils
 import engineer.utils.viz as viz
 
