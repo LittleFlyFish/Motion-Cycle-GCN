@@ -140,8 +140,8 @@ def main():
     ax = plt.gca(projection='3d')
     for act in cfg.actions['all']:
         for i, (inputs, targets, all_seq) in enumerate(test_datasets[act]):
-            inputs = Variable(inputs).float()
-            all_seq = Variable(all_seq).float()
+            inputs = Variable(inputs.cuda(cfg.cuda_num)).float()
+            all_seq = Variable(all_seq.cuda(cfg.cuda_num, non_blocking=True)).float()
             is_cuda = torch.cuda.is_available()
             if is_cuda:
                 inputs = inputs.cuda(cfg.cuda_num)
