@@ -182,6 +182,7 @@ def main():
             outputs_exp = torch.matmul(idct_m, outputs_t).transpose(0, 1).contiguous().view(-1, dim_used_len,
                                                                                             seq_len).transpose(1, 2)
             pred_expmap = all_seq.clone()
+            print(pred_expmap)
             dim_used = np.array(dim_used)
             pred_expmap[:, :, dim_used] = outputs_exp
             targ_expmap = all_seq
