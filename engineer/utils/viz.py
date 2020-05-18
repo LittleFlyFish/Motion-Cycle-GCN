@@ -8,7 +8,7 @@ import numpy as np
 import h5py
 import os
 from mpl_toolkits.mplot3d import Axes3D
-from utils import forward_kinematics as fk
+from engineer.utils import forward_kinematics as fk
 
 
 class Ax3DPose(object):
