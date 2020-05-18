@@ -125,6 +125,8 @@ def main():
 
     #build model and print model info
     model = build_backbone(cfg.model)
+    model.cuda(torch.device(cfg.cuda_num))
+    model.to(cfg.cuda_num)
     misc.log_model_info(model)
 
     #optimizer build
@@ -154,7 +156,7 @@ def main():
     for key in test_datasets.keys():
         test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
                                              cfg.dataloader.batch_size.test)
-    
+
     for act in test_loaders.keys():
         for i, (inputs, targets, all_seq) in enumerate(test_loaders[act]):
             inputs = Variable(inputs.cuda(cfg.cuda_num)).float()
