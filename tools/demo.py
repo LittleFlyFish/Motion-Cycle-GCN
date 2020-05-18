@@ -154,7 +154,7 @@ def main():
     ax = plt.gca(projection='3d')
     test_loaders = dict()
 
-    dim_used = test_datasets.dim_used
+    dim_used = train_dataset.dim_used
     for key in test_datasets.keys():
         test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
                                              cfg.dataloader.batch_size.test)
