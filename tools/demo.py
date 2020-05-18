@@ -171,5 +171,4 @@ def main():
 
 
 if __name__ == "__main__":
-    option = Options().parse()
-    main(option)
+    main()

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc80c41a-95eb-4748-8891-a541fbbb941d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/scripts/May13.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/May13.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools/demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/demo.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -172,27 +171,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579204040348</updated>
-    </task>
-    <task id="LOCAL-00619" summary=" &quot;nice&quot;">
-      <created>1588271404848</created>
-      <option name="number" value="00619" />
-      <option name="presentableId" value="LOCAL-00619" />
-      <option name="project" value="LOCAL" />
-      <updated>1588271404848</updated>
-    </task>
-    <task id="LOCAL-00620" summary=" &quot;nice&quot;">
-      <created>1588271562976</created>
-      <option name="number" value="00620" />
-      <option name="presentableId" value="LOCAL-00620" />
-      <option name="project" value="LOCAL" />
-      <updated>1588271562976</updated>
-    </task>
-    <task id="LOCAL-00621" summary=" &quot;nice&quot;">
-      <created>1588272031619</created>
-      <option name="number" value="00621" />
-      <option name="presentableId" value="LOCAL-00621" />
-      <option name="project" value="LOCAL" />
-      <updated>1588272031620</updated>
     </task>
     <task id="LOCAL-00622" summary=" &quot;nice&quot;">
       <created>1588272249693</created>
@@ -516,7 +494,28 @@
       <option name="project" value="LOCAL" />
       <updated>1589760893241</updated>
     </task>
-    <option name="localTasksCounter" value="668" />
+    <task id="LOCAL-00668" summary=" &quot;nice&quot;">
+      <created>1589761876325</created>
+      <option name="number" value="00668" />
+      <option name="presentableId" value="LOCAL-00668" />
+      <option name="project" value="LOCAL" />
+      <updated>1589761876325</updated>
+    </task>
+    <task id="LOCAL-00669" summary=" &quot;nice&quot;">
+      <created>1589761943787</created>
+      <option name="number" value="00669" />
+      <option name="presentableId" value="LOCAL-00669" />
+      <option name="project" value="LOCAL" />
+      <updated>1589761943787</updated>
+    </task>
+    <task id="LOCAL-00670" summary=" &quot;nice&quot;">
+      <created>1589762053985</created>
+      <option name="number" value="00670" />
+      <option name="presentableId" value="LOCAL-00670" />
+      <option name="project" value="LOCAL" />
+      <updated>1589762053985</updated>
+    </task>
+    <option name="localTasksCounter" value="671" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
