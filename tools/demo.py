@@ -38,6 +38,14 @@ import engineer.utils.viz as viz
 
 logger = logging.get_logger(__name__)
 
+def build_dataloader(dataset,num_worker,batch_size):
+    return DataLoader(
+        dataset=dataset,
+        batch_size=batch_size,
+        shuffle=True,
+        num_workers=num_worker,
+        pin_memory=True)
+
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a Motion GCN Module')
     parser.add_argument('--config', help='train config file path')
@@ -126,6 +134,10 @@ def main():
 
     #datasets build
     test_datasets=dict()
+    test_loaders = dict()
+    for key in test_datasets.keys():
+        test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
+                                             cfg.dataloader.batch_size.test)
     for act in cfg.actions['all']:
         cfg.data.test.actions=act
         test_datasets[act] = build_dataset(cfg.data.test)
@@ -139,7 +151,7 @@ def main():
     fig = plt.figure()
     ax = plt.gca(projection='3d')
     for act in cfg.actions['all']:
-        for i, (inputs, targets, all_seq) in enumerate(test_datasets[act]):
+        for i, (inputs, targets, all_seq) in test_loaders[act]:
             inputs = Variable(inputs.cuda(cfg.cuda_num)).float()
             all_seq = Variable(all_seq.cuda(cfg.cuda_num, non_blocking=True)).float()
             is_cuda = torch.cuda.is_available()
