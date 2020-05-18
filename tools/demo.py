@@ -150,9 +150,12 @@ def main():
     model.eval()
     fig = plt.figure()
     ax = plt.gca(projection='3d')
-    val_loader = build_dataloader(val_dataset, cfg.dataloader.num_worker, cfg.dataloader.batch_size.test)
-    for act in cfg.actions['all']:
-        for i, (inputs, targets, all_seq) in val_loader:
+    test_loaders = dict()
+    for key in test_datasets.keys():
+        test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
+                                             cfg.dataloader.batch_size.test)
+    for act in test_loaders.keys():
+        for i, (inputs, targets, all_seq) in test_loaders[act]:
             inputs = Variable(inputs.cuda(cfg.cuda_num)).float()
             all_seq = Variable(all_seq.cuda(cfg.cuda_num, non_blocking=True)).float()
             is_cuda = torch.cuda.is_available()
