@@ -153,6 +153,8 @@ def main():
     fig = plt.figure()
     ax = plt.gca(projection='3d')
     test_loaders = dict()
+
+    dim_used = test_datasets.dim_used
     for key in test_datasets.keys():
         test_loaders[key] = build_dataloader(test_datasets[key], cfg.dataloader.num_worker,
                                              cfg.dataloader.batch_size.test)
