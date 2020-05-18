@@ -99,7 +99,7 @@ def main():
         distributed = False
     else:
         raise NotImplementedError("distributed Training is not necessary Here")
-    cfg.checkpoints = os.path.join(cfg.checkpoints,cfg.name)
+    cfg.checkpoints = os.path.join(cfg.checkpoints, cfg.name)
 
     if not os.path.exists(cfg.checkpoints):
         os.mkdir(cfg.checkpoints)
@@ -138,7 +138,7 @@ def main():
     model.eval()
     fig = plt.figure()
     ax = plt.gca(projection='3d')
-    for act in cfg.acts:
+    for act in cfg.actions['all']:
         for i, (inputs, targets, all_seq) in enumerate(test_datasets[act]):
             inputs = Variable(inputs).float()
             all_seq = Variable(all_seq).float()
