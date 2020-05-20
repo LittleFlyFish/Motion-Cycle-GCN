@@ -4,14 +4,14 @@ model = dict(
     input_feature=35,
     hidden_feature=256,
     p_dropout=0.5,
-    num_stage=8,
+    num_stage=12,
     node_n=69
 )
 dataset_type = 'Pose3dPW'
 data_root = './engineer/datasets/D3P'
 
 cuda_num = 'cuda:0'
-flag = 'Dense+d3p'
+flag = 'Dense+d3p+M100'
 
 
 train_pipeline = [
