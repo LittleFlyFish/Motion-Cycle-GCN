@@ -13,10 +13,10 @@ python3 tools/train_hm.py --config ./configs/Dense_GCN_I10_O10_D15_G_hm.py    #H
 python3 tools/train_net_d3p.py --config ./configs/Dense_GCN_I10_O30_D35_G_d3p.py
 python3 tools/train_net_d3p_3d.py --config ./configs/Dense_GCN_I10_O30_D35_G_d3p_3d.py
 
-python3 tools/demo.py --config ./configs/Dense_GCN_I10_O10_D15_G_hm.py
+# python3 tools/demo.py --config ./configs/Dense_GCN_I10_O10_D15_G_hm.py
 
 # export PYTHONPATH="/home/yanran/Yanran/Projects/Motion-Cycle-GCN/engineer/utils/":"${PYTHONPATH}"
 
-export PYTHONPATH="/home/yanran/Envs/MP_GCN/bin/python3":"${PYTHONPATH}"
+# export PYTHONPATH="/home/yanran/Envs/MP_GCN/bin/python3":"${PYTHONPATH}"
 
-export PYTHONPATH=$PYTHONPATH:/home/yanran/Envs/MP_GCN/lib/python3.6/site-packages
+# export PYTHONPATH=$PYTHONPATH:/home/yanran/Envs/MP_GCN/lib/python3.6/site-packages
