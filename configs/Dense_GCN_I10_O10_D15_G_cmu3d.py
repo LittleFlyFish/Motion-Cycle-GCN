@@ -49,7 +49,7 @@ actions=dict(all = ["basketball", "basketball_signal", "directing_traffic", "jum
                "washwindow"]
              )
 dataloader=dict(
-    num_worker=4,
+    num_worker=10,
     batch_size=dict(
         train=16,
         test=128
