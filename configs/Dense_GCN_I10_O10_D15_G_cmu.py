@@ -51,7 +51,7 @@ actions=dict(all = ["basketball", "basketball_signal", "directing_traffic", "jum
 dataloader=dict(
     num_worker=10,
     batch_size=dict(
-        train=16,
+        train=256,
         test=128
     )
 )
