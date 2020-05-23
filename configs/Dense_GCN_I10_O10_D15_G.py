@@ -4,7 +4,7 @@ model = dict(
     input_feature=15,
     hidden_feature=256,
     p_dropout=0.5,
-    num_stage=12,
+    num_stage=20,
     node_n=66
 )
 dataset_type = 'Hm36Dataset_3d'
@@ -13,7 +13,7 @@ train_pipeline = [
     dict(type='SampleFrames',direction = True),
 ]
 cuda_num ='cuda:1'
-flag = 'Dense+HM3.63D+M100'
+flag = 'Dense+HM3.63D+M100+N20'
 
 val_pipeline = [
     dict(type='SampleFrames', direction=True),

@@ -4,14 +4,14 @@ model = dict(
     input_feature=15,
     hidden_feature=256,
     p_dropout=0.5,
-    num_stage=12,
+    num_stage=20,
     node_n=48
 )
 dataset_type = 'H36motion'
 data_root = './engineer/datasets/h3.6m/dataset'
 
 cuda_num ='cuda:0'
-flag = 'Dense+HM3.6_angle+M100'
+flag = 'Dense+HM3.6_angle+M100+N20'
 
 
 data = dict(

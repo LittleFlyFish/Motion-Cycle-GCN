@@ -4,14 +4,14 @@ model = dict(
     input_feature=15,
     hidden_feature=256,
     p_dropout=0.5,
-    num_stage=12,
+    num_stage=20,
     node_n=64
 )
 dataset_type = 'CMU_Motion'
 data_root = './engineer/datasets/cmu_mocap'
 
 cuda_num = 'cuda:1'
-flag = 'Dense+CMU+M100'
+flag = 'Dense+CMU+M100+N20'
 
 data = dict(
     videos_per_gpu=2,
